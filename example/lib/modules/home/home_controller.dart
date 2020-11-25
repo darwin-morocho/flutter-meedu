@@ -1,6 +1,6 @@
 import 'package:meedu/meedu.dart';
 
-class HomeController extends MeeduController {
+class HomeController extends MController {
   int counter = 0;
 
   @override

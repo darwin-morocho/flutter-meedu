@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:meedu/src/meedu_controller.dart';
+import 'package:meedu/src/state_manager/meedu_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-class MeeduProvider<T extends MeeduController> extends SingleChildStatelessWidget {
+class MProvider<T extends MController> extends SingleChildStatelessWidget {
   final T controller;
 
-  const MeeduProvider({
+  const MProvider({
     Key key,
     @required this.controller,
     @required Widget child,
@@ -34,7 +34,7 @@ class MeeduProvider<T extends MeeduController> extends SingleChildStatelessWidge
   }
 
   /// Search one instance of MeeduController using the context
-  static T of<T extends MeeduController>(BuildContext context) {
+  static T of<T extends MController>(BuildContext context) {
     return Provider.of<T>(context, listen: false);
   }
 }

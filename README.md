@@ -1,14 +1,12 @@
 # meedu
+A simple State Managment for Flutter apps.
 
-A new Flutter package project.
 
-## Getting Started
+## Features
+* A Simple State Managment
+* LifeCycle included into Controllers
+* Navigate without BuildContext
+* Simple dependecy injection
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## IMPORTANT
+> This is a personal package for my own project or projects in my Company

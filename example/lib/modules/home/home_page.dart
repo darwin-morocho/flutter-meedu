@@ -9,9 +9,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MeeduProvider<HomeController>(
+    return MBuilder<HomeController>(
       controller: HomeController(),
-      child: Scaffold(
+      builder: (controller) => Scaffold(
         body: SafeArea(
           child: Container(
             width: double.infinity,
@@ -19,9 +19,9 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MeeduBuilder<HomeController>(
+                MBuilder<HomeController>(
                   id: 'counter',
-                  builder: (_, controller) => Text(
+                  builder: (controller) => Text(
                     "${controller.counter}\n counter",
                     style: TextStyle(fontSize: 30),
                     textAlign: TextAlign.center,
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 FlatButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, NumbersPage.routeName);
+                    MNavigator.i.pushNamed(NumbersPage.routeName, arguments: "este es un parametro");
                   },
                   child: Text("Go to Numbers Page"),
                 ),
@@ -38,13 +38,11 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButton: MeeduBuilder<HomeController>(
-          builder: (_, __) => FloatingActionButton(
-            onPressed: () {
-              __.incremment();
-            },
-            child: Icon(Icons.add),
-          ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            controller.incremment();
+          },
+          child: Icon(Icons.add),
         ),
       ),
     );
