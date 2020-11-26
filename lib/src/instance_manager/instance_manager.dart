@@ -13,7 +13,7 @@ class MGet {
   }
 
   /// Search and return one instance T from the hashmap
-  void find<T>({String tag}) {
+  T find<T>({String tag}) {
     final String key = _getKey(T, tag);
     if (!_vars.containsKey(key)) {
       throw "Cannot find $key, make sure call to MGet.i.put<${T.toString()}>() before call find.";
