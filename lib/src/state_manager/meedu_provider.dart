@@ -19,6 +19,7 @@ class MProvider<T extends MController> extends SingleChildStatelessWidget {
     return InheritedProvider<T>(
       create: (_) => this.controller,
       child: child,
+      lazy: false,
       dispose: (_, __) => this.controller.onClose(),
       startListening: (e, controller) {
         controller.onInit();

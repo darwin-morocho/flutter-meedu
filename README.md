@@ -9,4 +9,4 @@ A simple State Managment for Flutter apps.
 * Simple dependecy injection
 
 ## IMPORTANT
-> This is a personal package for my own project or projects in my Company
+> This is a personal package for my own projects or projects in my Company
