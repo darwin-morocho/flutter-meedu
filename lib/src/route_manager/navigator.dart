@@ -5,7 +5,8 @@ class MNavigator {
   static MNavigator _instance = MNavigator._internal();
   static MNavigator get instance => _instance;
 
-  final GlobalKey<NavigatorState> _navigatorKey = new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _navigatorKey =
+      new GlobalKey<NavigatorState>();
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
   NavigatorState get state => _navigatorKey.currentState;

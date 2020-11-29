@@ -45,7 +45,8 @@ class _MBuilderState<T extends MController> extends State<MBuilder<T>> {
 
     if (widget.initState != null) widget.initState(this);
 
-    _controller = widget.controller ?? context.read<T>(); // get the controller for this MBuilder
+    _controller = widget.controller ??
+        context.read<T>(); // get the controller for this MBuilder
 
     // listen the update events
     _subscription = _controller.stream.listen((List<String> listeners) {
@@ -78,14 +79,16 @@ class _MBuilderState<T extends MController> extends State<MBuilder<T>> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.didChangeDependencies != null) widget.didChangeDependencies(this);
+    if (widget.didChangeDependencies != null)
+      widget.didChangeDependencies(this);
   }
 
   @override
   Widget build(BuildContext context) {
     // if this MBuilder is the creator
     if (widget.controller != null) {
-      return MProvider(controller: widget.controller, child: widget.builder(_controller));
+      return MProvider(
+          controller: widget.controller, child: widget.builder(_controller));
     }
     return widget.builder(_controller);
   }

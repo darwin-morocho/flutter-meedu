@@ -8,7 +8,8 @@ abstract class MController implements LifeCycleBase {
   bool _disposed = false;
   bool get disposed => _disposed;
 
-  StreamController<List<String>> _streamController = StreamController.broadcast();
+  StreamController<List<String>> _streamController =
+      StreamController.broadcast();
 
   /// Stream to allow changes
   Stream<List<String>> get stream => _streamController.stream;

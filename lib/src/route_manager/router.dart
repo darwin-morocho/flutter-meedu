@@ -30,17 +30,20 @@ Future<T> pushReplacement<T>(Widget page, {Object arguments}) {
 
 /// Push a named route onto the navigator.
 Future<T> pushNamed<T>(String routeName, {Object arguments}) {
-  return MNavigator.instance.state.pushNamed<T>(routeName, arguments: arguments);
+  return MNavigator.instance.state
+      .pushNamed<T>(routeName, arguments: arguments);
 }
 
 /// Pop the current route off the navigator and push a named route in its place
 Future<T> popAndPushNamed<T>(String routeName, {Object arguments}) {
-  return MNavigator.instance.state.popAndPushNamed(routeName, arguments: arguments);
+  return MNavigator.instance.state
+      .popAndPushNamed(routeName, arguments: arguments);
 }
 
 /// replace the current page with a new route name
 Future<T> pushReplacementNamed<T>(String routeName, {Object arguments}) {
-  return MNavigator.instance.state.pushReplacementNamed(routeName, arguments: arguments);
+  return MNavigator.instance.state
+      .pushReplacementNamed(routeName, arguments: arguments);
 }
 
 /// navigates to a new pages and remove until
@@ -49,7 +52,9 @@ Future<T> pushNamedAndRemoveUntil<T>(
   bool Function(Route<dynamic>) predicate,
   Object arguments,
 }) {
-  return MNavigator.instance.state.pushNamedAndRemoveUntil(routeName, predicate ?? () => false, arguments: arguments);
+  return MNavigator.instance.state.pushNamedAndRemoveUntil(
+      routeName, predicate ?? () => false,
+      arguments: arguments);
 }
 
 /// remove all pages in the stack until [predicate]
