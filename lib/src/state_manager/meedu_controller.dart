@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart' show mustCallSuper;
-import 'package:meedu/src/state_manager/life_cycle_base.dart';
+import 'life_cycle_base.dart';
 
 abstract class MController implements LifeCycleBase {
   /// boolean to check if the controller is linked with a mounted widget
@@ -32,11 +32,12 @@ abstract class MController implements LifeCycleBase {
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper
-  FutureOr<void> onClose() async {
+  Future<void> onDispose() async {
     _disposed = true;
     await _streamController.close();
   }
 
+  /// Called when this object is inserted into the tree using a [MBuilder].
   @override
   void onInit() {}
 }

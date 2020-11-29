@@ -1,7 +1,6 @@
-///
-///
+/// interface to define the LifeCycle strcuture
 abstract class LifeCycleBase {
   void onInit();
   void afterFirstLayout();
-  void onClose();
+  Future<void> onDispose();
 }

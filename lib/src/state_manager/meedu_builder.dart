@@ -1,13 +1,21 @@
 import 'dart:async';
-import 'package:meedu/meedu.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
-import 'package:meedu/src/state_manager/meedu_controller.dart';
+import 'meedu_controller.dart';
+import 'meedu_provider.dart';
 
 class MBuilder<T extends MController> extends StatefulWidget {
+  /// When you force rerender using the update() method you can only update certains [Mbuilder]
+  /// using update(["your_id","other_id"]) so if you want update this [MBuilder] you sould use one id like
+  /// "your_id" or "other_id"
   final String id;
+
+  /// builder function
   final Widget Function(T) builder;
+
+  /// One instance of [MeeduController] it could be null, but you must a parent [MBuilder] with a controller
   final T controller;
+
   final void Function(State state) initState, didChangeDependencies, dispose;
   final void Function(MBuilder oldWidget, State state) didUpdateWidget;
 

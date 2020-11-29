@@ -1,8 +1,7 @@
-import 'package:meedu/meedu.dart';
+import 'package:meedu/state.dart';
 
 class HomeController extends MController {
   int counter = 0;
-
   @override
   void onInit() {
     print("onInit");
@@ -19,8 +18,7 @@ class HomeController extends MController {
   }
 
   @override
-  onClose() {
-    print("onClose");
-    super.onClose();
+  Future<void> onDispose() {
+    return super.onDispose();
   }
 }

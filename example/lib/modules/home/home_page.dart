@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meedu/meedu.dart';
-
+import 'package:meedu/state.dart';
+import 'package:meedu/router.dart' as router;
 import '../numbers/numbers_page.dart';
 import 'home_controller.dart';
 
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 FlatButton(
                   onPressed: () {
-                    MNavigator.i.pushNamed(NumbersPage.routeName, arguments: "este es un parametro");
+                    router.pushNamed(NumbersPage.routeName, arguments: "este es un parametro");
                   },
                   child: Text("Go to Numbers Page"),
                 ),

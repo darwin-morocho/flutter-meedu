@@ -33,6 +33,12 @@ class MGet {
     _vars.remove(key);
   }
 
+  /// removes an instance from the lazy hasmap
+  void lazyRemove<T>({String tag}) {
+    final String key = _getKey(T, tag);
+    _lazyVars.remove(key);
+  }
+
   /// Generates the key based on [type] (and optionally a [name])
   /// to register an Instance Builder in the hashmap.
   String _getKey(Type type, String name) {

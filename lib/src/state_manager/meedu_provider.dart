@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:meedu/src/state_manager/meedu_controller.dart';
+import 'meedu_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -20,7 +20,7 @@ class MProvider<T extends MController> extends SingleChildStatelessWidget {
       create: (_) => this.controller,
       child: child,
       lazy: false,
-      dispose: (_, __) => this.controller.onClose(),
+      dispose: (_, __) => this.controller.onDispose(),
       startListening: (e, controller) {
         controller.onInit();
         WidgetsBinding.instance.addPostFrameCallback((_) {
