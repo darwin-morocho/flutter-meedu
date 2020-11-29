@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
 import 'package:meedu/rx.dart';
-import 'package:meedu/router.dart' as router;
 import 'package:meedu_example/modules/numbers/numbers_controller.dart';
 
 class NumbersPage extends StatelessWidget {
@@ -10,7 +9,6 @@ class NumbersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = router.arguments(context);
     return MBuilder<NumbersController>(
       controller: NumbersController(),
       builder: (_) => Scaffold(

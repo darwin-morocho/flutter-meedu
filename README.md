@@ -4,7 +4,7 @@ A simple State Managment, Dependency Injection, Reactive programming and Navigat
 
 ## Overview
 
-This project was inpired by GetX, we could say that this is a Lite version of GetX but with a little changes in the code and some widgets.
+This project was inspired by GetX, we could say that this is a Lite version of GetX but with a little changes in the code and some widgets.
 
 ## Features
 
@@ -122,10 +122,8 @@ If you want get your arguments
 import 'package:flutter/material.dart';
 import 'package:meedu/router.dart' as router;
 
-
-class NumbersPage extends StatelessWidget {
-  static const routeName = "/numbers";
-  const NumbersPage({Key key}) : super(key: key);
+class DetailPage extends StatelessWidget {
+  const DetailPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,3 +132,60 @@ class NumbersPage extends StatelessWidget {
   }
 }
 ```
+
+
+## Depency Injection
+Just import the library
+```dart
+import 'package:meedu/get.dart';
+```
+
+Now you can inject your dependencies using `MGet.instance` or `MGet.i`
+
+```dart
+
+// inject the dependency as a singleton
+MGet.i.put<AuthRepository>(new AuthRepositoryImpl());
+
+// get the dependency
+MGet.i.find<AuthRepository>();
+
+// delete the dependency
+MGet.i.remove<AuthRepository>();
+
+// use a lazy put to get a new instance every time that you call to MGet.i.lazyFind
+MGet.i.lazyPut<AuthRepository>(()=>new AuthRepositoryImpl());
+MGet.i.lazyFind<AuthRepository>();
+MGet.i.lazyRemove<AuthRepository>();
+```
+
+## Reactive programming
+Just use the `Rx<T>` class to create one observable
+```dart
+import 'package:meedu/rx.dart';
+Rx<int> counter = Rx(0); // or use Rx<int> counter = 0.obs;
+.
+.
+.
+void increment() {
+    counter.value++;
+}
+```
+Now you can use the `RxBuilder` widget to listen changes in your observables
+
+```dart
+import 'package:meedu/rx.dart';
+.
+.
+.
+RxBuilder(
+    observables: [
+      counter,
+    ],
+    builder: () => Text(
+        "counter ${_.counter.value}",
+    ),
+)
+```
+Check the example for more info abour how to use the `Rx` class with `List` and `Map`.
+

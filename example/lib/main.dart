@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meedu/router.dart' show MNavigator;
+import 'package:meedu/get.dart';
 import 'modules/home/home_page.dart';
 import 'modules/numbers/numbers_page.dart';
 

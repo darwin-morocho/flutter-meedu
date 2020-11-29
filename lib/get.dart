@@ -1,3 +1,3 @@
-library instance_manager;
+library get;
 
 export 'src/instance_manager/instance_manager.dart';
