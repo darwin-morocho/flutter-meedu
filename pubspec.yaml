@@ -1,7 +1,6 @@
 name: meedu
-description: A new Flutter package project.
-version: 0.1.0
-author: Darwin Morocho
+description: A simple State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
+version: 0.1.1
 homepage: https://github.com/darwin-morocho/flutter-meedu
 
 environment:

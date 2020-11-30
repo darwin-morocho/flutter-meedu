@@ -9,7 +9,7 @@ class NumbersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MBuilder<NumbersController>(
+    return MeeduBuilder<NumbersController>(
       controller: NumbersController(),
       builder: (_) => Scaffold(
         appBar: AppBar(

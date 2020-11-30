@@ -1,7 +1,7 @@
 import 'package:meedu/state.dart';
 import 'package:meedu/rx.dart';
 
-class NumbersController extends MController {
+class NumbersController extends MeeduController {
   Rx<int> counter = 0.obs;
   Rx<List<String>> items = Rx([]);
 

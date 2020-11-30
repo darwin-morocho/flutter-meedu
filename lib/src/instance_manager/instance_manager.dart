@@ -1,15 +1,15 @@
 typedef InstanceBuilderCallback<S> = S Function();
 
-class MGet {
+class Get {
   /// private contructor
-  MGet._internal();
-  static MGet _instance = MGet._internal();
-  static MGet get i => _instance;
+  Get._internal();
+  static Get _instance = Get._internal();
+  static Get get i => _instance;
 
   Map<String, dynamic> _vars = {};
 
   /// Holds a reference to every registered callback when using
-  /// [MGet.i.lazyPut()]
+  /// [Get.i.lazyPut()]
   final Map<String, _Lazy> _lazyVars = {};
 
   /// Insert a Instance into the hashmap
@@ -22,7 +22,7 @@ class MGet {
   T find<T>({String tag}) {
     final String key = _getKey(T, tag);
     if (!_vars.containsKey(key)) {
-      throw "Cannot find $key, make sure call to MGet.i.put<${T.toString()}>() before call find.";
+      throw "Cannot find $key, make sure call to Get.i.put<${T.toString()}>() before call find.";
     }
     return _vars[key];
   }
@@ -60,14 +60,13 @@ class MGet {
   }) {
     final key = _getKey(T, tag);
     if (!_lazyVars.containsKey(key)) {
-      throw "Cannot find $key, make sure call to MGet.i.lazyPut<${T.toString()}>() before call lazyFind.";
+      throw "Cannot find $key, make sure call to Get.i.lazyPut<${T.toString()}>() before call lazyFind.";
     }
     return _lazyVars[key].builder();
   }
 }
 
 class _Lazy {
-  bool permanent = false;
   InstanceBuilderCallback builder;
   _Lazy(this.builder);
 }

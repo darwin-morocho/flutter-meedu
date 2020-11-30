@@ -3,10 +3,13 @@ import 'meedu_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-class MProvider<T extends MController> extends SingleChildStatelessWidget {
+/// classs to inject a controller into the widgets tree
+class MeeduProvider<T extends MeeduController>
+    extends SingleChildStatelessWidget {
+  /// instance that extends of MeeduController
   final T controller;
 
-  const MProvider({
+  const MeeduProvider({
     Key key,
     @required this.controller,
     @required Widget child,
@@ -35,7 +38,7 @@ class MProvider<T extends MController> extends SingleChildStatelessWidget {
   }
 
   /// Search one instance of MeeduController using the context
-  static T of<T extends MController>(BuildContext context) {
+  static T of<T extends MeeduController>(BuildContext context) {
     return Provider.of<T>(context, listen: false);
   }
 }

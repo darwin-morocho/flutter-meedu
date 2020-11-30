@@ -1,4 +1,4 @@
 library router;
 
-export 'src/route_manager/navigator.dart';
-export 'src/route_manager/router.dart';
+export 'src/router/navigator.dart';
+export 'src/router/router.dart';

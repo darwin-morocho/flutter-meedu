@@ -1,6 +1,6 @@
 import 'package:meedu/state.dart';
 
-class HomeController extends MController {
+class HomeController extends MeeduController {
   int counter = 0;
   @override
   void onInit() {

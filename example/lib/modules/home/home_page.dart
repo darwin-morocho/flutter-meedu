@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MBuilder<HomeController>(
+    return MeeduBuilder<HomeController>(
       controller: HomeController(),
       builder: (controller) => Scaffold(
         body: SafeArea(
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MBuilder<HomeController>(
+                MeeduBuilder<HomeController>(
                   id: 'counter',
                   builder: (controller) => Text(
                     "${controller.counter}\n counter",

@@ -4,22 +4,22 @@ import 'package:flutter/widgets.dart';
 import 'meedu_controller.dart';
 import 'meedu_provider.dart';
 
-class MBuilder<T extends MController> extends StatefulWidget {
-  /// When you force rerender using the update() method you can only update certains [Mbuilder]
-  /// using update(["your_id","other_id"]) so if you want update this [MBuilder] you sould use one id like
+class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
+  /// When you force rerender using the update() method you can only update certains [MeeduBuilder]
+  /// using update(["your_id","other_id"]) so if you want update this [MeeduBuilder] you sould use one id like
   /// "your_id" or "other_id"
   final String id;
 
   /// builder function
   final Widget Function(T) builder;
 
-  /// One instance of [MeeduController] it could be null, but you must a parent [MBuilder] with a controller
+  /// One instance of [MeeduController] it could be null, but you must a parent [MeeduBuilder] with a controller
   final T controller;
 
   final void Function(State state) initState, didChangeDependencies, dispose;
-  final void Function(MBuilder oldWidget, State state) didUpdateWidget;
+  final void Function(MeeduBuilder oldWidget, State state) didUpdateWidget;
 
-  MBuilder({
+  MeeduBuilder({
     Key key,
     this.id,
     @required this.builder,
@@ -32,27 +32,27 @@ class MBuilder<T extends MController> extends StatefulWidget {
         super(key: key);
 
   @override
-  _MBuilderState createState() => _MBuilderState<T>();
+  _MeeduBuilderState createState() => _MeeduBuilderState<T>();
 }
 
-class _MBuilderState<T extends MController> extends State<MBuilder<T>> {
+class _MeeduBuilderState<T extends MeeduController>
+    extends State<MeeduBuilder<T>> {
   StreamSubscription _subscription;
-  MController _controller;
+  MeeduController _controller;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.initState != null) widget.initState(this);
-
-    _controller = widget.controller ??
-        context.read<T>(); // get the controller for this MBuilder
+    // get the controller for this MeeduBuilder
+    _controller = widget.controller ?? context.read<T>();
 
     // listen the update events
     _subscription = _controller.stream.listen((List<String> listeners) {
       if (listeners.isNotEmpty) {
         // if the update method was called with ids
-        // if the current MBuilder id is inside the listeners
+        // if the current MeeduBuilder id is inside the listeners
         if (widget.id != null && listeners.contains(widget.id)) {
           setState(() {});
         }
@@ -71,7 +71,7 @@ class _MBuilderState<T extends MController> extends State<MBuilder<T>> {
   }
 
   @override
-  void didUpdateWidget(covariant MBuilder<T> oldWidget) {
+  void didUpdateWidget(covariant MeeduBuilder<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.didUpdateWidget != null) widget.didUpdateWidget(oldWidget, this);
   }
@@ -85,9 +85,9 @@ class _MBuilderState<T extends MController> extends State<MBuilder<T>> {
 
   @override
   Widget build(BuildContext context) {
-    // if this MBuilder is the creator
+    // if this MeeduBuilder is the creator
     if (widget.controller != null) {
-      return MProvider(
+      return MeeduProvider(
           controller: widget.controller, child: widget.builder(_controller));
     }
     return widget.builder(_controller);

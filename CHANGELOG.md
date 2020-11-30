@@ -1,3 +1,8 @@
-## [0.0.1] - TODO: Add release date.
+## [0.1.1]
+- Renamed MGet to Get
+- Renamed MController to MeeduController
+- Renamed MBuilder to MeeduBuilder
+- Updated documentation
 
-* TODO: Describe initial release.
+## [0.1.0]
+- Initial version

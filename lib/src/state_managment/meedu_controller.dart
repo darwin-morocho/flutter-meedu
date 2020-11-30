@@ -1,28 +1,25 @@
 import 'dart:async';
-
-import 'package:meta/meta.dart' show mustCallSuper;
+import 'package:flutter/foundation.dart' show mustCallSuper;
 import 'life_cycle_base.dart';
 
-abstract class MController implements LifeCycleBase {
+abstract class MeeduController implements LifeCycleBase {
   /// boolean to check if the controller is linked with a mounted widget
   bool _disposed = false;
   bool get disposed => _disposed;
 
-  StreamController<List<String>> _streamController =
+  StreamController<List<String>> _streaMeeduController =
       StreamController.broadcast();
 
   /// Stream to allow changes
-  Stream<List<String>> get stream => _streamController.stream;
+  Stream<List<String>> get stream => _streaMeeduController.stream;
 
   /// notify to listeners and rebuild the widgets
   ///
-  /// [state] the new state of the controller
-  ///
-  /// [listeners] a list of strings to update the widgets (MBuilder) with the ids inside the list
+  /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void update([List<String> listeners = const []]) {
     assert(listeners != null);
     if (!_disposed) {
-      _streamController.sink.add(listeners);
+      _streaMeeduController.sink.add(listeners);
     }
   }
 
@@ -35,10 +32,10 @@ abstract class MController implements LifeCycleBase {
   @mustCallSuper
   Future<void> onDispose() async {
     _disposed = true;
-    await _streamController.close();
+    await _streaMeeduController.close();
   }
 
-  /// Called when this object is inserted into the tree using a [MBuilder].
+  /// Called when this object is inserted into the tree using a [MeeduBuilder].
   @override
   void onInit() {}
 }

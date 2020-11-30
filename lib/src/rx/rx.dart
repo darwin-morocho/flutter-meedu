@@ -14,12 +14,12 @@ class Rx<T> {
     _value = initalValue;
   }
 
-  /// update the value and add a event sink to the [StreamController]
+  /// update the value and add a event sink to the [StreaMeeduController]
   set value(T newValue) {
     _value = newValue;
     _controller.sink.add(_value);
   }
 
-  /// close the [StreamController] for this observable
+  /// close the [StreaMeeduController] for this observable
   Future<void> close() => _controller.close();
 }
