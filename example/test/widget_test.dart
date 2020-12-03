@@ -7,9 +7,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../lib/main.dart';
+import 'package:meedu_example/main.dart';
+import 'package:meedu_example/modules/home/home_page.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {});
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+  });
 }

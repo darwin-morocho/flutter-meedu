@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
 import 'meedu_controller.dart';
-import 'meedu_provider.dart';
 
 class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
   /// When you force rerender using the update() method you can only update certains [MeeduBuilder]
@@ -13,8 +12,8 @@ class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
   /// builder function
   final Widget Function(T) builder;
 
-  /// One instance of [MeeduController] it could be null, but you must a parent [MeeduBuilder] with a controller
-  final T controller;
+  /// use this if you don't want rebuild this widget when update() is called
+  final bool allowRebuild;
 
   final void Function(State state) initState, didChangeDependencies, dispose;
   final void Function(MeeduBuilder oldWidget, State state) didUpdateWidget;
@@ -23,11 +22,11 @@ class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
     Key key,
     this.id,
     @required this.builder,
-    this.controller,
     this.initState,
     this.dispose,
     this.didChangeDependencies,
     this.didUpdateWidget,
+    this.allowRebuild = true,
   })  : assert(builder != null),
         super(key: key);
 
@@ -35,8 +34,7 @@ class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
   _MeeduBuilderState createState() => _MeeduBuilderState<T>();
 }
 
-class _MeeduBuilderState<T extends MeeduController>
-    extends State<MeeduBuilder<T>> {
+class _MeeduBuilderState<T extends MeeduController> extends State<MeeduBuilder<T>> {
   StreamSubscription _subscription;
   MeeduController _controller;
 
@@ -46,8 +44,14 @@ class _MeeduBuilderState<T extends MeeduController>
 
     if (widget.initState != null) widget.initState(this);
     // get the controller for this MeeduBuilder
-    _controller = widget.controller ?? context.read<T>();
+    _controller = context.read<T>();
 
+    if (widget.allowRebuild) {
+      _subscribe();
+    }
+  }
+
+  void _subscribe() {
     // listen the update events
     _subscription = _controller.stream.listen((List<String> listeners) {
       if (listeners.isNotEmpty) {
@@ -74,22 +78,24 @@ class _MeeduBuilderState<T extends MeeduController>
   void didUpdateWidget(covariant MeeduBuilder<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.didUpdateWidget != null) widget.didUpdateWidget(oldWidget, this);
+
+    if (oldWidget.allowRebuild != widget.allowRebuild) {
+      if (widget.allowRebuild) {
+        _subscribe();
+      } else {
+        _subscription?.cancel(); // cancel the listener for updates
+      }
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.didChangeDependencies != null)
-      widget.didChangeDependencies(this);
+    if (widget.didChangeDependencies != null) widget.didChangeDependencies(this);
   }
 
   @override
   Widget build(BuildContext context) {
-    // if this MeeduBuilder is the creator
-    if (widget.controller != null) {
-      return MeeduProvider(
-          controller: widget.controller, child: widget.builder(_controller));
-    }
     return widget.builder(_controller);
   }
 }

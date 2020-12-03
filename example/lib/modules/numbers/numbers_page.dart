@@ -9,41 +9,44 @@ class NumbersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MeeduBuilder<NumbersController>(
+    return MeeduProvider<NumbersController>(
       controller: NumbersController(),
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: RxBuilder(
-            observables: [
-              _.counter,
+      child: MeeduBuilder<NumbersController>(
+        allowRebuild: false,
+        builder: (_) => Scaffold(
+          appBar: AppBar(
+            title: RxBuilder(
+              observables: [
+                _.counter,
+              ],
+              builder: (ctx) => Text(
+                "counter ${_.counter.value}",
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            actions: [
+              FlatButton(
+                onPressed: _.addItem,
+                child: Text("Add list item"),
+              )
             ],
-            builder: () => Text(
-              "counter ${_.counter.value}",
-              style: TextStyle(fontSize: 18),
+          ),
+          body: RxBuilder(
+            observables: [_.items],
+            builder: (ctx) => ListView.builder(
+              itemBuilder: (__, index) {
+                final item = _.items.value[index];
+                return ListTile(
+                  title: Text(item),
+                );
+              },
+              itemCount: _.items.value.length,
             ),
           ),
-          actions: [
-            FlatButton(
-              onPressed: _.addItem,
-              child: Text("Add list item"),
-            )
-          ],
-        ),
-        body: RxBuilder(
-          observables: [_.items],
-          builder: () => ListView.builder(
-            itemBuilder: (__, index) {
-              final item = _.items.value[index];
-              return ListTile(
-                title: Text(item),
-              );
-            },
-            itemCount: _.items.value.length,
+          floatingActionButton: FloatingActionButton(
+            onPressed: _.increment,
+            child: Icon(Icons.add),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _.increment,
-          child: Icon(Icons.add),
         ),
       ),
     );

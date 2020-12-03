@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
 import 'package:meedu/router.dart' as router;
+import 'package:meedu_example/modules/rx_example.dart';
 import '../numbers/numbers_page.dart';
 import 'home_controller.dart';
 
@@ -9,9 +10,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MeeduBuilder<HomeController>(
+    return MeeduProvider<HomeController>(
       controller: HomeController(),
-      builder: (controller) => Scaffold(
+      child: Scaffold(
         body: SafeArea(
           child: Container(
             width: double.infinity,
@@ -30,19 +31,22 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 FlatButton(
                   onPressed: () {
-                    router.pushNamed(NumbersPage.routeName, arguments: "este es un parametro");
+                    router.push(RxExample());
                   },
-                  child: Text("Go to Numbers Page"),
+                  child: Text("Go to rx Page"),
                 ),
               ],
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            controller.incremment();
-          },
-          child: Icon(Icons.add),
+        floatingActionButton: MeeduBuilder<HomeController>(
+          allowRebuild: false,
+          builder: (_) => FloatingActionButton(
+            onPressed: () {
+              _.incremment();
+            },
+            child: Icon(Icons.add),
+          ),
         ),
       ),
     );

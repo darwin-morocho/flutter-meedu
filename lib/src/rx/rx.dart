@@ -16,8 +16,10 @@ class Rx<T> {
 
   /// update the value and add a event sink to the [StreaMeeduController]
   set value(T newValue) {
-    _value = newValue;
-    _controller.sink.add(_value);
+    if (_value != newValue) {
+      _value = newValue;
+      _controller.sink.add(_value);
+    }
   }
 
   /// close the [StreaMeeduController] for this observable

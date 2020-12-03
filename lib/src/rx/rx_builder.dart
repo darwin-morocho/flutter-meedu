@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'rx.dart';
 
@@ -8,7 +8,7 @@ class RxBuilder extends StatefulWidget {
   final List<Rx> observables;
 
   /// the builder function
-  final Widget Function() builder;
+  final Widget Function(BuildContext context) builder;
   RxBuilder({Key key, @required this.observables, @required this.builder})
       : assert(builder != null && observables != null),
         super(key: key);
@@ -21,10 +21,16 @@ class _RxBuilderState extends State<RxBuilder> {
   /// a list of StreamSubscription for each observable
   List<StreamSubscription> _subscriptions = [];
 
+  List<int> _hashes(List<Rx> observables) => observables.map((e) => e.hashCode).toList();
+
+  bool _observablesHasBeenChanged(List<int> oldHashes, List<int> newHashes) {
+    return listEquals(oldHashes, newHashes);
+  }
+
   @override
   void initState() {
     super.initState();
-    _addSubsciptions(); // listen the observable events
+    _addSubscriptions(); // listen the observable events
   }
 
   @override
@@ -35,7 +41,7 @@ class _RxBuilderState extends State<RxBuilder> {
   }
 
   /// read all observables and creates a subscription for each one
-  Future<void> _addSubsciptions() async {
+  Future<void> _addSubscriptions() async {
     widget.observables.forEach((e) {
       _subscriptions.add(_addListener(e));
     });
@@ -57,14 +63,27 @@ class _RxBuilderState extends State<RxBuilder> {
 
   @override
   void didUpdateWidget(covariant RxBuilder oldWidget) {
+    print("didUpdateWidget");
+    final oldHashes = _hashes(oldWidget.observables);
+    final newHashes = _hashes(widget.observables);
+    final bool hasBeenChanged = !_observablesHasBeenChanged(oldHashes, newHashes);
+    if (hasBeenChanged) {
+      _removeSubscriptions().then((_) {
+        _addSubscriptions();
+      });
+    }
+
     super.didUpdateWidget(oldWidget);
-    _removeSubscriptions().then((_) {
-      _addSubsciptions();
-    });
+  }
+
+  @override
+  void reassemble() {
+    print("reassemble");
+    super.reassemble();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder();
+    return widget.builder(context);
   }
 }
