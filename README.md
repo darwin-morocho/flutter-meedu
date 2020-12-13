@@ -59,32 +59,32 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MeeduBuilder<HomeController>(
+    return MeeduProvider<HomeController>(
       controller: HomeController(),
-      builder: (controller) => Scaffold(
-        body: Center(
-            child: MeeduBuilder<HomeController>(
-                builder: (controller) => Text(
-                    "${controller.counter}",
+      child: Scaffold(
+        body:  MeeduBuilder<HomeController>(
+          id: 'counter',
+          builder: (controller) => Text(
+                    "${controller.counter}\n counter",
                     style: TextStyle(fontSize: 30),
                     textAlign: TextAlign.center,
-                ),
-            ),
+          ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            controller.incremment();
-          },
-          child: Icon(Icons.add),
+        floatingActionButton: MeeduBuilder<HomeController>(
+          allowRebuild: false,
+          builder: (_) => FloatingActionButton(
+            onPressed: () {
+              _.incremment();
+            },
+            child: Icon(Icons.add),
+          ),
         ),
       ),
     );
   }
 }
 ```
-
-The parent `MeeduBuilder` needs to define the `controller` parameter and the childs don't need this parameter only need to know what kind of controller they need to search in the widget tree.
-
+First you need define your `MeeduProvider` and pass it your `controller`.
 If you have multiples `MeeduBuilder` widgets in your page and you only want update certain `MeeduBuilder` you can use the `id` parameter in yours `MeeduBuilder` and from your controller you can call to `update(['id_one','id_two',...])`.
 
 When you call to `update` and pass it a list of Strings the update method only rerender the `MeeduBuilder` widgets with one id inside the list passed to the `update` method.   

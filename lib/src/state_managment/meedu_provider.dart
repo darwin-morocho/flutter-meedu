@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 /// classs to inject a controller into the widgets tree
-class MeeduProvider<T extends MeeduController> extends SingleChildStatelessWidget {
+class MeeduProvider<T extends MeeduController>
+    extends SingleChildStatelessWidget {
   /// instance that extends of MeeduController
   final T controller;
 

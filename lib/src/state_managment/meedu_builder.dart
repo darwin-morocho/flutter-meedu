@@ -34,7 +34,8 @@ class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
   _MeeduBuilderState createState() => _MeeduBuilderState<T>();
 }
 
-class _MeeduBuilderState<T extends MeeduController> extends State<MeeduBuilder<T>> {
+class _MeeduBuilderState<T extends MeeduController>
+    extends State<MeeduBuilder<T>> {
   StreamSubscription _subscription;
   MeeduController _controller;
 
@@ -91,7 +92,8 @@ class _MeeduBuilderState<T extends MeeduController> extends State<MeeduBuilder<T
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.didChangeDependencies != null) widget.didChangeDependencies(this);
+    if (widget.didChangeDependencies != null)
+      widget.didChangeDependencies(this);
   }
 
   @override

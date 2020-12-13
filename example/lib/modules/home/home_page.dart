@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
 import 'package:meedu/router.dart' as router;
 import 'package:meedu_example/modules/rx_example.dart';
-import '../numbers/numbers_page.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {

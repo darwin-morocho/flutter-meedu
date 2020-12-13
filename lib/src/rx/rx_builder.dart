@@ -21,7 +21,8 @@ class _RxBuilderState extends State<RxBuilder> {
   /// a list of StreamSubscription for each observable
   List<StreamSubscription> _subscriptions = [];
 
-  List<int> _hashes(List<Rx> observables) => observables.map((e) => e.hashCode).toList();
+  List<int> _hashes(List<Rx> observables) =>
+      observables.map((e) => e.hashCode).toList();
 
   bool _observablesHasBeenChanged(List<int> oldHashes, List<int> newHashes) {
     return listEquals(oldHashes, newHashes);
@@ -63,23 +64,16 @@ class _RxBuilderState extends State<RxBuilder> {
 
   @override
   void didUpdateWidget(covariant RxBuilder oldWidget) {
-    print("didUpdateWidget");
     final oldHashes = _hashes(oldWidget.observables);
     final newHashes = _hashes(widget.observables);
-    final bool hasBeenChanged = !_observablesHasBeenChanged(oldHashes, newHashes);
+    final bool hasBeenChanged =
+        !_observablesHasBeenChanged(oldHashes, newHashes);
     if (hasBeenChanged) {
       _removeSubscriptions().then((_) {
         _addSubscriptions();
       });
     }
-
     super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void reassemble() {
-    print("reassemble");
-    super.reassemble();
   }
 
   @override
