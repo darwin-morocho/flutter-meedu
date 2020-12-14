@@ -182,7 +182,7 @@ RxBuilder(
     observables: [
       counter,
     ],
-    builder: () => Text(
+    builder: (ctx) => Text(
         "counter ${_.counter.value}",
     ),
 )

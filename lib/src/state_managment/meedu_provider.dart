@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 /// classs to inject a controller into the widgets tree
-class MeeduProvider<T extends MeeduController>
-    extends SingleChildStatelessWidget {
+class MeeduProvider<T extends MeeduController> extends SingleChildStatelessWidget {
   /// instance that extends of MeeduController
   final T controller;
 
@@ -14,10 +13,7 @@ class MeeduProvider<T extends MeeduController>
     @required this.controller,
     @required Widget child,
   })  : assert(controller != null && child != null),
-        super(
-          key: key,
-          child: child,
-        );
+        super(key: key, child: child);
 
   @override
   Widget buildWithChild(BuildContext context, Widget child) {
@@ -26,7 +22,7 @@ class MeeduProvider<T extends MeeduController>
       create: (_) => this.controller,
       child: child,
       lazy: false,
-      dispose: (_, __) => this.controller.onDispose(),
+      dispose: (_, controller) => controller.onDispose(),
       startListening: (e, controller) {
         controller.onInit();
         WidgetsBinding.instance.addPostFrameCallback((_) {

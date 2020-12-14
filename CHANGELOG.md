@@ -1,3 +1,6 @@
+## [0.2.1]
+- Removed Satte param from MeeduBuilder callbacks.
+
 ## [0.2.0+1]
 - Removed logs.
 

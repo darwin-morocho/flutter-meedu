@@ -15,8 +15,8 @@ class MeeduBuilder<T extends MeeduController> extends StatefulWidget {
   /// use this if you don't want rebuild this widget when update() is called
   final bool allowRebuild;
 
-  final void Function(State state) initState, didChangeDependencies, dispose;
-  final void Function(MeeduBuilder oldWidget, State state) didUpdateWidget;
+  final void Function() initState, didChangeDependencies, dispose;
+  final void Function(MeeduBuilder oldWidget) didUpdateWidget;
 
   MeeduBuilder({
     Key key,
@@ -43,7 +43,7 @@ class _MeeduBuilderState<T extends MeeduController>
   void initState() {
     super.initState();
 
-    if (widget.initState != null) widget.initState(this);
+    if (widget.initState != null) widget.initState();
     // get the controller for this MeeduBuilder
     _controller = context.read<T>();
 
@@ -71,14 +71,14 @@ class _MeeduBuilderState<T extends MeeduController>
   @override
   void dispose() {
     _subscription?.cancel(); // cancel the listener for updates
-    if (widget.dispose != null) widget.dispose(this);
+    if (widget.dispose != null) widget.dispose();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant MeeduBuilder<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.didUpdateWidget != null) widget.didUpdateWidget(oldWidget, this);
+    if (widget.didUpdateWidget != null) widget.didUpdateWidget(oldWidget);
 
     if (oldWidget.allowRebuild != widget.allowRebuild) {
       if (widget.allowRebuild) {
@@ -92,8 +92,7 @@ class _MeeduBuilderState<T extends MeeduController>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.didChangeDependencies != null)
-      widget.didChangeDependencies(this);
+    if (widget.didChangeDependencies != null) widget.didChangeDependencies();
   }
 
   @override

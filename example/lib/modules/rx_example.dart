@@ -12,6 +12,7 @@ class RxExample extends StatelessWidget {
       child: MeeduBuilder<RxController>(
         allowRebuild: false,
         builder: (_) => Scaffold(
+          appBar: AppBar(),
           body: Container(
             width: double.infinity,
             child: Column(
@@ -19,7 +20,7 @@ class RxExample extends StatelessWidget {
               children: [
                 RxBuilder(
                   observables: [_.time],
-                  builder: (ctx) => Text("${_.time.value}"),
+                  builder: (ctx) => Text("-> ${_.time.value}"),
                 ),
                 MeeduBuilder<RxController>(
                   builder: (_) => TextButton(
