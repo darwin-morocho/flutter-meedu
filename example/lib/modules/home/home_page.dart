@@ -30,7 +30,12 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 FlatButton(
                   onPressed: () {
-                    router.push(RxExample());
+                    router.push(
+                      RxExample(),
+                      transition: router.Transition.fadeIn,
+                      transitionDuration: Duration(milliseconds: 100),
+                      backGestureEnabled: true,
+                    );
                   },
                   child: Text("Go to rx Page"),
                 ),

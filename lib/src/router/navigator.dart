@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
+import 'package:meedu/src/router/transition.dart';
 
-class Navigator {
-  Navigator._internal();
-  static Navigator _instance = Navigator._internal();
-  static Navigator get instance => _instance;
+///this class has the navigator state and the transition configuration
+class MeeduNavigator {
+  MeeduNavigator._internal();
+  static final MeeduNavigator _instance = MeeduNavigator._internal();
+  static MeeduNavigator get instance => _instance;
 
-  final GlobalKey<NavigatorState> _navigatorKey =
-      new GlobalKey<NavigatorState>();
-  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
-  NavigatorState get state => _navigatorKey.currentState;
+  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+  NavigatorState get state => navigatorKey.currentState;
+  Transition transition = Transition.material;
+  Duration transitionDuration = const Duration(milliseconds: 300);
 }

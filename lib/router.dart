@@ -1,4 +1,4 @@
 library router;
 
-export 'src/router/navigator.dart';
+export 'src/router/transitions/custom_transition.dart';
 export 'src/router/router.dart';
