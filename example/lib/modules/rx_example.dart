@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:meedu/get.dart';
 import 'package:meedu/rx.dart';
 import 'package:meedu/state.dart';
+import 'package:meedu_example/modules/home/home_controller.dart';
 
 class RxExample extends StatelessWidget {
   @override
@@ -57,6 +59,15 @@ class RxController extends MeeduController {
       });
     }
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    final HomeController homeController = Get.i.find<HomeController>();
+    final int homeCounter = homeController.counter;
+    print("homeCunter $homeCounter");
+    homeController.incremment();
   }
 
   @override

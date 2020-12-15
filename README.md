@@ -84,16 +84,20 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
 First you need define your `MeeduProvider` and pass it your `controller`.
 If you have multiples `MeeduBuilder` widgets in your page and you only want update certain `MeeduBuilder` you can use the `id` parameter in yours `MeeduBuilder` and from your controller you can call to `update(['id_one','id_two',...])`.
 
-When you call to `update` and pass it a list of Strings the update method only rerender the `MeeduBuilder` widgets with one id inside the list passed to the `update` method.   
+When you call to `update` and pass it a list of Strings the update method only rerender the `MeeduBuilder` widgets with one id inside the list passed to the `update` method.
 
+✅ **IMPORTANT** The `MeeduProvider` widget automatically inject your `controller` using `Get.i.put<YourController>()` so you can call to `Get.i.find<YourController>()` from everywhere of your code while your `MeeduProvider` is inside the widget tree. When the `MeeduProvider` is destroyed your `controller` will be removed using `Get.i.remove<YourController>()`.
 
 ## Navigation
+
 To navigate between page without a BuildContext you can use the meedu's router
 
 In your `MaterialApp`
+
 ```dart
 import 'package:meedu/router.dart' as router;
 
@@ -108,7 +112,9 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
 Now since your pages you can navigate without BuildContext
+
 ```dart
 import 'package:meedu/router.dart' as router;
 .
@@ -118,6 +124,7 @@ router.pushNamed('detail-page', arguments: "your-arguments");
 ```
 
 If you want get your arguments
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:meedu/router.dart' as router;
@@ -133,9 +140,10 @@ class DetailPage extends StatelessWidget {
 }
 ```
 
-
 ## Depency Injection
+
 Just import the library
+
 ```dart
 import 'package:meedu/get.dart';
 ```
@@ -160,7 +168,9 @@ Get.i.lazyRemove<AuthRepository>();
 ```
 
 ## Reactive programming
+
 Just use the `Rx<T>` class to create one observable
+
 ```dart
 import 'package:meedu/rx.dart';
 Rx<int> counter = Rx(0); // or use Rx<int> counter = 0.obs;
@@ -171,6 +181,7 @@ void increment() {
     counter.value++;
 }
 ```
+
 Now you can use the `RxBuilder` widget to listen changes in your observables
 
 ```dart
@@ -187,5 +198,5 @@ RxBuilder(
     ),
 )
 ```
-Check the example for more info abour how to use the `Rx` class with `List` and `Map`.
 
+Check the example for more info abour how to use the `Rx` class with `List` and `Map`.

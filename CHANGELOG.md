@@ -1,3 +1,7 @@
+## [0.2.2]
+- Added page transitions.
+- MeeduProvider inject the MeeduController using Get.i.put.
+
 ## [0.2.1+1]
 - Updated Callbacks.
 
