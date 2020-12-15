@@ -32,8 +32,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     router.push(
                       RxExample(),
-                      transition: router.Transition.fadeIn,
-                      transitionDuration: Duration(milliseconds: 100),
+                      transition: router.Transition.zoom,
                       backGestureEnabled: true,
                     );
                   },

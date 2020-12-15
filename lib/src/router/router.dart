@@ -20,14 +20,16 @@ void setDefaultTransition(Transition transition, {Duration duration}) {
 
 /// Push the given [page] onto the navigator.
 ///
-/// [backGestureEnabled] ignored when [transition] is [Transition.material] or [Transition.cupertino]
+/// [transitionDuration] will be [Duration.zero] when [transition] is equals to [Transition.none]
+///
+/// [backGestureEnabled] ignored when [transition] is equals to [Transition.material] or [Transition.cupertino]
 Future<T> push<T>(
   Widget page, {
   Object arguments,
   bool maintainState = true,
   bool fullscreenDialog = false,
   Transition transition,
-  Duration transitionDuration = const Duration(seconds: 1),
+  Duration transitionDuration = const Duration(milliseconds: 300),
   bool backGestureEnabled = false,
 }) {
   return _state.push(
@@ -45,6 +47,8 @@ Future<T> push<T>(
 
 /// Replace the current [page] of the navigator by pushing the given [page] and then
 ///  disposing the previous route once the new route has finished animating in.
+///
+/// [transitionDuration] will be [Duration.zero] when [transition] is equals to [Transition.none]
 ///
 /// [backGestureEnabled] ignored when [transition] is [Transition.material] or [Transition.cupertino]
 Future<T> pushReplacement<T>(

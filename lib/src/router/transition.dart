@@ -1,17 +1,10 @@
 enum Transition {
-  fade,
   fadeIn, // ready
-  rightToLeft,
-  leftToRight,
-  upToDown,
+  rightToLeft, // ready
+  upToDown, //ready
   downToUp, // ready
-  rightToLeftWithFade,
-  leftToRightWithFade,
-  zoom,
-  topLevel,
-  none,
+  zoom, // ready
+  none, // none
   cupertino, // ready
   material, // ready
-  cupertinoDialog,
-  size,
 }

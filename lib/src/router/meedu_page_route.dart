@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'gesture_detector/back_gesture_controller.dart';
 import 'gesture_detector/gesture_detector.dart';
 import 'transitions/down_to_up.dart';
 import 'transitions/right_to_left.dart';
 import 'transition.dart';
+import 'transitions/up_to_down.dart';
 
 class MeeduPageRoute extends PageRoute {
   final Duration transitionDuration;
@@ -50,6 +52,11 @@ class MeeduPageRoute extends PageRoute {
           animation: animation,
           child: _child,
         );
+      case Transition.upToDown:
+        return UpToDownTransition().buildTransition(
+          animation: animation,
+          child: _child,
+        );
 
       case Transition.rightToLeft:
         return RightToLeftTransition().buildTransition(
@@ -62,11 +69,19 @@ class MeeduPageRoute extends PageRoute {
           opacity: animation,
           child: _child,
         );
+
+      case Transition.zoom:
+        return ScaleTransition(
+          scale: animation,
+          child: _child,
+        );
+
       default:
         return child;
     }
   }
 
+  /// check if [backGestureEnabled]is true and envolves it into a BackGestureDetector
   Widget get _child {
     return this.backGestureEnabled
         ? BackGestureDetector(
@@ -77,6 +92,7 @@ class MeeduPageRoute extends PageRoute {
         : this.child;
   }
 
+  ///
   BackGestureController<T> _startPopGesture<T>() {
     return BackGestureController<T>(
       navigator: this.navigator,
@@ -84,6 +100,7 @@ class MeeduPageRoute extends PageRoute {
     );
   }
 
+  ///
   bool get _isPopGestureInProgress {
     return this.navigator.userGestureInProgress;
   }
