@@ -6,7 +6,8 @@ abstract class MeeduController {
   bool _disposed = false;
   bool get disposed => _disposed;
 
-  StreamController<List<String>> _streaMeeduController = StreamController.broadcast();
+  StreamController<List<String>> _streaMeeduController =
+      StreamController.broadcast();
 
   /// Stream to allow changes
   Stream<List<String>> get stream => _streaMeeduController.stream;

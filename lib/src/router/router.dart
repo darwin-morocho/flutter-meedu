@@ -6,7 +6,8 @@ import 'navigator.dart';
 
 export 'transition.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = MeeduNavigator.instance.navigatorKey;
+final GlobalKey<NavigatorState> navigatorKey =
+    MeeduNavigator.instance.navigatorKey;
 final _state = navigatorKey.currentState;
 
 /// set the default transition for all pages
@@ -94,7 +95,8 @@ Future<T> pushNamedAndRemoveUntil<T>(
   bool Function(Route<dynamic>) predicate,
   Object arguments,
 }) {
-  return _state.pushNamedAndRemoveUntil(routeName, predicate ?? () => false, arguments: arguments);
+  return _state.pushNamedAndRemoveUntil(routeName, predicate ?? () => false,
+      arguments: arguments);
 }
 
 /// Consults the current route's [Route.willPop] method,

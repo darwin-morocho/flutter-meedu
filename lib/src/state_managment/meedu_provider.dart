@@ -7,7 +7,8 @@ import 'package:provider/single_child_widget.dart';
 /// classs to inject a controller into the widgets tree
 ///
 /// By defaul the [MeeduProvider] injects the controller using [Get.i.put] and remove it when the provider is destroyed
-class MeeduProvider<T extends MeeduController> extends SingleChildStatelessWidget {
+class MeeduProvider<T extends MeeduController>
+    extends SingleChildStatelessWidget {
   /// instance that extends of MeeduController
   final T controller;
 
