@@ -93,7 +93,7 @@ When you call to `update` and pass it a list of Strings the update method only r
 
 
 ### StateController
-If you have a more complex State consider using the `StateController` instance of `SimpleController` and the `StateBuilder` widget.
+If you have a more complex State consider using the `StateController` instance of `SimpleController`.
 
 When you call to `update(newState)` the new state must be different of the current State so `StateBuilder` widget will be rendered again with the new state. 
 
