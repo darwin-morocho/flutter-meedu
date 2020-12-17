@@ -59,10 +59,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MeeduProvider<HomeController>(
+    return Provider<HomeController>(
       controller: HomeController(),
       child: Scaffold(
-        body:  MeeduBuilder<HomeController>(
+        body:  SimpleBuilder<HomeController>(
           id: 'counter',
           builder: (controller) => Text(
                     "${controller.counter}\n counter",
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
           ),
         ),
-        floatingActionButton: MeeduBuilder<HomeController>(
+        floatingActionButton: SimpleBuilder<HomeController>(
           allowRebuild: false,
           builder: (_) => FloatingActionButton(
             onPressed: () {
@@ -85,12 +85,12 @@ class HomePage extends StatelessWidget {
 }
 ```
 
-First you need define your `MeeduProvider` and pass it your `controller`.
-If you have multiples `MeeduBuilder` widgets in your page and you only want update certain `MeeduBuilder` you can use the `id` parameter in yours `MeeduBuilder` and from your controller you can call to `update(['id_one','id_two',...])`.
+First you need define your `Provider` and pass it your `controller`.
+If you have multiples `SimpleBuilder` widgets in your page and you only want update certain `SimpleBuilder` you can use the `id` parameter in yours `SimpleBuilder` and from your controller you can call to `update(['id_one','id_two',...])`.
 
-When you call to `update` and pass it a list of Strings the update method only rerender the `MeeduBuilder` widgets with one id inside the list passed to the `update` method.
+When you call to `update` and pass it a list of Strings the update method only rerender the `SimpleBuilder` widgets with one id inside the list passed to the `update` method.
 
-✅ **IMPORTANT** The `MeeduProvider` widget automatically inject your `controller` using `Get.i.put<YourController>()` so you can call to `Get.i.find<YourController>()` from everywhere of your code while your `MeeduProvider` is inside the widget tree. When the `MeeduProvider` is destroyed your `controller` will be removed using `Get.i.remove<YourController>()`.
+✅ **IMPORTANT** The `Provider` widget automatically inject your `controller` using `Get.i.put<YourController>()` so you can call to `Get.i.find<YourController>()` from everywhere of your code while your `Provider` is inside the widget tree. When the `Provider` is destroyed your `controller` will be removed using `Get.i.remove<YourController>()`.
 
 ## Navigation
 

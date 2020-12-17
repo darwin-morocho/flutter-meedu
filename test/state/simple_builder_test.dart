@@ -11,24 +11,24 @@ void main() {
 
     await test.pumpWidget(
       MaterialApp(
-        home: MeeduProvider<Controller>(
+        home: Provider<Controller>(
           controller: Controller(),
           child: Scaffold(
             body: Center(
               child: Column(
                 children: [
                   //its value must be always 0
-                  MeeduBuilder<Controller>(
+                  SimpleBuilder<Controller>(
                     allowRebuild: false,
                     builder: (_) => Text("${_.counter}"),
                   ),
                   // its value must change when call update() without ids
-                  MeeduBuilder<Controller>(
+                  SimpleBuilder<Controller>(
                     key: withoutTextKey,
                     builder: (_) => Text("${_.counter}"),
                   ),
                   // its value must change when call update() or  update(['id'])
-                  MeeduBuilder<Controller>(
+                  SimpleBuilder<Controller>(
                     key: withIdTextKey,
                     id: 'id',
                     builder: (_) => Text("${_.counter}"),
@@ -42,13 +42,13 @@ void main() {
                   FloatingActionButton(
                     key: incrementButtonKey,
                     onPressed: () {
-                      MeeduProvider.of<Controller>(context).increment();
+                      Provider.of<Controller>(context).increment();
                     },
                   ),
                   FloatingActionButton(
                     key: incrementButtonIdKey,
                     onPressed: () {
-                      MeeduProvider.of<Controller>(context).incrementWithId();
+                      Provider.of<Controller>(context).incrementWithId();
                     },
                   ),
                 ],
@@ -72,7 +72,7 @@ void main() {
   });
 }
 
-class Controller extends MeeduController {
+class Controller extends SimpleController {
   int counter = 0;
 
   void increment() {

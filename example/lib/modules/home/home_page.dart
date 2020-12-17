@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
 import 'package:meedu/router.dart' as router;
+import 'package:meedu_example/modules/login/login_page.dart';
 import 'package:meedu_example/modules/rx_example.dart';
 import 'home_controller.dart';
 
@@ -9,7 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MeeduProvider<HomeController>(
+    return Provider<HomeController>(
       controller: HomeController(),
       child: Scaffold(
         body: SafeArea(
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MeeduBuilder<HomeController>(
+                SimpleBuilder<HomeController>(
                   id: 'counter',
                   builder: (controller) => Text(
                     "${controller.counter}\n counter",
@@ -31,7 +32,7 @@ class HomePage extends StatelessWidget {
                 FlatButton(
                   onPressed: () {
                     router.push(
-                      RxExample(),
+                      LoginPage(),
                       transition: router.Transition.zoom,
                       backGestureEnabled: true,
                     );
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButton: MeeduBuilder<HomeController>(
+        floatingActionButton: SimpleBuilder<HomeController>(
           allowRebuild: false,
           builder: (_) => FloatingActionButton(
             onPressed: () {

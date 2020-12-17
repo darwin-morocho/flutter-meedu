@@ -1,14 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:meedu/get.dart';
-import 'meedu_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:meedu/src/state_managment/controllers/base_controller.dart';
+import 'package:provider/provider.dart' as p;
 import 'package:provider/single_child_widget.dart';
 
 /// classs to inject a controller into the widgets tree
 ///
 /// By defaul the [MeeduProvider] injects the controller using [Get.i.put] and remove it when the provider is destroyed
-class MeeduProvider<T extends MeeduController>
-    extends SingleChildStatelessWidget {
+class Provider<T extends BaseController> extends SingleChildStatelessWidget {
   /// instance that extends of MeeduController
   final T controller;
 
@@ -17,7 +16,7 @@ class MeeduProvider<T extends MeeduController>
   /// its own controller
   final String tag;
 
-  MeeduProvider({
+  Provider({
     Key key,
     @required this.controller,
     this.tag,
@@ -28,7 +27,7 @@ class MeeduProvider<T extends MeeduController>
   @override
   Widget buildWithChild(BuildContext context, Widget child) {
     // use the InheritedProvider to inject the controller and catch the life cycle widget
-    return InheritedProvider<T>(
+    return p.InheritedProvider<T>(
       create: (_) {
         Get.i.put<T>(this.controller, tag: this.tag);
         return this.controller;
@@ -53,7 +52,7 @@ class MeeduProvider<T extends MeeduController>
   }
 
   /// Search one instance of MeeduController using the context
-  static T of<T extends MeeduController>(BuildContext context) {
-    return Provider.of<T>(context, listen: false);
+  static T of<T extends BaseController>(BuildContext context) {
+    return p.Provider.of<T>(context, listen: false);
   }
 }

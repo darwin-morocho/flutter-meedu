@@ -9,9 +9,9 @@ import 'package:meedu_example/modules/home/home_controller.dart';
 class RxExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MeeduProvider(
+    return Provider(
       controller: RxController(),
-      child: MeeduBuilder<RxController>(
+      child: SimpleBuilder<RxController>(
         allowRebuild: false,
         builder: (_) => Scaffold(
           appBar: AppBar(),
@@ -24,7 +24,7 @@ class RxExample extends StatelessWidget {
                   observables: [_.time],
                   builder: (ctx) => Text("-> ${_.time.value}"),
                 ),
-                MeeduBuilder<RxController>(
+                SimpleBuilder<RxController>(
                   builder: (_) => TextButton(
                     onPressed: _.onToggle,
                     child: Text(!_.running ? "START" : "STOP"),
@@ -39,7 +39,7 @@ class RxExample extends StatelessWidget {
   }
 }
 
-class RxController extends MeeduController {
+class RxController extends SimpleController {
   Rx<int> time = 0.obs;
   Timer timer;
   bool running = false;
