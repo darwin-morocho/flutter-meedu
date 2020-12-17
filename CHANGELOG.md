@@ -1,3 +1,8 @@
+## [0.3.0]
+- Renamed MeeduProvider to Provider.
+- Renamed MeeduBuilder to SimpleBuilder.
+- Added SimpleController and StateController.
+- Added StateBuilder.
 ## [0.2.2]
 - Added page transitions.
 - MeeduProvider inject the MeeduController using Get.i.put.

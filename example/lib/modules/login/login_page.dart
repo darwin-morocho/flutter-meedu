@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
-import 'package:meedu_example/modules/login/login_state.dart';
+import 'login_state.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatelessWidget {

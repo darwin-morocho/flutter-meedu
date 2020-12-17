@@ -4,8 +4,7 @@ A simple State Managment, Dependency Injection, Reactive programming and Navigat
 
 ## Overview
 
-This project was inspired by GetX, we could say that this is a Lite version of GetX but with a little changes in the code and some widgets.
-
+This project was inspired by GetX, we could say that this is a Lite version of GetX but with best practices in the code, without a custom MaterialApp or custom CuppertinoApp, without Dialogs and Snackbars and any other unnecessary functionality.
 ## Features
 
 - A Simple State Managment
@@ -21,7 +20,7 @@ Juste create a controller
 ```dart
 import 'package:meedu/state.dart';
 
-class HomeController extends MeeduController {
+class HomeController extends SimpleController {
   int counter = 0;
 
   @override
@@ -36,7 +35,7 @@ class HomeController extends MeeduController {
 
   void incremment() {
     counter++;
-    update(); // notify and update all MeeduBuilder wigets
+    update(); // notify and update all SimpleBuilder widgets
   }
 
   @override
@@ -91,6 +90,118 @@ If you have multiples `SimpleBuilder` widgets in your page and you only want upd
 When you call to `update` and pass it a list of Strings the update method only rerender the `SimpleBuilder` widgets with one id inside the list passed to the `update` method.
 
 ✅ **IMPORTANT** The `Provider` widget automatically inject your `controller` using `Get.i.put<YourController>()` so you can call to `Get.i.find<YourController>()` from everywhere of your code while your `Provider` is inside the widget tree. When the `Provider` is destroyed your `controller` will be removed using `Get.i.remove<YourController>()`.
+
+
+### StateController
+If you have a more complex State consider using the `StateController` instance of `SimpleController` and the `StateBuilder` widget.
+
+When you call to `update(newState)` the new state must be different of the current State so `StateBuilder` widget will be rendered again with the new state. 
+
+First install [equatable](https://pub.dev/packages/equatable) to compare instances of the same class.
+
+Add `equatable` as a dependency in your pubspec.yaml file
+```
+equatable: ^1.2.5
+```
+
+Now you can use the `StateController` class
+```dart
+class LoginState extends Equatable {
+  final String email, password;
+  LoginState({
+    @required this.email,
+    @required this.password,
+  });
+
+  LoginState copyWith({
+    String email,
+    String password,
+  }) {
+    return LoginState(
+      email: email ?? this.email,
+      password: password ?? this.password,
+    );
+  }
+
+  @override
+  List<Object> get props => [email, password];
+}
+
+
+class LoginController extends StateController<LoginState> {
+  @override
+  LoginState get initialState => LoginState(email: '', password: '');
+
+  void onEmailChanged(String email) {
+    update(
+      this.state.copyWith(email: email),
+    );
+  }
+
+  void onPasswordChanged(String password) {
+    update(
+      this.state.copyWith(password: password),
+    );
+  }
+
+  @override
+  Future<void> onDispose() {
+    print(":::: dispose login page");
+    return super.onDispose();
+  }
+}
+
+
+class LoginPage extends StatelessWidget {
+  const LoginPage({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider<LoginController>(
+      controller: LoginController(),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Builder(
+            builder: (_) {
+              final controller = Provider.of<LoginController>(_);
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CupertinoTextField(
+                    onChanged: controller.onEmailChanged,
+                    placeholder: "email",
+                  ),
+                  SizedBox(height: 20),
+                  CupertinoTextField(
+                    onChanged: controller.onPasswordChanged,
+                    placeholder: "password",
+                  ),
+                  SizedBox(height: 20),
+                  StateBuilder<LoginController, LoginState>(
+                    builder: (_) => Text("email is ${_.state.email}"),
+                  ),
+                  StateBuilder<LoginController, LoginState>(
+                    buildWhen: (oldState, newState) => oldState.password != newState.password,
+                    builder: (_) => Text("password is ${_.state.password}"),
+                  )
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+```
 
 ## Navigation
 
@@ -194,7 +305,7 @@ RxBuilder(
       counter,
     ],
     builder: (ctx) => Text(
-        "counter ${_.counter.value}",
+        "counter ${counter.value}",
     ),
 )
 ```
