@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../controllers/base_controller.dart';
 
 /// this widget define the basic Builder properties and render logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidget {
+abstract class BaseBuilder<T extends BaseController<S>, S>
+    extends StatefulWidget {
   /// the builder function that render the widget when the controller notify changes
   final Widget Function(T) builder;
 
@@ -38,7 +39,8 @@ abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidge
 }
 
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<BaseBuilder<T, S>> {
+abstract class BaseBuilderState<T extends BaseController<S>, S>
+    extends State<BaseBuilder<T, S>> {
   StreamSubscription subscription;
   T _controller;
   T get controller => _controller;
