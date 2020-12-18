@@ -1,3 +1,7 @@
+## [0.3.1]
+- Fixed popUntil and pushNamedAndRemoveUntil.
+- Added Tests.
+
 ## [0.3.0]
 - Renamed MeeduProvider to Provider.
 - Renamed MeeduBuilder to SimpleBuilder.

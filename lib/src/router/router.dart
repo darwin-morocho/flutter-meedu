@@ -95,7 +95,7 @@ Future<T> pushNamedAndRemoveUntil<T>(
   bool Function(Route<dynamic>) predicate,
   Object arguments,
 }) {
-  return _state.pushNamedAndRemoveUntil(routeName, predicate ?? () => false,
+  return _state.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false,
       arguments: arguments);
 }
 
@@ -114,7 +114,7 @@ void pop<T>([T result]) {
 
 /// remove all pages in the stack until [predicate]
 void popUntil([bool Function(Route<dynamic>) predicate]) {
-  _state.popUntil(predicate ?? () => false);
+  _state.popUntil(predicate ?? (_) => false);
 }
 
 /// return true if we can do pop

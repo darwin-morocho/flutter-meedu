@@ -17,6 +17,7 @@ void main() {
       counter.value = i;
     }
     await Future.delayed(Duration(seconds: 1));
+    await counter.close();
     expect(values.length, length + 1);
   });
 }

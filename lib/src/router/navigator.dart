@@ -9,7 +9,6 @@ class MeeduNavigator {
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
-  NavigatorState get state => navigatorKey.currentState;
   Transition transition = Transition.material;
   Duration transitionDuration = const Duration(milliseconds: 300);
 }

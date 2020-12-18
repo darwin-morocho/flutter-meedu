@@ -1,6 +1,6 @@
 name: meedu
 description: A simple State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
-version: 0.3.0
+version: 0.3.1
 homepage: https://github.com/darwin-morocho/flutter-meedu
 
 environment:
@@ -15,3 +15,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  equatable: ^1.2.5
