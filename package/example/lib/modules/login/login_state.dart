@@ -8,6 +8,8 @@ class LoginState extends Equatable {
     @required this.password,
   });
 
+  static LoginState get initialState => LoginState(email: '', password: '');
+
   LoginState copyWith({
     String email,
     String password,

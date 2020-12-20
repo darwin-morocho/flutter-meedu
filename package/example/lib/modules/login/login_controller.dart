@@ -2,8 +2,7 @@ import 'package:meedu/state.dart';
 import 'login_state.dart';
 
 class LoginController extends StateController<LoginState> {
-  @override
-  LoginState get initialState => LoginState(email: '', password: '');
+  LoginController() : super(LoginState.initialState);
 
   void onEmailChanged(String email) {
     update(

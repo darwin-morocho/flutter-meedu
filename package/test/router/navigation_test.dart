@@ -4,7 +4,7 @@ import 'package:meedu/router.dart' as router;
 
 void main() {
   testWidgets('normal navigation', (test) async {
-    router.setDefaultTransition(router.Transition.material);
+    router.setDefaultTransition(router.Transition.material, duration: Duration(milliseconds: 100));
     await test.pumpWidget(
       MaterialApp(
         navigatorKey: router.navigatorKey,

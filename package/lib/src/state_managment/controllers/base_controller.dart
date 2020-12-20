@@ -13,7 +13,6 @@ abstract class BaseController<T> {
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void notify([T data]) {
-    assert(data != null);
     if (!_disposed) {
       _streamController.sink.add(data);
     }

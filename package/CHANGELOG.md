@@ -1,3 +1,9 @@
+## [0.4.0]
+- Updated documentation.
+- Updated Tests.
+- Added onStateWillChange and onStateChanged on StateController.
+- Added initialState on StateController's constructor.
+
 ## [0.3.1]
 - Fixed popUntil and pushNamedAndRemoveUntil.
 - Added Tests.

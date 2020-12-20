@@ -25,6 +25,13 @@ void main() {
     await test.pump();
     expect(find.text("test"), findsOneWidget);
     expect(find.text("test@test.com"), findsOneWidget);
+
+    // test onStateWillChange
+    await test.tap(find.text("set invalid value"));
+    await test.pump();
+    expect(find.text("test@test.com"), findsOneWidget);
+    // end onStateWillChange
+
     await test.tap(find.text("back"));
     await test.pumpAndSettle();
     expect(find.text("test"), findsNothing);
@@ -76,6 +83,13 @@ class LoginPage extends StatelessWidget {
                 },
                 child: Text("set"),
               ),
+              FlatButton(
+                onPressed: () {
+                  final c = Get.i.find<LoginController>();
+                  c.onEmailChanged("test.com");
+                },
+                child: Text("set invalid value"),
+              ),
               StateBuilder<LoginController, LoginState>(
                 buildWhen: (prev, current) => prev.email != current.email,
                 builder: (_) => Text(_.state.email),
@@ -99,6 +113,8 @@ class LoginState extends Equatable {
     @required this.password,
   });
 
+  static LoginState get initialState => LoginState(email: '', password: '');
+
   LoginState copyWith({
     String email,
     String password,
@@ -109,13 +125,14 @@ class LoginState extends Equatable {
     );
   }
 
+  Map toJson() => {"email": this.email, "password": this.password};
+
   @override
   List<Object> get props => [email, password];
 }
 
 class LoginController extends StateController<LoginState> {
-  @override
-  LoginState get initialState => LoginState(email: '', password: '');
+  LoginController() : super(LoginState.initialState);
 
   void onEmailChanged(String email) {
     update(
@@ -127,6 +144,20 @@ class LoginController extends StateController<LoginState> {
     update(
       this.state.copyWith(password: password),
     );
+  }
+
+  @override
+  bool onStateWillChange(LoginState oldState, LoginState newState) {
+    if (oldState.email != newState.email) {
+      return newState.email.contains("@");
+    }
+    return true;
+  }
+
+  @override
+  void onStateChanged(LoginState oldState, LoginState currentState) {
+    print("oldState ${oldState.toJson()}");
+    print("currentState ${currentState.toJson()}\n\n");
   }
 
   @override
