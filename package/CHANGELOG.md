@@ -1,3 +1,5 @@
+## [0.4.0+1]
+- Updated documentation.
 ## [0.4.0]
 - Updated documentation.
 - Updated Tests.
