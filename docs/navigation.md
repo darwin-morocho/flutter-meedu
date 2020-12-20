@@ -1,4 +1,4 @@
-To navigate between page without a BuildContext you can use the meedu's router
+To navigate between page without a BuildContext you can use the meedu's router module.
 
 In your `MaterialApp`
 
