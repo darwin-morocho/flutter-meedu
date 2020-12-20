@@ -13,6 +13,8 @@ This project was inspired by GetX, we could say that this is a Lite version of G
 - Simple dependecy injection
 - Reactive programming
 
+
+👉 **FULL DOCUMENTATION** https://flutter.meedu.app
 ## State Managment
 
 Juste create a controller
