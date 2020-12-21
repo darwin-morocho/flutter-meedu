@@ -1,20 +1,33 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
-import 'package:flutter/foundation.dart' show mustCallSuper;
+class BaseListener<T> {
+  final void Function(T) listener;
+  BaseListener(this.listener);
+}
 
 abstract class BaseController<T> {
   bool _disposed = false;
+
+  List<BaseListener<T>> _listeners = [];
   bool get disposed => _disposed;
 
-  StreamController<T> _streamController = StreamController.broadcast();
-  Stream<T> get stream => _streamController.stream;
+  void addListener(BaseListener listener) {
+    _listeners.add(listener);
+  }
+
+  void removeListener(BaseListener listener) {
+    _listeners.remove(listener);
+  }
 
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void notify([T data]) {
     if (!_disposed) {
-      _streamController.sink.add(data);
+      _listeners.forEach((e) {
+        e.listener(data);
+      });
     }
   }
 
@@ -29,6 +42,7 @@ abstract class BaseController<T> {
   @mustCallSuper
   Future<void> onDispose() async {
     _disposed = true;
-    await _streamController.close();
+    _listeners.clear();
+    _listeners = null;
   }
 }

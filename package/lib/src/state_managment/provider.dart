@@ -38,6 +38,7 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
         Get.i.remove<T>(tag: this.tag);
         return controller.onDispose();
       },
+      updateShouldNotify: (_, __) => false,
       startListening: (e, controller) {
         controller.onInit();
         WidgetsBinding.instance.addPostFrameCallback((_) {

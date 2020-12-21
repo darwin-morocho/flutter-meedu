@@ -17,6 +17,12 @@ class LoginController extends StateController<LoginState> {
   }
 
   @override
+  void onStateChanged(LoginState oldState, LoginState currentState) {
+    print("oldState ${oldState.toJson()}");
+    print("currentState ${currentState.toJson()}\n\n");
+  }
+
+  @override
   Future<void> onDispose() {
     print(":::: dispose login page");
     return super.onDispose();

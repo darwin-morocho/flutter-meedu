@@ -3,6 +3,7 @@ First you need import the state module to your files.
 ```dart
 import 'package:meedu/state.dart';
 ```
+
 ## SimpleController
 
 For a simple state managment just create a class that extends of `SimpleController`
@@ -19,6 +20,7 @@ class HomeController extends SimpleController {
 ```
 
 Now in your page or widget you need define a `Provider` and pass to it a new instance of your controller.
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
@@ -49,6 +51,7 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
 The `SimpleBuilder` widget allows you to listen changes in your controller. Use the `allowRebuild` param if you don't want that your `SimpleBuilder` will be render again when the `update` method is called.
 
 If you have multiples `SimpleBuilder` widgets in your page and you only want update certain `SimpleBuilder` you can use the `id` parameter in yours `SimpleBuilder` and from your controller you can call to `update(['id_one','id_two',...])`.
@@ -59,11 +62,14 @@ When you call to `update` and pass it a list of Strings the update method only r
 
 For example instead of using a `SimpleBuilder` you can use the `Get` module.
 Just import the module
+
 ```dart
 import 'package:meedu/get.dart';
 ```
+
 Now you can access to your controller using `Get.i.find`.
-``` dart
+
+```dart
 FloatingActionButton(
   onPressed: () {
     final controller = Get.i.find<HomeController>();
@@ -73,22 +79,21 @@ FloatingActionButton(
 )
 ```
 
-
 ## StateController
+
 If you have a more complex State consider using the `StateController` instead of `SimpleController`.
 
 First install [equatable](https://pub.dev/packages/equatable) to compare instances of the same class.
 Add `equatable` as a dependency in your pubspec.yaml file
+
 ```
 equatable: ^1.2.5
 ```
-When you call to `update(newState)` the new state must be different of the current State so `StateBuilder` widget will be rendered again with the new state. 
 
-
-
-
+When you call to `update(newState)` the new state must be different of the current State so `StateBuilder` widget will be rendered again with the new state.
 
 Now you can use the `StateController` class
+
 ```dart
 class LoginState extends Equatable {
   final String email, password;
@@ -182,11 +187,12 @@ class LoginPage extends StatelessWidget {
 }
 ```
 
-
 ## Life cycle
+
 When a `SimpleController` or a `StateController` is passed to one `Provider` you can track the **Life cycle** of this Provider since your controller.
 
 Just override the respective methods.
+
 ```dart
 class HomeController extends SimpleController {
 
@@ -199,7 +205,7 @@ class HomeController extends SimpleController {
   /// called when the provider and its child is rendered for the first time
   @override
   void afterFirstLayout() {
-    
+
   }
 
   /// called when the controller is removed because the Provider widget was destroyed
@@ -207,6 +213,30 @@ class HomeController extends SimpleController {
   Future<void> onDispose() {
     // YOUR CODE HERE
     return super.onDispose();
+  }
+}
+```
+
+❌ **IMPORTANT**: You should never call an `update(...)` method inside the `onInit()` method even if the `update` method does not belong to the current controller.
+The `onInit` method is called when the the `Provider` widget is inserted into the **widget tree** but is not rendered yet. So you can use the `afterFirstLayout()` method to notify any change calling `update(...)`.
+
+```dart
+class HomeController extends SimpleController {
+  @override
+  void onInit() {
+      update(); //<--  BAD CODE 🤦‍♂️ this produce the next error -->  setState() or markNeedsBuild called during build
+      // or
+      final SomeController homeController = Get.i.find<SomeController>();
+      someController.update(); //<--  BAD CODE 🤦‍♂️
+  }
+
+
+  @override
+  void afterFirstLayout() {
+    update(); // GOOD CODE 👏
+     // or
+    final SomeController homeController = Get.i.find<SomeController>();
+    someController.update(); //<--  GOOD CODE 👏
   }
 }
 ```

@@ -20,6 +20,8 @@ class LoginState extends Equatable {
     );
   }
 
+  Map toJson() => {"email": this.email, "password": this.password};
+
   @override
   List<Object> get props => [email, password];
 }

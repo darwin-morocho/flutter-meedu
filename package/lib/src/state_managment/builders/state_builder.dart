@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-
+import '../controllers/base_controller.dart';
 import '../controllers/state_controller.dart';
 import 'base_builder.dart';
 
@@ -32,6 +32,7 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
 class _StateBuilderState<T extends StateController<S>, S>
     extends BaseBuilderState<T, S> {
   S _oldState;
+  BaseListener<S> _listener;
 
   @override
   void initState() {
@@ -42,16 +43,24 @@ class _StateBuilderState<T extends StateController<S>, S>
   @override
   void subscribe() {
     // listen the update events
-    this.subscription = this.controller.stream.listen((newState) {
-      final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
-      if (buildWhen != null) {
-        if (buildWhen(_oldState, newState)) {
+    _listener = BaseListener<S>(
+      (S newState) {
+        final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
+        if (buildWhen != null) {
+          if (buildWhen(_oldState, newState)) {
+            setState(() {});
+          }
+        } else {
           setState(() {});
         }
-      } else {
-        setState(() {});
-      }
-      _oldState = newState;
-    });
+        _oldState = newState;
+      },
+    );
+    this.controller.addListener(_listener);
+  }
+
+  @override
+  void unsubscribe() {
+    this.controller.removeListener(_listener);
   }
 }

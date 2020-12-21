@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
 import '../controllers/base_controller.dart';
@@ -41,45 +40,52 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
 abstract class BaseBuilderState<T extends BaseController<S>, S>
     extends State<BaseBuilder<T, S>> {
-  StreamSubscription subscription;
+  bool _initialized = false;
+
   T _controller;
   T get controller => _controller;
 
   /// this methods must be override to implement the subscribe events
   void subscribe();
 
+  /// this methods must be override to implement the unsubscribe logic
+  void unsubscribe();
+
   @override
   void initState() {
-    super.initState();
-    // get the controller for this MeeduBuilder
-    _controller = context.read<T>();
+    if (!_initialized) {
+      // get the controller for this MeeduBuilder
+      _controller = context.read<T>();
 
-    // if the widget is allowed to listening update events
-    if (widget.allowRebuild) {
-      subscribe();
+      // if the widget is allowed to listening update events
+      if (widget.allowRebuild) {
+        subscribe();
+      }
+      if (widget.initState != null) widget.initState();
     }
-    if (widget.initState != null) widget.initState();
+
+    _initialized = true;
+    super.initState();
   }
 
   @override
   void dispose() {
-    subscription?.cancel(); // cancel the listener for updates
+    unsubscribe(); // cancel the listener for updates
     if (widget.dispose != null) widget.dispose();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant BaseBuilder<T, S> oldWidget) {
-    super.didUpdateWidget(oldWidget);
     if (widget.didUpdateWidget != null) widget.didUpdateWidget(oldWidget);
-
     if (oldWidget.allowRebuild != widget.allowRebuild) {
       if (widget.allowRebuild) {
         subscribe();
       } else {
-        subscription?.cancel(); // cancel the listener for updates
+        unsubscribe(); // cancel the listener for updates
       }
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
