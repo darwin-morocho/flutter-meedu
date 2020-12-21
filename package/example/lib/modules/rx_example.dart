@@ -63,7 +63,10 @@ class RxController extends SimpleController {
   }
 
   @override
-  void onInit() {}
+  void onInit() {
+    // final HomeController homeController = Get.i.find<HomeController>();
+    // homeController.incremment();
+  }
 
   @override
   void afterFirstLayout() {

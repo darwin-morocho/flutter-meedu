@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^1.2.5
+  get:
   meedu:
     path: ../
 
