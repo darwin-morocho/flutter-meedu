@@ -1,26 +1,79 @@
 import 'dart:async';
+import 'dart:collection' show LinkedList, LinkedListEntry;
+import 'package:flutter/foundation.dart';
 
-import 'package:flutter/foundation.dart' show ChangeNotifier, mustCallSuper;
+class _ListenerEntry extends LinkedListEntry<_ListenerEntry> {
+  _ListenerEntry(this.listener);
+  final VoidCallback listener;
+}
 
-abstract class BaseController<T> extends ChangeNotifier {
-  bool _disposed = false;
+abstract class BaseController<T> implements Listenable {
+  LinkedList<_ListenerEntry> _listeners = LinkedList<_ListenerEntry>();
+
+  bool _disposed = false, _initialized = false;
   bool get disposed => _disposed;
+  bool get initialized => _initialized;
 
   T _data;
   T get data => _data;
+
+  bool _debugAssertNotDisposed() {
+    assert(() {
+      if (_disposed) {
+        throw FlutterError('A $runtimeType was used after being disposed.');
+      }
+      return true;
+    }());
+    return true;
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    assert(_debugAssertNotDisposed());
+    _listeners.add(_ListenerEntry(listener));
+  }
+
+  bool get hasListeners {
+    assert(_debugAssertNotDisposed());
+    return _listeners.isNotEmpty;
+  }
+
+  @override
+  void removeListener(VoidCallback listener) {
+    assert(_debugAssertNotDisposed());
+    for (final _ListenerEntry entry in _listeners) {
+      if (entry.listener == listener) {
+        entry.unlink();
+        return;
+      }
+    }
+  }
 
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void notify([T data]) {
-    if (!_disposed) {
-      _data = data;
-      notifyListeners();
+    try {
+      if (!_disposed) {
+        _data = data;
+        for (final _ListenerEntry entry in _listeners) {
+          if (entry.list != null) {
+            entry.listener();
+            return;
+          }
+        }
+      }
+    } catch (e, s) {
+      print(e);
+      print(s);
     }
   }
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
-  void onInit();
+  @mustCallSuper
+  void onInit() {
+    _initialized = true;
+  }
 
   /// when the MeeduBuilder was mounted
   void afterFirstLayout();
@@ -30,8 +83,7 @@ abstract class BaseController<T> extends ChangeNotifier {
   @mustCallSuper
   Future<void> onDispose() async {
     _disposed = true;
-    if (super.hasListeners) {
-      super.dispose();
-    }
+    _listeners.clear();
+    _listeners = null;
   }
 }

@@ -40,6 +40,8 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
       },
       updateShouldNotify: (_, __) => false,
       startListening: (e, controller) {
+        print("🥶 oninit ${controller.hashCode}");
+        if (controller.initialized) return () {};
         controller.onInit();
         WidgetsBinding.instance.addPostFrameCallback((_) {
           // if the controller is not disposed

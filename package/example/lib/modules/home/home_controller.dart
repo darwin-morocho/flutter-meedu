@@ -4,6 +4,7 @@ class HomeController extends SimpleController {
   int counter = 0;
   @override
   void onInit() {
+    super.onInit();
     print("onInit");
   }
 

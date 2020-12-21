@@ -63,6 +63,7 @@ class RxController extends SimpleController {
 
   @override
   void onInit() {
+    super.onInit();
     print("jajajaj");
     final HomeController homeController = Get.i.find<HomeController>();
     final int homeCounter = homeController.counter;

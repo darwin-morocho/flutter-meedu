@@ -14,9 +14,11 @@ abstract class SimpleController extends BaseController<List<String>> {
   }
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
+  @override
   void onInit() {}
 
   /// when the MeeduBuilder was mounted
+  @override
   void afterFirstLayout() {}
 
   /// use to listen when the controller was deleted from memory

@@ -38,6 +38,8 @@ abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidge
 
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
 abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<BaseBuilder<T, S>> {
+  bool _initialized = false;
+
   T _controller;
   T get controller => _controller;
 
@@ -50,14 +52,17 @@ abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<Ba
   @override
   void initState() {
     super.initState();
-    // get the controller for this MeeduBuilder
-    _controller = context.read<T>();
+    if (!_initialized) {
+      // get the controller for this MeeduBuilder
+      _controller = context.read<T>();
 
-    // if the widget is allowed to listening update events
-    if (widget.allowRebuild) {
-      subscribe();
+      // if the widget is allowed to listening update events
+      if (widget.allowRebuild) {
+        subscribe();
+      }
+      if (widget.initState != null) widget.initState();
     }
-    if (widget.initState != null) widget.initState();
+    _initialized = true;
   }
 
   @override
