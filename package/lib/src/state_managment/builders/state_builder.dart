@@ -29,8 +29,7 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   _StateBuilderState createState() => _StateBuilderState<T, S>();
 }
 
-class _StateBuilderState<T extends StateController<S>, S>
-    extends BaseBuilderState<T, S> {
+class _StateBuilderState<T extends StateController<S>, S> extends BaseBuilderState<T, S> {
   S _oldState;
 
   @override
@@ -42,16 +41,24 @@ class _StateBuilderState<T extends StateController<S>, S>
   @override
   void subscribe() {
     // listen the update events
-    this.subscription = this.controller.stream.listen((newState) {
-      final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
-      if (buildWhen != null) {
-        if (buildWhen(_oldState, newState)) {
-          setState(() {});
-        }
-      } else {
+    this.controller.addListener(_subscribe);
+  }
+
+  void _subscribe() {
+    final S newState = this.controller.data;
+    final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
+    if (buildWhen != null) {
+      if (buildWhen(_oldState, newState)) {
         setState(() {});
       }
-      _oldState = newState;
-    });
+    } else {
+      setState(() {});
+    }
+    _oldState = newState;
+  }
+
+  @override
+  void unsubscribe() {
+    this.controller.removeListener(_subscribe);
   }
 }

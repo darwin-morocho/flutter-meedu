@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
                 SimpleBuilder<HomeController>(
                   id: 'counter',
                   builder: (controller) => Text(
-                    "${controller.counter}\n counter",
+                    "${controller.counter}",
                     style: TextStyle(fontSize: 30),
                     textAlign: TextAlign.center,
                   ),
@@ -32,12 +32,12 @@ class HomePage extends StatelessWidget {
                 FlatButton(
                   onPressed: () {
                     router.push(
-                      LoginPage(),
+                      RxExample(),
                       transition: router.Transition.zoom,
                       backGestureEnabled: true,
                     );
                   },
-                  child: Text("Go to rx Page"),
+                  child: Text("StateController example"),
                 ),
               ],
             ),

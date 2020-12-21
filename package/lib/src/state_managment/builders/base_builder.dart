@@ -4,8 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../controllers/base_controller.dart';
 
 /// this widget define the basic Builder properties and render logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilder<T extends BaseController<S>, S>
-    extends StatefulWidget {
+abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidget {
   /// the builder function that render the widget when the controller notify changes
   final Widget Function(T) builder;
 
@@ -39,14 +38,15 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
 }
 
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilderState<T extends BaseController<S>, S>
-    extends State<BaseBuilder<T, S>> {
-  StreamSubscription subscription;
+abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<BaseBuilder<T, S>> {
   T _controller;
   T get controller => _controller;
 
   /// this methods must be override to implement the subscribe events
   void subscribe();
+
+  /// this methods must be override to implement the unsubscribe logic
+  void unsubscribe();
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ abstract class BaseBuilderState<T extends BaseController<S>, S>
 
   @override
   void dispose() {
-    subscription?.cancel(); // cancel the listener for updates
+    unsubscribe(); // cancel the listener for updates
     if (widget.dispose != null) widget.dispose();
     super.dispose();
   }
@@ -77,7 +77,7 @@ abstract class BaseBuilderState<T extends BaseController<S>, S>
       if (widget.allowRebuild) {
         subscribe();
       } else {
-        subscription?.cancel(); // cancel the listener for updates
+        unsubscribe(); // cancel the listener for updates
       }
     }
   }
