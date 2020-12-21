@@ -31,15 +31,11 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 FlatButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => RxExample()),
+                    router.push(
+                      RxExample(),
+                      transition: router.Transition.zoom,
+                      backGestureEnabled: true,
                     );
-                    // router.push(
-                    //   RxExample(),
-                    //   transition: router.Transition.material,
-                    //   backGestureEnabled: true,
-                    // );
                   },
                   child: Text("StateController example"),
                 ),

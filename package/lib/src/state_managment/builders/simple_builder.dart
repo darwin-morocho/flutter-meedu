@@ -38,8 +38,6 @@ class _SimpleBuilderState<T extends SimpleController> extends BaseBuilderState<T
 
   @override
   void subscribe() {
-    print("subscribe this.controller ${this.controller.runtimeType}");
-    print("subscribe this.controller ${this.controller.hashCode}");
     // listen the update events
     _listener = BaseListener<List<String>>(
       (listeners) {

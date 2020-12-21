@@ -37,10 +37,7 @@ abstract class StateController<S> extends BaseController<S> {
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
   @override
-  @mustCallSuper
-  void onInit() {
-    super.onInit();
-  }
+  void onInit() {}
 
   /// when the MeeduBuilder was mounted
   @override

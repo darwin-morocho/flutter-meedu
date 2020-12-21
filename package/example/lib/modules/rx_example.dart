@@ -11,9 +11,9 @@ class RxExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<RxController>(
       controller: RxController(),
-      child: SimpleBuilder<RxController>(
-        allowRebuild: false,
-        builder: (_) => Scaffold(
+      child: Builder(builder: (__) {
+        final RxController _ = Get.i.find<RxController>();
+        return Scaffold(
           appBar: AppBar(),
           body: Container(
             width: double.infinity,
@@ -22,10 +22,10 @@ class RxExample extends StatelessWidget {
               children: [
                 RxBuilder(
                   observables: [_.time],
-                  builder: (ctx) => Text("-> ${_.time.value}"),
+                  builder: (ctx) => Text("--> ${_.time.value}"),
                 ),
                 SimpleBuilder<RxController>(
-                  allowRebuild: false,
+                  allowRebuild: true,
                   builder: (_) => TextButton(
                     onPressed: _.onToggle,
                     child: Text(!_.running ? "START" : "STOP"),
@@ -34,8 +34,8 @@ class RxExample extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
@@ -63,16 +63,13 @@ class RxController extends SimpleController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-
-    final HomeController homeController = Get.i.find<HomeController>();
-    // print("HomeController ${homeController.hashCode}");
-    homeController.incremment();
-  }
+  void onInit() {}
 
   @override
-  void afterFirstLayout() {}
+  void afterFirstLayout() {
+    final HomeController homeController = Get.i.find<HomeController>();
+    homeController.incremment();
+  }
 
   @override
   Future<void> onDispose() {

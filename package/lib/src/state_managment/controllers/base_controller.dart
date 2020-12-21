@@ -7,11 +7,10 @@ class BaseListener<T> {
 }
 
 abstract class BaseController<T> {
-  bool _disposed = false, _initialized = false;
+  bool _disposed = false;
 
   List<BaseListener<T>> _listeners = [];
   bool get disposed => _disposed;
-  bool get initialized => _initialized;
 
   void addListener(BaseListener listener) {
     _listeners.add(listener);
@@ -33,10 +32,7 @@ abstract class BaseController<T> {
   }
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
-  @mustCallSuper
-  void onInit() {
-    _initialized = true;
-  }
+  void onInit();
 
   /// when the MeeduBuilder was mounted
   void afterFirstLayout();
