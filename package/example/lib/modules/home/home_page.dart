@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                 FlatButton(
                   onPressed: () {
                     router.push(
-                      LoginPage(),
+                      RxExample(),
                       transition: router.Transition.zoom,
                       backGestureEnabled: true,
                     );
