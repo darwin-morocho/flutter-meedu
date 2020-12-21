@@ -1,3 +1,7 @@
+## [0.4.1+1]
+- Updated code documentation.
+
+
 ## [0.4.1]
 - Removed streams from BaseController.
 - Updated documentation.

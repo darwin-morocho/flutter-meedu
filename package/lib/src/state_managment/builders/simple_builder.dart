@@ -36,6 +36,7 @@ class SimpleBuilder<T extends SimpleController>
 
 class _SimpleBuilderState<T extends SimpleController>
     extends BaseBuilderState<T, List<String>> {
+  /// listener for update events
   BaseListener<List<String>> _listener;
 
   @override

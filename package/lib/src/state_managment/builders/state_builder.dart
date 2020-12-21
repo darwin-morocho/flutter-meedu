@@ -4,7 +4,8 @@ import '../controllers/state_controller.dart';
 import 'base_builder.dart';
 
 class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
-  final bool Function(S oldController, S controller) buildWhen;
+  /// use this if you want to define a condition to rebuild the widget
+  final bool Function(S oldState, S newState) buildWhen;
 
   const StateBuilder({
     Key key,
@@ -31,7 +32,10 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
 
 class _StateBuilderState<T extends StateController<S>, S>
     extends BaseBuilderState<T, S> {
+  /// save the previous state
   S _oldState;
+
+  /// listener for update events
   BaseListener<S> _listener;
 
   @override
@@ -46,7 +50,9 @@ class _StateBuilderState<T extends StateController<S>, S>
     _listener = BaseListener<S>(
       (S newState) {
         final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
+        // if the buildWhen param is defined
         if (buildWhen != null) {
+          /// check if the condition allows the rebuild
           if (buildWhen(_oldState, newState)) {
             setState(() {});
           }
