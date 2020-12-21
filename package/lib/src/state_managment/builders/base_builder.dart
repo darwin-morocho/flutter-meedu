@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
 import '../controllers/base_controller.dart';
@@ -70,9 +69,7 @@ abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<Ba
 
   @override
   void didUpdateWidget(covariant BaseBuilder<T, S> oldWidget) {
-    super.didUpdateWidget(oldWidget);
     if (widget.didUpdateWidget != null) widget.didUpdateWidget(oldWidget);
-
     if (oldWidget.allowRebuild != widget.allowRebuild) {
       if (widget.allowRebuild) {
         subscribe();
@@ -80,6 +77,7 @@ abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<Ba
         unsubscribe(); // cancel the listener for updates
       }
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

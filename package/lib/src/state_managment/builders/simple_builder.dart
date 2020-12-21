@@ -40,17 +40,19 @@ class _SimpleBuilderState<T extends SimpleController> extends BaseBuilderState<T
   }
 
   _subscribe() {
-    final listeners = this.controller.data;
-    if (listeners.isNotEmpty) {
-      // if the update method was called with ids
-      // if the current MeeduBuilder id is inside the listeners
-      final id = (widget as SimpleBuilder).id;
-      if (id != null && listeners.contains(id)) {
+    if (mounted) {
+      final listeners = this.controller.data;
+      if (listeners.isNotEmpty) {
+        // if the update method was called with ids
+        // if the current MeeduBuilder id is inside the listeners
+        final id = (widget as SimpleBuilder).id;
+        if (id != null && listeners.contains(id)) {
+          setState(() {});
+        }
+      } else {
+        // update the widget if  listeners is empty
         setState(() {});
       }
-    } else {
-      // update the widget if  listeners is empty
-      setState(() {});
     }
   }
 

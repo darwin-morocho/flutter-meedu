@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart' show ChangeNotifier, VoidCallback, mustCallSuper;
+import 'package:flutter/foundation.dart' show ChangeNotifier, mustCallSuper;
 
 abstract class BaseController<T> extends ChangeNotifier {
   bool _disposed = false;
