@@ -51,7 +51,6 @@ abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<Ba
 
   @override
   void initState() {
-    super.initState();
     if (!_initialized) {
       // get the controller for this MeeduBuilder
       _controller = context.read<T>();
@@ -62,7 +61,9 @@ abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<Ba
       }
       if (widget.initState != null) widget.initState();
     }
+
     _initialized = true;
+    super.initState();
   }
 
   @override

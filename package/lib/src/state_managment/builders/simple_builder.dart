@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:meedu/src/state_managment/controllers/base_controller.dart';
 
 import 'base_builder.dart';
 import '../controllers/simple_controller.dart';
@@ -33,31 +34,33 @@ class SimpleBuilder<T extends SimpleController> extends BaseBuilder<T, List<Stri
 }
 
 class _SimpleBuilderState<T extends SimpleController> extends BaseBuilderState<T, List<String>> {
+  BaseListener<List<String>> _listener;
+
   @override
   void subscribe() {
+    print("subscribe this.controller ${this.controller.runtimeType}");
+    print("subscribe this.controller ${this.controller.hashCode}");
     // listen the update events
-    this.controller.addListener(_subscribe);
-  }
-
-  _subscribe() {
-    if (mounted) {
-      final listeners = this.controller.data;
-      if (listeners.isNotEmpty) {
-        // if the update method was called with ids
-        // if the current MeeduBuilder id is inside the listeners
-        final id = (widget as SimpleBuilder).id;
-        if (id != null && listeners.contains(id)) {
+    _listener = BaseListener<List<String>>(
+      (listeners) {
+        if (listeners.isNotEmpty) {
+          // if the update method was called with ids
+          // if the current MeeduBuilder id is inside the listeners
+          final id = (widget as SimpleBuilder<T>).id;
+          if (id != null && listeners.contains(id)) {
+            setState(() {});
+          }
+        } else {
+          // update the widget if  listeners is empty
           setState(() {});
         }
-      } else {
-        // update the widget if  listeners is empty
-        setState(() {});
-      }
-    }
+      },
+    );
+    this.controller.addListener(_listener);
   }
 
   @override
   void unsubscribe() {
-    this.controller.removeListener(_subscribe);
+    this.controller.removeListener(_listener);
   }
 }

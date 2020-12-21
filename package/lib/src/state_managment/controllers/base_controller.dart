@@ -1,71 +1,34 @@
 import 'dart:async';
-import 'dart:collection' show LinkedList, LinkedListEntry;
 import 'package:flutter/foundation.dart';
 
-class _ListenerEntry extends LinkedListEntry<_ListenerEntry> {
-  _ListenerEntry(this.listener);
-  final VoidCallback listener;
+class BaseListener<T> {
+  final void Function(T) listener;
+  BaseListener(this.listener);
 }
 
-abstract class BaseController<T> implements Listenable {
-  LinkedList<_ListenerEntry> _listeners = LinkedList<_ListenerEntry>();
-
+abstract class BaseController<T> {
   bool _disposed = false, _initialized = false;
+
+  List<BaseListener<T>> _listeners = [];
   bool get disposed => _disposed;
   bool get initialized => _initialized;
 
-  T _data;
-  T get data => _data;
-
-  bool _debugAssertNotDisposed() {
-    assert(() {
-      if (_disposed) {
-        throw FlutterError('A $runtimeType was used after being disposed.');
-      }
-      return true;
-    }());
-    return true;
+  void addListener(BaseListener listener) {
+    _listeners.add(listener);
   }
 
-  @override
-  void addListener(VoidCallback listener) {
-    assert(_debugAssertNotDisposed());
-    _listeners.add(_ListenerEntry(listener));
-  }
-
-  bool get hasListeners {
-    assert(_debugAssertNotDisposed());
-    return _listeners.isNotEmpty;
-  }
-
-  @override
-  void removeListener(VoidCallback listener) {
-    assert(_debugAssertNotDisposed());
-    for (final _ListenerEntry entry in _listeners) {
-      if (entry.listener == listener) {
-        entry.unlink();
-        return;
-      }
-    }
+  void removeListener(BaseListener listener) {
+    _listeners.remove(listener);
   }
 
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void notify([T data]) {
-    try {
-      if (!_disposed) {
-        _data = data;
-        for (final _ListenerEntry entry in _listeners) {
-          if (entry.list != null) {
-            entry.listener();
-            return;
-          }
-        }
-      }
-    } catch (e, s) {
-      print(e);
-      print(s);
+    if (!_disposed) {
+      _listeners.forEach((e) {
+        e.listener(data);
+      });
     }
   }
 

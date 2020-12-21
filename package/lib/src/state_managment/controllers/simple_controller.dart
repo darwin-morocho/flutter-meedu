@@ -15,7 +15,10 @@ abstract class SimpleController extends BaseController<List<String>> {
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
   @override
-  void onInit() {}
+  @mustCallSuper
+  void onInit() {
+    super.onInit();
+  }
 
   /// when the MeeduBuilder was mounted
   @override

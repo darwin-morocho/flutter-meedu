@@ -9,7 +9,7 @@ import 'package:meedu_example/modules/home/home_controller.dart';
 class RxExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider(
+    return Provider<RxController>(
       controller: RxController(),
       child: SimpleBuilder<RxController>(
         allowRebuild: false,
@@ -25,6 +25,7 @@ class RxExample extends StatelessWidget {
                   builder: (ctx) => Text("-> ${_.time.value}"),
                 ),
                 SimpleBuilder<RxController>(
+                  allowRebuild: false,
                   builder: (_) => TextButton(
                     onPressed: _.onToggle,
                     child: Text(!_.running ? "START" : "STOP"),
@@ -64,10 +65,9 @@ class RxController extends SimpleController {
   @override
   void onInit() {
     super.onInit();
-    print("jajajaj");
+
     final HomeController homeController = Get.i.find<HomeController>();
-    final int homeCounter = homeController.counter;
-    print("homeCunter $homeCounter");
+    // print("HomeController ${homeController.hashCode}");
     homeController.incremment();
   }
 

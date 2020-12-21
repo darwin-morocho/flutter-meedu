@@ -27,6 +27,8 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
   @override
   Widget buildWithChild(BuildContext context, Widget child) {
     // use the InheritedProvider to inject the controller and catch the life cycle widget
+    print("🥶 initialized ${controller.runtimeType}");
+
     return p.InheritedProvider<T>(
       create: (_) {
         Get.i.put<T>(this.controller, tag: this.tag);
@@ -40,15 +42,16 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
       },
       updateShouldNotify: (_, __) => false,
       startListening: (e, controller) {
-        print("🥶 oninit ${controller.hashCode}");
-        if (controller.initialized) return () {};
-        controller.onInit();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          // if the controller is not disposed
-          if (!controller.disposed) {
-            controller.afterFirstLayout();
-          }
-        });
+        if (!controller.initialized) {
+          controller.onInit();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            // if the controller is not disposed
+            if (!controller.disposed) {
+              controller.afterFirstLayout();
+            }
+          });
+        }
+
         return () {};
       },
     );
