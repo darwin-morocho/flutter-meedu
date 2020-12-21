@@ -16,3 +16,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   equatable: ^1.2.5
+  get: ^3.23.1
+
+  
