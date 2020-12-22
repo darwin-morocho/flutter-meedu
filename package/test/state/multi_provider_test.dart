@@ -27,6 +27,11 @@ void main() {
     await test.tap(find.text("add"));
     await test.pump();
     expect(find.text("counter 1"), findsOneWidget);
+
+    await test.tap(find.text("update user"));
+    await test.pump();
+    expect(find.text("12345"), findsOneWidget);
+    expect(find.text("meedu"), findsOneWidget);
   });
 }
 
