@@ -2,7 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/state.dart' show SimpleController, BaseListener;
 import 'base_builder.dart';
 
-class SimpleBuilder<T extends SimpleController> extends BaseBuilder<T, List<String>> {
+class SimpleBuilder<T extends SimpleController>
+    extends BaseBuilder<T, List<String>> {
   /// When you force rerender using the update() method you can only update certains [MeeduBuilder]
   /// using update(["your_id","other_id"]) so if you want update this [MeeduBuilder] you sould use one id like
   /// "your_id" or "other_id"
@@ -31,7 +32,8 @@ class SimpleBuilder<T extends SimpleController> extends BaseBuilder<T, List<Stri
   _SimpleBuilderState createState() => _SimpleBuilderState<T>();
 }
 
-class _SimpleBuilderState<T extends SimpleController> extends BaseBuilderState<T, List<String>> {
+class _SimpleBuilderState<T extends SimpleController>
+    extends BaseBuilderState<T, List<String>> {
   /// listener for update events
   BaseListener<List<String>> _listener;
 

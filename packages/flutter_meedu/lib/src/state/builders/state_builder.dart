@@ -29,7 +29,8 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   _StateBuilderState createState() => _StateBuilderState<T, S>();
 }
 
-class _StateBuilderState<T extends StateController<S>, S> extends BaseBuilderState<T, S> {
+class _StateBuilderState<T extends StateController<S>, S>
+    extends BaseBuilderState<T, S> {
   /// save the previous state
   S _oldState;
 

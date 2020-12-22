@@ -7,7 +7,8 @@ class MeeduNavigator {
   static final MeeduNavigator _instance = MeeduNavigator._internal();
   static MeeduNavigator get instance => _instance;
 
-  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
   Transition transition = Transition.material;
   Duration transitionDuration = const Duration(milliseconds: 300);
 }

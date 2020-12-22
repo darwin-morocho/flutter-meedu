@@ -25,7 +25,7 @@ void main() {
       controller.onDispose();
       expect(() {
         controller.update([]);
-      }, throwsFlutterError);
+      }, throwsAssertionError);
     });
     testWidgets("MeeduController counter", (test) async {
       final incrementButtonKey = Key('incrementButtonKey');

@@ -1,3 +1,6 @@
+## [0.5.0]
+- Create 2 packages meedu and flutter_meedu.
+
 ## [0.4.2+1]
 - Fixed provider afterFirstlayout.
 ## [0.4.2]

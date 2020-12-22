@@ -6,7 +6,7 @@
 </p>
 
 # meedu
-A simple State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
+A simple State Managment, Dependency Injection, Reactive programming for Dart projects.
 
 ## Overview
 
@@ -14,8 +14,6 @@ This project was inspired by GetX, we could say that this is a Lite version of G
 ## Features
 
 - A Simple State Managment
-- LifeCycle included into controllers
-- Navigate without BuildContext
 - Simple dependecy injection
 - Reactive programming
 

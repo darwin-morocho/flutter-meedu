@@ -23,7 +23,7 @@ Now in your page or widget you need define a `Provider` and pass to it a new ins
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:meedu/state.dart';
+import 'package:flutter_meedu/flutter_meedu.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
