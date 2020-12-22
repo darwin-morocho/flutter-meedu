@@ -3,7 +3,7 @@ To navigate between page without a BuildContext you can use the meedu's router m
 In your `MaterialApp`
 
 ```dart
-import 'package:meedu/router.dart' as router;
+import 'package:flutter_meedu/router.dart' as router;
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 Now since your pages you can navigate without BuildContext
 
 ```dart
-import 'package:meedu/router.dart' as router;
+import 'package:flutter_meedu/router.dart' as router;
 .
 .
 .
@@ -31,7 +31,7 @@ If you want get your arguments
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:meedu/router.dart' as router;
+import 'package:flutter_meedu/router.dart' as router;
 
 class DetailPage extends StatelessWidget {
   const DetailPage({Key key}) : super(key: key);

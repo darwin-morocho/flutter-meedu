@@ -15,7 +15,7 @@ Don't forget to call `close()` method when your widget or controller is destroye
 Now you can use the `RxBuilder` widget to listen changes in your observables
 
 ```dart
-import 'package:meedu/rx.dart';
+import 'package:flutter_meedu/rx.dart';
 .
 .
 .
