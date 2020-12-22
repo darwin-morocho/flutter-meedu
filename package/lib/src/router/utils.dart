@@ -14,6 +14,7 @@ Route getRoute(
   Transition transition,
   Duration transitionDuration,
 }) {
+  assert(page != null);
   final name = "/${page.runtimeType.toString()}";
   final settings = RouteSettings(
     name: name,
@@ -21,8 +22,7 @@ Route getRoute(
   );
 
   final _transition = transition ?? MeeduNavigator.instance.transition;
-  final _transitionDuration =
-      transitionDuration ?? MeeduNavigator.instance.transitionDuration;
+  final _transitionDuration = transitionDuration ?? MeeduNavigator.instance.transitionDuration;
 
   switch (_transition) {
     case Transition.material:
@@ -45,9 +45,7 @@ Route getRoute(
         page,
         settings: settings,
         maintainState: maintainState,
-        transitionDuration: _transition == Transition.none
-            ? Duration.zero
-            : _transitionDuration,
+        transitionDuration: _transition == Transition.none ? Duration.zero : _transitionDuration,
         fullscreenDialog: fullscreenDialog,
         transition: _transition,
         backGestureEnabled: backGestureEnabled,

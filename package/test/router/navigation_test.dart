@@ -3,29 +3,42 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:meedu/router.dart' as router;
 
 void main() {
-  testWidgets('normal navigation', (test) async {
-    router.setDefaultTransition(router.Transition.material, duration: Duration(milliseconds: 100));
-    await test.pumpWidget(
-      MaterialApp(
-        navigatorKey: router.navigatorKey,
-        home: HomePage(),
-        routes: {
-          'detail': (_) => DetailPage(),
-        },
-      ),
-    );
-    expect(router.canPop(), false);
-    await test.tap(find.text("pushNamed"));
-    await test.pumpAndSettle();
-    expect(find.text("meedu"), findsOneWidget);
-    expect(router.canPop(), true);
-    await test.tap(find.text("back"));
-    await test.pumpAndSettle();
-    expect(find.text("meedu"), findsNothing);
-    await test.tap(find.text("pushReplacement"));
-    await test.pumpAndSettle();
-    expect(find.text("meedu"), findsOneWidget);
-    expect(router.canPop(), false);
+  group('navigation', () {
+    test("getRoute page != null", () {
+      expect(() {
+        router.getRoute(null);
+      }, throwsAssertionError);
+    });
+    test("transition != null", () {
+      expect(() {
+        router.setDefaultTransition(null);
+      }, throwsAssertionError);
+    });
+
+    testWidgets('normal navigation', (test) async {
+      router.setDefaultTransition(router.Transition.material, duration: Duration(milliseconds: 100));
+      await test.pumpWidget(
+        MaterialApp(
+          navigatorKey: router.navigatorKey,
+          home: HomePage(),
+          routes: {
+            'detail': (_) => DetailPage(),
+          },
+        ),
+      );
+      expect(router.canPop(), false);
+      await test.tap(find.text("pushNamed"));
+      await test.pumpAndSettle();
+      expect(find.text("meedu"), findsOneWidget);
+      expect(router.canPop(), true);
+      await test.tap(find.text("back"));
+      await test.pumpAndSettle();
+      expect(find.text("meedu"), findsNothing);
+      await test.tap(find.text("pushReplacement"));
+      await test.pumpAndSettle();
+      expect(find.text("meedu"), findsOneWidget);
+      expect(router.canPop(), false);
+    });
   });
 }
 

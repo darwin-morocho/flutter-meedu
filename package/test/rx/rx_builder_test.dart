@@ -67,37 +67,47 @@ class _ClockState extends State<Clock> {
 }
 
 void main() {
-  testWidgets(
-    'RxBuilder counter test',
-    (test) async {
-      final counter = 0.obs;
-      await test.pumpWidget(
-        MaterialApp(
-          home: Clock(
-            counter: counter,
-            enabled: true.obs,
+  group('RxBuilder', () {
+    test("assert(builder != null)", () {
+      expect(() {
+        RxBuilder(
+          builder: null,
+          observables: [],
+        );
+      }, throwsAssertionError);
+    });
+    testWidgets(
+      'RxBuilder counter test',
+      (test) async {
+        final counter = 0.obs;
+        await test.pumpWidget(
+          MaterialApp(
+            home: Clock(
+              counter: counter,
+              enabled: true.obs,
+            ),
           ),
-        ),
-      );
+        );
 
-      expect(find.text("hi"), findsOneWidget);
-      expect(find.text("0"), findsOneWidget);
-      await test.tap(find.text("Add"));
-      print("value ${counter.value}");
-      await test.pump();
-      expect(find.text("1"), findsOneWidget);
-      await test.tap(find.text("switch"));
-      await test.pump();
-      expect(find.text("hi"), findsNothing);
-      await test.tap(find.text("switch"));
-      await test.pump();
-      expect(find.text("hi"), findsOneWidget);
-      expect(find.text("1"), findsOneWidget);
-      await test.tap(find.text("Add"));
-      print("value ${counter.value}");
-      await test.pump();
-      expect(find.text("2"), findsOneWidget);
-      await test.pump();
-    },
-  );
+        expect(find.text("hi"), findsOneWidget);
+        expect(find.text("0"), findsOneWidget);
+        await test.tap(find.text("Add"));
+        print("value ${counter.value}");
+        await test.pump();
+        expect(find.text("1"), findsOneWidget);
+        await test.tap(find.text("switch"));
+        await test.pump();
+        expect(find.text("hi"), findsNothing);
+        await test.tap(find.text("switch"));
+        await test.pump();
+        expect(find.text("hi"), findsOneWidget);
+        expect(find.text("1"), findsOneWidget);
+        await test.tap(find.text("Add"));
+        print("value ${counter.value}");
+        await test.pump();
+        expect(find.text("2"), findsOneWidget);
+        await test.pump();
+      },
+    );
+  });
 }

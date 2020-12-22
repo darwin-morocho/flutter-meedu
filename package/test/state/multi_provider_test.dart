@@ -4,34 +4,48 @@ import 'package:meedu/meedu.dart';
 import 'package:meedu/state.dart';
 
 void main() {
-  testWidgets('MultiProvider Test', (test) async {
-    await test.pumpWidget(
-      MultiProvider(
-        providers: [
-          Provider<UserController>(
-            create: (_) => UserController(
-              User(id: -1, email: '', username: ''),
+  group('Multiprovider', () {
+    test("assert(child != null && providers != null)", () {
+      expect(() {
+        MultiProvider(child: null, providers: null);
+      }, throwsAssertionError);
+    });
+
+    test("assert(child != null)", () {
+      expect(() {
+        MultiProvider(child: null, providers: []);
+      }, throwsAssertionError);
+    });
+
+    testWidgets('MultiProvider Test', (test) async {
+      await test.pumpWidget(
+        MultiProvider(
+          providers: [
+            Provider<UserController>(
+              create: (_) => UserController(
+                User(id: -1, email: '', username: ''),
+              ),
             ),
+            Provider<CounterController>(create: (_) => CounterController()),
+          ],
+          child: MaterialApp(
+            home: HomePage(),
           ),
-          Provider<CounterController>(create: (_) => CounterController()),
-        ],
-        child: MaterialApp(
-          home: HomePage(),
         ),
-      ),
-    );
-    expect(find.text("counter 0"), findsOneWidget);
-    expect(find.text("-1"), findsOneWidget);
-    expect(find.text(""), findsWidgets);
+      );
+      expect(find.text("counter 0"), findsOneWidget);
+      expect(find.text("-1"), findsOneWidget);
+      expect(find.text(""), findsWidgets);
 
-    await test.tap(find.text("add"));
-    await test.pump();
-    expect(find.text("counter 1"), findsOneWidget);
+      await test.tap(find.text("add"));
+      await test.pump();
+      expect(find.text("counter 1"), findsOneWidget);
 
-    await test.tap(find.text("update user"));
-    await test.pump();
-    expect(find.text("12345"), findsOneWidget);
-    expect(find.text("meedu"), findsOneWidget);
+      await test.tap(find.text("update user"));
+      await test.pump();
+      expect(find.text("12345"), findsOneWidget);
+      expect(find.text("meedu"), findsOneWidget);
+    });
   });
 }
 
