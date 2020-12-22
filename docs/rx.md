@@ -10,7 +10,7 @@ void increment() {
     counter.value++;
 }
 ```
-Don't forget to call `close()` method when your widget or controller is detroyed.
+Don't forget to call `close()` method when your widget or controller is destroyed.
 
 Now you can use the `RxBuilder` widget to listen changes in your observables
 
