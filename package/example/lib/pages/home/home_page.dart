@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meedu/state.dart';
 import 'package:meedu/router.dart' as router;
-import 'package:meedu_example/modules/login/login_page.dart';
-import 'package:meedu_example/modules/rx_example.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -29,7 +27,10 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
+                CounterDetail(),
+                SizedBox(height: 20),
                 FlatButton(
+                  color: Colors.redAccent,
                   onPressed: () {
                     router.pushNamed(
                       '/login',
@@ -45,12 +46,34 @@ class HomePage extends StatelessWidget {
           allowRebuild: false,
           builder: (_) => FloatingActionButton(
             onPressed: () {
-              _.incremment();
+              _.increment();
             },
             child: Icon(Icons.add),
           ),
         ),
       ),
+    );
+  }
+}
+
+class CounterDetail extends SimpleWidget<HomeController> {
+  final String id = 'counter'; //  to allow rebuilds when the update(['counter']) method is called
+
+  void onPressed() {
+    controller.increment();
+  }
+
+  @override
+  Widget buildChild(BuildContext context, HomeController controller) {
+    return Column(
+      children: [
+        Text("${controller.counter}"),
+        FlatButton(
+          color: Colors.grey,
+          onPressed: onPressed,
+          child: Text("add value to counter"),
+        ),
+      ],
     );
   }
 }

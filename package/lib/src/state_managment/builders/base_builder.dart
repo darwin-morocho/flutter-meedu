@@ -22,6 +22,7 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
 
   /// callback when didUpdateWidget is called
   final void Function(BaseBuilder<T, S> oldWidget) didUpdateWidget;
+
   const BaseBuilder({
     Key key,
     @required this.builder,

@@ -30,7 +30,13 @@ void main() {
     await test.tap(find.text("set invalid value"));
     await test.pump();
     expect(find.text("test@test.com"), findsOneWidget);
+    expect(find.text("Email: test@test.com"), findsOneWidget);
     // end onStateWillChange
+
+    await test.tap(find.text("reset"));
+    await test.pump();
+    expect(find.text("test"), findsNothing);
+    expect(find.text("test@test.com"), findsNothing);
 
     await test.tap(find.text("back"));
     await test.pumpAndSettle();
@@ -98,10 +104,37 @@ class LoginPage extends StatelessWidget {
                 buildWhen: (prev, current) => prev.password != current.password,
                 builder: (_) => Text(_.state.password),
               ),
+              LoginDetail(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class LoginDetail extends StateWidget<LoginController, LoginState> {
+  void reset() {
+    this.controller.update(
+          state.copyWith(email: '@', password: ''),
+        );
+  }
+
+  @override
+  Widget buildChild(BuildContext context, LoginController controller) {
+    final email = controller.state.email;
+    final password = controller.state.password;
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        Text(":::StateWidget:::"),
+        Text("Email: $email"),
+        Text("Password: $password"),
+        FlatButton(
+          onPressed: this.reset,
+          child: Text("reset"),
+        ),
+      ],
     );
   }
 }

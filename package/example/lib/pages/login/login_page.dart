@@ -39,13 +39,30 @@ class LoginPage extends StatelessWidget {
                   StateBuilder<LoginController, LoginState>(
                     buildWhen: (oldState, newState) => oldState.password != newState.password,
                     builder: (_) => Text("password is ${_.state.password}"),
-                  )
+                  ),
+                  LoginDetail(),
                 ],
               );
             },
           ),
         ),
       ),
+    );
+  }
+}
+
+class LoginDetail extends StateWidget<LoginController, LoginState> {
+  @override
+  Widget buildChild(BuildContext context, LoginController controller) {
+    final email = controller.state.email;
+    final password = controller.state.password;
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        Text(":::StateWidget:::"),
+        Text("Email: $email"),
+        Text("Password: $password"),
+      ],
     );
   }
 }

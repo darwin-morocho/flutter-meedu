@@ -13,7 +13,7 @@ abstract class BaseController<T> {
   List<BaseListener<T>> _listeners = [];
 
   /// Tell us if the controller was disposed
-  bool get disposed => _listeners != null;
+  bool get disposed => _listeners == null;
 
   /// check if the controller is mounted
   bool get _debugAssertNotDisposed {

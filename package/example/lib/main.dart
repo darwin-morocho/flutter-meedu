@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meedu/router.dart' as router;
-import 'package:meedu_example/modules/login/login_page.dart';
-import 'modules/home/home_page.dart';
+
+import 'pages/home/home_page.dart';
+import 'pages/login/login_page.dart';
 
 void main() {
   router.setDefaultTransition(router.Transition.upToDown);

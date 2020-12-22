@@ -12,7 +12,7 @@ class HomeController extends SimpleController {
     print("afterFirstLayout");
   }
 
-  void incremment() {
+  void increment() {
     counter++;
     update(['counter']);
   }

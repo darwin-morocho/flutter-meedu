@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meedu_example/modules/login/login_state.dart';
+
+import 'login_state.dart';
 
 class GetXExample extends StatelessWidget {
   const GetXExample({Key key}) : super(key: key);

@@ -1,3 +1,5 @@
+## [0.4.2+1]
+- Fixed provider afterFirstlayout.
 ## [0.4.2]
 - Added MultiProvider.
 
