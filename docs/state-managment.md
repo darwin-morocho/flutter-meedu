@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<HomeController>(
-      controller: HomeController(),
+      create:(_)=> HomeController(),
       child: Scaffold(
         body:  SimpleBuilder<HomeController>(
           builder: (controller) => Text("${controller.counter}"),
@@ -146,7 +146,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<LoginController>(
-      controller: LoginController(),
+      create:(_) => LoginController(),
       child: Scaffold(
         appBar: AppBar(),
         body: Container(

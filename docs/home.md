@@ -26,7 +26,7 @@ This project was inspired by GetX, we could say that this is a Lite version of G
 Add the following to your pubspec.yaml
 ```yaml
 dependencies:
-  meedu: ^0.4.1+2
+  meedu: ^0.4.2
 ```
 
 Now you're ready to use **flutter_meedu**

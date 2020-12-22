@@ -1,3 +1,6 @@
+## [0.4.2]
+- Added MultiProvider.
+
 ## [0.4.1+2]
 - Animate transition to named route.
 ## [0.4.1+1]

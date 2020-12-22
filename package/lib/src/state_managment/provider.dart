@@ -4,24 +4,26 @@ import 'package:meedu/src/state_managment/controllers/base_controller.dart';
 import 'package:provider/provider.dart' as p;
 import 'package:provider/single_child_widget.dart';
 
-/// classs to inject a controller into the widgets tree
+/// class to inject a controller into the widgets tree
 ///
-/// By defaul the [MeeduProvider] injects the controller using [Get.i.put] and remove it when the provider is destroyed
+/// By defaul the [Provider] injects the controller using [Get.i.put] and remove it when the provider is destroyed
 class Provider<T extends BaseController> extends SingleChildStatelessWidget {
-  /// instance that extends of MeeduController
-  final T controller;
+  /// function that is responsible for
+  /// creating the [SimpleController] or [StateController] and a child which will have access
+  /// to the instance via `Provider.of<...>(context)`.
+  final T Function(BuildContext context) create;
 
   /// (must be unique, don't use list's index) use this when you have in the same page or widget
-  /// mutiples [MeeduProvider] that uses controller of the same class for example in lists that you want each item has
+  /// mutiples [Provider] that uses controller of the same class for example in lists that you want each item has
   /// its own controller
   final String tag;
 
   Provider({
     Key key,
-    @required this.controller,
+    @required this.create,
     this.tag,
-    @required Widget child,
-  })  : assert(controller != null && child != null),
+    Widget child,
+  })  : assert(create != null),
         super(key: key, child: child);
 
   @override
@@ -29,8 +31,9 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
     // use the InheritedProvider to inject the controller and catch the life cycle widget
     return p.InheritedProvider<T>(
       create: (_) {
-        Get.i.put<T>(this.controller, tag: this.tag);
-        return this.controller;
+        final T controller = this.create(_);
+        Get.i.put<T>(controller, tag: this.tag);
+        return controller;
       },
       child: child,
       lazy: false,
@@ -52,7 +55,7 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
     );
   }
 
-  /// Search one instance of MeeduController using the context
+  /// Search one instance of [BaseController] using the context
   static T of<T extends BaseController>(BuildContext context) {
     return p.Provider.of<T>(context, listen: false);
   }

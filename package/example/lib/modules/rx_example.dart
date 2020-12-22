@@ -10,7 +10,7 @@ class RxExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<RxController>(
-      controller: RxController(),
+      create: (_) => RxController(),
       child: Builder(builder: (__) {
         final RxController _ = Get.i.find<RxController>();
         return Scaffold(

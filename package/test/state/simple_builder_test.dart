@@ -12,7 +12,7 @@ void main() {
     await test.pumpWidget(
       MaterialApp(
         home: Provider<Controller>(
-          controller: Controller(),
+          create: (_) => Controller(),
           child: Scaffold(
             body: Center(
               child: Column(

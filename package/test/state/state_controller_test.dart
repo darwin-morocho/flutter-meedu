@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
         ),
       ),
       body: Provider<LoginController>(
-        controller: LoginController(),
+        create: (_) => LoginController(),
         child: Builder(
           builder: (context) => Column(
             children: [

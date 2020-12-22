@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<HomeController>(
-      controller: HomeController(),
+      create: (_) => HomeController(),
       child: Scaffold(
         body: SafeArea(
           child: Container(

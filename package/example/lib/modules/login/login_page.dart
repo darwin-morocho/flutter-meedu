@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<LoginController>(
-      controller: LoginController(),
+      create: (_) => LoginController(),
       child: Scaffold(
         appBar: AppBar(),
         body: Container(
