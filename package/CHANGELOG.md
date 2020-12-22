@@ -1,3 +1,5 @@
+## [0.4.1+2]
+- Animate transition to named route.
 ## [0.4.1+1]
 - Updated code documentation.
 

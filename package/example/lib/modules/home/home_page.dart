@@ -31,10 +31,8 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 FlatButton(
                   onPressed: () {
-                    router.push(
-                      RxExample(),
-                      transition: router.Transition.zoom,
-                      backGestureEnabled: true,
+                    router.pushNamed(
+                      '/login',
                     );
                   },
                   child: Text("StateController example"),
