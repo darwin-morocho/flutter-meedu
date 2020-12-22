@@ -11,7 +11,7 @@ class MultiProvider extends p.MultiProvider {
     Key key,
     @required Widget child,
     @required List<Provider> providers,
-  })  : assert(child != null),
+  })  : assert(child != null && providers != null),
         super(
           key: key,
           child: child,
