@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
+import 'package:meedu/meedu.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {

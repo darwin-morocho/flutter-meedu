@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key;
 import 'package:meedu/state.dart' show SimpleController, BaseListener;
 import 'base_builder.dart';
 
@@ -10,7 +10,7 @@ class SimpleBuilder<T extends SimpleController> extends BaseBuilder<T, List<Stri
 
   SimpleBuilder({
     Key key,
-    @required BaseWidgetBuilder<T> builder,
+    @required Widget Function(T) builder,
     this.id,
     VoidCallback initState,
     VoidCallback didChangeDependencies,
@@ -39,7 +39,7 @@ class _SimpleBuilderState<T extends SimpleController> extends BaseBuilderState<T
   void subscribe() {
     // listen the update events
     _listener = BaseListener<List<String>>(
-      (listeners) {
+      (listeners) async {
         if (listeners.isNotEmpty) {
           // if the update method was called with ids
           // if the current MeeduBuilder id is inside the listeners

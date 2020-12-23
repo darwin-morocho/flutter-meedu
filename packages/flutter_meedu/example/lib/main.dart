@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
+import 'package:meedu_example/pages/rx/search_page.dart';
+import 'package:meedu_example/pages/rx_example.dart';
 import 'pages/home/home_page.dart';
 import 'pages/login/login_page.dart';
 
@@ -19,13 +21,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: SearchPage(),
       onGenerateRoute: (RouteSettings settings) {
         Widget page;
 
         switch (settings.name) {
           case "/login":
-            page = LoginPage();
+            page = RxExample();
             break;
 
           default:

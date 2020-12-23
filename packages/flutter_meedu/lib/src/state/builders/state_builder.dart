@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key;
 import 'package:meedu/state.dart' show StateController, BaseListener;
 import 'base_builder.dart';
 
@@ -9,7 +9,7 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   const StateBuilder({
     Key key,
     this.buildWhen,
-    @required BaseWidgetBuilder<T> builder,
+    @required Widget Function(T) builder,
     VoidCallback initState,
     VoidCallback didChangeDependencies,
     void Function(StateBuilder<T, S> oldWidget) didUpdateWidget,

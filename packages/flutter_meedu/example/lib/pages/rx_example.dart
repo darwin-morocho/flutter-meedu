@@ -61,24 +61,14 @@ class RxController extends SimpleController {
         }
       });
     }
+
     update();
-  }
-
-  @override
-  void onInit() {
-    // final HomeController homeController = Get.i.find<HomeController>();
-    // homeController.incremment();
-  }
-
-  @override
-  void afterFirstLayout() {
-    final HomeController homeController = Get.i.find<HomeController>();
-    homeController.increment();
   }
 
   @override
   Future<void> onDispose() {
     timer?.cancel();
+    time.close();
     return super.onDispose();
   }
 }

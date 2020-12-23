@@ -11,7 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^4.3.2+2
-  meedu: ^0.5.0
+  # meedu: ^0.5.0
+  meedu:
+    path: ../meedu
 
 
 dev_dependencies:
