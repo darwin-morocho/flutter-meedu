@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter_test/flutter_test.dart';
 import 'package:meedu/meedu.dart';
+import 'package:test/test.dart';
 
 const times = 50;
 void main() {
@@ -10,7 +10,7 @@ void main() {
     final c = Controller();
     expect(() {
       c.update(null);
-    }, throwsAssertionError);
+    }, throwsA(isA<AssertionError>()));
     int value = c.counter;
     expect(value, 0);
     c.onInit();
@@ -33,7 +33,7 @@ void main() {
     expect(c.disposed, true);
     expect(() {
       c.update();
-    }, throwsAssertionError);
+    }, throwsA(isA<AssertionError>()));
   });
 }
 

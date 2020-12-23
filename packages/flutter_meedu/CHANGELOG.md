@@ -1,3 +1,5 @@
+## [1.0.2]
+ - Added SimpleWidget and StateWidget.
 ## [1.0.1]
  - Added screen utils.
 

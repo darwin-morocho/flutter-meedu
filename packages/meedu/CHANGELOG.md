@@ -1,3 +1,5 @@
+## [0.5.1]
+- Added screen utils and Rx workers.
 ## [0.5.0]
 - Create 2 packages meedu and flutter_meedu.
 

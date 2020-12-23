@@ -1,9 +1,18 @@
 import 'package:meedu/state.dart' show BaseController;
 import 'package:provider/provider.dart';
-import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key, StatefulWidget, State, BuildContext;
+import 'package:flutter/widgets.dart'
+    show
+        Widget,
+        VoidCallback,
+        required,
+        Key,
+        StatefulWidget,
+        State,
+        BuildContext;
 
 /// this widget define the basic Builder properties and render logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidget {
+abstract class BaseBuilder<T extends BaseController<S>, S>
+    extends StatefulWidget {
   /// the builder function that render the widget when the controller notify changes
   final Widget Function(T) builder;
 
@@ -38,7 +47,8 @@ abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidge
 }
 
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<BaseBuilder<T, S>> {
+abstract class BaseBuilderState<T extends BaseController<S>, S>
+    extends State<BaseBuilder<T, S>> {
   bool _initialized = false;
 
   T _controller;

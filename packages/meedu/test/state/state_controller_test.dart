@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:meedu/meedu.dart';
 import 'package:meta/meta.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('StateController', () async {
@@ -29,7 +29,7 @@ void main() {
     expect(c.disposed, true);
     expect(() {
       c.onEmailChanged("test@test.com");
-    }, throwsAssertionError);
+    }, throwsA(isA<AssertionError>()));
   });
 }
 
