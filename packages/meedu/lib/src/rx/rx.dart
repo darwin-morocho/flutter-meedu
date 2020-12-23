@@ -6,6 +6,7 @@ class Rx<T> {
   T get value => _value;
   StreamController<T> _controller = StreamController.broadcast();
   Stream<T> get stream => _controller.stream;
+  bool get hasListeners => _controller.hasListener;
 
   /// Constructor
   ///
