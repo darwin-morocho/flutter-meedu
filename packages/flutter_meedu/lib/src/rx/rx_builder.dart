@@ -8,7 +8,7 @@ class RxBuilder extends StatefulWidget {
   final List<Rx> observables;
 
   /// the builder function
-  final Widget Function(BuildContext context) builder;
+  final WidgetBuilder builder;
   RxBuilder({Key key, @required this.observables, @required this.builder})
       : assert(builder != null && observables != null),
         super(key: key);

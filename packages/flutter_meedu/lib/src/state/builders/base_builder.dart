@@ -2,23 +2,24 @@ import 'package:meedu/state.dart' show BaseController;
 import 'package:provider/provider.dart';
 import 'package:flutter/widgets.dart';
 
+typedef BaseWidgetBuilder<T> = Widget Function(T);
+
 /// this widget define the basic Builder properties and render logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilder<T extends BaseController<S>, S>
-    extends StatefulWidget {
+abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidget {
   /// the builder function that render the widget when the controller notify changes
-  final Widget Function(T) builder;
+  final BaseWidgetBuilder builder;
 
   /// use this if you don't want rebuild this widget when update() is called
   final bool allowRebuild;
 
   /// callback when initState is called
-  final void Function() initState;
+  final VoidCallback initState;
 
   /// callback when didChangeDependencies is called
-  final void Function() didChangeDependencies;
+  final VoidCallback didChangeDependencies;
 
   /// callback when dispose is called
-  final void Function() dispose;
+  final VoidCallback dispose;
 
   /// callback when didUpdateWidget is called
   final void Function(BaseBuilder<T, S> oldWidget) didUpdateWidget;
@@ -39,8 +40,7 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
 }
 
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilderState<T extends BaseController<S>, S>
-    extends State<BaseBuilder<T, S>> {
+abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<BaseBuilder<T, S>> {
   bool _initialized = false;
 
   T _controller;

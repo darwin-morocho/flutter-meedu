@@ -9,7 +9,7 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   const StateBuilder({
     Key key,
     this.buildWhen,
-    @required Widget Function(T) builder,
+    @required BaseWidgetBuilder<T> builder,
     VoidCallback initState,
     VoidCallback didChangeDependencies,
     void Function(StateBuilder<T, S> oldWidget) didUpdateWidget,
@@ -29,8 +29,7 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   _StateBuilderState createState() => _StateBuilderState<T, S>();
 }
 
-class _StateBuilderState<T extends StateController<S>, S>
-    extends BaseBuilderState<T, S> {
+class _StateBuilderState<T extends StateController<S>, S> extends BaseBuilderState<T, S> {
   /// save the previous state
   S _oldState;
 
