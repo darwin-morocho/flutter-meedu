@@ -5,7 +5,7 @@ extension RxExtensions<T> on Rx<T> {
   /// [callback] is called every time that the [Rx<T>] changes.
   ///
   /// If [condition] is not null the [callback] only is called if [condition] returns true.
-  RxUtil ever(void Function(T) callback, {bool Function(T) condition}) {
+  RxWorker ever(void Function(T) callback, {bool Function(T) condition}) {
     // ignore: cancel_subscriptions
     final StreamSubscription subscription = this.stream.listen((event) {
       if (condition != null) {
@@ -16,32 +16,32 @@ extension RxExtensions<T> on Rx<T> {
         callback(event);
       }
     });
-    return RxUtil(subscription, null);
+    return RxWorker(subscription, null);
   }
 
   /// the [callback] will be executed only 1 time
   ///
   /// If [condition] is not null the [callback] only is called if [condition] returns true.
-  RxUtil once(void Function(T) callback, {bool Function(T) condition}) {
-    RxUtil rxUtil;
+  RxWorker once(void Function(T) callback, {bool Function(T) condition}) {
+    RxWorker rxWorker;
     // ignore: cancel_subscriptions
     StreamSubscription subscription = this.stream.listen((event) {
       if (condition != null) {
         if (condition(event)) {
           callback(event);
-          rxUtil.dispose();
+          rxWorker.dispose();
         }
       } else {
         callback(event);
-        rxUtil.dispose();
+        rxWorker.dispose();
       }
     });
-    rxUtil = RxUtil(subscription, null);
-    return rxUtil;
+    rxWorker = RxWorker(subscription, null);
+    return rxWorker;
   }
 
   /// the [callback] will be called every certain time interval ignoring the other changes
-  RxUtil interval(Duration duration, void Function(T) callback) {
+  RxWorker interval(Duration duration, void Function(T) callback) {
     Debouncer debouncer = Debouncer(duration);
     // ignore: cancel_subscriptions
     final StreamSubscription subscription = this.stream.listen((event) {
@@ -52,11 +52,11 @@ extension RxExtensions<T> on Rx<T> {
         });
       }
     });
-    return RxUtil(subscription, debouncer);
+    return RxWorker(subscription, debouncer);
   }
 
   /// Every time that the [Rx<T>] changes the [callback] will be called after a delay.
-  RxUtil debounce(Duration delay, void Function(T) callback) {
+  RxWorker debounce(Duration delay, void Function(T) callback) {
     final Debouncer debouncer = Debouncer(delay);
     // ignore: cancel_subscriptions
     final StreamSubscription subscription = this.stream.listen((event) {
@@ -64,17 +64,17 @@ extension RxExtensions<T> on Rx<T> {
         callback(event);
       });
     });
-    return RxUtil(subscription, debouncer);
+    return RxWorker(subscription, debouncer);
   }
 }
 
 /// this class allow us to cancel schedules tasks and subscriptions
-class RxUtil {
+class RxWorker {
   final StreamSubscription _subscription;
   final Debouncer _debouncer;
   bool _disposed = false;
 
-  RxUtil(this._subscription, this._debouncer);
+  RxWorker(this._subscription, this._debouncer);
 
   Future<void> dispose() async {
     if (_disposed) return;
