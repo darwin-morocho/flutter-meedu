@@ -217,6 +217,8 @@ class HomeController extends SimpleController {
 }
 ```
 
+Also the `Provider` widget allows you to listen the life cycle of this widget **(Not the life cycle of their controller)**, just define the optional callbacks **onInit, onAfterFirstLayout , onDispose**.
+
 ❌ **IMPORTANT**: You should never call an `update(...)` method inside the `onInit()` method even if the `update` method does not belong to the current controller.
 The `onInit` method is called when the the `Provider` widget is inserted into the **widget tree** but is not rendered yet. So you can use the `onAfterFirstLayout()` method to notify any change calling `update(...)`.
 
@@ -282,11 +284,12 @@ class LoginController extends StateController<LoginState> {
 
 ```
 
-
 ## MultiProvider
+
 If you want inject multiples providers at the same time without `boilerplate` just use the `MultiProvider` widget.
 
 Here a complete example
+
 ```dart
       MultiProvider(
         providers: [
@@ -386,5 +389,154 @@ class User {
   }
 
   Map toJson() => {"id": id, "email": email, "username": username};
+}
+```
+
+## ProviderPage
+
+The `ProviderPage` class allows you to create a StalessWidget with a `Provider` without define a `Provider` because the `ProviderPage` class already has a `Provider` widget inside.
+
+```dart
+/*
+SIMMILAR TO
+class HomePage extends StatelessWidget {
+  const HomePage({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider<HomeController>(
+      create:(_)=> HomeController(),
+      child: Scaffold(
+        body:  SimpleBuilder<HomeController>(
+          builder: (controller) => Text("${controller.counter}"),
+        ),
+        floatingActionButton: SimpleBuilder<HomeController>(
+          allowRebuild: false,
+          builder: (_) => FloatingActionButton(
+            onPressed: () {
+              _.incremment();
+            },
+            child: Icon(Icons.add),
+          ),
+        ),
+      ),
+    );
+  }
+}
+*/
+class HomePage extends ProviderPage<Controller> {
+  @override
+  Controller create(BuildContext context) {
+    // HERE YOU CAN GET A PAGE PARAMS OR INITIAL DATA FOR YOUR CONTROLLER
+    return Controller(10);
+  }
+
+  /// OPTIONAL
+  @override
+  void onInit(BuildContext context, Controller controller) {}
+
+  /// OPTIONAL
+  @override
+  void onAfterFirstLayout(BuildContext context, Controller controller) {}
+
+  /// OPTIONAL
+  @override
+  void onDispose(BuildContext context, Controller controller) {}
+
+  @override
+  Widget buildPage(BuildContext context, Controller controller) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SimpleBuilder<Controller>(
+              builder: (_) => Text("${controller.counter}"),
+            ),
+            SizedBox(height: 10),
+            FlatButton(
+              color: Colors.amber,
+              onPressed: () => pushReplacementNamed('/login'),
+              child: Text("GO TO LOGIN"),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: controller.increment,
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+class Controller extends SimpleController {
+  int counter;
+
+  Controller(this.counter);
+
+  void increment() {
+    counter++;
+    update();
+  }
+}
+```
+
+
+
+## SimpleWidget
+You can use a `SimpleBuilder` widget to listen changes in your `SimpleController` or maybe you want to use the `SimpleWidget`.
+
+You can access to you controller in any method inside your class.
+```dart
+class CounterDetail extends SimpleWidget<HomeController> {
+  final String id = 'counter'; //  to allow rebuilds when the update(['counter']) method is called
+
+  void onPressed() {
+    controller.increment();
+  }
+
+  @override
+  Widget buildChild(BuildContext context, HomeController controller) {
+    return Column(
+      children: [
+        Text("${controller.counter}"),
+        FlatButton(
+          color: Colors.grey,
+          onPressed: onPressed,
+          child: Text("add value to counter"),
+        ),
+      ],
+    );
+  }
+}
+```
+
+
+## StateWidget
+You can use a `StateBuilder` widget to listen changes in your `StateController` or maybe you want to use the `StateWidget`.
+
+You can access to you controller in any method inside your class.
+```dart
+class LoginDetail extends StateWidget<LoginController, LoginState> {
+  @override
+  Widget buildChild(BuildContext context, LoginController controller) {
+    final email = controller.state.email;
+    final password = controller.state.password;
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        Text(":::StateWidget:::"),
+        Text("Email: $email"),
+        Text("Password: $password"),
+      ],
+    );
+  }
 }
 ```

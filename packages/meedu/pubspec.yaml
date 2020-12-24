@@ -1,8 +1,8 @@
 name: meedu
 description: A simple State Managment, Dependency Injection, Reactive programming for dart Projects.
-version: 0.5.2
+version: 0.5.2+1
 homepage: https://github.com/darwin-morocho/flutter-meedu/tree/master/packages/meedu
-documentation: https://meedu.flutter.app
+documentation: https://flutter.meedu.app
 
 environment:
   sdk: ">=2.10.4 <3.0.0"

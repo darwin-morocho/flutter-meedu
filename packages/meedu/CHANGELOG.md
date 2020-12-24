@@ -1,3 +1,6 @@
+## [0.5.2+1]
+- Added documentation url.
+
 ## [0.5.2]
 - Improved BaseController.
 

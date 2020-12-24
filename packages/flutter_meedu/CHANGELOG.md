@@ -1,3 +1,6 @@
+## [1.0.3+1]
+- Added documentation url.
+
 ## [1.0.3]
  - Added ProviderPage.
 
