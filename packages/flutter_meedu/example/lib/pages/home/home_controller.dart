@@ -21,7 +21,7 @@ class HomeController extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
-    return super.onDispose();
+  void onDispose() {
+    super.onDispose();
   }
 }

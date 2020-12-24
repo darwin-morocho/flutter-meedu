@@ -46,7 +46,7 @@ abstract class StateController<S> extends BaseController<S> {
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper
-  Future<void> onDispose() async {
+  void onDispose() async {
     super.onDispose();
   }
 }

@@ -1,3 +1,6 @@
+## [1.0.3+2]
+- Updated meedu version.
+
 ## [1.0.3+1]
 - Added documentation url.
 

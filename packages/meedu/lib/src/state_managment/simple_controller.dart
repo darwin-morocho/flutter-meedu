@@ -21,7 +21,7 @@ abstract class SimpleController extends BaseController<List<String>> {
 
   /// use to listen when the controller was deleted from memory
   @mustCallSuper
-  Future<void> onDispose() async {
+  void onDispose() async {
     super.onDispose();
   }
 }

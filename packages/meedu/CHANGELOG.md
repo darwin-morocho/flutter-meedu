@@ -1,3 +1,7 @@
+## [0.5.2+2]
+- Removed Future<void> from onDispose().
+
+
 ## [0.5.2+1]
 - Added documentation url.
 

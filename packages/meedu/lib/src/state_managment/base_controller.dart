@@ -64,7 +64,7 @@ abstract class BaseController<T> {
   /// use to listen when the controller was deleted from memory
   /// use to listen when the controller was deleted from memory
   @mustCallSuper
-  Future<void> onDispose() async {
+  void onDispose() async {
     _debugAssertNotDisposed();
     _listeners.clear();
     _listeners = null;

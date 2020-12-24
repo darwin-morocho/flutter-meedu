@@ -53,8 +53,8 @@ class Controller extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     print("😜 onDispose");
-    return super.onDispose();
+    super.onDispose();
   }
 }

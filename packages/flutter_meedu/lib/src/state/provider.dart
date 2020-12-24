@@ -53,9 +53,8 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
       lazy: false,
       dispose: (context, controller) {
         Get.i.remove<T>(tag: this.tag);
-        controller.onDispose().then((_) {
-          if (this.onDispose != null) this.onDispose(context, controller);
-        });
+        controller.onDispose();
+        if (this.onDispose != null) this.onDispose(context, controller);
       },
       updateShouldNotify: (_, __) => false,
       startListening: (e, controller) {

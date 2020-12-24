@@ -65,9 +65,9 @@ class RxController extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     timer?.cancel();
     time.close();
-    return super.onDispose();
+    super.onDispose();
   }
 }

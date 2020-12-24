@@ -97,7 +97,7 @@ class SearchController extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     _text.close();
     _debounceWorker?.dispose();
     _everWorker?.dispose();
@@ -105,6 +105,6 @@ class SearchController extends SimpleController {
     _intervalWorker?.dispose();
     _onceWithOutConditionWorker?.dispose();
     _everWithOutConditionWorker?.dispose();
-    return super.onDispose();
+    super.onDispose();
   }
 }

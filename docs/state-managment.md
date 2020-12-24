@@ -210,9 +210,9 @@ class HomeController extends SimpleController {
 
   /// called when the controller is removed because the Provider widget was destroyed
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     // YOUR CODE HERE
-    return super.onDispose();
+    super.onDispose();
   }
 }
 ```
@@ -276,9 +276,9 @@ class LoginController extends StateController<LoginState> {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     print(":::: dispose login page");
-    return super.onDispose();
+    super.onDispose();
   }
 }
 

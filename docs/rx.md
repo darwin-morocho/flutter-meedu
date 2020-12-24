@@ -11,9 +11,9 @@ void increment() {
 }
 
 @override
-Future<void> onDispose(){
+void onDispose(){
  counter.close(); // close the stream controller
- return super.onDispose();
+  super.onDispose();
 }
 ```
 Don't forget to call `close()` method when your widget or controller is destroyed.
