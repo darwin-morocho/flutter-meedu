@@ -102,16 +102,14 @@ Future<void> meedu() {
   final controller = MyController();
 
   DateTime startTime = DateTime.now(), endTime;
-  controller.addListener(BaseListener<int>(
-    (value) {
-      if (times == value) {
-        endTime = DateTime.now();
-        final diff = endTime.difference(startTime).inMilliseconds;
-        print("""$value listeners notified | [MEEDU STATE CONTROLLER] time: ${diff}ms""");
-        completer.complete();
-      }
-    },
-  ));
+  controller.addListener((int value) {
+    if (times == value) {
+      endTime = DateTime.now();
+      final diff = endTime.difference(startTime).inMilliseconds;
+      print("""$value listeners notified | [MEEDU STATE CONTROLLER] time: ${diff}ms""");
+      completer.complete();
+    }
+  });
 
   for (var i = 1; i <= times; i++) {
     controller.notify(i);

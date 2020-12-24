@@ -1,19 +1,24 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:meta/meta.dart' show mustCallSuper;
 
+typedef ListenerCallback<T> = void Function(T);
+
 /// this class define the basic Listener for each SimpleController's subscriber or StateController's subscriber
-class BaseListener<T> {
-  final void Function(T) listener;
-  BaseListener(this.listener);
+class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
+  _ListenerEntry(this.listener);
+  final ListenerCallback<T> listener;
 }
 
 /// Define a base controller for SimpleController and StateController
 abstract class BaseController<T> {
   /// list to save the subscribers
-  List<BaseListener<T>> _listeners = [];
+  LinkedList<_ListenerEntry<T>> _listeners = LinkedList<_ListenerEntry<T>>();
 
   /// Tell us if the controller was disposed
   bool get disposed => _listeners == null;
+
+  bool get hasListeners => _listeners.isNotEmpty;
 
   /// check if the controller is mounted
   void _debugAssertNotDisposed() {
@@ -21,15 +26,20 @@ abstract class BaseController<T> {
   }
 
   /// add a new listener
-  void addListener(BaseListener listener) {
+  void addListener(ListenerCallback<T> listener) {
     _debugAssertNotDisposed();
-    _listeners.add(listener);
+    _listeners.add(_ListenerEntry<T>(listener));
   }
 
   /// remove a listener
-  void removeListener(BaseListener listener) {
+  void removeListener(ListenerCallback<T> listener) {
     _debugAssertNotDisposed();
-    _listeners.remove(listener);
+    for (final _ListenerEntry<T> entry in _listeners) {
+      if (entry.listener == listener) {
+        entry.unlink();
+        return;
+      }
+    }
   }
 
   /// notify to listeners and rebuild the widgets
@@ -37,16 +47,19 @@ abstract class BaseController<T> {
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void notify([T data]) {
     _debugAssertNotDisposed();
-    _listeners.forEach((e) {
-      e.listener(data);
-    });
+
+    if (_listeners.isNotEmpty) {
+      for (final _ListenerEntry<T> entry in _listeners) {
+        if (entry.list != null) entry.listener(data);
+      }
+    }
   }
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
   void onInit();
 
   /// when the MeeduBuilder was mounted
-  void afterFirstLayout();
+  void onAfterFirstLayout();
 
   /// use to listen when the controller was deleted from memory
   /// use to listen when the controller was deleted from memory

@@ -1,5 +1,8 @@
+## [0.5.2]
+- Improved BaseController.
+
 ## [0.5.1]
-- Added screen utils and Rx workers.
+- Added Rx workers.
 ## [0.5.0]
 - Create 2 packages meedu and flutter_meedu.
 

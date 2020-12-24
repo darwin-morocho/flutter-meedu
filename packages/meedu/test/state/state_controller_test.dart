@@ -12,11 +12,11 @@ void main() {
     String password = c.state.password;
     expect(email, '');
     c.onInit();
-    c.afterFirstLayout();
-    final subscribe = BaseListener<LoginState>((state) {
+    c.onAfterFirstLayout();
+    final subscribe = (LoginState state) {
       email = state.email;
       password = state.password;
-    });
+    };
     c.addListener(subscribe);
 
     c.onEmailChanged("test@test.com");

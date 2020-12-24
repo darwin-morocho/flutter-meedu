@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu/meedu.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
+  void onInit(BuildContext context, HomeController controller) {
+    print("HomePage provider OnInit");
+  }
+
+  void onAfterFirstLayout(BuildContext context, HomeController controller) {
+    print("HomePage provider onAfterFirstLayout");
+  }
+
+  void onDispose(BuildContext context, HomeController controller) {
+    print("HomePage provider onDispose");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Provider<HomeController>(
       create: (_) => HomeController(),
+      onInit: this.onInit,
+      onAfterFirstLayout: this.onAfterFirstLayout,
+      onDispose: this.onDispose,
       child: Scaffold(
         body: SafeArea(
           child: Container(
@@ -33,7 +47,7 @@ class HomePage extends StatelessWidget {
                 FlatButton(
                   color: Colors.redAccent,
                   onPressed: () {
-                    router.pushNamed(
+                    router.pushReplacementNamed(
                       '/login',
                     );
                   },

@@ -10,6 +10,8 @@ import 'package:flutter/widgets.dart'
         State,
         BuildContext;
 
+typedef ListenerCallback<T> = void Function(T);
+
 /// this widget define the basic Builder properties and render logic for [SimpleBuilder] and [StateBuilder]
 abstract class BaseBuilder<T extends BaseController<S>, S>
     extends StatefulWidget {

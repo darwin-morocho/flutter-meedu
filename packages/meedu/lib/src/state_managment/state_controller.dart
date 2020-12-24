@@ -41,7 +41,7 @@ abstract class StateController<S> extends BaseController<S> {
 
   /// when the MeeduBuilder was mounted
   @override
-  void afterFirstLayout() {}
+  void onAfterFirstLayout() {}
 
   /// use to listen when the controller was deleted from memory
   @override

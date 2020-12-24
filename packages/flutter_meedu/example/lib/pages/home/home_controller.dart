@@ -11,7 +11,7 @@ class HomeController extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     print("afterFirstLayout");
   }
 

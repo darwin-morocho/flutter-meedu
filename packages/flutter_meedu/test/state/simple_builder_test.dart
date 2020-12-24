@@ -37,6 +37,12 @@ void main() {
         MaterialApp(
           home: Provider<Controller>(
             create: (_) => Controller(),
+            onInit: (BuildContext context, Controller controller) {
+              print("Provider OnInit");
+            },
+            onAfterFirstLayout: (BuildContext context, Controller controller) {
+              print("Provider onAfterFirstLayout");
+            },
             child: Scaffold(
               body: Center(
                 child: Column(
@@ -112,7 +118,7 @@ class Controller extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     print("👉 afterFirstLayout SimpleController");
   }
 

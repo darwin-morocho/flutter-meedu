@@ -17,7 +17,7 @@ abstract class SimpleController extends BaseController<List<String>> {
 
   /// when the MeeduBuilder was mounted
   @override
-  void afterFirstLayout() {}
+  void onAfterFirstLayout() {}
 
   /// use to listen when the controller was deleted from memory
   @mustCallSuper

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key;
-import 'package:meedu/state.dart' show StateController, BaseListener;
+import 'package:meedu/state.dart' show StateController;
 import 'base_builder.dart';
 
 class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
@@ -35,7 +35,7 @@ class _StateBuilderState<T extends StateController<S>, S>
   S _oldState;
 
   /// listener for update events
-  BaseListener<S> _listener;
+  ListenerCallback<S> _listener;
 
   @override
   void initState() {
@@ -46,21 +46,19 @@ class _StateBuilderState<T extends StateController<S>, S>
   @override
   void subscribe() {
     // listen the update events
-    _listener = BaseListener<S>(
-      (S newState) {
-        final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
-        // if the buildWhen param is defined
-        if (buildWhen != null) {
-          /// check if the condition allows the rebuild
-          if (buildWhen(_oldState, newState)) {
-            setState(() {});
-          }
-        } else {
+    _listener = (S newState) {
+      final buildWhen = (widget as StateBuilder<T, S>).buildWhen;
+      // if the buildWhen param is defined
+      if (buildWhen != null) {
+        /// check if the condition allows the rebuild
+        if (buildWhen(_oldState, newState)) {
           setState(() {});
         }
-        _oldState = newState;
-      },
-    );
+      } else {
+        setState(() {});
+      }
+      _oldState = newState;
+    };
     this.controller.addListener(_listener);
   }
 

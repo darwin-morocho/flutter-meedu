@@ -14,13 +14,13 @@ void main() {
     int value = c.counter;
     expect(value, 0);
     c.onInit();
-    c.afterFirstLayout();
-    final subscribe = BaseListener<List<String>>((listeners) {
+    c.onAfterFirstLayout();
+    final subscribe = (List<String> listeners) {
       value = c.counter;
       if (value == times) {
         completer.complete();
       }
-    });
+    };
     c.addListener(subscribe);
     for (int i = 1; i <= times; i++) {
       c.counter = i;
@@ -47,8 +47,8 @@ class Controller extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
-    super.afterFirstLayout();
+  void onAfterFirstLayout() {
+    super.onAfterFirstLayout();
     print("😜 afterFirstLayout");
   }
 

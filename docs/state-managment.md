@@ -204,7 +204,7 @@ class HomeController extends SimpleController {
 
   /// called when the provider and its child is rendered for the first time
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
 
   }
 
@@ -218,7 +218,7 @@ class HomeController extends SimpleController {
 ```
 
 ❌ **IMPORTANT**: You should never call an `update(...)` method inside the `onInit()` method even if the `update` method does not belong to the current controller.
-The `onInit` method is called when the the `Provider` widget is inserted into the **widget tree** but is not rendered yet. So you can use the `afterFirstLayout()` method to notify any change calling `update(...)`.
+The `onInit` method is called when the the `Provider` widget is inserted into the **widget tree** but is not rendered yet. So you can use the `onAfterFirstLayout()` method to notify any change calling `update(...)`.
 
 ```dart
 class HomeController extends SimpleController {
@@ -232,7 +232,7 @@ class HomeController extends SimpleController {
 
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     update(); // GOOD CODE 👏
      // or
     final SomeController homeController = Get.i.find<SomeController>();

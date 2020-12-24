@@ -10,7 +10,7 @@ class SearchController extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     _debounceWorker = _text.debounce(Duration(milliseconds: 500), (value) {
       print("debounce  $value");
     });
