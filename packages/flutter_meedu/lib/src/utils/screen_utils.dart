@@ -27,9 +27,7 @@ extension ContextExtensionss on BuildContext {
   /// [reducedBy] is a percentage value of how much of the height you want
   /// if you for example want 46% of the height, then you reduce it by 56%.
   double heightTransformer({double dividedBy = 1, double reducedBy = 0.0}) {
-    return (mediaQuerySize.height -
-            ((mediaQuerySize.height / 100) * reducedBy)) /
-        dividedBy;
+    return (mediaQuerySize.height - ((mediaQuerySize.height / 100) * reducedBy)) / dividedBy;
   }
 
   /// Gives you the power to get a portion of the width.
@@ -42,8 +40,7 @@ extension ContextExtensionss on BuildContext {
   /// [reducedBy] is a percentage value of how much of the width you want
   /// if you for example want 46% of the width, then you reduce it by 56%.
   double widthTransformer({double dividedBy = 1, double reducedBy = 0.0}) {
-    return (mediaQuerySize.width - ((mediaQuerySize.width / 100) * reducedBy)) /
-        dividedBy;
+    return (mediaQuerySize.width - ((mediaQuerySize.width / 100) * reducedBy)) / dividedBy;
   }
 
   /// Divide the height proportionally by the given value
@@ -106,26 +103,4 @@ extension ContextExtensionss on BuildContext {
 
   /// True if the current device is Tablet
   bool get isTablet => isSmallTablet || isLargeTablet;
-
-  /// Returns a specific value according to the screen size
-  /// if the device width is higher than or equal to 1200 return
-  /// [desktop] value. if the device width is higher than  or equal to 600
-  /// and less than 1200 return [tablet] value.
-  /// if the device width is less than 300  return [watch] value.
-  /// in other cases return [mobile] value.
-  T responsiveValue<T>({
-    T mobile,
-    T tablet,
-    T desktop,
-    T watch,
-  }) {
-    var deviceWidth = mediaQuerySize.shortestSide;
-    if (GetPlatform.isDesktop) {
-      deviceWidth = mediaQuerySize.width;
-    }
-    if (deviceWidth >= 1200 && desktop != null) return desktop;
-    if (deviceWidth >= 600 && tablet != null) return tablet;
-    if (deviceWidth < 300 && watch != null) return watch;
-    return mobile;
-  }
 }
