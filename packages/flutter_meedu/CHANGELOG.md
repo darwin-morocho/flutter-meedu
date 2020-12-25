@@ -1,3 +1,6 @@
+## [1.0.4]
+- Fixed route.arguments in ProviderPage.
+
 ## [1.0.3+2]
 - Updated meedu version.
 

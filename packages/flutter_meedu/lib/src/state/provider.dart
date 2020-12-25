@@ -45,7 +45,7 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
     // use the InheritedProvider to inject the controller and catch the life cycle widget
     return p.InheritedProvider<T>(
       create: (_) {
-        final T controller = this.create(_);
+        final T controller = this.create(context);
         Get.i.put<T>(controller, tag: this.tag);
         return controller;
       },
