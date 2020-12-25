@@ -86,7 +86,7 @@ If you have a more complex State consider using the `StateController` instead of
 First install [equatable](https://pub.dev/packages/equatable) to compare instances of the same class.
 Add `equatable` as a dependency in your pubspec.yaml file
 
-```
+```yaml
 equatable: ^1.2.5
 ```
 
