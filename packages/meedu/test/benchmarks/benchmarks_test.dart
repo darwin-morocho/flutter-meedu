@@ -3,7 +3,6 @@ import 'dart:async';
 // import 'package:flutter/foundation.dart';
 // import 'package:get/get.dart';
 import 'package:meedu/meedu.dart';
-import 'package:meedu/src/state_managment/base_controller.dart';
 import 'package:test/test.dart';
 
 void main() {

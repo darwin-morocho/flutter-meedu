@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:meedu/state.dart';
 
 class HomeController extends SimpleController {

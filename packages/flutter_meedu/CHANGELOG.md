@@ -1,3 +1,6 @@
+## [1.0.5]
+- Removed unused imports.
+
 ## [1.0.4]
 - Fixed route.arguments in ProviderPage.
 

@@ -1,3 +1,5 @@
+## [0.5.3]
+- Removed unused imports.
 ## [0.5.2+2]
 - Removed Future<void> from onDispose().
 

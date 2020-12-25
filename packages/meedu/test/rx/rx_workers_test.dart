@@ -12,7 +12,7 @@ void main() {
     final c = SearchController();
     expect(c.text, "");
     expect(c.hasListeners, false);
-    c.afterFirstLayout();
+    c.onAfterFirstLayout();
     timer = Timer.periodic(Duration(milliseconds: 50), (_) {
       if (i == 1) {
         c.onTextChange("${c.text}-");
@@ -63,7 +63,7 @@ class SearchController extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     _debounceWorker = _text.debounce(Duration(milliseconds: 100), (value) {
       debounce = value;
     });

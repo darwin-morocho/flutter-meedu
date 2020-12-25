@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 import 'package:meedu/meedu.dart';
 import 'package:meta/meta.dart';
