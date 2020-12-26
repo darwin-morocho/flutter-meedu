@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
+import 'package:meedu_example/main.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,6 +27,18 @@ class HomePage extends StatelessWidget {
       onAfterFirstLayout: this.onAfterFirstLayout,
       onDispose: this.onDispose,
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            Row(
+              children: [
+                Text("DarkMode"),
+                SimpleBuilder<AppThemeController>(
+                  builder: (_) => Switch(value: _.darkMode, onChanged: _.onToggleTheme),
+                )
+              ],
+            )
+          ],
+        ),
         body: SafeArea(
           child: Container(
             width: double.infinity,

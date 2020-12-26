@@ -64,8 +64,7 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
           // if the controller is not disposed
           if (!controller.disposed) {
             controller.onAfterFirstLayout();
-            if (this.onAfterFirstLayout != null)
-              this.onAfterFirstLayout(e, controller);
+            if (this.onAfterFirstLayout != null) this.onAfterFirstLayout(e, controller);
           }
         });
         return () {};
