@@ -5,7 +5,8 @@ import 'package:meedu/state.dart' show BaseController;
 import 'package:provider/single_child_widget.dart';
 
 // ignore: must_be_immutable
-abstract class ProviderPage<T extends BaseController> extends SingleChildStatelessWidget {
+abstract class ProviderPage<T extends BaseController>
+    extends SingleChildStatelessWidget {
   /// function that is responsible for
   /// creating the [SimpleController] or [StateController] and a child which will have access
   /// to the instance via `Provider.of<...>(tag:'tag')`.

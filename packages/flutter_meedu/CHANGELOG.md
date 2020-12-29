@@ -1,3 +1,6 @@
+## [1.1.0]
+- Added tag support for Provider.of<...>(...)
+
 ## [1.0.5]
 - Removed unused imports.
 

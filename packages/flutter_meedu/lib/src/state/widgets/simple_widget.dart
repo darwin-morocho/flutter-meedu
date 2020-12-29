@@ -1,9 +1,11 @@
-import 'package:flutter/widgets.dart' show BuildContext, StatelessWidget, Key, Widget;
+import 'package:flutter/widgets.dart'
+    show BuildContext, StatelessWidget, Key, Widget;
 import 'package:meedu/get.dart';
 import 'package:meedu/state.dart';
 import '../builders/simple_builder.dart';
 
-abstract class SimpleWidget<T extends SimpleController> extends StatelessWidget {
+abstract class SimpleWidget<T extends SimpleController>
+    extends StatelessWidget {
   /// override this value if you have a tag in your Provider
   String get tag => null;
 
