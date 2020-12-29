@@ -155,7 +155,7 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Builder(
             builder: (_) {
-              final controller = Provider.of<LoginController>(_);
+              final controller = Provider.of<LoginController>();
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -496,7 +496,8 @@ You can use a `SimpleBuilder` widget to listen changes in your `SimpleController
 You can access to you controller in any method inside your class.
 ```dart
 class CounterDetail extends SimpleWidget<HomeController> {
-  final String id = 'counter'; //  to allow rebuilds when the update(['counter']) method is called
+  @override
+  String get id => 'counter'; //  to allow rebuilds when the update(['counter']) method is called
 
   void onPressed() {
     controller.increment();
