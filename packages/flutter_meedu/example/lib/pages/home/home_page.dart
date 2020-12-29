@@ -46,6 +46,10 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SimpleBuilder<AppThemeController>(
+                  builder: (_) => Text("_.darkMode ${_.darkMode}"),
+                ),
+                SizedBox(height: 20),
                 SimpleBuilder<HomeController>(
                   id: 'counter',
                   builder: (controller) => Text(
@@ -85,7 +89,8 @@ class HomePage extends StatelessWidget {
 }
 
 class CounterDetail extends SimpleWidget<HomeController> {
-  final String id = 'counter'; //  to allow rebuilds when the update(['counter']) method is called
+  @override
+  String get id => 'counter'; //  to allow rebuilds when the update(['counter']) method is called
 
   void onPressed() {
     controller.increment();

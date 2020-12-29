@@ -1,20 +1,11 @@
+import 'package:meedu/get.dart';
 import 'package:meedu/state.dart' show BaseController;
-import 'package:provider/provider.dart';
-import 'package:flutter/widgets.dart'
-    show
-        Widget,
-        VoidCallback,
-        required,
-        Key,
-        StatefulWidget,
-        State,
-        BuildContext;
+import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key, StatefulWidget, State, BuildContext;
 
 typedef ListenerCallback<T> = void Function(T);
 
 /// this widget define the basic Builder properties and render logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilder<T extends BaseController<S>, S>
-    extends StatefulWidget {
+abstract class BaseBuilder<T extends BaseController<S>, S> extends StatefulWidget {
   /// the builder function that render the widget when the controller notify changes
   final Widget Function(T) builder;
 
@@ -33,6 +24,8 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
   /// callback when didUpdateWidget is called
   final void Function(BaseBuilder<T, S> oldWidget) didUpdateWidget;
 
+  final String tag;
+
   const BaseBuilder({
     Key key,
     @required this.builder,
@@ -41,6 +34,7 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
     this.dispose,
     this.didUpdateWidget,
     this.allowRebuild,
+    this.tag,
   })  : assert(builder != null),
         super(key: key);
 
@@ -49,8 +43,7 @@ abstract class BaseBuilder<T extends BaseController<S>, S>
 }
 
 /// this calss define the State's logic for [SimpleBuilder] and [StateBuilder]
-abstract class BaseBuilderState<T extends BaseController<S>, S>
-    extends State<BaseBuilder<T, S>> {
+abstract class BaseBuilderState<T extends BaseController<S>, S> extends State<BaseBuilder<T, S>> {
   bool _initialized = false;
 
   T _controller;
@@ -66,7 +59,7 @@ abstract class BaseBuilderState<T extends BaseController<S>, S>
   void initState() {
     if (!_initialized) {
       // get the controller for this MeeduBuilder
-      _controller = context.read<T>();
+      _controller = Get.i.find<T>(tag: widget.tag);
 
       // if the widget is allowed to listening update events
       if (widget.allowRebuild) {

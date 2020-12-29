@@ -6,6 +6,7 @@ import 'package:meedu_example/pages/home/home_page.dart';
 import 'package:meedu_example/pages/login/login_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   router.setDefaultTransition(router.Transition.upToDown);
   runApp(MyApp());
 }

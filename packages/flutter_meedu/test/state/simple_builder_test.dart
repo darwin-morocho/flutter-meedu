@@ -73,13 +73,13 @@ void main() {
                     FloatingActionButton(
                       key: incrementButtonKey,
                       onPressed: () {
-                        Provider.of<Controller>(context).increment();
+                        Provider.of<Controller>().increment();
                       },
                     ),
                     FloatingActionButton(
                       key: incrementButtonIdKey,
                       onPressed: () {
-                        Provider.of<Controller>(context).incrementWithId();
+                        Provider.of<Controller>().incrementWithId();
                       },
                     ),
                   ],
@@ -129,7 +129,7 @@ class Controller extends SimpleController {
 }
 
 class CounterDetail extends SimpleWidget<Controller> {
-  final String id = 'id'; //  to allow rebuilds when the update(['counter']) method is called
+  String get id => 'id'; //  to allow rebuilds when the update(['counter']) method is called
 
   void onPressed() {
     controller.increment();

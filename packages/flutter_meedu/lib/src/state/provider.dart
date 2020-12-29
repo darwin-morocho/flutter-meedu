@@ -72,8 +72,8 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
     );
   }
 
-  /// Search one instance of [BaseController] using the context
-  static T of<T extends BaseController>(BuildContext context) {
-    return p.Provider.of<T>(context, listen: false);
+  /// Search one instance of [BaseController]
+  static T of<T extends BaseController>({String tag}) {
+    return Get.i.find<T>(tag: tag);
   }
 }
