@@ -1,3 +1,6 @@
+## [1.1.1]
+- Updated meedu: ^0.5.4.
+
 ## [1.1.0]
 - Added tag support for Provider.of<...>(...)
 

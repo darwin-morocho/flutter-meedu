@@ -32,11 +32,12 @@ abstract class BaseController<T> {
 
   /// remove a listener
   void removeListener(ListenerCallback<T> listener) {
-    _debugAssertNotDisposed();
-    for (final _ListenerEntry<T> entry in _listeners) {
-      if (entry.listener == listener) {
-        entry.unlink();
-        return;
+    if (_listeners != null) {
+      for (final _ListenerEntry<T> entry in _listeners) {
+        if (entry.listener == listener) {
+          entry.unlink();
+          return;
+        }
       }
     }
   }

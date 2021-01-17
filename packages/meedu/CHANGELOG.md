@@ -1,3 +1,6 @@
+## [0.5.4]
+- Fixed _debugAssertNotDisposed(); on removeListener.
+
 ## [0.5.3]
 - Removed unused imports.
 ## [0.5.2+2]

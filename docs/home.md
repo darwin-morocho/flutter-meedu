@@ -27,8 +27,8 @@ Add the following to your pubspec.yaml
 
 ```yaml
 dependencies:
-  meedu: ^0.5.3
-  flutter_meedu: ^1.1.0
+  meedu: ^0.5.4
+  flutter_meedu: ^1.1.1
 ```
 
 Now you're ready to use **flutter_meedu**
