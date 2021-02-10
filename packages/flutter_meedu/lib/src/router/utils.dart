@@ -5,7 +5,7 @@ import 'navigator.dart';
 import 'transition.dart';
 
 /// get the transition
-Route getRoute(
+Route<T> getRoute<T>(
   Widget page, {
   Object arguments,
   bool maintainState = true,
@@ -27,14 +27,14 @@ Route getRoute(
 
   switch (_transition) {
     case Transition.material:
-      return MaterialPageRoute(
+      return MaterialPageRoute<T>(
         builder: (_) => page,
         maintainState: maintainState,
         fullscreenDialog: fullscreenDialog,
         settings: settings,
       );
     case Transition.cupertino:
-      return CupertinoPageRoute(
+      return CupertinoPageRoute<T>(
         builder: (_) => page,
         maintainState: maintainState,
         fullscreenDialog: fullscreenDialog,
@@ -42,7 +42,7 @@ Route getRoute(
       );
 
     default:
-      return MeeduPageRoute(
+      return MeeduPageRoute<T>(
         page,
         settings: settings,
         maintainState: maintainState,

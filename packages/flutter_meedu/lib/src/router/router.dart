@@ -33,8 +33,8 @@ Future<T> push<T>(
   Duration transitionDuration = const Duration(milliseconds: 300),
   bool backGestureEnabled = false,
 }) {
-  return _state.push(
-    getRoute(
+  return _state.push<T>(
+    getRoute<T>(
       page,
       arguments: arguments,
       maintainState: maintainState,

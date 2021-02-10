@@ -1,3 +1,6 @@
+## [1.1.2]
+- Fixed push with Generic types.
+
 ## [1.1.1]
 - Updated meedu: ^0.5.4.
 
