@@ -4,6 +4,7 @@ import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
 const times = 50;
+typedef _Subscriber = void Function(List<String>);
 void main() {
   test('SimpleController', () async {
     final Completer completer = Completer();
@@ -12,7 +13,7 @@ void main() {
     expect(value, 0);
     c.onInit();
     c.onAfterFirstLayout();
-    final subscribe = (List<String> listeners) {
+    final _Subscriber subscribe = (List<String> listeners) {
       value = c.counter;
       if (value == times) {
         completer.complete();

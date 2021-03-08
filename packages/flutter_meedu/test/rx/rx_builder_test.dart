@@ -7,9 +7,9 @@ class Clock extends StatefulWidget {
   final Rx<int> counter;
   final Rx<bool> enabled;
   Clock({
-    Key key,
-    @required this.counter,
-    @required this.enabled,
+    Key? key,
+    required this.counter,
+    required this.enabled,
   }) : super(key: key);
 
   @override
@@ -69,14 +69,6 @@ class _ClockState extends State<Clock> {
 
 void main() {
   group('RxBuilder', () {
-    test("assert(builder != null)", () {
-      expect(() {
-        RxBuilder(
-          builder: null,
-          observables: [],
-        );
-      }, throwsAssertionError);
-    });
     testWidgets(
       'RxBuilder counter test',
       (test) async {

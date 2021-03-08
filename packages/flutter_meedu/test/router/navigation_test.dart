@@ -4,17 +4,6 @@ import 'package:flutter_meedu/router.dart' as router;
 
 void main() {
   group('navigation', () {
-    test("getRoute page != null", () {
-      expect(() {
-        router.getRoute(null);
-      }, throwsAssertionError);
-    });
-    test("transition != null", () {
-      expect(() {
-        router.setDefaultTransition(null);
-      }, throwsAssertionError);
-    });
-
     testWidgets('normal navigation', (test) async {
       router.setDefaultTransition(router.Transition.material, duration: Duration(milliseconds: 100));
       await test.pumpWidget(
@@ -43,14 +32,14 @@ void main() {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          FlatButton(
+          TextButton(
             onPressed: () {
               router.pushReplacement(
                 DetailPage(),
@@ -61,7 +50,7 @@ class HomePage extends StatelessWidget {
             },
             child: Text("pushReplacement"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               router.pushNamed(
                 'detail',
@@ -79,10 +68,10 @@ class HomePage extends StatelessWidget {
 class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String productName = router.arguments(context);
+    final productName = router.arguments(context) as String;
     return Scaffold(
       appBar: AppBar(
-        leading: FlatButton(
+        leading: TextButton(
           onPressed: () {
             router.popUntil((route) {
               print(" route.settings.name ${route.settings.name}");

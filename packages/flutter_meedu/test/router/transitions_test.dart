@@ -46,14 +46,14 @@ void main() {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          FlatButton(
+          TextButton(
             onPressed: () => router.push(
               DetailPage(),
               transition: router.Transition.downToUp,
@@ -61,27 +61,27 @@ class HomePage extends StatelessWidget {
             ),
             child: Text("downToUp"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => router.push(DetailPage(), transition: router.Transition.upToDown),
             child: Text("upToDown"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => router.push(DetailPage(), transition: router.Transition.fadeIn),
             child: Text("fadeIn"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => router.push(DetailPage(), transition: router.Transition.rightToLeft),
             child: Text("rightToLeft"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => router.push(DetailPage(), transition: router.Transition.none),
             child: Text("none"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => router.push(DetailPage(), transition: router.Transition.cupertino),
             child: Text("cupertino"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => router.pushNamedAndRemoveUntil('/detail'),
             child: Text("pushNamedAndRemoveUntil"),
           ),
@@ -96,7 +96,7 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: FlatButton(
+        leading: TextButton(
           onPressed: () {
             router.pop();
           },

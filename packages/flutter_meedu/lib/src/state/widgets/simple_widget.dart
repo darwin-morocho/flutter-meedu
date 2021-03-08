@@ -7,12 +7,12 @@ import '../builders/simple_builder.dart';
 abstract class SimpleWidget<T extends SimpleController>
     extends StatelessWidget {
   /// override this value if you have a tag in your Provider
-  String get tag => null;
+  String? get tag => null;
 
   /// override this value if you want updates by id
-  String get id => null;
+  String? get id => null;
 
-  const SimpleWidget({Key key}) : super(key: key);
+  const SimpleWidget({Key? key}) : super(key: key);
 
   /// get the controller
   T get controller => Get.i.find<T>(tag: tag);

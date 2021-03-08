@@ -6,18 +6,6 @@ import 'package:flutter_meedu/flutter_meedu.dart';
 
 void main() {
   group('Multiprovider', () {
-    test("assert(child != null && providers != null)", () {
-      expect(() {
-        MultiProvider(child: null, providers: null);
-      }, throwsAssertionError);
-    });
-
-    test("assert(child != null)", () {
-      expect(() {
-        MultiProvider(child: null, providers: []);
-      }, throwsAssertionError);
-    });
-
     testWidgets('MultiProvider Test', (test) async {
       await test.pumpWidget(
         MultiProvider(
@@ -51,7 +39,7 @@ void main() {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +62,14 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: Row(
         children: [
-          FlatButton(
+          TextButton(
             onPressed: () {
               final CounterController c = Get.i.find<CounterController>();
               c.add();
             },
             child: Text("add"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               final UserController c = Get.i.find<UserController>();
               c.update(
@@ -113,20 +101,20 @@ class User {
   final String username, email;
 
   User({
-    this.id,
-    this.username,
-    this.email,
+    required this.id,
+    required this.username,
+    required this.email,
   });
 
   User copyWith({
-    int id,
-    String username,
-    String email,
+    int? id,
+    String? username,
+    String? email,
   }) {
     return User(
       id: id ?? this.id,
       username: username ?? this.username,
-      email: email ?? email,
+      email: email ?? this.email,
     );
   }
 

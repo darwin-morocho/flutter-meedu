@@ -27,7 +27,7 @@ import 'package:flutter_meedu/flutter_meedu.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ First install [equatable](https://pub.dev/packages/equatable) to compare instanc
 Add `equatable` as a dependency in your pubspec.yaml file
 
 ```yaml
-equatable: ^1.2.5
+equatable: ^2.0.0
 ```
 
 When you call to `update(newState)` the new state must be different of the current State so `StateBuilder` widget will be rendered again with the new state.
@@ -98,16 +98,16 @@ Now you can use the `StateController` class
 class LoginState extends Equatable {
   final String email, password;
   LoginState({
-    @required this.email,
-    @required this.password,
+    required this.email,
+    required this.password,
   });
 
   static LoginState get initialState => LoginState(email: '', password: '');
 
 
   LoginState copyWith({
-    String email,
-    String password,
+    String? email,
+    String? password,
   }) {
     return LoginState(
       email: email ?? this.email,
@@ -141,7 +141,7 @@ class LoginController extends StateController<LoginState> {
 
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +309,7 @@ Here a complete example
 .
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -332,14 +332,14 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: Row(
         children: [
-          FlatButton(
+          TextButton(
             onPressed: () {
               final CounterController c = Get.i.find<CounterController>();
               c.add();
             },
             child: Text("add"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               final UserController c = Get.i.find<UserController>();
               c.update(
@@ -371,15 +371,15 @@ class User {
   final String username, email;
 
   User({
-    this.id,
-    this.username,
-    this.email,
+    required this.id,
+    required this.username,
+    required this.email,
   });
 
   User copyWith({
-    int id,
-    String username,
-    String email,
+    int? id,
+    String? username,
+    String? email,
   }) {
     return User(
       id: id ?? this.id,
@@ -455,7 +455,7 @@ class HomePage extends ProviderPage<Controller> {
               builder: (_) => Text("${controller.counter}"),
             ),
             SizedBox(height: 10),
-            FlatButton(
+            TextButton(
               color: Colors.amber,
               onPressed: () => pushReplacementNamed('/login'),
               child: Text("GO TO LOGIN"),
@@ -508,7 +508,7 @@ class CounterDetail extends SimpleWidget<HomeController> {
     return Column(
       children: [
         Text("${controller.counter}"),
-        FlatButton(
+        TextButton(
           color: Colors.grey,
           onPressed: onPressed,
           child: Text("add value to counter"),

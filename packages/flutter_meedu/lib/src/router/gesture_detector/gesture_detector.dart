@@ -7,14 +7,11 @@ const double _kBackGestureWidth = 20.0;
 
 class BackGestureDetector<T> extends StatefulWidget {
   const BackGestureDetector({
-    Key key,
-    @required this.enabledCallback,
-    @required this.onStartPopGesture,
-    @required this.child,
-  })  : assert(enabledCallback != null),
-        assert(onStartPopGesture != null),
-        assert(child != null),
-        super(key: key);
+    Key? key,
+    required this.enabledCallback,
+    required this.onStartPopGesture,
+    required this.child,
+  }) : super(key: key);
 
   final Widget child;
 
@@ -27,9 +24,8 @@ class BackGestureDetector<T> extends StatefulWidget {
 }
 
 class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
-  BackGestureController<T> _backGestureController;
-
-  HorizontalDragGestureRecognizer _recognizer;
+  BackGestureController<T>? _backGestureController;
+  late HorizontalDragGestureRecognizer _recognizer;
 
   @override
   void initState() {
@@ -56,15 +52,15 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
   void _handleDragUpdate(DragUpdateDetails details) {
     assert(mounted);
     assert(_backGestureController != null);
-    _backGestureController.dragUpdate(
-        _convertToLogical(details.primaryDelta / context.size.width));
+    _backGestureController!.dragUpdate(
+        _convertToLogical(details.primaryDelta! / context.size!.width));
   }
 
   void _handleDragEnd(DragEndDetails details) {
     assert(mounted);
     assert(_backGestureController != null);
-    _backGestureController.dragEnd(_convertToLogical(
-        details.velocity.pixelsPerSecond.dx / context.size.width));
+    _backGestureController!.dragEnd(_convertToLogical(
+        details.velocity.pixelsPerSecond.dx / context.size!.width));
     _backGestureController = null;
   }
 
@@ -87,7 +83,6 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
       case TextDirection.ltr:
         return value;
     }
-    return null;
   }
 
   @override

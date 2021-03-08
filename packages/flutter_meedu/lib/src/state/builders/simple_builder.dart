@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key;
+import 'package:flutter/widgets.dart' show Widget, VoidCallback, Key;
 import 'package:meedu/state.dart' show SimpleController;
 import 'base_builder.dart';
 
@@ -7,25 +7,26 @@ class SimpleBuilder<T extends SimpleController>
   /// When you force rerender using the update() method you can only update certains [MeeduBuilder]
   /// using update(["your_id","other_id"]) so if you want update this [MeeduBuilder] you sould use one id like
   /// "your_id" or "other_id"
-  final String id;
+  final String? id;
 
   SimpleBuilder({
-    Key key,
-    @required Widget Function(T) builder,
+    Key? key,
+    required Widget Function(T) builder,
     this.id,
-    VoidCallback initState,
-    VoidCallback didChangeDependencies,
-    void Function(SimpleBuilder<T> oldWidget) didUpdateWidget,
-    VoidCallback dispose,
+    VoidCallback? initState,
+    VoidCallback? didChangeDependencies,
+    void Function(SimpleBuilder<T> oldWidget)? didUpdateWidget,
+    VoidCallback? dispose,
     bool allowRebuild = true,
-    String tag,
+    String? tag,
   }) : super(
           key: key,
           builder: builder,
           initState: initState,
           didChangeDependencies: didChangeDependencies,
           dispose: dispose,
-          didUpdateWidget: didUpdateWidget,
+          didUpdateWidget:
+              didUpdateWidget as void Function(BaseBuilder<T, List<String>>)?,
           allowRebuild: allowRebuild,
           tag: tag,
         );
@@ -37,7 +38,7 @@ class SimpleBuilder<T extends SimpleController>
 class _SimpleBuilderState<T extends SimpleController>
     extends BaseBuilderState<T, List<String>> {
   /// listener for update events
-  ListenerCallback<List<String>> _listener;
+  ListenerCallback<List<String>>? _listener;
 
   @override
   void subscribe() {
@@ -55,11 +56,13 @@ class _SimpleBuilderState<T extends SimpleController>
         setState(() {});
       }
     };
-    this.controller.addListener(_listener);
+    this.controller.addListener(_listener!);
   }
 
   @override
   void unsubscribe() {
-    this.controller.removeListener(_listener);
+    if (_listener != null) {
+      this.controller.removeListener(_listener!);
+    }
   }
 }

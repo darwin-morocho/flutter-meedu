@@ -56,12 +56,7 @@ class SearchController extends SimpleController {
       _onceWorker,
       _onceWithOutConditionWorker,
       _intervalWorker;
-  String debounce = "",
-      ever = "",
-      everWithOutCondition = "",
-      once = "",
-      onceWithOutCondition = "",
-      interval = "";
+  String debounce = "", ever = "", everWithOutCondition = "", once = "", onceWithOutCondition = "", interval = "";
 
   void onTextChange(String text) {
     _text.value = text;
@@ -98,7 +93,7 @@ class SearchController extends SimpleController {
       (value) {
         once = value!;
       },
-      condition: ((value) => value.contains("-")) as bool Function(String?)?,
+      condition: ((value) => value != null ? value.contains("-") : false),
     );
 
     _intervalWorker = _text.interval(

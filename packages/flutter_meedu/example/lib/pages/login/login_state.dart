@@ -1,18 +1,17 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 class LoginState extends Equatable {
   final String email, password;
   LoginState({
-    @required this.email,
-    @required this.password,
+    required this.email,
+    required this.password,
   });
 
   static LoginState get initialState => LoginState(email: '', password: '');
 
   LoginState copyWith({
-    String email,
-    String password,
+    String? email,
+    String? password,
   }) {
     return LoginState(
       email: email ?? this.email,

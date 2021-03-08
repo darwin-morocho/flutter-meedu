@@ -5,21 +5,6 @@ import 'package:meedu/state.dart';
 
 void main() {
   group('Simple Controller', () {
-    test('BaseBuilder builder!=null', () {
-      expect(() {
-        SimpleBuilder(
-          builder: null,
-        );
-      }, throwsAssertionError);
-    });
-
-    test('Invalid update', () {
-      final Controller controller = Controller();
-      expect(() {
-        controller.update(null);
-      }, throwsAssertionError);
-    });
-
     test('Call after dispose', () {
       final Controller controller = Controller();
       controller.onDispose();
@@ -140,8 +125,7 @@ class CounterDetail extends SimpleWidget<Controller> {
     return Column(
       children: [
         Text(":: ${controller.counter}"),
-        FlatButton(
-          color: Colors.grey,
+        TextButton(
           onPressed: onPressed,
           child: Text("add"),
         ),

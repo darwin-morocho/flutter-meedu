@@ -9,22 +9,22 @@ import 'transitions/up_to_down.dart';
 class MeeduPageRoute<T> extends PageRoute<T> {
   final Duration transitionDuration;
   final bool maintainState;
-  final Color barrierColor;
-  final String barrierLabel;
+  final Color? barrierColor;
+  final String? barrierLabel;
   final Transition transition;
   final Widget child;
   final bool backGestureEnabled;
 
   MeeduPageRoute(
     this.child, {
-    @required RouteSettings settings,
-    @required this.maintainState,
-    @required this.transitionDuration,
-    @required bool fullscreenDialog,
+    @required RouteSettings? settings,
+    required this.maintainState,
+    required this.transitionDuration,
+    required bool fullscreenDialog,
     this.barrierColor,
     this.barrierLabel,
-    @required this.transition,
-    @required this.backGestureEnabled,
+    required this.transition,
+    required this.backGestureEnabled,
   }) : super(
           settings: settings,
           fullscreenDialog: fullscreenDialog,
@@ -95,14 +95,14 @@ class MeeduPageRoute<T> extends PageRoute<T> {
   ///
   BackGestureController<T> _startPopGesture<T>() {
     return BackGestureController<T>(
-      navigator: this.navigator,
-      controller: this.controller,
+      navigator: this.navigator!,
+      controller: this.controller!,
     );
   }
 
   ///
   bool get _isPopGestureInProgress {
-    return this.navigator.userGestureInProgress;
+    return this.navigator!.userGestureInProgress;
   }
 
   bool _isPopGestureEnabled<T>() {
@@ -111,8 +111,8 @@ class MeeduPageRoute<T> extends PageRoute<T> {
         this.willHandlePopInternally ||
         this.hasScopedWillPopCallback ||
         this.fullscreenDialog ||
-        this.animation.status != AnimationStatus.completed ||
-        this.secondaryAnimation.status != AnimationStatus.dismissed ||
+        this.animation!.status != AnimationStatus.completed ||
+        this.secondaryAnimation!.status != AnimationStatus.dismissed ||
         _isPopGestureInProgress) return false;
 
     return true;

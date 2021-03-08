@@ -1,3 +1,6 @@
+## [2.0.0]
+- Added support for flutter 2 and null safety.
+
 ## [1.1.2]
 - Fixed push with Generic types.
 

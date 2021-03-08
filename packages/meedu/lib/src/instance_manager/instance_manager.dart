@@ -1,4 +1,4 @@
-typedef InstanceBuilderCallback<S> = S? Function();
+typedef InstanceBuilderCallback<S> = S Function();
 
 class Get {
   /// private contructor
@@ -19,7 +19,7 @@ class Get {
   }
 
   /// Search and return one instance T from the hashmap
-  T? find<T>({String? tag}) {
+  T find<T>({String? tag}) {
     final String key = _getKey(T, tag);
     if (!_vars.containsKey(key)) {
       throw "Cannot find $key, make sure call to Get.i.put<${T.toString()}>() before call find.";
@@ -55,7 +55,7 @@ class Get {
   }
 
   /// Returns a new Instance<S> lazily from the [<S>builder()] callback.
-  T? lazyFind<T>({
+  T lazyFind<T>({
     String? tag,
   }) {
     final key = _getKey(T, tag);

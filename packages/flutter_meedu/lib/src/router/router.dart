@@ -8,15 +8,21 @@ export 'transition.dart';
 
 final GlobalKey<NavigatorState> navigatorKey =
     MeeduNavigator.instance.navigatorKey;
-final _state = navigatorKey.currentState;
+final NavigatorState? _state = navigatorKey.currentState;
 
 /// set the default transition for all pages
-void setDefaultTransition(Transition transition, {Duration duration}) {
-  assert(transition != null);
+void setDefaultTransition(Transition transition, {Duration? duration}) {
   MeeduNavigator.instance.transition = transition;
   if (duration != null) {
     MeeduNavigator.instance.transitionDuration = duration;
   }
+}
+
+void _validateRouterState() {
+  assert(
+    _state != null,
+    "Invalid navigator state, maake sure that you has been set the navigator key in your MaterialApp",
+  );
 }
 
 /// Push the given [page] onto the navigator.
@@ -24,16 +30,17 @@ void setDefaultTransition(Transition transition, {Duration duration}) {
 /// [transitionDuration] will be [Duration.zero] when [transition] is equals to [Transition.none]
 ///
 /// [backGestureEnabled] ignored when [transition] is equals to [Transition.material] or [Transition.cupertino]
-Future<T> push<T>(
+Future<T?> push<T>(
   Widget page, {
-  Object arguments,
+  Object? arguments,
   bool maintainState = true,
   bool fullscreenDialog = false,
-  Transition transition,
+  Transition? transition,
   Duration transitionDuration = const Duration(milliseconds: 300),
   bool backGestureEnabled = false,
 }) {
-  return _state.push<T>(
+  _validateRouterState();
+  return _state!.push<T>(
     getRoute<T>(
       page,
       arguments: arguments,
@@ -52,16 +59,17 @@ Future<T> push<T>(
 /// [transitionDuration] will be [Duration.zero] when [transition] is equals to [Transition.none]
 ///
 /// [backGestureEnabled] ignored when [transition] is [Transition.material] or [Transition.cupertino]
-Future<T> pushReplacement<T>(
+Future<T?> pushReplacement<T>(
   Widget page, {
-  Object arguments,
+  Object? arguments,
   bool maintainState = true,
   bool fullscreenDialog = false,
-  Transition transition,
+  Transition? transition,
   Duration transitionDuration = const Duration(milliseconds: 300),
   bool backGestureEnabled = false,
 }) {
-  return _state.pushReplacement(
+  _validateRouterState();
+  return _state!.pushReplacement(
     getRoute(
       page,
       arguments: arguments,
@@ -75,27 +83,31 @@ Future<T> pushReplacement<T>(
 }
 
 /// Push a named route onto the navigator.
-Future<T> pushNamed<T>(String routeName, {Object arguments}) {
-  return _state.pushNamed<T>(routeName, arguments: arguments);
+Future<T?> pushNamed<T>(String routeName, {Object? arguments}) {
+  _validateRouterState();
+  return _state!.pushNamed<T>(routeName, arguments: arguments);
 }
 
 /// Pop the current route off the navigator and push a named route in its place
-Future<T> popAndPushNamed<T>(String routeName, {Object arguments}) {
-  return _state.popAndPushNamed(routeName, arguments: arguments);
+Future<T?> popAndPushNamed<T>(String routeName, {Object? arguments}) {
+  _validateRouterState();
+  return _state!.popAndPushNamed(routeName, arguments: arguments);
 }
 
 /// replace the current page with a new route name
-Future<T> pushReplacementNamed<T>(String routeName, {Object arguments}) {
-  return _state.pushReplacementNamed(routeName, arguments: arguments);
+Future<T?> pushReplacementNamed<T>(String routeName, {Object? arguments}) {
+  _validateRouterState();
+  return _state!.pushReplacementNamed(routeName, arguments: arguments);
 }
 
 /// navigates to a new pages and remove until
-Future<T> pushNamedAndRemoveUntil<T>(
+Future<T?> pushNamedAndRemoveUntil<T>(
   String routeName, {
-  bool Function(Route<dynamic>) predicate,
-  Object arguments,
+  bool Function(Route<dynamic>)? predicate,
+  Object? arguments,
 }) {
-  return _state.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false,
+  _validateRouterState();
+  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false,
       arguments: arguments);
 }
 
@@ -103,24 +115,30 @@ Future<T> pushNamedAndRemoveUntil<T>(
 ///  and acts accordingly, potentially popping the route as a result;
 ///
 ///  returns whether the pop request should be considered handled.
-Future<bool> maybePop<T>([T result]) {
-  return _state.maybePop(result);
+Future<bool> maybePop<T>([T? result]) {
+  _validateRouterState();
+  return _state!.maybePop(result);
 }
 
 /// remove the current page or dialog from the stack until [predicate]
-void pop<T>([T result]) {
-  _state.pop(result);
+void pop<T>([T? result]) {
+  _validateRouterState();
+  _state!.pop(result);
 }
 
 /// remove all pages in the stack until [predicate]
-void popUntil([bool Function(Route<dynamic>) predicate]) {
-  _state.popUntil(predicate ?? (_) => false);
+void popUntil([bool Function(Route<dynamic>)? predicate]) {
+  _validateRouterState();
+  _state!.popUntil(predicate ?? (_) => false);
 }
 
 /// return true if we can do pop
-bool canPop() => _state.canPop();
+bool canPop() {
+  _validateRouterState();
+  return _state!.canPop();
+}
 
 /// return the arguments of the current page
-Object arguments(BuildContext context) {
-  return ModalRoute.of(context).settings.arguments;
+Object? arguments(BuildContext context) {
+  return ModalRoute.of(context)?.settings.arguments;
 }

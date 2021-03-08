@@ -3,7 +3,7 @@ import 'package:meedu/state.dart';
 
 class SearchController extends SimpleController {
   final Rx<String> _text = "".obs;
-  RxWorker _debounceWorker, _everWorker, _onceWorker, _intervalWorker;
+  RxWorker? _debounceWorker, _everWorker, _onceWorker, _intervalWorker;
 
   void onTextChange(String text) {
     _text.value = text;
@@ -18,14 +18,14 @@ class SearchController extends SimpleController {
       (value) {
         print("ever  $value");
       },
-      condition: (value) => value.contains("@"),
+      condition: (value) => value!.contains("@"),
     );
 
     _onceWorker = _text.once(
       (value) {
         print("once  $value");
       },
-      condition: (value) => value.contains("-"),
+      condition: (value) => value!.contains("-"),
     );
 
     _intervalWorker = _text.interval(Duration(seconds: 2), (value) {

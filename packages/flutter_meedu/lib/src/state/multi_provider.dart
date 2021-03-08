@@ -8,11 +8,10 @@ import 'provider.dart';
 /// readability due to the reduction in nesting and boilerplate.
 class MultiProvider extends p.MultiProvider {
   MultiProvider({
-    Key key,
-    @required Widget child,
-    @required List<Provider> providers,
-  })  : assert(child != null && providers != null),
-        super(
+    Key? key,
+    required Widget child,
+    required List<Provider> providers,
+  }) : super(
           key: key,
           child: child,
           providers: providers,

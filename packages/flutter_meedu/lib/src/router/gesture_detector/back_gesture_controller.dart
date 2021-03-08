@@ -19,10 +19,9 @@ class BackGestureController<T> {
   ///
   /// The [navigator] and [controller] arguments must not be null.
   BackGestureController({
-    @required this.navigator,
-    @required this.controller,
-  })  : assert(navigator != null),
-        assert(controller != null) {
+    required this.navigator,
+    required this.controller,
+  }) {
     navigator.didStartUserGesture();
   }
 
@@ -61,7 +60,7 @@ class BackGestureController<T> {
       // to determine it.
       final int droppedPageForwardAnimationTime = min(
         lerpDouble(
-                _kMaxDroppedSwipePageForwardAnimationTime, 0, controller.value)
+                _kMaxDroppedSwipePageForwardAnimationTime, 0, controller.value)!
             .floor(),
         _kMaxPageBackAnimationTime,
       );
@@ -76,7 +75,7 @@ class BackGestureController<T> {
       if (controller.isAnimating) {
         // Otherwise, use a custom popping animation duration and curve.
         final int droppedPageBackAnimationTime = lerpDouble(
-                0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)
+                0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)!
             .floor();
         controller.animateBack(0.0,
             duration: Duration(milliseconds: droppedPageBackAnimationTime),
@@ -88,7 +87,7 @@ class BackGestureController<T> {
       // Keep the userGestureInProgress in true state so we don't change the
       // curve of the page transition mid-flight since CupertinoPageTransition
       // depends on userGestureInProgress.
-      AnimationStatusListener animationStatusCallback;
+      late AnimationStatusListener animationStatusCallback;
       animationStatusCallback = (AnimationStatus status) {
         navigator.didStopUserGesture();
         controller.removeStatusListener(animationStatusCallback);

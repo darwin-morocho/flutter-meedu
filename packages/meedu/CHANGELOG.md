@@ -1,3 +1,12 @@
+## [2.0.0]
+- Added support for flutter 2 and null safety.
+
+## [0.6.0-nullsafety.1]
+- Fixed Get.i.find<...>()
+
+## [0.6.0-nullsafety.0]
+- Added support for null safety.
+
 ## [0.5.4]
 - Fixed _debugAssertNotDisposed(); on removeListener.
 

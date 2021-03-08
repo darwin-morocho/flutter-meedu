@@ -54,11 +54,11 @@ class _HomePageState extends State<HomePage> {
               builder: (_) => Text("counter:: ${_.counter}"),
             ),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => Get.i.find<Controller>().imcrement(),
             child: Text("add"),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () => allow.value = !allow.value,
             child: Text("toggle"),
           )

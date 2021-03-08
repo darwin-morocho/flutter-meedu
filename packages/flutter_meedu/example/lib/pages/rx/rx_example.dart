@@ -43,7 +43,7 @@ class RxExample extends StatelessWidget {
 
 class RxController extends SimpleController {
   Rx<int> time = 0.obs;
-  Timer timer;
+  Timer? timer;
   bool running = false;
 
   onToggle() {
@@ -52,9 +52,9 @@ class RxController extends SimpleController {
     if (running) {
       time.value = 10;
       timer = Timer.periodic(Duration(seconds: 1), (_) {
-        time.value--;
+        time.value = time.value - 1;
         if (time.value == 0) {
-          timer.cancel();
+          timer!.cancel();
           running = false;
           update();
         }

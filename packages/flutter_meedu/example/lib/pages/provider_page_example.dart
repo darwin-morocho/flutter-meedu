@@ -35,8 +35,7 @@ class ProviderPageExample extends ProviderPage<Controller> {
               builder: (_) => Text("${controller.counter}"),
             ),
             SizedBox(height: 10),
-            FlatButton(
-              color: Colors.amber,
+            TextButton(
               onPressed: () => pushReplacementNamed('/login'),
               child: Text("GO TO LOGIN"),
             )

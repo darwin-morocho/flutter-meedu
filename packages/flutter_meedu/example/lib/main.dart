@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu/state.dart';
-import 'package:meedu_example/pages/home/home_page.dart';
-import 'package:meedu_example/pages/login/login_page.dart';
+
+import 'pages/home/home_page.dart';
+import 'pages/login/login_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

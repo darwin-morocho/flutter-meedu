@@ -34,7 +34,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key key}) : super(key: key);
+  const DetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

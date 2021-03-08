@@ -12,14 +12,16 @@ abstract class ProviderPage<T extends BaseController>
   /// to the instance via `Provider.of<...>(tag:'tag')`.
   T create(BuildContext context);
 
+  /// this function build a widget
+  ///
   Widget buildPage(BuildContext context, T controller);
 
   /// (must be unique, don't use list's index) use this when you have in the same page or widget
   /// mutiples [Provider] that uses a controller of the same class for example in lists that you want each item has
   /// its own controller
-  String get tag => null;
+  String? get tag => null;
 
-  ProviderPage({Key key}) : super(key: key);
+  ProviderPage({Key? key}) : super(key: key);
 
   /// overrride this method to listen when the provider is inserted into the widget tree
   void onInit(BuildContext context, T controller) {}
@@ -31,13 +33,13 @@ abstract class ProviderPage<T extends BaseController>
   void onDispose(BuildContext context, T controller) {}
 
   @override
-  Widget buildWithChild(BuildContext context, Widget child) {
+  Widget buildWithChild(BuildContext context, Widget? child) {
     return Provider<T>(
       create: this.create,
       onInit: this.onInit,
       onAfterFirstLayout: this.onAfterFirstLayout,
       onDispose: this.onDispose,
-      child: child,
+      child: child!,
     );
   }
 

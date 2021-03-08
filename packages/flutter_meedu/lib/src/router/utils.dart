@@ -7,14 +7,13 @@ import 'transition.dart';
 /// get the transition
 Route<T> getRoute<T>(
   Widget page, {
-  Object arguments,
+  Object? arguments,
   bool maintainState = true,
   bool fullscreenDialog = false,
   bool backGestureEnabled = true,
-  Transition transition,
-  Duration transitionDuration,
+  Transition? transition,
+  Duration? transitionDuration,
 }) {
-  assert(page != null);
   final name = "/${page.runtimeType.toString()}";
   final settings = RouteSettings(
     name: name,

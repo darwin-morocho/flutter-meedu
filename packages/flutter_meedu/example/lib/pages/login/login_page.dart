@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/main.dart';
+import '../../main.dart';
 import 'login_state.dart';
 import 'login_controller.dart';
 import 'package:flutter_meedu/flutter_meedu.dart' show Provider, StateWidget, StateBuilder;
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

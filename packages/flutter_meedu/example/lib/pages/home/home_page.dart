@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/main.dart';
+import '../../main.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   void onInit(BuildContext context, HomeController controller) {
     print("HomePage provider OnInit");
@@ -61,8 +61,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(height: 20),
                 CounterDetail(),
                 SizedBox(height: 20),
-                FlatButton(
-                  color: Colors.redAccent,
+                TextButton(
                   onPressed: () {
                     router.pushReplacementNamed(
                       '/login',
@@ -101,8 +100,7 @@ class CounterDetail extends SimpleWidget<HomeController> {
     return Column(
       children: [
         Text("${controller.counter}"),
-        FlatButton(
-          color: Colors.grey,
+        TextButton(
           onPressed: onPressed,
           child: Text("add value to counter"),
         ),

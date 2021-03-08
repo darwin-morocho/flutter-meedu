@@ -2,15 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
+typedef _Subscriber = void Function(LoginState);
+
 void main() {
   test('StateController', () async {
     final c = LoginController();
-    String email = c.state!.email;
-    String password = c.state!.password;
+    String email = c.state.email;
+    String password = c.state.password;
     expect(email, '');
     c.onInit();
     c.onAfterFirstLayout();
-    final subscribe = (LoginState state) {
+    final _Subscriber subscribe = (LoginState state) {
       email = state.email;
       password = state.password;
     };
@@ -60,28 +62,28 @@ class LoginController extends StateController<LoginState> {
 
   void onEmailChanged(String email) {
     update(
-      this.state!.copyWith(email: email),
+      this.state.copyWith(email: email),
     );
   }
 
   void onPasswordChanged(String password) {
     update(
-      this.state!.copyWith(password: password),
+      this.state.copyWith(password: password),
     );
   }
 
   @override
-  bool onStateWillChange(LoginState? oldState, LoginState newState) {
-    if (oldState!.email != newState.email) {
+  bool onStateWillChange(LoginState oldState, LoginState newState) {
+    if (oldState.email != newState.email) {
       return newState.email.contains("@");
     }
     return true;
   }
 
   @override
-  void onStateChanged(LoginState? oldState, LoginState? currentState) {
-    print("oldState ${oldState!.toJson()}");
-    print("currentState ${currentState!.toJson()}\n\n");
+  void onStateChanged(LoginState oldState, LoginState currentState) {
+    print("oldState ${oldState.toJson()}");
+    print("currentState ${currentState.toJson()}\n\n");
   }
 
   @override

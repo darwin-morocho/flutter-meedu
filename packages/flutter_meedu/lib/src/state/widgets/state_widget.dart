@@ -9,12 +9,12 @@ typedef _BuildWhen<S> = bool Function(S, S);
 abstract class StateWidget<T extends StateController<S>, S>
     extends StatelessWidget {
   /// override this value if you have a tag in your Provider
-  String get tag => null;
+  String? get tag => null;
 
   /// override this value if you want updates by the buildWhen condition
-  _BuildWhen<S> get buildWhen => null;
+  _BuildWhen<S>? get buildWhen => null;
 
-  const StateWidget({Key key}) : super(key: key);
+  const StateWidget({Key? key}) : super(key: key);
 
   /// get the controller
   T get controller => Get.i.find<T>(tag: tag);

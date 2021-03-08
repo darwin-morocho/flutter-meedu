@@ -1,16 +1,10 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'custom_transition.dart';
-
-class RightToLeftTransition extends CustomTransition {
-  @override
+class RightToLeftTransition {
   Widget buildTransition({
-    BuildContext context,
-    Curve curve,
-    @required Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    @required Widget child,
+    required Animation<double> animation,
+    required Widget child,
   }) {
     return SlideTransition(
       position: Tween<Offset>(

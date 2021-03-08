@@ -1,28 +1,28 @@
-import 'package:flutter/widgets.dart' show Widget, VoidCallback, required, Key;
+import 'package:flutter/widgets.dart' show Widget, VoidCallback, Key;
 import 'package:meedu/state.dart' show StateController;
 import 'base_builder.dart';
 
 class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   /// use this if you want to define a condition to rebuild the widget
-  final bool Function(S oldState, S newState) buildWhen;
+  final bool Function(S oldState, S newState)? buildWhen;
 
   const StateBuilder({
-    Key key,
+    Key? key,
     this.buildWhen,
-    @required Widget Function(T) builder,
-    VoidCallback initState,
-    VoidCallback didChangeDependencies,
-    void Function(StateBuilder<T, S> oldWidget) didUpdateWidget,
-    VoidCallback dispose,
+    required Widget Function(T) builder,
+    VoidCallback? initState,
+    VoidCallback? didChangeDependencies,
+    void Function(StateBuilder<T, S> oldWidget)? didUpdateWidget,
+    VoidCallback? dispose,
     bool allowRebuild = true,
-    String tag,
+    String? tag,
   }) : super(
           key: key,
           builder: builder,
           initState: initState,
           didChangeDependencies: didChangeDependencies,
           dispose: dispose,
-          didUpdateWidget: didUpdateWidget,
+          didUpdateWidget: didUpdateWidget as void Function(BaseBuilder<T, S>)?,
           allowRebuild: allowRebuild,
           tag: tag,
         );
@@ -34,10 +34,10 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
 class _StateBuilderState<T extends StateController<S>, S>
     extends BaseBuilderState<T, S> {
   /// save the previous state
-  S _oldState;
+  late S _oldState;
 
   /// listener for update events
-  ListenerCallback<S> _listener;
+  ListenerCallback<S>? _listener;
 
   @override
   void initState() {
@@ -61,11 +61,13 @@ class _StateBuilderState<T extends StateController<S>, S>
       }
       _oldState = newState;
     };
-    this.controller.addListener(_listener);
+    this.controller.addListener(_listener!);
   }
 
   @override
   void unsubscribe() {
-    this.controller.removeListener(_listener);
+    if (_listener != null) {
+      this.controller.removeListener(_listener!);
+    }
   }
 }

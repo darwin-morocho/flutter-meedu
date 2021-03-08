@@ -6,7 +6,7 @@ import 'package:meedu/get.dart';
 ```
 
 
-Now you can inject your dependencies using `Get.instance` or `Get.i`
+Now you can inject your dependencies using `Get.i`
 
 ```dart
 // inject the dependency as a singleton

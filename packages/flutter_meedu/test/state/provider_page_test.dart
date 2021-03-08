@@ -6,12 +6,6 @@ import 'package:meedu/meedu.dart';
 
 void main() {
   group('provider page', () {
-    test('provider create assert', () {
-      expect(() {
-        Provider(create: null);
-      }, throwsAssertionError);
-    });
-
     testWidgets('provider page', (test) async {
       await test.pumpWidget(
         MaterialApp(
@@ -79,7 +73,7 @@ class HomePage extends ProviderPage<Controller> {
       body: SimpleBuilder<Controller>(
         builder: (_) => Text("${_.counter}"),
       ),
-      floatingActionButton: FlatButton(
+      floatingActionButton: TextButton(
         child: Text("add"),
         onPressed: controller.imcrement,
       ),

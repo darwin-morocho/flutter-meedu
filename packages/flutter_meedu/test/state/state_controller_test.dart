@@ -46,12 +46,12 @@ void main() {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FlatButton(
+      child: TextButton(
         onPressed: () => router.push(
           LoginPage(),
         ),
@@ -62,14 +62,14 @@ class HomePage extends StatelessWidget {
 }
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print("loginPage");
     return Scaffold(
       appBar: AppBar(
-        leading: FlatButton(
+        leading: TextButton(
           onPressed: () {
             router.pop();
           },
@@ -81,7 +81,7 @@ class LoginPage extends StatelessWidget {
         child: Builder(
           builder: (context) => Column(
             children: [
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   final c = Get.i.find<LoginController>();
                   c.onEmailChanged("test@test.com");
@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                 },
                 child: Text("set"),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   final c = Get.i.find<LoginController>();
                   c.onEmailChanged("test.com");
@@ -130,7 +130,7 @@ class LoginDetail extends StateWidget<LoginController, LoginState> {
         Text(":::StateWidget:::"),
         Text("Email: $email"),
         Text("Password: $password"),
-        FlatButton(
+        TextButton(
           onPressed: this.reset,
           child: Text("reset"),
         ),
@@ -142,15 +142,15 @@ class LoginDetail extends StateWidget<LoginController, LoginState> {
 class LoginState extends Equatable {
   final String email, password;
   LoginState({
-    @required this.email,
-    @required this.password,
+    required this.email,
+    required this.password,
   });
 
   static LoginState get initialState => LoginState(email: '', password: '');
 
   LoginState copyWith({
-    String email,
-    String password,
+    String? email,
+    String? password,
   }) {
     return LoginState(
       email: email ?? this.email,

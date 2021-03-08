@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'custom_transition.dart';
 
-class UpToDownTransition extends CustomTransition {
-  @override
+class UpToDownTransition {
   Widget buildTransition({
-    BuildContext context,
     Curve curve = Curves.ease,
-    @required Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    @required Widget child,
+    required Animation<double> animation,
+    required Widget child,
   }) {
     const begin = Offset(0.0, -1.0);
     const end = Offset.zero;
