@@ -67,39 +67,39 @@ class SearchController extends SimpleController {
     _debounceWorker = _text.debounce(
       Duration(milliseconds: 100),
       (value) {
-        debounce = value!;
+        debounce = value;
       },
     );
     _everWorker = _text.ever(
       (value) {
-        ever = value!;
+        ever = value;
       },
-      condition: ((value) => value![value.length - 1] == "@"),
+      condition: ((value) => value[value.length - 1] == "@"),
     );
 
     _everWithOutConditionWorker = _text.ever(
       (value) {
-        everWithOutCondition = value!;
+        everWithOutCondition = value;
       },
     );
 
     _onceWithOutConditionWorker = _text.once(
       (value) {
-        onceWithOutCondition = value!;
+        onceWithOutCondition = value;
       },
     );
 
     _onceWorker = _text.once(
       (value) {
-        once = value!;
+        once = value;
       },
-      condition: ((value) => value != null ? value.contains("-") : false),
+      condition: ((value) => value.contains("-")),
     );
 
     _intervalWorker = _text.interval(
       Duration(milliseconds: 50),
       (value) {
-        interval = value!;
+        interval = value;
       },
     );
   }

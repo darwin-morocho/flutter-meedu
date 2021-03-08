@@ -5,7 +5,7 @@ extension RxExtensions<T> on Rx<T> {
   /// [callback] is called every time that the [Rx<T>] changes.
   ///
   /// If [condition] is not null the [callback] only is called if [condition] returns true.
-  RxWorker ever(void Function(T?) callback, {bool Function(T?)? condition}) {
+  RxWorker ever(void Function(T) callback, {bool Function(T)? condition}) {
     // ignore: cancel_subscriptions
     final StreamSubscription subscription = this.stream.listen((event) {
       if (condition != null) {
@@ -22,7 +22,7 @@ extension RxExtensions<T> on Rx<T> {
   /// the [callback] will be executed only 1 time
   ///
   /// If [condition] is not null the [callback] only is called if [condition] returns true.
-  RxWorker once(void Function(T?) callback, {bool Function(T?)? condition}) {
+  RxWorker once(void Function(T) callback, {bool Function(T)? condition}) {
     late RxWorker rxWorker;
     // ignore: cancel_subscriptions
     StreamSubscription subscription = this.stream.listen((event) {
@@ -41,7 +41,7 @@ extension RxExtensions<T> on Rx<T> {
   }
 
   /// the [callback] will be called every certain time interval ignoring the other changes
-  RxWorker interval(Duration duration, void Function(T?) callback) {
+  RxWorker interval(Duration duration, void Function(T) callback) {
     Debouncer debouncer = Debouncer(duration);
     // ignore: cancel_subscriptions
     final StreamSubscription subscription = this.stream.listen((event) {
@@ -56,7 +56,7 @@ extension RxExtensions<T> on Rx<T> {
   }
 
   /// Every time that the [Rx<T>] changes the [callback] will be called after a delay.
-  RxWorker debounce(Duration delay, void Function(T?) callback) {
+  RxWorker debounce(Duration delay, void Function(T) callback) {
     final Debouncer debouncer = Debouncer(delay);
     // ignore: cancel_subscriptions
     final StreamSubscription subscription = this.stream.listen((event) {

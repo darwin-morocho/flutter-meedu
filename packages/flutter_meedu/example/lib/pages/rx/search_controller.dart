@@ -18,14 +18,14 @@ class SearchController extends SimpleController {
       (value) {
         print("ever  $value");
       },
-      condition: (value) => value!.contains("@"),
+      condition: (value) => value.contains("@"),
     );
 
     _onceWorker = _text.once(
       (value) {
         print("once  $value");
       },
-      condition: (value) => value!.contains("-"),
+      condition: (value) => value.contains("-"),
     );
 
     _intervalWorker = _text.interval(Duration(seconds: 2), (value) {

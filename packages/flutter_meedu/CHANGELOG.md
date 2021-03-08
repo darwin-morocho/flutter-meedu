@@ -1,3 +1,6 @@
+## [2.0.1]
+- Updated meedu: ^2.0.1
+
 ## [2.0.0]
 - Added support for flutter 2 and null safety.
 

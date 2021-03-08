@@ -1,6 +1,6 @@
 name: flutter_meedu
 description: A simple State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/darwin-morocho/flutter-meedu/tree/master/packages/flutter_meedu
 documentation: https://flutter.meedu.app
 
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^5.0.0
-  meedu: ^2.0.0
+  meedu: ^2.0.1
   
   # meedu:
   #   path: ../meedu
