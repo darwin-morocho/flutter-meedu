@@ -6,7 +6,6 @@ import 'package:meedu/state.dart';
 import 'package:meedu/rx.dart';
 import 'package:flutter_meedu/state.dart';
 import 'package:flutter_meedu/rx.dart';
-import 'home/home_controller.dart';
 
 class RxExample extends StatelessWidget {
   @override
@@ -66,9 +65,9 @@ class RxController extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     timer?.cancel();
     time.close();
-    return super.onDispose();
+    super.onDispose();
   }
 }

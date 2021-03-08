@@ -23,8 +23,8 @@ class LoginController extends StateController<LoginState> {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     print(":::: dispose login page");
-    return super.onDispose();
+    super.onDispose();
   }
 }

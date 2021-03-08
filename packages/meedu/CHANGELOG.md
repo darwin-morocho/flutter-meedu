@@ -1,3 +1,20 @@
+## [0.5.4]
+- Fixed _debugAssertNotDisposed(); on removeListener.
+
+## [0.5.3]
+- Removed unused imports.
+## [0.5.2+2]
+- Removed Future<void> from onDispose().
+
+
+## [0.5.2+1]
+- Added documentation url.
+
+## [0.5.2]
+- Improved BaseController.
+
+## [0.5.1]
+- Added Rx workers.
 ## [0.5.0]
 - Create 2 packages meedu and flutter_meedu.
 

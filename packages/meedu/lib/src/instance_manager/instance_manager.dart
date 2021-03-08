@@ -1,4 +1,4 @@
-typedef InstanceBuilderCallback<S> = S Function();
+typedef InstanceBuilderCallback<S> = S? Function();
 
 class Get {
   /// private contructor
@@ -13,13 +13,13 @@ class Get {
   final Map<String, _Lazy> _lazyVars = {};
 
   /// Insert a Instance into the hashmap
-  void put<T>(T value, {String tag}) {
+  void put<T>(T value, {String? tag}) {
     final String key = _getKey(T, tag);
     _vars[key] = value;
   }
 
   /// Search and return one instance T from the hashmap
-  T find<T>({String tag}) {
+  T? find<T>({String? tag}) {
     final String key = _getKey(T, tag);
     if (!_vars.containsKey(key)) {
       throw "Cannot find $key, make sure call to Get.i.put<${T.toString()}>() before call find.";
@@ -28,41 +28,41 @@ class Get {
   }
 
   /// removes an instance from the hasmap
-  void remove<T>({String tag}) {
+  void remove<T>({String? tag}) {
     final String key = _getKey(T, tag);
     _vars.remove(key);
   }
 
   /// removes an instance from the lazy hasmap
-  void lazyRemove<T>({String tag}) {
+  void lazyRemove<T>({String? tag}) {
     final String key = _getKey(T, tag);
     _lazyVars.remove(key);
   }
 
   /// Generates the key based on [type] (and optionally a [name])
   /// to register an Instance Builder in the hashmap.
-  String _getKey(Type type, String name) {
+  String _getKey(Type type, String? name) {
     return name == null ? type.toString() : type.toString() + name;
   }
 
   /// Creates a new Instance<S> lazily from the [<S>builder()] callback.
   void lazyPut<T>(
     InstanceBuilderCallback<T> builder, {
-    String tag,
+    String? tag,
   }) {
     final key = _getKey(T, tag);
     _lazyVars.putIfAbsent(key, () => _Lazy(builder));
   }
 
   /// Returns a new Instance<S> lazily from the [<S>builder()] callback.
-  T lazyFind<T>({
-    String tag,
+  T? lazyFind<T>({
+    String? tag,
   }) {
     final key = _getKey(T, tag);
     if (!_lazyVars.containsKey(key)) {
       throw "Cannot find $key, make sure call to Get.i.lazyPut<${T.toString()}>() before call lazyFind.";
     }
-    return _lazyVars[key].builder();
+    return _lazyVars[key]!.builder();
   }
 }
 

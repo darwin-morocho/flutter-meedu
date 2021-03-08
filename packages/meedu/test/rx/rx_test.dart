@@ -6,7 +6,7 @@ void main() {
     final counter = Rx<int>(0);
     expect(counter.value, 0);
     // check the stream events
-    List<int> values = [counter.value];
+    List<int?> values = [counter.value];
     counter.stream.listen((event) {
       values.add(event);
     });

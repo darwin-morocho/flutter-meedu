@@ -10,7 +10,7 @@ class SearchController extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     _debounceWorker = _text.debounce(Duration(milliseconds: 500), (value) {
       print("debounce  $value");
     });
@@ -34,12 +34,12 @@ class SearchController extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
+  void onDispose() {
     _text.close();
     _debounceWorker?.dispose();
     _everWorker?.dispose();
     _onceWorker?.dispose();
     _intervalWorker?.dispose();
-    return super.onDispose();
+    super.onDispose();
   }
 }

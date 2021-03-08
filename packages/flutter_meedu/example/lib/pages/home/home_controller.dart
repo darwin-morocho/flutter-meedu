@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:meedu/state.dart';
 
 class HomeController extends SimpleController {
@@ -11,7 +9,7 @@ class HomeController extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     print("afterFirstLayout");
   }
 
@@ -21,7 +19,7 @@ class HomeController extends SimpleController {
   }
 
   @override
-  Future<void> onDispose() {
-    return super.onDispose();
+  void onDispose() {
+    super.onDispose();
   }
 }

@@ -6,7 +6,7 @@ import 'transitions/right_to_left.dart';
 import 'transition.dart';
 import 'transitions/up_to_down.dart';
 
-class MeeduPageRoute extends PageRoute {
+class MeeduPageRoute<T> extends PageRoute<T> {
   final Duration transitionDuration;
   final bool maintainState;
   final Color barrierColor;

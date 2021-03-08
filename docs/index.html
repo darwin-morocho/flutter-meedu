@@ -15,6 +15,16 @@
     />
   </head>
   <body>
+    <nav>
+      <a href="https://meedu.app">Powered By?</a>
+      <a
+        href="https://github.com/the-meedu-app/flutter-meedu-player/tree/master/plugin/example"
+        >Examples</a
+      >
+      <a target="_blank" href="https://www.buymeacoffee.com/meedu">
+       <b>👊 Buy me a coffee</b>
+      </a>
+    </nav>
     <div id="app"></div>
     <script src="https://unpkg.com/docsify-edit-on-github/index.js"></script>
     <script>
@@ -27,13 +37,17 @@
         loadSidebar: true,
         subMaxLevel: 2,
         repo: "https://github.com/darwin-morocho/flutter-meedu",
-        plugins: [  EditOnGithubPlugin.create('https://github.com/darwin-morocho/flutter-meedu/tree/master/docs/', undefined, 'Edit on GitHub'),
-      ],
+        plugins: [
+          EditOnGithubPlugin.create(
+            "https://github.com/darwin-morocho/flutter-meedu/tree/master/docs/",
+            undefined,
+            "Edit on GitHub"
+          ),
+        ],
       };
     </script>
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
     <script src="https://unpkg.com/prismjs/components/prism-yaml.min.js"></script>
     <script src="https://unpkg.com/prismjs/components/prism-dart.min.js"></script>
-
   </body>
 </html>

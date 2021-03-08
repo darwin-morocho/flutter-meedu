@@ -37,6 +37,12 @@ void main() {
         MaterialApp(
           home: Provider<Controller>(
             create: (_) => Controller(),
+            onInit: (BuildContext context, Controller controller) {
+              print("Provider OnInit");
+            },
+            onAfterFirstLayout: (BuildContext context, Controller controller) {
+              print("Provider onAfterFirstLayout");
+            },
             child: Scaffold(
               body: Center(
                 child: Column(
@@ -67,13 +73,13 @@ void main() {
                     FloatingActionButton(
                       key: incrementButtonKey,
                       onPressed: () {
-                        Provider.of<Controller>(context).increment();
+                        Provider.of<Controller>().increment();
                       },
                     ),
                     FloatingActionButton(
                       key: incrementButtonIdKey,
                       onPressed: () {
-                        Provider.of<Controller>(context).incrementWithId();
+                        Provider.of<Controller>().incrementWithId();
                       },
                     ),
                   ],
@@ -112,7 +118,7 @@ class Controller extends SimpleController {
   }
 
   @override
-  void afterFirstLayout() {
+  void onAfterFirstLayout() {
     print("👉 afterFirstLayout SimpleController");
   }
 
@@ -123,7 +129,7 @@ class Controller extends SimpleController {
 }
 
 class CounterDetail extends SimpleWidget<Controller> {
-  final String id = 'id'; //  to allow rebuilds when the update(['counter']) method is called
+  String get id => 'id'; //  to allow rebuilds when the update(['counter']) method is called
 
   void onPressed() {
     controller.increment();

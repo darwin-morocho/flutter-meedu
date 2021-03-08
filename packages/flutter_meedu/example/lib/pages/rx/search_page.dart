@@ -16,7 +16,7 @@ class SearchPage extends StatelessWidget {
             width: double.infinity,
             child: Builder(
               builder: (context) {
-                final controller = Provider.of<SearchController>(context);
+                final controller = Provider.of<SearchController>();
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -9,6 +9,12 @@ Rx<int> counter = Rx(0); // or use Rx<int> counter = 0.obs;
 void increment() {
     counter.value++;
 }
+
+@override
+void onDispose(){
+ counter.close(); // close the stream controller
+  super.onDispose();
+}
 ```
 Don't forget to call `close()` method when your widget or controller is destroyed.
 
@@ -29,4 +35,48 @@ RxBuilder(
 )
 ```
 
-Check the example for more info abour how to use the `Rx` class with `List` and `Map`.
+## Working with ***List*** and ***Map***.
+
+### Lists
+```dart
+Rx<List<int>> numbers = Rx([]);
+
+void add(int number){
+    final copy = List<int>.from(numbers.value);
+    copy.add(number);
+    numbers.value = copy;
+}
+
+void remove(int index){
+    final copy = List<int>.from(numbers.value);
+    copy.removeAt(index);
+    numbers.value = copy;
+}
+
+void update(int index, int number){
+    final copy = List<int>.from(numbers.value);
+    copy[index] = number;
+    numbers.value = copy;
+}
+```
+
+
+### Maps
+```dart
+Rx<Map<String, dynamic>> data = Rx({});
+void add(String key, dynamic value) {
+  final copy = Map<String, dynamic>.from(data.value);
+  copy[key] = value;
+  data.value = copy;
+}
+void remove(String key) {
+  final copy = Map<String, dynamic>.from(data.value);
+  copy.remove(key);
+  data.value = copy;
+}
+```
+
+
+## Rx Workers
+You can use the `Rx` class to use some utils methods like **debounce, once, ever and interval**.
+Check one example [here](https://github.com/darwin-morocho/flutter-meedu/blob/master/packages/flutter_meedu/example/lib/pages/rx/search_controller.dart).

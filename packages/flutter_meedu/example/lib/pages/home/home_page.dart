@@ -1,17 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu/meedu.dart';
+import 'package:meedu_example/main.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
+  void onInit(BuildContext context, HomeController controller) {
+    print("HomePage provider OnInit");
+  }
+
+  void onAfterFirstLayout(BuildContext context, HomeController controller) {
+    print("HomePage provider onAfterFirstLayout");
+  }
+
+  void onDispose(BuildContext context, HomeController controller) {
+    print("HomePage provider onDispose");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Provider<HomeController>(
       create: (_) => HomeController(),
+      onInit: this.onInit,
+      onAfterFirstLayout: this.onAfterFirstLayout,
+      onDispose: this.onDispose,
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            Row(
+              children: [
+                Text("DarkMode"),
+                SimpleBuilder<AppThemeController>(
+                  builder: (_) => Switch(value: _.darkMode, onChanged: _.onToggleTheme),
+                )
+              ],
+            )
+          ],
+        ),
         body: SafeArea(
           child: Container(
             width: double.infinity,
@@ -19,6 +46,10 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SimpleBuilder<AppThemeController>(
+                  builder: (_) => Text("_.darkMode ${_.darkMode}"),
+                ),
+                SizedBox(height: 20),
                 SimpleBuilder<HomeController>(
                   id: 'counter',
                   builder: (controller) => Text(
@@ -33,7 +64,7 @@ class HomePage extends StatelessWidget {
                 FlatButton(
                   color: Colors.redAccent,
                   onPressed: () {
-                    router.pushNamed(
+                    router.pushReplacementNamed(
                       '/login',
                     );
                   },
@@ -58,7 +89,8 @@ class HomePage extends StatelessWidget {
 }
 
 class CounterDetail extends SimpleWidget<HomeController> {
-  final String id = 'counter'; //  to allow rebuilds when the update(['counter']) method is called
+  @override
+  String get id => 'counter'; //  to allow rebuilds when the update(['counter']) method is called
 
   void onPressed() {
     controller.increment();

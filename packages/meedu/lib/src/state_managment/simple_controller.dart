@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:meta/meta.dart' show mustCallSuper;
 import 'base_controller.dart';
 
@@ -7,7 +6,6 @@ abstract class SimpleController extends BaseController<List<String>> {
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void update([List<String> listeners = const []]) {
-    assert(listeners != null);
     notify(listeners);
   }
 
@@ -17,11 +15,11 @@ abstract class SimpleController extends BaseController<List<String>> {
 
   /// when the MeeduBuilder was mounted
   @override
-  void afterFirstLayout() {}
+  void onAfterFirstLayout() {}
 
   /// use to listen when the controller was deleted from memory
   @mustCallSuper
-  Future<void> onDispose() async {
+  void onDispose() async {
     super.onDispose();
   }
 }

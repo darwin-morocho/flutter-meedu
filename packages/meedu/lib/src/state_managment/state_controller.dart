@@ -1,10 +1,9 @@
-import 'dart:async';
 import 'base_controller.dart';
 import 'package:meta/meta.dart' show mustCallSuper;
 
 abstract class StateController<S> extends BaseController<S> {
-  S _state, _oldState;
-  S get state => _state;
+  S? _state, _oldState;
+  S? get state => _state;
 
   StateController(S initialState) {
     _state = initialState;
@@ -30,10 +29,10 @@ abstract class StateController<S> extends BaseController<S> {
   /// By default this method returns true, you can use this method to intercept the [newState]
   /// and check if the new state is valid.
   /// If this method returns false the new state will be igonored
-  bool onStateWillChange(S oldState, S newState) => true;
+  bool onStateWillChange(S? oldState, S newState) => true;
 
   /// this method is called when the state has been changed
-  void onStateChanged(S oldState, S currentState) {}
+  void onStateChanged(S? oldState, S? currentState) {}
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
   @override
@@ -41,12 +40,12 @@ abstract class StateController<S> extends BaseController<S> {
 
   /// when the MeeduBuilder was mounted
   @override
-  void afterFirstLayout() {}
+  void onAfterFirstLayout() {}
 
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper
-  Future<void> onDispose() async {
+  void onDispose() async {
     super.onDispose();
   }
 }
