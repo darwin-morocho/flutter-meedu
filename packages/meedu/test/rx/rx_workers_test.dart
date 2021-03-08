@@ -56,7 +56,12 @@ class SearchController extends SimpleController {
       _onceWorker,
       _onceWithOutConditionWorker,
       _intervalWorker;
-  String debounce = "", ever = "", everWithOutCondition = "", once = "", onceWithOutCondition = "", interval = "";
+  String debounce = "",
+      ever = "",
+      everWithOutCondition = "",
+      once = "",
+      onceWithOutCondition = "",
+      interval = "";
 
   void onTextChange(String text) {
     _text.value = text;
