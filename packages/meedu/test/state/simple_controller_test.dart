@@ -8,9 +8,6 @@ void main() {
   test('SimpleController', () async {
     final Completer completer = Completer();
     final c = Controller();
-    expect(() {
-      c.update(null);
-    }, throwsA(isA<AssertionError>()));
     int value = c.counter;
     expect(value, 0);
     c.onInit();

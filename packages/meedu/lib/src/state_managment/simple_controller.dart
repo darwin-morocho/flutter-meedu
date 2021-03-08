@@ -6,7 +6,6 @@ abstract class SimpleController extends BaseController<List<String>> {
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   void update([List<String> listeners = const []]) {
-    assert(listeners != null);
     notify(listeners);
   }
 

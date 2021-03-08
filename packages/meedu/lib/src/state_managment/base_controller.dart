@@ -12,12 +12,12 @@ class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
 /// Define a base controller for SimpleController and StateController
 abstract class BaseController<T> {
   /// list to save the subscribers
-  LinkedList<_ListenerEntry<T>> _listeners = LinkedList<_ListenerEntry<T>>();
+  LinkedList<_ListenerEntry<T?>>? _listeners = LinkedList<_ListenerEntry<T>>();
 
   /// Tell us if the controller was disposed
   bool get disposed => _listeners == null;
 
-  bool get hasListeners => _listeners.isNotEmpty;
+  bool get hasListeners => _listeners!.isNotEmpty;
 
   /// check if the controller is mounted
   void _debugAssertNotDisposed() {
@@ -27,13 +27,13 @@ abstract class BaseController<T> {
   /// add a new listener
   void addListener(ListenerCallback<T> listener) {
     _debugAssertNotDisposed();
-    _listeners.add(_ListenerEntry<T>(listener));
+    _listeners!.add(_ListenerEntry<T>(listener));
   }
 
   /// remove a listener
   void removeListener(ListenerCallback<T> listener) {
     if (_listeners != null) {
-      for (final _ListenerEntry<T> entry in _listeners) {
+      for (final _ListenerEntry<T?> entry in _listeners!) {
         if (entry.listener == listener) {
           entry.unlink();
           return;
@@ -45,11 +45,11 @@ abstract class BaseController<T> {
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
-  void notify([T data]) {
+  void notify([T? data]) {
     _debugAssertNotDisposed();
 
-    if (_listeners.isNotEmpty) {
-      for (final _ListenerEntry<T> entry in _listeners) {
+    if (_listeners!.isNotEmpty) {
+      for (final _ListenerEntry<T?> entry in _listeners!) {
         if (entry.list != null) entry.listener(data);
       }
     }
@@ -66,7 +66,7 @@ abstract class BaseController<T> {
   @mustCallSuper
   void onDispose() async {
     _debugAssertNotDisposed();
-    _listeners.clear();
+    _listeners!.clear();
     _listeners = null;
   }
 }

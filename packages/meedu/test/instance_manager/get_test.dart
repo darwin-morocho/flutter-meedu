@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   group('dependecy injection', () {
     test('put', () {
-      Person c1;
+      Person? c1;
       try {
         c1 = Get.i.find<Person>();
       } catch (e) {}
@@ -17,7 +17,7 @@ void main() {
       expect(c1.hashCode == c2.hashCode, true);
 
       // check with TAG
-      Person t1;
+      Person? t1;
       try {
         t1 = Get.i.find<Person>(tag: 't');
       } catch (e) {}
@@ -41,7 +41,7 @@ void main() {
       expect(t1, isNull);
     });
     test('lazy put', () {
-      Person c1;
+      Person? c1;
       try {
         c1 = Get.i.lazyFind<Person>();
       } catch (e) {}
@@ -53,7 +53,7 @@ void main() {
       expect(c2, isNotNull);
       expect(c1.hashCode == c2.hashCode, false);
 
-      Person t1;
+      Person? t1;
       try {
         t1 = Get.i.lazyFind<Person>(tag: 't');
       } catch (e) {}

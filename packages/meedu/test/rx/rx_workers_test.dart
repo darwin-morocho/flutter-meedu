@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 void main() {
   test("RxWorkers", () async {
     Completer completer = Completer();
-    Timer timer;
+    late Timer timer;
     final times = 10;
     int i = 0;
     final c = SearchController();
@@ -48,9 +48,9 @@ void main() {
 
 class SearchController extends SimpleController {
   final Rx<String> _text = "".obs;
-  String get text => _text.value;
+  String? get text => _text.value;
   bool get hasListeners => _text.hasListeners;
-  RxWorker _debounceWorker,
+  RxWorker? _debounceWorker,
       _everWorker,
       _everWithOutConditionWorker,
       _onceWorker,
@@ -64,36 +64,44 @@ class SearchController extends SimpleController {
 
   @override
   void onAfterFirstLayout() {
-    _debounceWorker = _text.debounce(Duration(milliseconds: 100), (value) {
-      debounce = value;
-    });
+    _debounceWorker = _text.debounce(
+      Duration(milliseconds: 100),
+      (value) {
+        debounce = value!;
+      },
+    );
     _everWorker = _text.ever(
       (value) {
-        ever = value;
+        ever = value!;
       },
-      condition: (value) => value[value.length - 1] == "@",
+      condition: ((value) => value![value.length - 1] == "@"),
     );
 
-    _everWithOutConditionWorker = _text.ever((value) {
-      everWithOutCondition = value;
-    });
+    _everWithOutConditionWorker = _text.ever(
+      (value) {
+        everWithOutCondition = value!;
+      },
+    );
 
     _onceWithOutConditionWorker = _text.once(
       (value) {
-        onceWithOutCondition = value;
+        onceWithOutCondition = value!;
       },
     );
 
     _onceWorker = _text.once(
       (value) {
-        once = value;
+        once = value!;
       },
-      condition: (value) => value.contains("-"),
+      condition: ((value) => value.contains("-")) as bool Function(String?)?,
     );
 
-    _intervalWorker = _text.interval(Duration(milliseconds: 50), (value) {
-      interval = value;
-    });
+    _intervalWorker = _text.interval(
+      Duration(milliseconds: 50),
+      (value) {
+        interval = value!;
+      },
+    );
   }
 
   @override
