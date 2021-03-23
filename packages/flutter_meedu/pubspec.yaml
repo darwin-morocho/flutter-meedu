@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
   provider: ^5.0.0
   meedu: ^2.0.1
-  
   # meedu:
   #   path: ../meedu
 

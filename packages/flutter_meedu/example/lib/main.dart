@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu/state.dart';
+import 'package:meedu_example/pages/modal_with_tags_example.dart';
 
 import 'pages/home/home_page.dart';
 import 'pages/login/login_page.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           themeMode: _.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          home: HomePage(),
+          home: ModalAndTagsExamplePage(),
           routes: {
             '/login': (_) => LoginPage(),
           },
