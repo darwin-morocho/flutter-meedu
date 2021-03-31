@@ -20,7 +20,6 @@ Get.i.remove<AuthRepository>();
 
 // use a lazy put to get a new instance every time that you call to MGet.i.lazyFind
 Get.i.lazyPut<AuthRepository>(()=>new AuthRepositoryImpl());
-Get.i.lazyFind<AuthRepository>();
 Get.i.lazyRemove<AuthRepository>();
 ```
 
@@ -28,6 +27,6 @@ Get.i.lazyRemove<AuthRepository>();
 Using `Get.i.put<...>(...)` for dependency injection will do that when you call `Get.i.find<...>(...)` you allways get the same instance.
 
 
-Using `Get.i.lazyPut<...>(...)` for dependency injection will do that when you call `Get.i.lazyFind<...>(...)` you allways get a new instance.
+Using `Get.i.lazyPut<...>(...)` for dependency injection will do that when you call `Get.i.find<...>(lazy:true)` you allways get a new instance.
 
 In both `Get.i.put<...>(...)` and `Get.i.lazyPut<...>(...)` you can use the `tag` parameter to inject multiples instances of the same class but each one will be unique.

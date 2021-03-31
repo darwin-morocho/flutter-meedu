@@ -1,3 +1,11 @@
+## [2.1.1]
+- Fixed router navigator key.
+
+## [2.1.0-prev.1]
+- Updated export file.
+## [2.1.0-prev.0]
+- Updated meedu: ^2.1.0
+
 ## [2.0.1]
 - Updated meedu: ^2.0.1
 

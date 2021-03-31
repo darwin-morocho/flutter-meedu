@@ -6,22 +6,21 @@ import 'navigator.dart';
 
 export 'transition.dart';
 
-final GlobalKey<NavigatorState> navigatorKey =
-    MeeduNavigator.instance.navigatorKey;
-final NavigatorState? _state = navigatorKey.currentState;
+GlobalKey<NavigatorState> get navigatorKey => MeeduNavigator.i.navigatorKey;
+NavigatorState? get _state => MeeduNavigator.i.navigatorKey.currentState;
 
 /// set the default transition for all pages
 void setDefaultTransition(Transition transition, {Duration? duration}) {
-  MeeduNavigator.instance.transition = transition;
+  MeeduNavigator.i.transition = transition;
   if (duration != null) {
-    MeeduNavigator.instance.transitionDuration = duration;
+    MeeduNavigator.i.transitionDuration = duration;
   }
 }
 
 void _validateRouterState() {
   assert(
     _state != null,
-    "Invalid navigator state, maake sure that you has been set the navigator key in your MaterialApp",
+    "Invalid navigator state, make sure that you has been set the navigator key in your MaterialApp",
   );
 }
 

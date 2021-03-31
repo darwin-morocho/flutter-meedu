@@ -20,9 +20,9 @@ Route<T> getRoute<T>(
     arguments: arguments,
   );
 
-  final _transition = transition ?? MeeduNavigator.instance.transition;
+  final _transition = transition ?? MeeduNavigator.i.transition;
   final _transitionDuration =
-      transitionDuration ?? MeeduNavigator.instance.transitionDuration;
+      transitionDuration ?? MeeduNavigator.i.transitionDuration;
 
   switch (_transition) {
     case Transition.material:

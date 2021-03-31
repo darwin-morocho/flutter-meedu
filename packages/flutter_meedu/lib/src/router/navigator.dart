@@ -3,9 +3,8 @@ import 'transition.dart';
 
 ///this class has the navigator state and the transition configuration
 class MeeduNavigator {
-  MeeduNavigator._internal();
-  static final MeeduNavigator _instance = MeeduNavigator._internal();
-  static MeeduNavigator get instance => _instance;
+  MeeduNavigator._();
+  static final MeeduNavigator i = MeeduNavigator._();
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();

@@ -1,3 +1,6 @@
+## [2.1.0]
+- Updated Get.i.find with lazy param.
+
 ## [2.0.1]
 - Removed T? in RxWorker.
 
