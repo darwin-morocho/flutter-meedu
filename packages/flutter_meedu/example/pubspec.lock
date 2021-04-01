@@ -91,9 +91,9 @@ packages:
   meedu:
     dependency: "direct main"
     description:
-      name: meedu
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../meedu"
+      relative: true
+    source: path
     version: "2.1.0"
   meta:
     dependency: transitive

@@ -26,9 +26,9 @@ dependencies:
   equatable: ^2.0.0 
   flutter_meedu:
     path: ../
-  meedu: ^2.0.1
-  # meedu:
-  #   path: ../../meedu
+  # meedu: ^2.0.1
+  meedu:
+    path: ../../meedu
 
 
   # The following adds the Cupertino Icons font to your application.

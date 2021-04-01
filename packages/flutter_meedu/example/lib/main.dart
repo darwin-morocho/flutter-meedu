@@ -6,6 +6,7 @@ import 'package:meedu_example/pages/modal_with_tags_example.dart';
 
 import 'pages/home/home_page.dart';
 import 'pages/login/login_page.dart';
+import 'pages/simple_provider_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
           themeMode: _.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          home: ModalAndTagsExamplePage(),
+          // home: ModalAndTagsExamplePage(),
+          home: SimpleProviderPage(),
           routes: {
             '/login': (_) => LoginPage(),
           },
