@@ -1,11 +1,11 @@
-import 'base_controller.dart';
+import 'base_notifier.dart';
 import 'package:meta/meta.dart' show mustCallSuper;
 
-abstract class StateController<S> extends BaseController<S> {
+abstract class StateNotifier<S> extends BaseNotifier<S> {
   late S _state, _oldState;
   S get state => _state;
 
-  StateController(S initialState) {
+  StateNotifier(S initialState) {
     _state = initialState;
     _oldState = _state;
   }
@@ -13,7 +13,7 @@ abstract class StateController<S> extends BaseController<S> {
   /// Update the State and  notify to listeners and rebuild the widgets
   ///
   /// [state] must be different of the current state
-  void update(S state) {
+  set state(S state) {
     assert(!disposed, 'A $runtimeType was used after being disposed.');
     if (onStateWillChange(_oldState, state)) {
       _oldState = _state;

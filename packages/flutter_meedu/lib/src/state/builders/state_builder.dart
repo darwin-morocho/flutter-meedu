@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart' show Widget, VoidCallback, Key;
-import 'package:meedu/state.dart' show StateController;
+import 'package:meedu/state.dart' show StateNotifier;
 import 'base_builder.dart';
 
-class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
+class StateBuilder<T extends StateNotifier<S>, S> extends BaseBuilder<T, S> {
   /// use this if you want to define a condition to rebuild the widget
   final bool Function(S oldState, S newState)? buildWhen;
 
@@ -31,8 +31,7 @@ class StateBuilder<T extends StateController<S>, S> extends BaseBuilder<T, S> {
   _StateBuilderState createState() => _StateBuilderState<T, S>();
 }
 
-class _StateBuilderState<T extends StateController<S>, S>
-    extends BaseBuilderState<T, S> {
+class _StateBuilderState<T extends StateNotifier<S>, S> extends BaseBuilderState<T, S> {
   /// save the previous state
   late S _oldState;
 

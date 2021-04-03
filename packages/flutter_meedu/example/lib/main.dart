@@ -3,6 +3,7 @@ import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu/state.dart';
 import 'package:meedu_example/pages/modal_with_tags_example.dart';
+import 'package:meedu_example/pages/rx/rx_example.dart';
 
 import 'pages/home/home_page.dart';
 import 'pages/login/login_page.dart';
@@ -27,10 +28,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           // home: ModalAndTagsExamplePage(),
-          home: SimpleProviderPage(),
-          routes: {
-            '/login': (_) => LoginPage(),
-          },
+          // home: SimpleProviderPage(),
+          home: RxExample(),
+          // routes: {
+          //   '/login': (_) => LoginPage(),
+          // },
         ),
       ),
       providers: [
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AppThemeController extends SimpleController {
+class AppThemeController extends SimpleNotifier {
   bool _darkMode = false;
   bool get darkMode => _darkMode;
 

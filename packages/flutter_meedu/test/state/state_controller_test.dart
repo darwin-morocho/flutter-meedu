@@ -115,9 +115,7 @@ class LoginPage extends StatelessWidget {
 
 class LoginDetail extends StateWidget<LoginController, LoginState> {
   void reset() {
-    this.controller.update(
-          state.copyWith(email: '@', password: ''),
-        );
+    this.controller.state = state.copyWith(email: '@', password: '');
   }
 
   @override
@@ -164,19 +162,15 @@ class LoginState extends Equatable {
   List<Object> get props => [email, password];
 }
 
-class LoginController extends StateController<LoginState> {
+class LoginController extends StateNotifier<LoginState> {
   LoginController() : super(LoginState.initialState);
 
   void onEmailChanged(String email) {
-    update(
-      this.state.copyWith(email: email),
-    );
+    state = this.state.copyWith(email: email);
   }
 
   void onPasswordChanged(String password) {
-    update(
-      this.state.copyWith(password: password),
-    );
+    state = this.state.copyWith(password: password);
   }
 
   @override

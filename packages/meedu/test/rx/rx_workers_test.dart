@@ -46,7 +46,7 @@ void main() {
   });
 }
 
-class SearchController extends SimpleController {
+class SearchController extends SimpleNotifier {
   final Rx<String> _text = "".obs;
   String? get text => _text.value;
   bool get hasListeners => _text.hasListeners;

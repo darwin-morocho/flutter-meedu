@@ -1,6 +1,6 @@
 import 'package:meedu/state.dart';
 
-class HomeController extends SimpleController {
+class HomeController extends SimpleNotifier {
   int counter = 0;
 
   @override

@@ -1,44 +1,55 @@
-import '../../get.dart';
-import '../../state.dart';
-import 'state_provider.dart';
+import 'dart:async';
+import 'package:meta/meta.dart' show sealed;
+import '../notifiers/base_notifier.dart';
+import '../notifiers/simple_notifier.dart';
+import '../notifiers/state_notifier.dart';
+import '../instance_manager/instance_manager.dart';
 
-typedef _LazyCallback<T extends BaseController> = T Function();
+part 'simple_provider.dart';
+part 'state_provider.dart';
+
+typedef _LazyCallback<T extends BaseNotifier> = T Function(ProviderReference ref);
 
 const String meeduProviderTag = 'meedu-provider';
 
-abstract class BaseProvider<T extends BaseController> {
+@sealed
+abstract class BaseProvider<T extends BaseNotifier> {
   /// callback to create one Instance of [T] when it was need it
   _LazyCallback<T> _create;
-  BaseProvider(this._create);
+  bool _initialized = false;
+  final bool autoDispose;
+  BaseProvider(this._create, {this.autoDispose = false});
 
-  T get controller {
-    final created = Get.i.has<T>(tag: meeduProviderTag);
-    if (created) {
-      return Get.i.find<T>(tag: meeduProviderTag);
-    }
-
-    final controller = _create();
-    Get.i.put<T>(controller, tag: meeduProviderTag);
-    if (this is StateProvider) {
-      final state = (controller as StateController).state;
-      (this as StateProvider).setOldState(state);
-    }
-    return controller;
-  }
+  T get read;
 
   // Custom implementation of hash code optimized for reading providers.
-  //
-  // The value is designed to fit within the SMI representation. This makes
-  // the cached value use less memory (one field and no extra heap objects) and
-  // cheap to compare (no indirection).
-  //
-  // See also:
-  //
-  //  * https://dart.dev/articles/dart-vm/numeric-computation, which
-  //    explains how numbers are represented in Dart.
   @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes, hash_and_equals
   int get hashCode => _cachedHash;
   final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
   static int _nextHashCode = 1;
+}
+
+class ProviderReference {
+  T read<T extends BaseNotifier>(BaseProvider<T> provider) {
+    return provider.read;
+  }
+
+  /// called when the provider is destroyed
+  void onDispose(void Function() cb) {
+    cb();
+  }
+}
+
+mixin NotifyManager<T> {
+  StreamController<T> streamController = StreamController();
+  final _subscriptions = <Stream, List<StreamSubscription>>{};
+
+  close() {
+    _subscriptions.forEach((stream, subscriptions) {
+      for (final subscription in subscriptions) {
+        subscription.cancel();
+      }
+    });
+    _subscriptions.clear();
+  }
 }

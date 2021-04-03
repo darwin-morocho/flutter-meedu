@@ -72,9 +72,7 @@ class HomePage extends StatelessWidget {
           TextButton(
             onPressed: () {
               final UserController c = Get.i.find<UserController>();
-              c.update(
-                User(id: 12345, username: "meedu", email: "test@test.com"),
-              );
+              c.state = User(id: 12345, username: "meedu", email: "test@test.com");
             },
             child: Text("update user"),
           ),
@@ -84,7 +82,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class CounterController extends SimpleController {
+class CounterController extends SimpleNotifier {
   int counter = 0;
   void add() {
     counter++;
@@ -92,7 +90,7 @@ class CounterController extends SimpleController {
   }
 }
 
-class UserController extends StateController<User> {
+class UserController extends StateNotifier<User> {
   UserController(User initialState) : super(initialState);
 }
 

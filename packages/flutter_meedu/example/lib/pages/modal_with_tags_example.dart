@@ -74,7 +74,7 @@ class CounterView extends StatelessWidget {
   }
 }
 
-class CounterController extends SimpleController {
+class CounterController extends SimpleNotifier {
   int _counter = 0;
   int get counter => _counter;
 

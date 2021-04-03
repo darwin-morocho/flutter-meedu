@@ -22,8 +22,7 @@ class RxExample extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RxBuilder(
-                  observables: [_.time],
-                  builder: (ctx) => Text("--> ${_.time.value}"),
+                  () => Text("--> ${_.time}"),
                 ),
                 SimpleBuilder<RxController>(
                   allowRebuild: true,
@@ -41,8 +40,9 @@ class RxExample extends StatelessWidget {
   }
 }
 
-class RxController extends SimpleController {
-  Rx<int> time = 0.obs;
+class RxController extends SimpleNotifier {
+  Rx<int> _time = 0.obs;
+  int get time => _time.value;
   Timer? timer;
   bool running = false;
 
@@ -50,10 +50,10 @@ class RxController extends SimpleController {
     timer?.cancel();
     running = !running;
     if (running) {
-      time.value = 10;
+      _time.value = 10;
       timer = Timer.periodic(Duration(seconds: 1), (_) {
-        time.value = time.value - 1;
-        if (time.value == 0) {
+        _time.value = time - 1;
+        if (time == 0) {
           timer!.cancel();
           running = false;
           update();
@@ -67,7 +67,7 @@ class RxController extends SimpleController {
   @override
   void onDispose() {
     timer?.cancel();
-    time.close();
+    _time.close();
     super.onDispose();
   }
 }

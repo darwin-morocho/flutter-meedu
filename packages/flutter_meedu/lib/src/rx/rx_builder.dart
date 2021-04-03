@@ -4,79 +4,59 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/rx.dart';
 
 class RxBuilder extends StatefulWidget {
-  /// a list of observables
-  final List<Rx> observables;
-
   /// the builder function
-  final WidgetBuilder builder;
-  RxBuilder({Key? key, required this.observables, required this.builder})
-      : super(key: key);
-
+  final Widget Function() builder;
+  RxBuilder(this.builder, {Key? key}) : super(key: key);
   @override
   _RxBuilderState createState() => _RxBuilderState();
 }
 
 class _RxBuilderState extends State<RxBuilder> {
-  /// a list of StreamSubscription for each observable
-  List<StreamSubscription> _subscriptions = [];
+  RxNotifier? _observer;
+  late StreamSubscription _subscription;
+  bool _afterFirstLayout = false;
 
-  List<int> _hashes(List<Rx> observables) =>
-      observables.map((e) => e.hashCode).toList();
-
-  bool _observablesHasBeenChanged(List<int> oldHashes, List<int> newHashes) {
-    return listEquals(oldHashes, newHashes);
+  _RxBuilderState() {
+    _observer = RxNotifier();
   }
 
   @override
   void initState() {
     super.initState();
-    _addSubscriptions(); // listen the observable events
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _afterFirstLayout = true;
+    });
+    // listen the observable events
+    _subscription = _observer!.listen(this._rebuild);
   }
 
   @override
   void dispose() {
+    _afterFirstLayout = false;
     // remove the subsciptions when the widget is destroyed
-    _removeSubscriptions();
+    _subscription.cancel();
+    _observer?.close();
     super.dispose();
   }
 
-  /// read all observables and creates a subscription for each one
-  Future<void> _addSubscriptions() async {
-    widget.observables.forEach((e) {
-      _subscriptions.add(_addListener(e));
-    });
-  }
-
-  /// create a [StreamSubscription] of a given Rx [observable]
-  StreamSubscription _addListener(Rx observable) {
-    return observable.stream.listen((_) {
+  void _rebuild(_) {
+    if (_afterFirstLayout && this.mounted) {
       setState(() {});
-    });
-  }
-
-  /// remove all subscriptions
-  Future<void> _removeSubscriptions() async {
-    final tasks = _subscriptions.map((e) => e.cancel());
-    await Future.wait(tasks);
-    _subscriptions.clear();
-  }
-
-  @override
-  void didUpdateWidget(covariant RxBuilder oldWidget) {
-    final oldHashes = _hashes(oldWidget.observables);
-    final newHashes = _hashes(widget.observables);
-    final bool hasBeenChanged =
-        !_observablesHasBeenChanged(oldHashes, newHashes);
-    if (hasBeenChanged) {
-      _removeSubscriptions().then((_) {
-        _addSubscriptions();
-      });
     }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context);
+    final observer = RxNotifier.proxy;
+
+    RxNotifier.proxy = _observer;
+    final result = widget.builder();
+    if (!_observer!.canUpdate) {
+      throw """
+      If you are seeing this error, you probably did not insert any observable variables into RxBuilder   
+      """;
+    }
+    RxNotifier.proxy = observer;
+    return result;
   }
 }

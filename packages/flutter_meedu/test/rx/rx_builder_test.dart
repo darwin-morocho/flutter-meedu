@@ -32,11 +32,9 @@ class _ClockState extends State<Clock> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RxBuilder(
-        observables: [widget.enabled],
-        builder: (ctx) => widget.enabled.value
+        () => widget.enabled.value
             ? RxBuilder(
-                observables: [widget.counter],
-                builder: (ctx) {
+                () {
                   return Column(
                     children: [
                       if (widget.enabled.value) ...[

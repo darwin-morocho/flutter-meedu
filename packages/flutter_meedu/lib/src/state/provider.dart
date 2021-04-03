@@ -9,7 +9,7 @@ typedef ProviderCallback<T> = void Function(BuildContext context, T controller);
 /// class to inject a controller into the widgets tree
 ///
 /// By defaul the [Provider] injects the controller using [Get.i.put] and remove it when the provider is destroyed
-class Provider<T extends BaseController> extends SingleChildStatelessWidget {
+class Provider<T extends BaseNotifier> extends SingleChildStatelessWidget {
   /// function that is responsible for
   /// creating the [SimpleController] or [StateController] and a child which will have access
   /// to the instance via `Provider.of<...>(context)`.
@@ -63,8 +63,7 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
           // if the controller is not disposed
           if (!controller.disposed) {
             controller.onAfterFirstLayout();
-            if (this.onAfterFirstLayout != null)
-              this.onAfterFirstLayout!(e, controller);
+            if (this.onAfterFirstLayout != null) this.onAfterFirstLayout!(e, controller);
           }
         });
         return () {};
@@ -73,7 +72,7 @@ class Provider<T extends BaseController> extends SingleChildStatelessWidget {
   }
 
   /// Search one instance of [BaseController]
-  static T of<T extends BaseController>({String? tag}) {
+  static T of<T extends BaseNotifier>({String? tag}) {
     return Get.i.find<T>(tag: tag);
   }
 }

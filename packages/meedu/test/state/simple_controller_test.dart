@@ -35,7 +35,7 @@ void main() {
   });
 }
 
-class Controller extends SimpleController {
+class Controller extends SimpleNotifier {
   int counter = 0;
 
   @override

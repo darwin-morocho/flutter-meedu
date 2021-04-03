@@ -1,19 +1,15 @@
 import 'package:meedu/state.dart';
 import 'login_state.dart';
 
-class LoginController extends StateController<LoginState> {
+class LoginController extends StateNotifier<LoginState> {
   LoginController() : super(LoginState.initialState);
 
   void onEmailChanged(String email) {
-    update(
-      this.state.copyWith(email: email),
-    );
+    state = this.state.copyWith(email: email);
   }
 
   void onPasswordChanged(String password) {
-    update(
-      this.state.copyWith(password: password),
-    );
+    state = this.state.copyWith(password: password);
   }
 
   @override

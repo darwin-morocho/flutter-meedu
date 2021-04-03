@@ -50,7 +50,7 @@ class ProviderPageExample extends ProviderPage<Controller> {
   }
 }
 
-class Controller extends SimpleController {
+class Controller extends SimpleNotifier {
   int counter;
 
   Controller(this.counter);

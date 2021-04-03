@@ -2,15 +2,27 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_meedu/src/state/provider_filter.dart';
 import 'package:meedu/meedu.dart';
 
-typedef _ScopedReader = T Function<T extends BaseController>(BaseProvider<T> provider, [BaseFilter? filter]);
+typedef ScopedReader = T Function<T extends BaseNotifier>(BaseProvider<T> provider, [BaseFilter? filter]);
 
+/// {@template meedu.consumerwidget}
+/// ```dart
+/// class Example extends ConsumerWidget {
+///   const Example({Key? key}): super(key: key);
+///
+///   @override
+///   Widget build(BuildContext context, ScopedReader watch) {
+///     final value = watch(myProvider);
+///
+///   }
+/// }
+/// ```
+/// {@endtemplate}
 abstract class ConsumerWidget extends StatefulWidget {
   const ConsumerWidget({Key? key}) : super(key: key);
+  Widget build(BuildContext context, ScopedReader watch);
 
   @override
   _ConsumerState createState() => _ConsumerState();
-
-  Widget build(BuildContext context, _ScopedReader watch);
 }
 
 class _ConsumerState extends State<ConsumerWidget> {
@@ -19,9 +31,14 @@ class _ConsumerState extends State<ConsumerWidget> {
   // initialized at true for the first build
   bool _isExternalBuild = true;
 
+  bool _afterFirstLayout = false;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _afterFirstLayout = true;
+    });
   }
 
   @override
@@ -38,7 +55,9 @@ class _ConsumerState extends State<ConsumerWidget> {
 
   ///
   void _rebuild() {
-    (context as Element).markNeedsBuild();
+    if (_afterFirstLayout) {
+      (context as Element).markNeedsBuild();
+    }
   }
 
   @override
@@ -49,12 +68,12 @@ class _ConsumerState extends State<ConsumerWidget> {
 
   void _clearDependencies() {
     _dependencies.forEach((provider, listener) {
-      provider.controller.removeListener(listener);
+      provider.read.removeListener(listener);
     });
     _dependencies = {};
   }
 
-  T _reader<T extends BaseController>(BaseProvider<T> target, [BaseFilter? filter]) {
+  T _reader<T extends BaseNotifier>(BaseProvider<T> target, [BaseFilter? filter]) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
@@ -68,7 +87,7 @@ class _ConsumerState extends State<ConsumerWidget> {
         if (filter != null && !(filter is SimpleFilter)) {
           throw AssertionError('filter must be a SimpleFilter');
         }
-        final controller = target.controller as SimpleController;
+        final controller = target.read as SimpleNotifier;
         final listener = (dynamic _) {
           final listeners = _ as List<String>;
           if (listeners.isNotEmpty) {
@@ -94,7 +113,7 @@ class _ConsumerState extends State<ConsumerWidget> {
           throw AssertionError('filter must be a StateFilter');
         }
         final stateTarget = (target as StateProvider);
-        final controller = stateTarget.controller;
+        final controller = stateTarget.read;
         final listener = (Object? newState) {
           // if the buildWhen param is defined
           if (filter != null) {
@@ -113,7 +132,7 @@ class _ConsumerState extends State<ConsumerWidget> {
         _dependencies[target] = listener;
       }
     }
-    return target.controller;
+    return target.read;
   }
 
   @override

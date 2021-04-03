@@ -48,8 +48,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           RxBuilder(
-            observables: [allow],
-            builder: (__) => SimpleBuilder<Controller>(
+            () => SimpleBuilder<Controller>(
               allowRebuild: allow.value,
               builder: (_) => Text("counter:: ${_.counter}"),
             ),
@@ -68,7 +67,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class Controller extends SimpleController {
+class Controller extends SimpleNotifier {
   int counter = 0;
 
   void imcrement() {

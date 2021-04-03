@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:meta/meta.dart' show mustCallSuper;
 
@@ -10,7 +11,7 @@ class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
 }
 
 /// Define a base controller for SimpleController and StateController
-abstract class BaseController<T> {
+abstract class BaseNotifier<T> {
   /// list to save the subscribers
   LinkedList<_ListenerEntry<T>>? _listeners = LinkedList<_ListenerEntry<T>>();
 
@@ -18,6 +19,14 @@ abstract class BaseController<T> {
   bool get disposed => _listeners == null;
 
   bool get hasListeners => !disposed ? _listeners!.isNotEmpty : false;
+
+  StreamController<T>? _controller;
+
+  /// A broadcast stream representation of a [StateNotifier].
+  Stream<T> get stream {
+    _controller ??= StreamController<T>.broadcast();
+    return _controller!.stream;
+  }
 
   /// check if the controller is mounted
   void _debugAssertNotDisposed() {

@@ -105,8 +105,7 @@ Future<void> meedu() {
     if (times == value) {
       endTime = DateTime.now();
       final diff = endTime.difference(startTime).inMilliseconds;
-      print(
-          """$value listeners notified | [MEEDU STATE CONTROLLER] time: ${diff}ms""");
+      print("""$value listeners notified | [MEEDU STATE CONTROLLER] time: ${diff}ms""");
       completer.complete();
     }
   });
@@ -117,6 +116,6 @@ Future<void> meedu() {
   return completer.future;
 }
 
-class MyController extends StateController<int> {
+class MyController extends StateNotifier<int> {
   MyController() : super(0);
 }

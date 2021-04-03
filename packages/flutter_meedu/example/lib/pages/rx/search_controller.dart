@@ -1,7 +1,7 @@
 import 'package:meedu/rx.dart';
 import 'package:meedu/state.dart';
 
-class SearchController extends SimpleController {
+class SearchController extends SimpleNotifier {
   final Rx<String> _text = "".obs;
   RxWorker? _debounceWorker, _everWorker, _onceWorker, _intervalWorker;
 
