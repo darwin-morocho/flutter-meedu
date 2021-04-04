@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           // home: ModalAndTagsExamplePage(),
-          // home: SimpleProviderPage(),
-          home: RxExample(),
+          home: CounterPage(),
+          // home: RxExample(),
           // routes: {
           //   '/login': (_) => LoginPage(),
           // },

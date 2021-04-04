@@ -68,7 +68,7 @@ class _ConsumerState extends State<ConsumerWidget> {
 
   void _clearDependencies() {
     _dependencies.forEach((provider, listener) {
-      provider.read.removeListener(listener);
+      provider.read.removeListener(listener, _isExternalBuild);
     });
     _dependencies = {};
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:meedu/provider.dart';
 import 'package:meta/meta.dart' show mustCallSuper;
 
 typedef ListenerCallback<T> = void Function(T);
@@ -7,11 +8,15 @@ typedef ListenerCallback<T> = void Function(T);
 /// this class define the basic Listener for each SimpleController's subscriber or StateController's subscriber
 class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
   final ListenerCallback<T> listener;
-  _ListenerEntry(this.listener);
+  final bool autoDispose;
+  _ListenerEntry(this.listener, this.autoDispose);
 }
 
 /// Define a base controller for SimpleController and StateController
 abstract class BaseNotifier<T> {
+  /// if the Notifier was created using a SimpleProvider or a StateProvider
+  int? containerHash;
+
   /// list to save the subscribers
   LinkedList<_ListenerEntry<T>>? _listeners = LinkedList<_ListenerEntry<T>>();
 
@@ -34,18 +39,30 @@ abstract class BaseNotifier<T> {
   }
 
   /// add a new listener
-  void addListener(ListenerCallback<T> listener) {
+  void addListener(ListenerCallback<T> listener, [autoDispose = false]) {
     _debugAssertNotDisposed();
-    _listeners!.add(_ListenerEntry<T>(listener));
+    _listeners!.add(_ListenerEntry<T>(listener, autoDispose));
   }
 
   /// remove a listener
-  void removeListener(ListenerCallback<T> listener) {
+  void removeListener(ListenerCallback<T> listener, [bool isExternalBuild = false]) {
     if (_listeners != null) {
       for (final _ListenerEntry<T> entry in _listeners!) {
         if (entry.listener == listener) {
           entry.unlink();
-          return;
+          break;
+        }
+      }
+
+      // if this notifier was created using autoDispose equals trueand the listener
+      // was not removed by a hot reload or  didUpdateWidget
+      if (this.containerHash != null && !isExternalBuild) {
+        final container = BaseProvider.notifiers[this.containerHash]!;
+        if (container.autoDispose) {
+          final elements = _listeners!.where((e) => e.autoDispose);
+          if (elements.isEmpty) {
+            container.reference.dispose();
+          }
         }
       }
     }

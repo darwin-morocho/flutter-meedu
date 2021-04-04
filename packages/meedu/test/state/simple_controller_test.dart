@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
-const times = 50;
 typedef _Subscriber = void Function(List<String>);
 void main() {
   test('SimpleController', () async {
+    const times = 50;
     final Completer completer = Completer();
     final c = Controller();
     int value = c.counter;

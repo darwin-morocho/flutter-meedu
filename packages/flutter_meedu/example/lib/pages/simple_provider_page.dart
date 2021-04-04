@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu/meedu.dart';
 import 'package:meedu/state.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 class CounterController extends SimpleNotifier {
   int counter = 0;
@@ -20,37 +21,16 @@ class LoginController extends SimpleNotifier {
   }
 }
 
-final counterProvider = SimpleProvider((ref) => CounterController());
+final counterProvider = SimpleProvider.autoDispose<CounterController>(
+  (ref) {
+    ref.onDispose(() {
+      print("counterProvider disposed");
+    });
+    return CounterController();
+  },
+);
 
-final SimpleProvider<LoginController> loginProvider = SimpleProvider((ref) {
-  ref.read(counterProvider).increment();
-  ref.onDispose(() {});
-
-  return LoginController();
-});
-
-class SimpleProviderPage extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, watch) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: CounterPage(),
-          ),
-          Expanded(
-            child: LoginPage(),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          counterProvider.read.increment();
-        },
-      ),
-    );
-  }
-}
+final loginProvider = SimpleProvider((_) => LoginController());
 
 class CounterPage extends ConsumerWidget {
   @override
@@ -62,8 +42,18 @@ class CounterPage extends ConsumerWidget {
       ),
     ).counter;
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              router.pushReplacement(LoginPage());
+            },
+          )
+        ],
+      ),
       body: Center(
-        child: Text("$counter"),
+        child: Text("->> $counter"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -84,15 +74,17 @@ class LoginPage extends ConsumerWidget {
       ),
     ).email;
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.all(30),
           child: Column(
             children: [
               Text(email),
               CupertinoTextField(
-                placeholder: "kakakak",
+                placeholder: "",
                 onChanged: loginProvider.read.onEmailChanged,
               ),
               CupertinoButton(

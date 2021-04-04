@@ -1,21 +1,13 @@
 part of 'base_provider.dart';
 
 class SimpleProvider<T extends SimpleNotifier> extends BaseProvider<T> {
-  SimpleProvider(
-    _LazyCallback<T> create, {
-    bool autoDispose = false,
-  }) : super(create, autoDispose: autoDispose);
+  SimpleProvider(_LazyCallback<T> create, [bool _autoDispose = false])
+      : super(
+          create,
+          _autoDispose,
+        );
 
-  @override
-  T get read {
-    final created = Get.i.has<T>(tag: meeduProviderTag);
-    if (created) {
-      return Get.i.find<T>(tag: meeduProviderTag);
-    }
-    final ref = ProviderReference();
-    final notifier = _create(ref);
-    Get.i.put<T>(notifier, tag: meeduProviderTag);
-    _initialized = true;
-    return notifier;
+  static SimpleProvider<T> autoDispose<T extends SimpleNotifier>(_LazyCallback<T> create) {
+    return SimpleProvider(create, true);
   }
 }
