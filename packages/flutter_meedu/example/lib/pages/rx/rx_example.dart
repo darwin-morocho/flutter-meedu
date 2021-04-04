@@ -12,7 +12,7 @@ class RxExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<RxController>(
       create: (_) => RxController(),
-      child: Builder(builder: (__) {
+      builder: (_, __) {
         final RxController _ = Get.i.find<RxController>();
         return Scaffold(
           appBar: AppBar(),
@@ -35,7 +35,7 @@ class RxExample extends StatelessWidget {
             ),
           ),
         );
-      }),
+      },
     );
   }
 }

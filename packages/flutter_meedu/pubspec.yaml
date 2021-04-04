@@ -11,11 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^5.0.0
   # meedu: ^2.1.0
   meedu:
     path: ../meedu
-
 
 dev_dependencies:
   flutter_test:

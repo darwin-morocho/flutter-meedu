@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
     return Provider<LoginController>(
       create: (_) => LoginController(),
       tag: 'login',
-      child: Scaffold(
+      builder: (_, __) => Scaffold(
         appBar: AppBar(),
         body: Container(
           width: double.infinity,

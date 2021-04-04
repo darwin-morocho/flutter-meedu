@@ -10,7 +10,7 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<SearchController>(
       create: (_) => SearchController(),
-      child: Scaffold(
+      builder: (_, __) => Scaffold(
         body: SafeArea(
           child: Container(
             width: double.infinity,

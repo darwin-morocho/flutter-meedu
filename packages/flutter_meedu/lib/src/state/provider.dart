@@ -1,15 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:meedu/get.dart';
 import 'package:meedu/state.dart';
-import 'package:provider/provider.dart' as p;
-import 'package:provider/single_child_widget.dart';
 
 typedef ProviderCallback<T> = void Function(BuildContext context, T controller);
 
-/// class to inject a controller into the widgets tree
+/// class to inject a Notifier into the widgets tree
 ///
 /// By defaul the [Provider] injects the controller using [Get.i.put] and remove it when the provider is destroyed
-class Provider<T extends BaseNotifier> extends SingleChildStatelessWidget {
+class Provider<T extends BaseNotifier> extends StatefulWidget {
   /// function that is responsible for
   /// creating the [SimpleController] or [StateController] and a child which will have access
   /// to the instance via `Provider.of<...>(context)`.
@@ -29,50 +27,55 @@ class Provider<T extends BaseNotifier> extends SingleChildStatelessWidget {
   /// use this callback to listen when the provider is disposed
   final ProviderCallback<T>? onDispose;
 
+  final Widget Function(BuildContext, T notifier) builder;
+
   Provider({
     Key? key,
     required this.create,
     this.tag,
-    Widget? child,
     this.onInit,
     this.onAfterFirstLayout,
     this.onDispose,
-  }) : super(key: key, child: child);
+    required this.builder,
+  }) : super(key: key);
 
   @override
-  Widget buildWithChild(BuildContext context, Widget? child) {
-    // use the InheritedProvider to inject the controller and catch the life cycle widget
-    return p.InheritedProvider<T>(
-      create: (_) {
-        final T controller = this.create(context);
-        Get.i.put<T>(controller, tag: this.tag);
-        return controller;
-      },
-      child: child,
-      lazy: false,
-      dispose: (context, controller) {
-        Get.i.remove<T>(tag: this.tag);
-        controller.onDispose();
-        if (this.onDispose != null) this.onDispose!(context, controller);
-      },
-      updateShouldNotify: (_, __) => false,
-      startListening: (e, controller) {
-        controller.onInit();
-        if (this.onInit != null) this.onInit!(e, controller);
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
-          // if the controller is not disposed
-          if (!controller.disposed) {
-            controller.onAfterFirstLayout();
-            if (this.onAfterFirstLayout != null) this.onAfterFirstLayout!(e, controller);
-          }
-        });
-        return () {};
-      },
-    );
-  }
+  _ProviderState createState() => _ProviderState();
 
   /// Search one instance of [BaseController]
   static T of<T extends BaseNotifier>({String? tag}) {
     return Get.i.find<T>(tag: tag);
+  }
+}
+
+class _ProviderState<T extends BaseNotifier> extends State<Provider<T>> {
+  late T _notifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _notifier = widget.create(context);
+    Get.i.put<T>(_notifier, tag: widget.tag);
+
+    WidgetsBinding.instance!.addPersistentFrameCallback((_) {
+      // if the controller is not disposed
+      if (!_notifier.disposed) {
+        _notifier.onAfterFirstLayout();
+        if (widget.onAfterFirstLayout != null) widget.onAfterFirstLayout!(context, _notifier);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    Get.i.remove<T>(tag: widget.tag);
+    _notifier.onDispose();
+    if (widget.onDispose != null) widget.onDispose!(context, _notifier);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder(context, _notifier);
   }
 }

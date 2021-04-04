@@ -50,7 +50,7 @@ class CounterView extends StatelessWidget {
     return Provider<CounterController>(
       tag: this.tag,
       create: (_) => CounterController(),
-      child: Container(
+      builder: (_, __) => Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

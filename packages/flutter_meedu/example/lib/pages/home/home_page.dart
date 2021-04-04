@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
       onInit: this.onInit,
       onAfterFirstLayout: this.onAfterFirstLayout,
       onDispose: this.onDispose,
-      child: Scaffold(
+      builder: (_, __) => Scaffold(
         appBar: AppBar(
           actions: [
             Row(

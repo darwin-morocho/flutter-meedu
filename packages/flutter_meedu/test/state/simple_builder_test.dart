@@ -28,7 +28,7 @@ void main() {
             onAfterFirstLayout: (BuildContext context, Controller controller) {
               print("Provider onAfterFirstLayout");
             },
-            child: Scaffold(
+            builder: (_, __) => Scaffold(
               body: Center(
                 child: Column(
                   children: [

@@ -10,12 +10,12 @@ void main() {
       await test.pumpWidget(
         MultiProvider(
           providers: [
-            Provider<UserController>(
+            MultiProviderItem<UserController>(
               create: (_) => UserController(
                 User(id: -1, email: '', username: ''),
               ),
             ),
-            Provider<CounterController>(create: (_) => CounterController()),
+            MultiProviderItem<CounterController>(create: (_) => CounterController()),
           ],
           child: MaterialApp(
             home: HomePage(),
@@ -34,6 +34,7 @@ void main() {
       await test.pump();
       expect(find.text("12345"), findsOneWidget);
       expect(find.text("meedu"), findsOneWidget);
+      print("🐶");
     });
   });
 }

@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       providers: [
-        Provider<AppThemeController>(
+        MultiProviderItem<AppThemeController>(
           create: (_) => AppThemeController(),
         )
       ],

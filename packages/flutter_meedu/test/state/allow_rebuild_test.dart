@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Provider(
       create: (_) => Controller(),
-      child: Column(
+      builder: (_, __) => Column(
         children: [
           RxBuilder(
             () => SimpleBuilder<Controller>(

@@ -2,10 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu/state.dart' show BaseNotifier;
-import 'package:provider/single_child_widget.dart';
 
 // ignore: must_be_immutable
-abstract class ProviderPage<T extends BaseNotifier> extends SingleChildStatelessWidget {
+abstract class ProviderPage<T extends BaseNotifier> extends StatelessWidget {
   /// function that is responsible for
   /// creating the [SimpleController] or [StateController] and a child which will have access
   /// to the instance via `Provider.of<...>(tag:'tag')`.
@@ -13,7 +12,7 @@ abstract class ProviderPage<T extends BaseNotifier> extends SingleChildStateless
 
   /// this function build a widget
   ///
-  Widget buildPage(BuildContext context, T controller);
+  Widget buildPage(BuildContext context, T notifier);
 
   /// (must be unique, don't use list's index) use this when you have in the same page or widget
   /// mutiples [Provider] that uses a controller of the same class for example in lists that you want each item has
@@ -23,37 +22,16 @@ abstract class ProviderPage<T extends BaseNotifier> extends SingleChildStateless
   ProviderPage({Key? key}) : super(key: key);
 
   /// overrride this method to listen when the provider is inserted into the widget tree
-  void onInit(BuildContext context, T controller) {}
+  void onInit(BuildContext context, T notifier) {}
 
   /// overrride this method to listen when the provider was rendered
-  void onAfterFirstLayout(BuildContext context, T controller) {}
+  void onAfterFirstLayout(BuildContext context, T notifier) {}
 
   /// overrride this method to listen when the provider is disposed
-  void onDispose(BuildContext context, T controller) {}
-
-  @override
-  Widget buildWithChild(BuildContext context, Widget? child) {
-    return Provider<T>(
-      create: this.create,
-      onInit: this.onInit,
-      onAfterFirstLayout: this.onAfterFirstLayout,
-      onDispose: this.onDispose,
-      child: child!,
-    );
-  }
+  void onDispose(BuildContext context, T notifier) {}
 
   @override
   Widget build(BuildContext context) {
-    return this.buildWithChild(
-      context,
-      Builder(
-        builder: (context) {
-          return this.buildPage(
-            context,
-            Provider.of<T>(tag: this.tag),
-          );
-        },
-      ),
-    );
+    return buildPage(context, this.create(context));
   }
 }
