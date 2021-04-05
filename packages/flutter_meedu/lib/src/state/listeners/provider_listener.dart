@@ -26,20 +26,22 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
 }
 
 class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
+  late T _notifier;
   @override
   void initState() {
     super.initState();
-    widget.provider.read.addListener(_listener);
+    _notifier = widget.provider.read;
+    _notifier.addListener(_listener);
   }
 
   @override
   void dispose() {
-    widget.provider.read.removeListener(_listener);
+    _notifier.removeListener(_listener);
     super.dispose();
   }
 
   void _listener(_) {
-    widget.onChanged(widget.provider.read);
+    widget.onChanged(_notifier);
   }
 
   @override

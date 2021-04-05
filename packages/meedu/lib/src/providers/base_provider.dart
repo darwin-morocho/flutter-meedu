@@ -16,15 +16,24 @@ abstract class BaseProvider<T extends BaseNotifier> {
   /// callback to create one Instance of [T] when it was need it
   _LazyCallback<T> _create;
   late ProviderReference _ref;
+  Object? _arguments;
 
   final bool _autoDispose;
   BaseProvider(this._create, [this._autoDispose = false]);
+
+  /// set the arguments to be available in the ProviderReference
+  T setArguments(Object arguments) {
+    if (_arguments == null) {
+      _arguments = arguments;
+    }
+    return this.read;
+  }
 
   T get read {
     if (BaseProvider.containers.containsKey(this.hashCode)) {
       return containers[this.hashCode]!.notifier as T;
     }
-    _ref = ProviderReference(hashCode);
+    _ref = ProviderReference(hashCode, _arguments);
     final notifier = _create(_ref);
 
     if (this is StateProvider) {
@@ -63,7 +72,8 @@ class ProviderContainer {
 
 class ProviderReference {
   final int _hashCodeProvider;
-  ProviderReference(this._hashCodeProvider);
+  final Object? params;
+  ProviderReference(this._hashCodeProvider, this.params);
 
   T read<T extends BaseNotifier>(BaseProvider<T> provider) {
     return provider.read;

@@ -6,6 +6,7 @@ import 'package:meedu_example/pages/login/login_provider.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    loginProvider.setArguments("HOLA MUNDO");
     return ProviderListener<LoginController>(
       onChanged: (_) {},
       provider: loginProvider,
