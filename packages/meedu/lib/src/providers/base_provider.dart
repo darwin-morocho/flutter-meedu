@@ -10,31 +10,33 @@ typedef _LazyCallback<T extends BaseNotifier> = T Function(ProviderReference ref
 
 @sealed
 abstract class BaseProvider<T extends BaseNotifier> {
+  static String? flutterCurrentRoute; // save the current route name in flutter apps
+  static final containers = <int, ProviderContainer>{};
+
   /// callback to create one Instance of [T] when it was need it
   _LazyCallback<T> _create;
-  final _ref = ProviderReference();
+  late ProviderReference _ref;
 
   final bool _autoDispose;
   BaseProvider(this._create, [this._autoDispose = false]);
 
   T get read {
-    if (BaseProvider.notifiers.containsKey(this.hashCode)) {
-      return notifiers[this.hashCode]!.notifier as T;
+    if (BaseProvider.containers.containsKey(this.hashCode)) {
+      return containers[this.hashCode]!.notifier as T;
     }
-
+    _ref = ProviderReference(hashCode);
     final notifier = _create(_ref);
 
     if (this is StateProvider) {
       final state = (notifier as StateNotifier).state;
       (this as StateProvider).setOldState(state);
     }
-    BaseProvider.notifiers[this.hashCode] = ProviderContainer(
+    BaseProvider.containers[this.hashCode] = ProviderContainer(
       notifier: notifier,
       reference: _ref,
       autoDispose: this._autoDispose,
+      routeName: BaseProvider.flutterCurrentRoute,
     );
-
-    notifier.containerHash = this.hashCode;
     return notifier;
   }
 
@@ -43,23 +45,26 @@ abstract class BaseProvider<T extends BaseNotifier> {
   int get hashCode => _cachedHash;
   final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
   static int _nextHashCode = 1;
-
-  static final notifiers = <int, ProviderContainer>{};
 }
 
 class ProviderContainer {
   final BaseNotifier notifier;
   final ProviderReference reference;
+  final String? routeName;
   final bool autoDispose;
 
   ProviderContainer({
     required this.notifier,
     required this.reference,
     required this.autoDispose,
+    required this.routeName,
   });
 }
 
 class ProviderReference {
+  final int _hashCodeProvider;
+  ProviderReference(this._hashCodeProvider);
+
   T read<T extends BaseNotifier>(BaseProvider<T> provider) {
     return provider.read;
   }
@@ -82,6 +87,7 @@ class ProviderReference {
       _disposableCallback!();
       disposed = true;
     }
+    BaseProvider.containers.remove(this._hashCodeProvider);
   }
 
   void Function()? _disposableCallback;

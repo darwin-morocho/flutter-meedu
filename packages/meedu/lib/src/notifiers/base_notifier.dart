@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-import 'package:meedu/provider.dart';
-import 'package:meta/meta.dart' show mustCallSuper;
+import 'package:meta/meta.dart' show mustCallSuper, protected;
 
 typedef ListenerCallback<T> = void Function(T);
 
@@ -14,9 +13,6 @@ class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
 
 /// Define a base controller for SimpleController and StateController
 abstract class BaseNotifier<T> {
-  /// if the Notifier was created using a SimpleProvider or a StateProvider
-  int? containerHash;
-
   /// list to save the subscribers
   LinkedList<_ListenerEntry<T>>? _listeners = LinkedList<_ListenerEntry<T>>();
 
@@ -26,6 +22,8 @@ abstract class BaseNotifier<T> {
   bool get hasListeners => !disposed ? _listeners!.isNotEmpty : false;
 
   StreamController<T>? _controller;
+
+  Completer<void>? _isBusy;
 
   /// A broadcast stream representation of a [StateNotifier].
   Stream<T> get stream {
@@ -45,40 +43,41 @@ abstract class BaseNotifier<T> {
   }
 
   /// remove a listener
-  void removeListener(ListenerCallback<T> listener, [bool isExternalBuild = false]) {
+  void removeListener(ListenerCallback<T> listener) {
     if (_listeners != null) {
       for (final _ListenerEntry<T> entry in _listeners!) {
         if (entry.listener == listener) {
           entry.unlink();
-          break;
+          return;
         }
       }
+    }
+  }
 
-      // if this notifier was created using autoDispose equals trueand the listener
-      // was not removed by a hot reload or  didUpdateWidget
-      if (this.containerHash != null && !isExternalBuild) {
-        final container = BaseProvider.notifiers[this.containerHash]!;
-        if (container.autoDispose) {
-          final elements = _listeners!.where((e) => e.autoDispose);
-          if (elements.isEmpty) {
-            container.reference.dispose();
-          }
-        }
-      }
+  _complete() {
+    if (_isBusy != null && !_isBusy!.isCompleted) {
+      _isBusy!.complete();
     }
   }
 
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
-  void notify(T data) {
+  @protected
+  void notifyListeners(T data) {
     _debugAssertNotDisposed();
 
+    _isBusy = Completer();
+
     if (_listeners!.isNotEmpty) {
+      if (_controller != null && !_controller!.isClosed) {
+        _controller?.sink.add(data);
+      }
       for (final _ListenerEntry<T> entry in _listeners!) {
         if (entry.list != null) entry.listener(data);
       }
     }
+    _complete();
   }
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
@@ -91,6 +90,11 @@ abstract class BaseNotifier<T> {
   @mustCallSuper
   void onDispose() async {
     _debugAssertNotDisposed();
+
+    _controller?.close();
+    if (_isBusy != null) {
+      await _isBusy!.future;
+    }
     _listeners!.clear();
     _listeners = null;
   }

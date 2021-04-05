@@ -87,7 +87,7 @@ class CounterController extends SimpleNotifier {
   int counter = 0;
   void add() {
     counter++;
-    update();
+    notify();
   }
 }
 

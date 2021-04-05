@@ -5,8 +5,8 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
-  void update([List<String> listeners = const []]) {
-    notify(listeners);
+  void notify([List<String> listeners = const []]) {
+    notifyListeners(listeners);
   }
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].

@@ -1,26 +1,25 @@
 import 'package:meedu/state.dart';
-import 'login_state.dart';
 
-class LoginController extends StateNotifier<LoginState> {
-  LoginController() : super(LoginState.initialState);
+class LoginController extends SimpleNotifier {
+  String _email = '', _password = '';
 
-  void onEmailChanged(String email) {
-    state = this.state.copyWith(email: email);
+  void onEmailChanged(String text) {
+    _email = text;
   }
 
-  void onPasswordChanged(String password) {
-    state = this.state.copyWith(password: password);
+  void onPasswordChanged(String text) {
+    _password = text;
   }
 
-  @override
-  void onStateChanged(LoginState oldState, LoginState currentState) {
-    print("oldState ${oldState.toJson()}");
-    print("currentState ${currentState.toJson()}\n\n");
+  Future<void> submit() {
+    print("_email $_email");
+    print("_password: $_password");
+    return Future.delayed(Duration(milliseconds: 1000));
   }
 
   @override
   void onDispose() {
-    print(":::: dispose login page");
+    print("LoginController disposed");
     super.onDispose();
   }
 }

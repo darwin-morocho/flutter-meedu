@@ -72,6 +72,6 @@ class Controller extends SimpleNotifier {
 
   void imcrement() {
     counter++;
-    update();
+    notify();
   }
 }

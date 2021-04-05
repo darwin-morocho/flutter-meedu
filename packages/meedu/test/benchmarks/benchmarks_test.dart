@@ -111,7 +111,7 @@ Future<void> meedu() {
   });
 
   for (var i = 1; i <= times; i++) {
-    controller.notify(i);
+    controller.state = i;
   }
   return completer.future;
 }

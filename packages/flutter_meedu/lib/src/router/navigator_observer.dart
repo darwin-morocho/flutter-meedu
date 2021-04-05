@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:meedu/provider.dart';
 
 RouteObserver<PageRoute> get observer => _RouterObserver.i;
 
@@ -10,24 +11,39 @@ class _RouterObserver extends RouteObserver<PageRoute> {
     return route.settings.name!;
   }
 
+  void _checkAutoDispose(String routeName) {
+    try {
+      if (BaseProvider.containers.isNotEmpty) {
+        final container = BaseProvider.containers.values.firstWhere(
+          (e) => e.routeName == routeName,
+        );
+        if (container.autoDispose) {
+          container.notifier.onDispose();
+          container.reference.dispose();
+          BaseProvider.containers.remove(container);
+        }
+      }
+    } catch (_) {}
+  }
+
   @override
   void didPop(Route route, Route? previousRoute) {
     if (route is PageRoute) {
-      print("did pop ${this._getRouteName(route)}");
+      _checkAutoDispose(this._getRouteName(route));
     }
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
     if (route is PageRoute) {
-      print("did push ${this._getRouteName(route)}");
+      BaseProvider.flutterCurrentRoute = this._getRouteName(route);
     }
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
-    if (newRoute is PageRoute) {
-      print("did pop ${this._getRouteName(newRoute)}");
+    if (oldRoute is PageRoute) {
+      _checkAutoDispose(this._getRouteName(oldRoute));
     }
   }
 }

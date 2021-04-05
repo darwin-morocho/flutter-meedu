@@ -1,3 +1,5 @@
+part of 'consumer_widget.dart';
+
 abstract class BaseFilter {}
 
 class SimpleFilter extends BaseFilter {

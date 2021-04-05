@@ -9,7 +9,7 @@ void main() {
       final Controller controller = Controller();
       controller.onDispose();
       expect(() {
-        controller.update([]);
+        controller.notify([]);
       }, throwsAssertionError);
     });
     testWidgets("MeeduController counter", (test) async {
@@ -99,7 +99,7 @@ class Controller extends SimpleNotifier {
 
   void increment() {
     counter++;
-    update();
+    notify();
   }
 
   @override
@@ -109,7 +109,7 @@ class Controller extends SimpleNotifier {
 
   void incrementWithId() {
     counter++;
-    update(['id']);
+    notify(['id']);
   }
 }
 

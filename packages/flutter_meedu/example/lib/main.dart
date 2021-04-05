@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu/state.dart';
-import 'package:meedu_example/pages/modal_with_tags_example.dart';
-import 'package:meedu_example/pages/rx/rx_example.dart';
-
-import 'pages/home/home_page.dart';
-import 'pages/login/login_page.dart';
-import 'pages/simple_provider_page.dart';
+import 'package:meedu_example/routes/pages.dart';
+import 'package:meedu_example/routes/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,12 +23,11 @@ class MyApp extends StatelessWidget {
           themeMode: _.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          // home: ModalAndTagsExamplePage(),
-          home: CounterPage(),
-          // home: RxExample(),
-          // routes: {
-          //   '/login': (_) => LoginPage(),
-          // },
+          initialRoute: Routes.SPLASH,
+          navigatorObservers: [
+            router.observer,
+          ],
+          routes: Pages.routes,
         ),
       ),
       providers: [
@@ -52,6 +47,6 @@ class AppThemeController extends SimpleNotifier {
 
   void onToggleTheme(bool enabled) {
     _darkMode = enabled;
-    update();
+    notify();
   }
 }

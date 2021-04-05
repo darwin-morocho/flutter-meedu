@@ -22,7 +22,7 @@ void main() {
     c.addListener(subscribe);
     for (int i = 1; i <= times; i++) {
       c.counter = i;
-      c.update();
+      c.notify();
     }
     await completer.future;
     expect(value, times);
@@ -30,7 +30,7 @@ void main() {
     c.onDispose();
     expect(c.disposed, true);
     expect(() {
-      c.update();
+      c.notify();
     }, throwsA(isA<AssertionError>()));
   });
 }

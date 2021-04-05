@@ -19,7 +19,7 @@ abstract class StateNotifier<S> extends BaseNotifier<S> {
       _oldState = _state;
       _state = state;
       onStateChanged(_oldState, _state);
-      notify(state);
+      notifyListeners(state);
     }
   }
 
