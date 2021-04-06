@@ -1,3 +1,6 @@
+## [3.0.0-prev.0]
+- Prev version of 3.0.0
+
 ## [2.1.1]
 - Fixed router navigator key.
 

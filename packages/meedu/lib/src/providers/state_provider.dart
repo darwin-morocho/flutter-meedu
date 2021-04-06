@@ -1,10 +1,10 @@
 part of 'base_provider.dart';
 
-typedef _BuildWhen<S> = bool Function(S prevState, S currentState);
+typedef _BuildWhen<S> = bool Function(S prev, S current);
 
 class StateProvider<T extends StateNotifier<S>, S> extends BaseProvider<T> {
   _BuildWhen<S>? _buildWhen;
-  _BuildWhen<S>? get buildWhen => _buildWhen;
+  _BuildWhen<S>? get buildWhenCallback => _buildWhen;
 
   StateProvider(
     _LazyCallback<T> create, {
@@ -14,7 +14,7 @@ class StateProvider<T extends StateNotifier<S>, S> extends BaseProvider<T> {
           autoDispose,
         );
 
-  StateProvider<T, S> select(_BuildWhen<S> buildWhen) {
+  StateProvider<T, S> buildWhen(_BuildWhen<S> buildWhen) {
     _buildWhen = buildWhen;
     return this;
   }

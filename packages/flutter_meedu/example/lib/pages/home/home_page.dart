@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           builder: (_, watch, __) {
             print("object");
             final text = watch<HomeController, HomeState>(
-              homeProvider.select(
+              homeProvider.buildWhen(
                 (prevState, currentState) {
                   return prevState.randomText != currentState.randomText;
                 },
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
       body: Consumer(
         builder: (_, watch, __) {
           final users = watch<HomeController, HomeState>(
-            homeProvider.select(
+            homeProvider.buildWhen(
               (prevState, currentState) => prevState.users.length != currentState.users.length,
             ),
           ).state.users;

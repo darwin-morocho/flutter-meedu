@@ -97,8 +97,8 @@ class _ConsumerState extends State<ConsumerWidget> {
         // if (filter != null && !(filter is SimpleFilter)) {
         //   throw AssertionError('filter must be a SimpleFilter');
         // }
-        _dependencies[target] = createSimpleProviderListener(
-          provider: target as SimpleProvider,
+        _dependencies[target] = createSimpleProviderListener<T>(
+          provider: target as SimpleProvider<T>,
           rebuild: _rebuild,
           // filter: filter as SimpleFilter?,
         );

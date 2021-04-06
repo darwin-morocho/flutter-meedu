@@ -10,7 +10,8 @@ typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
 @sealed
 abstract class BaseProvider<T> {
-  static String? flutterCurrentRoute; // save the current route name in flutter apps
+  static String?
+      flutterCurrentRoute; // save the current route name in flutter apps
   static final containers = <int, ProviderContainer>{};
 
   /// callback to create one Instance of [T] when it was need it

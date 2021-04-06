@@ -2,7 +2,8 @@ import 'package:flutter/widgets.dart' show Widget, VoidCallback, Key;
 import 'package:meedu/state.dart' show SimpleNotifier;
 import 'base_builder.dart';
 
-class SimpleBuilder<T extends SimpleNotifier> extends BaseBuilder<T, List<String>> {
+class SimpleBuilder<T extends SimpleNotifier>
+    extends BaseBuilder<T, List<String>> {
   /// When you force rerender using the update() method you can only update certains [MeeduBuilder]
   /// using update(["your_id","other_id"]) so if you want update this [MeeduBuilder] you sould use one id like
   /// "your_id" or "other_id"
@@ -24,7 +25,8 @@ class SimpleBuilder<T extends SimpleNotifier> extends BaseBuilder<T, List<String
           initState: initState,
           didChangeDependencies: didChangeDependencies,
           dispose: dispose,
-          didUpdateWidget: didUpdateWidget as void Function(BaseBuilder<T, List<String>>)?,
+          didUpdateWidget:
+              didUpdateWidget as void Function(BaseBuilder<T, List<String>>)?,
           allowRebuild: allowRebuild,
           tag: tag,
         );
@@ -33,7 +35,8 @@ class SimpleBuilder<T extends SimpleNotifier> extends BaseBuilder<T, List<String
   _SimpleBuilderState createState() => _SimpleBuilderState<T>();
 }
 
-class _SimpleBuilderState<T extends SimpleNotifier> extends BaseBuilderState<T, List<String>> {
+class _SimpleBuilderState<T extends SimpleNotifier>
+    extends BaseBuilderState<T, List<String>> {
   /// listener for update events
   ListenerCallback<List<String>>? _listener;
 

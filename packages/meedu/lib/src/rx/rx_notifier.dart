@@ -15,13 +15,15 @@ class RxNotifier<T> {
       final StreamSubscription subs = rx.stream.listen(subject.controller.add);
 
       /// ge the subscriptions for this Rx
-      final List<StreamSubscription> listSubscriptions = _subscriptions[rx] ?? [];
+      final List<StreamSubscription> listSubscriptions =
+          _subscriptions[rx] ?? [];
       listSubscriptions.add(subs);
       _subscriptions[rx] = listSubscriptions;
     }
   }
 
-  StreamSubscription<T?> listen(void Function(T?) _) => subject.stream.listen(_);
+  StreamSubscription<T?> listen(void Function(T?) _) =>
+      subject.stream.listen(_);
 
   /// Closes the subscriptions for this Rx, releasing the resources.
   void close() {

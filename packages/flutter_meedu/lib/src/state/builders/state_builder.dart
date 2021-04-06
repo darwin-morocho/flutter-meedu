@@ -31,7 +31,8 @@ class StateBuilder<T extends StateNotifier<S>, S> extends BaseBuilder<T, S> {
   _StateBuilderState createState() => _StateBuilderState<T, S>();
 }
 
-class _StateBuilderState<T extends StateNotifier<S>, S> extends BaseBuilderState<T, S> {
+class _StateBuilderState<T extends StateNotifier<S>, S>
+    extends BaseBuilderState<T, S> {
   /// save the previous state
   late S _oldState;
 

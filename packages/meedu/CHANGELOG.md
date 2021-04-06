@@ -1,3 +1,6 @@
+## [3.0.0-prev.0]
+- Prev version of 3.0.0
+
 ## [2.1.0]
 - Updated Get.i.find with lazy param.
 

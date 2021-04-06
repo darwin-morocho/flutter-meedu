@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart' show BuildContext, StatelessWidget, Key, Widget;
+import 'package:flutter/widgets.dart'
+    show BuildContext, StatelessWidget, Key, Widget;
 import 'package:meedu/get.dart';
 import 'package:meedu/state.dart';
 import '../builders/simple_builder.dart';

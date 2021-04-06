@@ -61,7 +61,8 @@ class _ProviderState<T extends BaseNotifier> extends State<Provider<T>> {
       // if the controller is not disposed
       if (!_notifier.disposed) {
         _notifier.onAfterFirstLayout();
-        if (widget.onAfterFirstLayout != null) widget.onAfterFirstLayout!(context, _notifier);
+        if (widget.onAfterFirstLayout != null)
+          widget.onAfterFirstLayout!(context, _notifier);
       }
     });
   }

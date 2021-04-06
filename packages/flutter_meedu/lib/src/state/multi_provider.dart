@@ -37,7 +37,8 @@ class _MultiProviderState extends State<MultiProvider> {
       _providers.forEach((notifier, provider) {
         if (!notifier.disposed && this.mounted) {
           notifier.onAfterFirstLayout();
-          if (provider.onAfterFirstLayout != null) provider.onAfterFirstLayout!(context, notifier);
+          if (provider.onAfterFirstLayout != null)
+            provider.onAfterFirstLayout!(context, notifier);
         }
       });
     });
