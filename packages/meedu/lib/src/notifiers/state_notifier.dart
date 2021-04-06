@@ -4,6 +4,7 @@ import 'package:meta/meta.dart' show mustCallSuper;
 abstract class StateNotifier<State> extends BaseNotifier<State> {
   late State _state, _oldState;
   State get state => _state;
+  State get oldState => _oldState;
 
   StateNotifier(State initialState) {
     _state = initialState;

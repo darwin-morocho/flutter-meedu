@@ -13,8 +13,24 @@ class HomePage extends StatelessWidget {
   Widget build(_) {
     return Scaffold(
       appBar: AppBar(
-        title: RxBuilder(
-          () => Text("${homeProvider.read.counter}"),
+        // title: RxBuilder(
+        //   () => Text("${homeProvider.read.counter}"),
+        // ),
+        title: Consumer(
+          builder: (_, watch, __) {
+            print("object");
+            final text = watch<HomeController, HomeState>(
+              homeProvider.select(
+                (prevState, currentState) {
+                  return prevState.randomText != currentState.randomText;
+                },
+              ),
+            ).state.randomText;
+            return Text(
+              text,
+              style: TextStyle(fontSize: 13),
+            );
+          },
         ),
         actions: [
           SimpleBuilder<AppThemeController>(
@@ -29,12 +45,16 @@ class HomePage extends StatelessWidget {
       ),
       body: Consumer(
         builder: (_, watch, __) {
-          final users = watch<HomeController, HomeState>(homeProvider).state.users;
+          final users = watch<HomeController, HomeState>(
+            homeProvider.select(
+              (prevState, currentState) => prevState.users.length != currentState.users.length,
+            ),
+          ).state.users;
           if (users.isEmpty)
             return Center(
               child: CupertinoActivityIndicator(radius: 15),
             );
-
+          print("list");
           return ListView.builder(
             itemBuilder: (_, index) {
               final user = users[index];
@@ -49,6 +69,9 @@ class HomePage extends StatelessWidget {
             itemCount: users.length,
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: homeProvider.read.random,
       ),
     );
   }

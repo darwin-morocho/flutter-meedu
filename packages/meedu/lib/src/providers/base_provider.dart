@@ -39,10 +39,6 @@ abstract class BaseProvider<T> {
     _ref = ProviderReference(hashCode, _arguments);
     final notifier = _create(_ref);
 
-    if (this is StateProvider) {
-      final state = (notifier as StateNotifier).state;
-      (this as StateProvider).setOldState(state);
-    }
     BaseProvider.containers[this.hashCode] = ProviderContainer(
       notifier: notifier as BaseNotifier,
       reference: _ref,

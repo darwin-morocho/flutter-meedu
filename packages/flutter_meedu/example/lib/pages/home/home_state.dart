@@ -2,18 +2,23 @@ import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
   final List<User> users;
+  final String randomText;
   HomeState({
     required this.users,
+    required this.randomText,
   });
 
-  static HomeState get initialState => HomeState(users: []);
+  static HomeState get initialState => HomeState(users: [], randomText: '');
 
-  HomeState copyWith({List<User>? users}) {
-    return HomeState(users: users ?? this.users);
+  HomeState copyWith({List<User>? users, String? randomText}) {
+    return HomeState(
+      users: users ?? this.users,
+      randomText: randomText ?? this.randomText,
+    );
   }
 
   @override
-  List<Object?> get props => [users];
+  List<Object?> get props => [users, randomText];
 }
 
 class User extends Equatable {

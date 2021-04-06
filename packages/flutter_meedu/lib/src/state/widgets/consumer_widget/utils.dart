@@ -38,14 +38,13 @@ void Function(dynamic) createStateProviderListener<S>({
     if (buildWhen != null) {
       // print(filter.buildWhen);
       /// check if the condition allows the rebuild
-      final allowRebuild = buildWhen(provider.oldState, newState);
+      final allowRebuild = buildWhen(notifier.oldState, newState);
       if (allowRebuild) {
         rebuild();
       }
     } else {
       rebuild();
     }
-    provider.setOldState(newState);
   };
   notifier.addListener(listener);
   provider.clearBuildWhen();

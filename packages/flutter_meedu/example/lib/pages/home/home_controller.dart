@@ -29,6 +29,10 @@ class HomeController extends StateNotifier<HomeState> {
     } catch (e) {}
   }
 
+  void random() {
+    state = state.copyWith(randomText: DateTime.now().toString());
+  }
+
   @override
   void onDispose() {
     print("HomeController disposed");
