@@ -6,10 +6,10 @@ import '../notifiers/state_notifier.dart';
 part 'simple_provider.dart';
 part 'state_provider.dart';
 
-typedef _LazyCallback<T extends BaseNotifier> = T Function(ProviderReference ref);
+typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
 @sealed
-abstract class BaseProvider<T extends BaseNotifier> {
+abstract class BaseProvider<T> {
   static String? flutterCurrentRoute; // save the current route name in flutter apps
   static final containers = <int, ProviderContainer>{};
 
@@ -17,6 +17,9 @@ abstract class BaseProvider<T extends BaseNotifier> {
   _LazyCallback<T> _create;
   late ProviderReference _ref;
   Object? _arguments;
+
+  /// tell us if the SimpleNotifier or StateNotifier was created
+  bool get mounted => BaseProvider.containers.containsKey(this.hashCode);
 
   final bool _autoDispose;
   BaseProvider(this._create, [this._autoDispose = false]);
@@ -30,7 +33,7 @@ abstract class BaseProvider<T extends BaseNotifier> {
   }
 
   T get read {
-    if (BaseProvider.containers.containsKey(this.hashCode)) {
+    if (mounted) {
       return containers[this.hashCode]!.notifier as T;
     }
     _ref = ProviderReference(hashCode, _arguments);
@@ -41,11 +44,12 @@ abstract class BaseProvider<T extends BaseNotifier> {
       (this as StateProvider).setOldState(state);
     }
     BaseProvider.containers[this.hashCode] = ProviderContainer(
-      notifier: notifier,
+      notifier: notifier as BaseNotifier,
       reference: _ref,
       autoDispose: this._autoDispose,
       routeName: BaseProvider.flutterCurrentRoute,
     );
+
     return notifier;
   }
 
@@ -75,7 +79,7 @@ class ProviderReference {
   final Object? params;
   ProviderReference(this._hashCodeProvider, this.params);
 
-  T read<T extends BaseNotifier>(BaseProvider<T> provider) {
+  T read<T extends BaseProvider>(T provider) {
     return provider.read;
   }
 

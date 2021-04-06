@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       child: SimpleBuilder<AppThemeController>(
         builder: (_) => MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           navigatorKey: router.navigatorKey,
           themeMode: _.themeMode,

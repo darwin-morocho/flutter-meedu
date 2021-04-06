@@ -2,7 +2,6 @@ part of 'consumer_widget.dart';
 
 void Function(dynamic) createSimpleProviderListener({
   required SimpleProvider provider,
-  SimpleFilter? filter,
   required void Function() rebuild,
 }) {
   final notifier = provider.read;
@@ -11,14 +10,14 @@ void Function(dynamic) createSimpleProviderListener({
     if (listeners.isNotEmpty) {
       // if the update method was called with ids
       //  if the current MeeduBuilder id is inside the listeners
-      if (filter != null) {
-        for (final String id in filter.ids) {
-          if (listeners.contains(id)) {
-            rebuild();
-            break;
-          }
-        }
-      }
+      // if (filter != null) {
+      //   for (final String id in filter.ids) {
+      //     if (listeners.contains(id)) {
+      //       rebuild();
+      //       break;
+      //     }
+      //   }
+      // }
     } else {
       // update the widget if  listeners is empty
       rebuild();
@@ -28,17 +27,19 @@ void Function(dynamic) createSimpleProviderListener({
   return listener;
 }
 
-void Function(Object?) createStateProviderListener({
-  required StateProvider provider,
-  StateFilter? filter,
+void Function(dynamic) createStateProviderListener<S>({
+  required StateProvider<StateNotifier<S>, S> provider,
   required void Function() rebuild,
 }) {
   final notifier = provider.read;
-  final listener = (Object? newState) {
+  final buildWhen = provider.buildWhen;
+  final listener = (dynamic newState) {
     // if the buildWhen param is defined
-    if (filter != null) {
+    if (buildWhen != null) {
+      // print(filter.buildWhen);
       /// check if the condition allows the rebuild
-      if (filter.buildWhen(provider.oldState, newState)) {
+      final allowRebuild = buildWhen(provider.oldState, newState);
+      if (allowRebuild) {
         rebuild();
       }
     } else {
@@ -47,6 +48,6 @@ void Function(Object?) createStateProviderListener({
     provider.setOldState(newState);
   };
   notifier.addListener(listener);
-
+  provider.clearBuildWhen();
   return listener;
 }

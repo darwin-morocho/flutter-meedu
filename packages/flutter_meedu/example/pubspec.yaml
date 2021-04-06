@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  equatable: ^2.0.0 
+  equatable: ^2.0.0
+  dio: ^4.0.0
   flutter_meedu:
     path: ../
   # meedu: ^2.0.1

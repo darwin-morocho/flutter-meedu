@@ -1,11 +1,11 @@
 import 'base_notifier.dart';
 import 'package:meta/meta.dart' show mustCallSuper;
 
-abstract class StateNotifier<S> extends BaseNotifier<S> {
-  late S _state, _oldState;
-  S get state => _state;
+abstract class StateNotifier<State> extends BaseNotifier<State> {
+  late State _state, _oldState;
+  State get state => _state;
 
-  StateNotifier(S initialState) {
+  StateNotifier(State initialState) {
     _state = initialState;
     _oldState = _state;
   }
@@ -13,7 +13,7 @@ abstract class StateNotifier<S> extends BaseNotifier<S> {
   /// Update the State and  notify to listeners and rebuild the widgets
   ///
   /// [state] must be different of the current state
-  set state(S state) {
+  set state(State state) {
     assert(!disposed, 'A $runtimeType was used after being disposed.');
     if (onStateWillChange(_oldState, state)) {
       _oldState = _state;
@@ -27,10 +27,10 @@ abstract class StateNotifier<S> extends BaseNotifier<S> {
   /// By default this method returns true, you can use this method to intercept the [newState]
   /// and check if the new state is valid.
   /// If this method returns false the new state will be igonored
-  bool onStateWillChange(S oldState, S newState) => true;
+  bool onStateWillChange(State oldState, State newState) => true;
 
   /// this method is called when the state has been changed
-  void onStateChanged(S oldState, S currentState) {}
+  void onStateChanged(State oldState, State currentState) {}
 
   /// Called when this object is inserted into the tree using a [MeeduBuilder].
   @override

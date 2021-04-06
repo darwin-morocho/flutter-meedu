@@ -11,7 +11,6 @@ class SplashPage extends StatelessWidget {
     return ProviderListener<SplashController>(
       onChanged: (_) {
         if (_.routeName != null) {
-          print(_.routeName);
           router.pushReplacementNamed(_.routeName!);
         }
       },

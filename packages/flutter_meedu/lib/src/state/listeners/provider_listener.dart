@@ -12,11 +12,11 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   final BaseProvider<T> provider;
 
   /// callback to listen the new events
-  final void Function(T) onChanged;
+  final void Function(T)? onChanged;
 
   const ProviderListener({
     Key? key,
-    required this.onChanged,
+    this.onChanged,
     required this.provider,
     required this.builder,
   }) : super(key: key);
@@ -31,17 +31,34 @@ class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListe
   void initState() {
     super.initState();
     _notifier = widget.provider.read;
-    _notifier.addListener(_listener);
+    if (widget.onChanged != null) {
+      _notifier.addListener(_listener);
+    }
   }
 
   @override
   void dispose() {
-    _notifier.removeListener(_listener);
+    if (widget.onChanged != null) {
+      _notifier.removeListener(_listener);
+    }
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant ProviderListener<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.onChanged == null && widget.onChanged != null) {
+      _notifier.addListener(_listener);
+    } else if (oldWidget.onChanged != null && widget.onChanged == null) {
+      _notifier.removeListener(_listener);
+    }
+  }
+
   void _listener(_) {
-    widget.onChanged(_notifier);
+    if (widget.onChanged != null) {
+      widget.onChanged!(_notifier);
+    }
   }
 
   @override

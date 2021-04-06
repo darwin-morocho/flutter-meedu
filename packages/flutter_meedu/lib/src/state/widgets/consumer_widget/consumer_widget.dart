@@ -9,7 +9,7 @@ part 'provider_filter.dart';
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
 /// [filter] one instance of SimpleFilter or StateFilter, use this to avoid unnecessary  updates
-typedef ScopedReader = T Function<T extends BaseNotifier>(BaseProvider<T> provider, [BaseFilter? filter]);
+typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider);
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
@@ -83,7 +83,7 @@ class _ConsumerState extends State<ConsumerWidget> {
     _dependencies = {};
   }
 
-  T _reader<T extends BaseNotifier>(BaseProvider<T> target, [BaseFilter? filter]) {
+  T _reader<T, S>(BaseProvider<T> target) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
@@ -94,22 +94,23 @@ class _ConsumerState extends State<ConsumerWidget> {
     // add a new listener if the provider is not into dependencies
     if (!insideDependencies) {
       if (target is SimpleProvider) {
-        if (filter != null && !(filter is SimpleFilter)) {
-          throw AssertionError('filter must be a SimpleFilter');
-        }
+        // if (filter != null && !(filter is SimpleFilter)) {
+        //   throw AssertionError('filter must be a SimpleFilter');
+        // }
         _dependencies[target] = createSimpleProviderListener(
           provider: target as SimpleProvider,
           rebuild: _rebuild,
-          filter: filter as SimpleFilter?,
+          // filter: filter as SimpleFilter?,
         );
       } else {
-        if (filter != null && !(filter is StateFilter)) {
-          throw AssertionError('filter must be a SimpleFilter');
-        }
-        _dependencies[target] = createStateProviderListener(
-          provider: target as StateProvider,
+        // if (filter != null && !(filter is StateFilter)) {
+        //   throw AssertionError('filter must be a StateFilter');
+        // }
+
+        _dependencies[target] = createStateProviderListener<S>(
+          provider: target as StateProvider<StateNotifier<S>, S>,
           rebuild: _rebuild,
-          filter: filter as StateFilter?,
+          // filter: filter as StateFilter?,
         );
       }
     }

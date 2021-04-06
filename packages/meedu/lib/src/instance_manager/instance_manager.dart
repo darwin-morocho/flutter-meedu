@@ -26,7 +26,6 @@ class Get {
   /// Insert a Instance into the hashmap
   void put<T>(T value, {String? tag}) {
     final String key = _getKey(T, tag);
-    print("key $key");
     _vars[key] = value;
   }
 
