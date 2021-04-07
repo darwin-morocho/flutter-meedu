@@ -25,9 +25,10 @@ dependencies:
     sdk: flutter
   equatable: ^2.0.0
   dio: ^4.0.0
-  flutter_meedu:
-    path: ../
-  meedu: ^3.0.0-prev.0
+  # flutter_meedu:
+  #   path: ../
+  
+  meedu: ^3.0.0-prev.1
   # meedu:
   #   path: ../../meedu
 

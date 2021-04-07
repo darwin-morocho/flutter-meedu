@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:meedu/meedu.dart';
+import 'package:meedu_example/pages/login/login_controller.dart';
 import 'home_state.dart';
 import 'package:dio/dio.dart';
 
 class HomeController extends StateNotifier<HomeState> {
-  HomeController() : super(HomeState.initialState) {
+  HomeController(LoginController loginController) : super(HomeState.initialState) {
     _init();
   }
 

@@ -1,3 +1,7 @@
+## [3.0.0-prev.2]
+- Fixed `read` method into `ProviderReference`.
+## [3.0.0-prev.1]
+- Added events to ProviderListener.
 ## [3.0.0-prev.0]
 - Prev version of 3.0.0
 

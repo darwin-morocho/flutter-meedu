@@ -76,7 +76,7 @@ class ProviderReference {
   final Object? params;
   ProviderReference(this._hashCodeProvider, this.params);
 
-  T read<T extends BaseProvider>(T provider) {
+  T read<T extends BaseNotifier>(BaseProvider<T> provider) {
     return provider.read;
   }
 

@@ -2,6 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
+typedef _ProviderListenerCallback<T> = void Function(
+    BuildContext _, T notifier);
+
 /// A widget to listen events in a SimpleProvider or a StateProvider
 ///
 /// THis widget only listen the events, does not update the widget when a SimpleNotifier or a StateNotifier emit a new event
@@ -12,13 +15,23 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   final BaseProvider<T> provider;
 
   /// callback to listen the new events
-  final void Function(T)? onChanged;
+  final _ProviderListenerCallback<T>? onChange;
+
+  /// callback when initState is called
+  final _ProviderListenerCallback<T>? onInitState;
+  final _ProviderListenerCallback<T>? onAfterFirstLayout;
+
+  /// callback when dispose is called
+  final _ProviderListenerCallback<T>? onDispose;
 
   const ProviderListener({
     Key? key,
-    this.onChanged,
+    this.onChange,
     required this.provider,
     required this.builder,
+    this.onInitState,
+    this.onDispose,
+    this.onAfterFirstLayout,
   }) : super(key: key);
 
   @override
@@ -32,16 +45,29 @@ class _ProviderListenerState<T extends BaseNotifier>
   void initState() {
     super.initState();
     _notifier = widget.provider.read;
-    if (widget.onChanged != null) {
+    if (widget.onChange != null) {
       _notifier.addListener(_listener);
+    }
+    if (widget.onInitState != null) widget.onInitState!(context, _notifier);
+    if (widget.onAfterFirstLayout != null) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        if (mounted) {
+          widget.onAfterFirstLayout!(context, _notifier);
+        }
+      });
     }
   }
 
   @override
   void dispose() {
-    if (widget.onChanged != null) {
+    if (widget.onChange != null) {
       _notifier.removeListener(_listener);
     }
+    if (widget.onDispose != null)
+      widget.onDispose!(
+        this.context,
+        _notifier,
+      );
     super.dispose();
   }
 
@@ -49,16 +75,16 @@ class _ProviderListenerState<T extends BaseNotifier>
   void didUpdateWidget(covariant ProviderListener<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.onChanged == null && widget.onChanged != null) {
+    if (oldWidget.onChange == null && widget.onChange != null) {
       _notifier.addListener(_listener);
-    } else if (oldWidget.onChanged != null && widget.onChanged == null) {
+    } else if (oldWidget.onChange != null && widget.onChange == null) {
       _notifier.removeListener(_listener);
     }
   }
 
   void _listener(_) {
-    if (widget.onChanged != null) {
-      widget.onChanged!(_notifier);
+    if (widget.onChange != null) {
+      widget.onChange!(context, _notifier);
     }
   }
 

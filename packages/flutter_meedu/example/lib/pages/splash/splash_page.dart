@@ -9,7 +9,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderListener<SplashController>(
-      onChanged: (_) {
+      onChange: (context, _) {
         if (_.routeName != null) {
           router.pushReplacementNamed(_.routeName!);
         }
