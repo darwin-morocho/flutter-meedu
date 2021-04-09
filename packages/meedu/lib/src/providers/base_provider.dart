@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart' show sealed;
 import '../notifiers/base_notifier.dart';
-import '../notifiers/simple_notifier.dart';
 import '../notifiers/state_notifier.dart';
 
 part 'simple_provider.dart';
@@ -10,14 +9,12 @@ typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
 @sealed
 abstract class BaseProvider<T> {
-  static String?
-      flutterCurrentRoute; // save the current route name in flutter apps
+  static String? flutterCurrentRoute; // save the current route name in flutter apps
   static final containers = <int, ProviderContainer>{};
 
   /// callback to create one Instance of [T] when it was need it
   _LazyCallback<T> _create;
-  late ProviderReference _ref;
-  Object? _arguments;
+  ProviderReference? _ref;
 
   /// tell us if the SimpleNotifier or StateNotifier was created
   bool get mounted => BaseProvider.containers.containsKey(this.hashCode);
@@ -27,9 +24,7 @@ abstract class BaseProvider<T> {
 
   /// set the arguments to be available in the ProviderReference
   T setArguments(Object arguments) {
-    if (_arguments == null) {
-      _arguments = arguments;
-    }
+    _ref = ProviderReference(hashCode, arguments: arguments);
     return this.read;
   }
 
@@ -37,12 +32,12 @@ abstract class BaseProvider<T> {
     if (mounted) {
       return containers[this.hashCode]!.notifier as T;
     }
-    _ref = ProviderReference(hashCode, _arguments);
-    final notifier = _create(_ref);
+    _ref = _ref ?? ProviderReference(hashCode);
+    final notifier = _create(_ref!);
 
     BaseProvider.containers[this.hashCode] = ProviderContainer(
       notifier: notifier as BaseNotifier,
-      reference: _ref,
+      reference: _ref!,
       autoDispose: this._autoDispose,
       routeName: BaseProvider.flutterCurrentRoute,
     );
@@ -73,8 +68,8 @@ class ProviderContainer {
 
 class ProviderReference {
   final int _hashCodeProvider;
-  final Object? params;
-  ProviderReference(this._hashCodeProvider, this.params);
+  final Object? arguments;
+  ProviderReference(this._hashCodeProvider, {this.arguments});
 
   T read<T extends BaseNotifier>(BaseProvider<T> provider) {
     return provider.read;
