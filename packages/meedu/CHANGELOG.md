@@ -1,3 +1,8 @@
+## [3.0.0-prev.3]
+- fixed factoryPut.
+## [3.0.0-prev.2]
+- Added `Get.i.factoryPut`.
+
 ## [3.0.0-prev.1]
 - Fixed `read` method into `ProviderReference`.
 

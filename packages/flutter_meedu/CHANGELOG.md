@@ -1,3 +1,8 @@
+## [3.0.0-prev.4]
+- meedu: ^3.0.0-prev.3
+
+## [3.0.0-prev.3]
+- meedu: ^3.0.0-prev.2
 ## [3.0.0-prev.2]
 - Fixed `read` method into `ProviderReference`.
 ## [3.0.0-prev.1]

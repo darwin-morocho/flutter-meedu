@@ -11,16 +11,17 @@ class Get {
   /// [Get.i.lazyPut()]
   final Map<String, _Lazy> _lazyVars = {};
 
+  final Map<String, _Lazy> _factoryVars = {};
+
   /// check if one dependency is available to call to the find method
-  bool has<T>({String? tag, bool lazy = false}) {
+  bool has<T>({String? tag}) {
     final String key = _getKey(T, tag);
     final inVars = _vars.containsKey(key);
     if (inVars) return true;
-
-    if (lazy) {
-      return _lazyVars.containsKey(key);
-    }
-    return false;
+    final inFactoryVars = _factoryVars.containsKey(key);
+    if (inFactoryVars) return true;
+    final inLazyVars = _lazyVars.containsKey(key);
+    return inLazyVars;
   }
 
   /// Insert a Instance into the hashmap
@@ -30,21 +31,26 @@ class Get {
   }
 
   /// Search and return one instance T from the hashmap
-  T find<T>({String? tag, bool lazy = false}) {
+  T find<T>({String? tag}) {
     final String key = _getKey(T, tag);
+
+    final inFactoryVars = _factoryVars.containsKey(key);
+    if (inFactoryVars) {
+      return _factoryVars[key]!.builder();
+    }
+
     final inVars = _vars.containsKey(key);
     if (inVars) {
       return _vars[key];
     }
-    if (lazy) {
-      if (!_lazyVars.containsKey(key)) {
-        throw "Cannot find $key, make sure call to Get.i.lazyPut<${T.toString()}>() before call lazyFind.";
-      }
+    final inLazyVars = _lazyVars.containsKey(key);
+    if (inLazyVars) {
       final dependency = _lazyVars[key]!.builder();
       _vars[key] = dependency;
       return dependency;
     }
-    throw "Cannot find $key, make sure call to Get.i.put<${T.toString()}>() before call find.";
+
+    throw "Cannot find $key, make sure call to Get.i.put<${T.toString()}>(), Get.i.lazyPut<${T.toString()}>(), or Get.i.factoryPut<${T.toString()}>() before call find.";
   }
 
   /// removes an instance from the hasmap
@@ -72,6 +78,15 @@ class Get {
   }) {
     final key = _getKey(T, tag);
     _lazyVars.putIfAbsent(key, () => _Lazy(builder));
+  }
+
+  /// Creates a new Instance<S> from the [<S>builder()] callback.
+  void factoryPut<T>(
+    InstanceBuilderCallback<T> builder, {
+    String? tag,
+  }) {
+    final key = _getKey(T, tag);
+    _factoryVars.putIfAbsent(key, () => _Lazy(builder));
   }
 }
 

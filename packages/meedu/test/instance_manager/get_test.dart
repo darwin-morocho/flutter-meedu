@@ -43,32 +43,40 @@ void main() {
     test('lazy put', () {
       Person? c1;
       try {
-        c1 = Get.i.find()<Person>(lazy: true);
+        c1 = Get.i.find()<Person>();
       } catch (e) {}
       expect(c1, isNull);
       Get.i.lazyPut<Person>(() => Person());
-      c1 = Get.i.find<Person>(lazy: true);
-      final c2 = Get.i.find<Person>(lazy: true);
+      c1 = Get.i.find<Person>();
+      final c2 = Get.i.find<Person>();
       expect(c1, isNotNull);
       expect(c2, isNotNull);
       expect(c1.hashCode == c2.hashCode, false);
 
       Person? t1;
       try {
-        t1 = Get.i.find<Person>(tag: 't', lazy: true);
+        t1 = Get.i.find<Person>(
+          tag: 't',
+        );
       } catch (e) {}
       expect(t1, isNull);
       Get.i.lazyPut<Person>(() => Person(), tag: 't');
-      t1 = Get.i.find<Person>(tag: 't', lazy: true);
-      final t2 = Get.i.find<Person>(tag: 't', lazy: true);
+      t1 = Get.i.find<Person>(
+        tag: 't',
+      );
+      final t2 = Get.i.find<Person>(
+        tag: 't',
+      );
       expect(t1, isNotNull);
       expect(t2, isNotNull);
       expect(t1.hashCode == t2.hashCode, false);
       Get.i.lazyRemove<Person>();
       Get.i.lazyRemove<Person>(tag: 't');
       try {
-        c1 = Get.i.find<Person>(lazy: true);
-        t1 = Get.i.find<Person>(tag: 't', lazy: true);
+        c1 = Get.i.find<Person>();
+        t1 = Get.i.find<Person>(
+          tag: 't',
+        );
       } catch (e) {
         c1 = null;
         t1 = null;
