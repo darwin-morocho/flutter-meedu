@@ -6,7 +6,7 @@ import 'home_state.dart';
 import 'package:dio/dio.dart';
 
 class HomeController extends StateNotifier<HomeState> {
-  HomeController(LoginController loginController) : super(HomeState.initialState) {
+  HomeController() : super(HomeState.initialState) {
     _init();
   }
 

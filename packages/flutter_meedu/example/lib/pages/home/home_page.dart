@@ -5,12 +5,14 @@ import 'package:flutter_meedu/state.dart';
 import 'package:meedu_example/main.dart';
 import 'package:meedu_example/pages/home/home_controller.dart';
 import 'package:meedu_example/pages/home/home_provider.dart';
-
+import 'package:flutter_meedu/router.dart' as router;
 import 'home_state.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(_) {
+    final dateTime = router.arguments(_) as DateTime;
+    homeProvider.setArguments(dateTime);
     return Scaffold(
       appBar: AppBar(
         // title: RxBuilder(

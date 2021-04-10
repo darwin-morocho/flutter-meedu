@@ -9,7 +9,7 @@ import 'login_provider.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = loginProvider.setArguments("HOLA MUNDO");
+    final controller = loginProvider.read;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -33,7 +33,10 @@ class LoginPage extends StatelessWidget {
                 child: Text("SEND"),
                 onPressed: () async {
                   await controller.submit();
-                  router.pushNamed(Routes.HOME);
+                  router.pushNamed(
+                    Routes.HOME,
+                    arguments: DateTime.now(),
+                  );
                 },
               ),
               Consumer(builder: (_, watch, ___) {
