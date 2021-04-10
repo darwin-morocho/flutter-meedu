@@ -18,9 +18,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
           (e) => e.routeName == routeName,
         );
         if (container.autoDispose) {
-          container.notifier.onDispose();
           container.reference.dispose();
-          BaseProvider.containers.remove(container);
         }
       }
     } catch (_) {}

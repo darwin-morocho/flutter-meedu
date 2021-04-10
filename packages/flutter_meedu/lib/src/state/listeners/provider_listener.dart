@@ -90,6 +90,6 @@ class _ProviderListenerState<T extends BaseNotifier>
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context, widget.provider.read);
+    return widget.builder(context, _notifier);
   }
 }

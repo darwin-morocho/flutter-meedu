@@ -1,3 +1,5 @@
+## [3.0.0-prev.5]
+- fixed read a notifier after dispose.
 ## [3.0.0-prev.4]
 - Fixed arguments in ProviderReference
 

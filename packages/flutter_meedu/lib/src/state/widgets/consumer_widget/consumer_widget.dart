@@ -77,9 +77,13 @@ class _ConsumerState extends State<ConsumerWidget> {
 
   /// clear the listeners for this widget
   void _clearDependencies() {
-    _dependencies.forEach((provider, listener) {
-      provider.read.removeListener(listener);
-    });
+    _dependencies.forEach(
+      (provider, listener) {
+        if (provider.mounted) {
+          provider.read.removeListener(listener);
+        }
+      },
+    );
     _dependencies = {};
   }
 
