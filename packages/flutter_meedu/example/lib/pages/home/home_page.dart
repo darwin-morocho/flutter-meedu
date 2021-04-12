@@ -11,8 +11,8 @@ import 'home_state.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(_) {
-    final dateTime = router.arguments(_) as DateTime;
-    homeProvider.setArguments(dateTime);
+    final dateTime = router.arguments(_) as DateTime?;
+    homeProvider.setArguments(dateTime ?? DateTime.now());
     return Scaffold(
       appBar: AppBar(
         // title: RxBuilder(

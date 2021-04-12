@@ -1,4 +1,6 @@
 ## [3.0.0-prev.6]
+- fixed autoDispose when navigate using `Navigator.push(...)`.
+## [3.0.0-prev.6]
 - meedu: ^3.0.0-prev.5
 
 ## [3.0.0-prev.5]

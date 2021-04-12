@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
+import 'package:meedu_example/pages/home/home_page.dart';
 import 'package:meedu_example/routes/routes.dart';
 import 'login_controller.dart';
 import 'login_provider.dart';
@@ -33,10 +34,12 @@ class LoginPage extends StatelessWidget {
                 child: Text("SEND"),
                 onPressed: () async {
                   await controller.submit();
-                  router.pushNamed(
-                    Routes.HOME,
-                    arguments: DateTime.now(),
-                  );
+                  // router.pushNamed(
+                  //   Routes.HOME,
+                  //   arguments: DateTime.now(),
+                  // );
+                  final route = MaterialPageRoute(builder: (_) => HomePage());
+                  Navigator.push(context, route);
                 },
               ),
               Consumer(builder: (_, watch, ___) {

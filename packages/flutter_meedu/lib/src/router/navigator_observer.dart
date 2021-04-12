@@ -8,7 +8,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
   static _RouterObserver i = _RouterObserver._();
 
   String _getRouteName(PageRoute route) {
-    return route.settings.name!;
+    return route.settings.name ?? "${route.hashCode}";
   }
 
   void _checkAutoDispose(String routeName) {
