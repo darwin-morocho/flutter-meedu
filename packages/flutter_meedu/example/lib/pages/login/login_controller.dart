@@ -16,8 +16,6 @@ class LoginController extends SimpleNotifier {
   }
 
   Future<void> submit() {
-    print("_email: $_email");
-    print("_password: $_password");
     return Future.delayed(Duration(milliseconds: 100));
   }
 

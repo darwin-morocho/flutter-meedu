@@ -1,3 +1,6 @@
+## [3.0.0-prev.10]
+- Fixed autoDispose in pushAndRemoveUntil usinf didRemove.
+
 ## [3.0.0-prev.9]
 - Fixed autoDispose in pushAndRemoveUntil.
 ## [3.0.0-prev.8]

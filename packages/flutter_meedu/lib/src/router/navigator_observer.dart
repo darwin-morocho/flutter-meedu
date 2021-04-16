@@ -13,8 +13,9 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   void _checkAutoDispose(String routeName) {
     if (BaseProvider.containers.isNotEmpty) {
-      final containers =
-          BaseProvider.containers.values.where((e) => e.routeName == routeName);
+      final containers = BaseProvider.containers.values.where(
+        (e) => e.routeName == routeName,
+      );
       List<int> keysToRemove = [];
       if (containers.isNotEmpty) {
         for (final container in containers) {
@@ -23,12 +24,22 @@ class _RouterObserver extends RouteObserver<PageRoute> {
             container.reference.dispose();
           }
         }
+
         if (keysToRemove.isNotEmpty) {
-          BaseProvider.containers
-              .removeWhere((key, value) => keysToRemove.contains(key));
+          BaseProvider.containers.removeWhere(
+            (key, value) => keysToRemove.contains(key),
+          );
         }
       }
     }
+  }
+
+  @override
+  void didRemove(Route route, Route? previousRoute) {
+    if (route is PageRoute) {
+      _checkAutoDispose(this._getRouteName(route));
+    }
+    super.didRemove(route, previousRoute);
   }
 
   @override
@@ -36,22 +47,25 @@ class _RouterObserver extends RouteObserver<PageRoute> {
     if (route is PageRoute) {
       _checkAutoDispose(this._getRouteName(route));
     }
+    super.didPop(route, previousRoute);
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
-    if (previousRoute != null && previousRoute is PageRoute) {
-      _checkAutoDispose(this._getRouteName(previousRoute));
-    }
     if (route is PageRoute) {
       BaseProvider.flutterCurrentRoute = this._getRouteName(route);
     }
+    super.didPush(route, previousRoute);
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
+    if (newRoute is PageRoute) {
+      BaseProvider.flutterCurrentRoute = this._getRouteName(newRoute);
+    }
     if (oldRoute != null && oldRoute is PageRoute) {
       _checkAutoDispose(this._getRouteName(oldRoute));
     }
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
   }
 }

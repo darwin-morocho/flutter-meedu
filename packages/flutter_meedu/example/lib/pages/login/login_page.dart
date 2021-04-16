@@ -34,37 +34,37 @@ class LoginPage extends StatelessWidget {
                 child: Text("SEND"),
                 onPressed: () async {
                   await controller.submit();
-                  // router.pushNamed(
-                  //   Routes.HOME,
-                  //   arguments: DateTime.now(),
-                  // );
-                  final route = MaterialPageRoute(builder: (_) => HomePage());
-                  Navigator.push(context, route);
+                  router.pushNamed(
+                    Routes.HOME,
+                    arguments: DateTime.now(),
+                  );
+                  // final route = MaterialPageRoute(builder: (_) => HomePage());
+                  // Navigator.push(context, route);
                 },
               ),
               Consumer(builder: (_, watch, ___) {
-                print("email");
+                // print("email");
                 final email = watch<LoginController, String>(
                   loginProvider.select((_) => _.email),
                 ).email;
                 return Text(email);
               }),
               Consumer(builder: (_, watch, ___) {
-                print("password");
+                // print("password");
                 final password = watch<LoginController, String>(
                   loginProvider.select((_) => _.password),
                 ).password;
                 return Text(password);
               }),
               Consumer(builder: (_, watch, ___) {
-                print("password by id");
+                // print("password by id");
                 final password = watch<LoginController, String>(
                   loginProvider.selectByIds((_) => ['password']),
                 ).password;
                 return Text("password by Id $password");
               }),
               Consumer(builder: (_, watch, ___) {
-                print("email by id");
+                // print("email by id");
                 final email = watch<LoginController, String>(
                   loginProvider.selectByIds((_) => ['email']),
                 ).email;

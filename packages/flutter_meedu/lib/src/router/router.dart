@@ -138,6 +138,7 @@ bool canPop() {
 }
 
 /// return the arguments of the current page
-Object? arguments(BuildContext context) {
-  return ModalRoute.of(context)?.settings.arguments;
+Object? get arguments {
+  _validateRouterState();
+  return ModalRoute.of(navigatorKey.currentContext!)?.settings.arguments;
 }

@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
 class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final productName = router.arguments(context) as String;
+    final productName = router.arguments as String;
     return Scaffold(
       appBar: AppBar(
         leading: TextButton(

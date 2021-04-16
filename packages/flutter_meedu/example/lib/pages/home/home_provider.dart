@@ -4,7 +4,7 @@ import 'package:meedu_example/pages/home/home_state.dart';
 
 final homeProvider = StateProvider<HomeController, HomeState>(
   (ref) {
-    print("👀 arguments ${ref.arguments}");
+    // print("👀 ${StackTrace.current}");
     return HomeController();
   },
 );

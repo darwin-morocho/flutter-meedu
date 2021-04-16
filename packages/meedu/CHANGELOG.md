@@ -1,3 +1,5 @@
+## [3.0.0-prev.7]
+- improved code.
 ## [3.0.0-prev.6]
 - Fixed auto dispose. 
 ## [3.0.0-prev.5]
