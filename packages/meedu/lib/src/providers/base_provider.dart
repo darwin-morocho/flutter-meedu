@@ -30,8 +30,9 @@ abstract class BaseProvider<T> {
 
   /// set the arguments to be available in the ProviderReference
   T setArguments(Object arguments) {
-    _ref = ProviderReference(
-        arguments: arguments, providerDisposeCallback: _dispose);
+    if (_ref == null) {
+      _ref = ProviderReference(arguments: arguments, providerDisposeCallback: _dispose);
+    }
     return this.read;
   }
 
@@ -53,6 +54,7 @@ abstract class BaseProvider<T> {
 
     // save the notifier into containers
     BaseProvider.containers[this.hashCode] = ProviderContainer(
+      providerHashCode: this.hashCode,
       notifier: notifier as BaseNotifier,
       reference: _ref!,
       autoDispose: this._autoDispose,
@@ -64,7 +66,7 @@ abstract class BaseProvider<T> {
 
   /// remove the current Notifier from containers and delete a previous reference
   void _dispose() {
-    final container = BaseProvider.containers.remove(this.hashCode);
+    final container = BaseProvider.containers[this.hashCode];
     if (container != null) {
       container.notifier.onDispose();
     }
@@ -78,6 +80,7 @@ abstract class BaseProvider<T> {
   void dispose() {
     assert(_mounted, 'this provider does not have a notifier linked yet');
     _ref!.dispose();
+    BaseProvider.containers.remove(this.hashCode);
   }
 
   // Custom implementation of hash code optimized for reading providers.
@@ -88,12 +91,14 @@ abstract class BaseProvider<T> {
 }
 
 class ProviderContainer {
+  final int providerHashCode;
   final BaseNotifier notifier;
   final ProviderReference reference;
   final String? routeName;
   final bool autoDispose;
 
   ProviderContainer({
+    required this.providerHashCode,
     required this.notifier,
     required this.reference,
     required this.autoDispose,
