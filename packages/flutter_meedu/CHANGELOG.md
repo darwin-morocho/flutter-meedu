@@ -1,4 +1,7 @@
-## [3.0.0-prev.6]
+## [3.0.0-prev.8]
+- fixed autoDispose for multiples providers.
+
+## [3.0.0-prev.7]
 - fixed autoDispose when navigate using `Navigator.push(...)`.
 ## [3.0.0-prev.6]
 - meedu: ^3.0.0-prev.5

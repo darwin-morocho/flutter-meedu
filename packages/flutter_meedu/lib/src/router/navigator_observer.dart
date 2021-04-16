@@ -13,17 +13,21 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   void _checkAutoDispose(String routeName) {
     if (BaseProvider.containers.isNotEmpty) {
-      final containers = BaseProvider.containers.values.where((e) => e.routeName == routeName);
+      final containers =
+          BaseProvider.containers.values.where((e) => e.routeName == routeName);
       List<int> keysToRemove = [];
       if (containers.isNotEmpty) {
         for (final container in containers) {
           if (container.autoDispose) {
-            keysToRemove.add(container.p);
+            keysToRemove.add(container.providerHashCode);
             container.reference.dispose();
           }
         }
+        if (keysToRemove.isNotEmpty) {
+          BaseProvider.containers
+              .removeWhere((key, value) => keysToRemove.contains(key));
+        }
       }
-      BaseProvider.containers.removeWhere((key, value) => keysToRemove.contains(key));
     }
   }
 
