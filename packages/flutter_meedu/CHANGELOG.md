@@ -1,3 +1,5 @@
+## [3.0.0-prev.11]
+- fixed router.arguments.
 ## [3.0.0-prev.10]
 - Fixed autoDispose in pushAndRemoveUntil usinf didRemove.
 

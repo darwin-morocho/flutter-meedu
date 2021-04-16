@@ -106,8 +106,7 @@ Future<T?> pushNamedAndRemoveUntil<T>(
   Object? arguments,
 }) {
   _validateRouterState();
-  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false,
-      arguments: arguments);
+  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false, arguments: arguments);
 }
 
 /// Consults the current route's [Route.willPop] method,
@@ -138,7 +137,7 @@ bool canPop() {
 }
 
 /// return the arguments of the current page
-Object? get arguments {
+T arguments<T>(BuildContext context) {
   _validateRouterState();
-  return ModalRoute.of(navigatorKey.currentContext!)?.settings.arguments;
+  return ModalRoute.of(context)?.settings.arguments as T;
 }

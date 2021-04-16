@@ -12,7 +12,8 @@ import 'home_state.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(_) {
-    final dateTime = router.arguments as DateTime?;
+    final dateTime = router.arguments<DateTime?>(_);
+    print("dateTime!=null ${dateTime != null}");
     homeProvider.setArguments(dateTime ?? DateTime.now());
     return Scaffold(
       appBar: AppBar(
