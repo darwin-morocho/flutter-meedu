@@ -1,3 +1,5 @@
+## [3.0.0-prev.9]
+- Fixed autoDispose in pushAndRemoveUntil.
 ## [3.0.0-prev.8]
 - fixed autoDispose for multiples providers.
 

@@ -40,6 +40,9 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   @override
   void didPush(Route route, Route? previousRoute) {
+    if (previousRoute != null && previousRoute is PageRoute) {
+      _checkAutoDispose(this._getRouteName(previousRoute));
+    }
     if (route is PageRoute) {
       BaseProvider.flutterCurrentRoute = this._getRouteName(route);
     }
@@ -47,7 +50,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
-    if (oldRoute is PageRoute) {
+    if (oldRoute != null && oldRoute is PageRoute) {
       _checkAutoDispose(this._getRouteName(oldRoute));
     }
   }

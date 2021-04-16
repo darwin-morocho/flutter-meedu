@@ -4,6 +4,8 @@ import '../notifiers/state_notifier.dart';
 
 part 'simple_provider.dart';
 part 'state_provider.dart';
+part 'provider_container.dart';
+part 'provider_reference.dart';
 
 typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
@@ -31,8 +33,7 @@ abstract class BaseProvider<T> {
   /// set the arguments to be available in the ProviderReference
   T setArguments(Object arguments) {
     if (_ref == null) {
-      _ref = ProviderReference(
-          arguments: arguments, providerDisposeCallback: _dispose);
+      _ref = ProviderReference(arguments: arguments, providerDisposeCallback: _dispose);
     }
     return this.read;
   }
@@ -89,63 +90,4 @@ abstract class BaseProvider<T> {
   int get hashCode => _cachedHash;
   final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
   static int _nextHashCode = 1;
-}
-
-class ProviderContainer {
-  final int providerHashCode;
-  final BaseNotifier notifier;
-  final ProviderReference reference;
-  final String? routeName;
-  final bool autoDispose;
-
-  ProviderContainer({
-    required this.providerHashCode,
-    required this.notifier,
-    required this.reference,
-    required this.autoDispose,
-    required this.routeName,
-  });
-}
-
-class ProviderReference {
-  final Object? arguments;
-  final void Function() _providerDisposeCallback;
-  ProviderReference({
-    this.arguments,
-    required void Function() providerDisposeCallback,
-  }) : _providerDisposeCallback = providerDisposeCallback;
-
-  T read<T extends BaseNotifier>(BaseProvider<T> provider) {
-    return provider.read;
-  }
-
-  bool disposed = false;
-
-  /// call this to force dispose the current provider
-  /// ```dart
-  /// final counterProvider = SimpleProvider.autoDispose<CounterController>(
-  ///   (ref) {
-  ///     ref.onDispose(() {
-  ///       print("counterProvider disposed");
-  ///     });
-  ///     return CounterController();
-  ///   },
-  /// );
-  /// ```
-  void dispose() {
-    if (!disposed) {
-      if (_disposableCallback != null) {
-        _disposableCallback!();
-      }
-      _providerDisposeCallback();
-      disposed = true;
-    }
-  }
-
-  void Function()? _disposableCallback;
-
-  /// called when the notifier linked to this reference is destroyed
-  void onDispose(void Function() cb) {
-    this._disposableCallback = cb;
-  }
 }

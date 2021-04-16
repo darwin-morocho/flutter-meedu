@@ -6,6 +6,7 @@ import 'package:meedu_example/main.dart';
 import 'package:meedu_example/pages/home/home_controller.dart';
 import 'package:meedu_example/pages/home/home_provider.dart';
 import 'package:flutter_meedu/router.dart' as router;
+import 'package:meedu_example/routes/routes.dart';
 import 'home_state.dart';
 
 class HomePage extends StatelessWidget {
@@ -42,7 +43,13 @@ class HomePage extends StatelessWidget {
               trackColor: Colors.black26,
               activeColor: Colors.blue,
             ),
-          )
+          ),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () => {
+              router.pushNamedAndRemoveUntil(Routes.SPLASH),
+            },
+          ),
         ],
       ),
       body: Consumer(
