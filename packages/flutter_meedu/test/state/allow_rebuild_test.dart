@@ -45,12 +45,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Provider(
       create: (_) => Controller(),
-      builder: (_, __) => Column(
+      builder: (_, __, ___) => Column(
         children: [
           RxBuilder(
-            () => SimpleBuilder<Controller>(
+            (_) => SimpleBuilder<Controller>(
               allowRebuild: allow.value,
-              builder: (_) => Text("counter:: ${_.counter}"),
+              builder: (context, _) => Text("counter:: ${_.counter}"),
             ),
           ),
           TextButton(

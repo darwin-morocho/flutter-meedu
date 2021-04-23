@@ -32,6 +32,13 @@ abstract class ProviderPage<T extends BaseNotifier> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildPage(context, this.create(context));
+    return Provider<T>(
+      create: this.create,
+      tag: tag,
+      onInit: onInit,
+      onAfterFirstLayout: onAfterFirstLayout,
+      onDispose: onDispose,
+      builder: (context, notifier, _) => buildPage(context, notifier),
+    );
   }
 }

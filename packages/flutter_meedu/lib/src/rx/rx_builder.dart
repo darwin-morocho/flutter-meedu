@@ -5,7 +5,7 @@ import 'package:meedu/rx.dart';
 
 class RxBuilder extends StatefulWidget {
   /// the builder function
-  final Widget Function() builder;
+  final Widget Function(BuildContext context) builder;
   RxBuilder(this.builder, {Key? key}) : super(key: key);
   @override
   _RxBuilderState createState() => _RxBuilderState();
@@ -50,7 +50,7 @@ class _RxBuilderState extends State<RxBuilder> {
     final observer = RxNotifier.proxy;
 
     RxNotifier.proxy = _observer;
-    final result = widget.builder();
+    final result = widget.builder(context);
     if (!_observer!.canUpdate) {
       throw """
       If you are seeing this error, you probably did not insert any observable variables into RxBuilder   

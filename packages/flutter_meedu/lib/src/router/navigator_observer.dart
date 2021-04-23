@@ -11,24 +11,27 @@ class _RouterObserver extends RouteObserver<PageRoute> {
     return route.settings.name ?? "${route.hashCode}";
   }
 
-  void _checkAutoDispose(String routeName) {
-    if (BaseProvider.containers.isNotEmpty) {
-      final containers = BaseProvider.containers.values.where(
-        (e) => e.routeName == routeName,
-      );
-      List<int> keysToRemove = [];
-      if (containers.isNotEmpty) {
-        for (final container in containers) {
-          if (container.autoDispose) {
-            keysToRemove.add(container.providerHashCode);
-            container.reference.dispose();
+  void _checkAutoDispose(Route? route) async {
+    if (route is PageRoute) {
+      final routeName = this._getRouteName(route);
+      if (BaseProvider.containers.isNotEmpty) {
+        final containers = BaseProvider.containers.values.where(
+          (e) => e.routeName == routeName,
+        );
+        List<int> keysToRemove = [];
+        if (containers.isNotEmpty) {
+          for (final container in containers) {
+            if (container.autoDispose) {
+              keysToRemove.add(container.providerHashCode);
+              container.reference.dispose();
+            }
           }
-        }
 
-        if (keysToRemove.isNotEmpty) {
-          BaseProvider.containers.removeWhere(
-            (key, value) => keysToRemove.contains(key),
-          );
+          if (keysToRemove.isNotEmpty) {
+            BaseProvider.containers.removeWhere(
+              (key, value) => keysToRemove.contains(key),
+            );
+          }
         }
       }
     }
@@ -36,17 +39,13 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   @override
   void didRemove(Route route, Route? previousRoute) {
-    if (route is PageRoute) {
-      _checkAutoDispose(this._getRouteName(route));
-    }
+    _checkAutoDispose(route);
     super.didRemove(route, previousRoute);
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
-    if (route is PageRoute) {
-      _checkAutoDispose(this._getRouteName(route));
-    }
+    _checkAutoDispose(route);
     super.didPop(route, previousRoute);
   }
 
@@ -63,9 +62,8 @@ class _RouterObserver extends RouteObserver<PageRoute> {
     if (newRoute is PageRoute) {
       BaseProvider.flutterCurrentRoute = this._getRouteName(newRoute);
     }
-    if (oldRoute != null && oldRoute is PageRoute) {
-      _checkAutoDispose(this._getRouteName(oldRoute));
-    }
+
+    _checkAutoDispose(oldRoute);
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
   }
 }

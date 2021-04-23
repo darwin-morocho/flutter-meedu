@@ -17,7 +17,7 @@ class HomeController extends StateNotifier<HomeState> {
 
   Future<void> _init() async {
     try {
-      final response = await Dio().get("https://reqres.in/api/users?delay=1");
+      final response = await Dio().get("https://reqres.in/api/users");
       final users = (response.data['data'] as List)
           .map(
             (e) => User.fromJson(e),

@@ -9,7 +9,23 @@ part 'provider_filter.dart';
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
 /// [filter] one instance of SimpleFilter or StateFilter, use this to avoid unnecessary  updates
-typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider);
+typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider,
+    [WatchFilter<T, S>? filter]);
+
+class WatchFilter<T, S> {
+  final BuildWhen<S>? when;
+  final List<String>? ids;
+  final BuildBySelect<T, S>? select;
+
+  WatchFilter({
+    this.when,
+    this.ids,
+    this.select,
+  });
+}
+
+typedef BuildWhen<S> = bool Function(S prev, S current);
+typedef BuildBySelect<T, S> = S Function(T);
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
@@ -87,7 +103,7 @@ class _ConsumerState extends State<ConsumerWidget> {
     _dependencies = {};
   }
 
-  T _reader<T, S>(BaseProvider<T> target) {
+  T _reader<T, S>(BaseProvider<T> target, [WatchFilter<T, S>? filter]) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
@@ -101,10 +117,11 @@ class _ConsumerState extends State<ConsumerWidget> {
         // if (filter != null && !(filter is SimpleFilter)) {
         //   throw AssertionError('filter must be a SimpleFilter');
         // }
-        _dependencies[target] = createSimpleProviderListener<T>(
+        _dependencies[target] = createSimpleProviderListener<T, S>(
           provider: target as SimpleProvider<T>,
           rebuild: _rebuild,
-          // filter: filter as SimpleFilter?,
+          buildByIds: filter?.ids,
+          buildBySelect: filter?.select,
         );
       } else {
         // if (filter != null && !(filter is StateFilter)) {
@@ -114,6 +131,7 @@ class _ConsumerState extends State<ConsumerWidget> {
         _dependencies[target] = createStateProviderListener<S>(
           provider: target as StateProvider<StateNotifier<S>, S>,
           rebuild: _rebuild,
+          buildWhen: filter?.when,
           // filter: filter as StateFilter?,
         );
       }

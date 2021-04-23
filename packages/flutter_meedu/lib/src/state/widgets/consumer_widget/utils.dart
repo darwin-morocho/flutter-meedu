@@ -1,25 +1,26 @@
 part of 'consumer_widget.dart';
 
-void Function(dynamic) createSimpleProviderListener<T>({
+void Function(dynamic) createSimpleProviderListener<T, S>({
   required SimpleProvider<T> provider,
   required void Function() rebuild,
+  required List<String>? buildByIds,
+  required BuildBySelect<T, S>? buildBySelect,
 }) {
   final notifier = provider.read;
-  final selectedCallback = provider.selectCallback;
-  final selectedByIdsCallback = provider.selectByIdsCallback;
+
   Object? prevValue;
   final listener = (dynamic _) {
     final listeners = _ as List<String>;
-    if (selectedCallback != null) {
-      final value = selectedCallback(notifier);
+    if (buildBySelect != null) {
+      final value = buildBySelect(notifier);
       if (prevValue != value) {
         rebuild();
       }
       prevValue = value;
-    } else if (selectedByIdsCallback != null && listeners.isNotEmpty) {
+    } else if (buildByIds != null && listeners.isNotEmpty) {
       // if the update method was called with ids
       //  if the current MeeduBuilder id is inside the listeners
-      final ids = selectedByIdsCallback(notifier);
+      final ids = buildByIds;
       for (final String id in ids) {
         if (listeners.contains(id)) {
           rebuild();
@@ -32,17 +33,16 @@ void Function(dynamic) createSimpleProviderListener<T>({
     }
   };
   (notifier as SimpleNotifier).addListener(listener);
-  provider.clearSelect();
-  provider.clearSelectByIds();
   return listener;
 }
 
 void Function(dynamic) createStateProviderListener<S>({
   required StateProvider<StateNotifier<S>, S> provider,
   required void Function() rebuild,
+  required BuildWhen<S>? buildWhen,
 }) {
   final notifier = provider.read;
-  final buildWhen = provider.buildWhenCallback;
+
   final listener = (dynamic newState) {
     // if the buildWhen param is defined
     if (buildWhen != null) {
@@ -57,6 +57,6 @@ void Function(dynamic) createStateProviderListener<S>({
     }
   };
   notifier.addListener(listener);
-  provider.clearBuildWhen();
+
   return listener;
 }

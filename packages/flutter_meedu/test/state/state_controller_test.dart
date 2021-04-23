@@ -78,7 +78,7 @@ class LoginPage extends StatelessWidget {
       ),
       body: Provider<LoginController>(
         create: (_) => LoginController(),
-        builder: (_, __) => Builder(
+        builder: (_, __, ___) => Builder(
           builder: (context) => Column(
             children: [
               TextButton(
@@ -98,11 +98,11 @@ class LoginPage extends StatelessWidget {
               ),
               StateBuilder<LoginController, LoginState>(
                 buildWhen: (prev, current) => prev.email != current.email,
-                builder: (_) => Text(_.state.email),
+                builder: (context, _) => Text(_.state.email),
               ),
               StateBuilder<LoginController, LoginState>(
                 buildWhen: (prev, current) => prev.password != current.password,
-                builder: (_) => Text(_.state.password),
+                builder: (context, _) => Text(_.state.password),
               ),
               LoginDetail(),
             ],

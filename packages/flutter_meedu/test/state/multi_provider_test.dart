@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           StateBuilder<UserController, User>(
-            builder: (_) => Column(
+            builder: (context, _) => Column(
               children: [
                 Text("${_.state.id}"),
                 Text("${_.state.username}"),
@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           SimpleBuilder<CounterController>(
-            builder: (_) => Text("counter ${_.counter}"),
+            builder: (context, _) => Text("counter ${_.counter}"),
           )
         ],
       ),

@@ -23,7 +23,7 @@ abstract class SimpleWidget<T extends SimpleNotifier> extends StatelessWidget {
     return SimpleBuilder<T>(
       id: this.id,
       tag: this.tag,
-      builder: (controller) => buildChild(
+      builder: (context, controller) => buildChild(
         context,
         controller,
       ),

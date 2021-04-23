@@ -2,7 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/get.dart';
 import 'package:meedu/state.dart';
 
-typedef ProviderCallback<T> = void Function(BuildContext context, T controller);
+typedef ProviderCallback<T extends BaseNotifier> = void Function(
+    BuildContext context, T controller);
 
 /// class to inject a Notifier into the widgets tree
 ///
@@ -27,7 +28,9 @@ class Provider<T extends BaseNotifier> extends StatefulWidget {
   /// use this callback to listen when the provider is disposed
   final ProviderCallback<T>? onDispose;
 
-  final Widget Function(BuildContext, T notifier) builder;
+  final Widget Function(BuildContext, T notifier, Widget? child)? builder;
+
+  final Widget? child;
 
   Provider({
     Key? key,
@@ -36,11 +39,13 @@ class Provider<T extends BaseNotifier> extends StatefulWidget {
     this.onInit,
     this.onAfterFirstLayout,
     this.onDispose,
-    required this.builder,
-  }) : super(key: key);
+    this.builder,
+    this.child,
+  })  : assert(child != null || builder != null),
+        super(key: key);
 
   @override
-  _ProviderState createState() => _ProviderState();
+  _ProviderState createState() => _ProviderState<T>();
 
   /// Search one instance of [BaseController]
   static T of<T extends BaseNotifier>({String? tag}) {
@@ -57,7 +62,7 @@ class _ProviderState<T extends BaseNotifier> extends State<Provider<T>> {
     _notifier = widget.create(context);
     Get.i.put<T>(_notifier, tag: widget.tag);
 
-    WidgetsBinding.instance!.addPersistentFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       // if the controller is not disposed
       if (!_notifier.disposed) {
         _notifier.onAfterFirstLayout();
@@ -77,6 +82,9 @@ class _ProviderState<T extends BaseNotifier> extends State<Provider<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context, _notifier);
+    if (widget.builder != null) {
+      return widget.builder!(context, _notifier, widget.child);
+    }
+    return widget.child!;
   }
 }

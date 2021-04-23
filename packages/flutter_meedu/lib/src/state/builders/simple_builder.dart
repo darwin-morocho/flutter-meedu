@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart' show Widget, VoidCallback, Key;
+import 'package:flutter/widgets.dart'
+    show BuildContext, Key, VoidCallback, Widget;
 import 'package:meedu/state.dart' show SimpleNotifier;
 import 'base_builder.dart';
 
@@ -11,7 +12,7 @@ class SimpleBuilder<T extends SimpleNotifier>
 
   SimpleBuilder({
     Key? key,
-    required Widget Function(T) builder,
+    required Widget Function(BuildContext, T) builder,
     this.id,
     VoidCallback? initState,
     VoidCallback? didChangeDependencies,

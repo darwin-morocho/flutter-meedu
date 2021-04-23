@@ -106,7 +106,8 @@ Future<T?> pushNamedAndRemoveUntil<T>(
   Object? arguments,
 }) {
   _validateRouterState();
-  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false, arguments: arguments);
+  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false,
+      arguments: arguments);
 }
 
 /// Consults the current route's [Route.willPop] method,

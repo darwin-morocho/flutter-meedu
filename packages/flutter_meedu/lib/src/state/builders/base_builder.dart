@@ -9,7 +9,7 @@ typedef ListenerCallback<T> = void Function(T);
 abstract class BaseBuilder<T extends BaseNotifier<S>, S>
     extends StatefulWidget {
   /// the builder function that render the widget when the controller notify changes
-  final Widget Function(T) builder;
+  final Widget Function(BuildContext, T) builder;
 
   /// use this if you don't want rebuild this widget when update() is called
   final bool allowRebuild;
@@ -102,6 +102,6 @@ abstract class BaseBuilderState<T extends BaseNotifier<S>, S>
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(_controller);
+    return widget.builder(context, _controller);
   }
 }

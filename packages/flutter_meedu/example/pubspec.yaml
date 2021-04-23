@@ -28,7 +28,7 @@ dependencies:
   flutter_meedu:
     path: ../
   
-  meedu: ^3.0.0-prev.7
+  meedu: ^3.0.0-prev.8
   # meedu:
   #   path: ../../meedu
 

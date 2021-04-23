@@ -5,6 +5,8 @@ import 'package:meedu/state.dart';
 import 'package:meedu_example/routes/pages.dart';
 import 'package:meedu_example/routes/routes.dart';
 
+import 'pages/provider_widget_page.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   router.setDefaultTransition(router.Transition.upToDown);
@@ -17,18 +19,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       child: SimpleBuilder<AppThemeController>(
-        builder: (_) => MaterialApp(
+        builder: (_, controller) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           navigatorKey: router.navigatorKey,
-          themeMode: _.themeMode,
+          themeMode: controller.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          initialRoute: Routes.SPLASH,
+          // initialRoute: Routes.SPLASH,
+          home: ProviderWidgetPage(),
           navigatorObservers: [
             router.observer,
           ],
-          routes: Pages.routes,
+          // routes: Pages.routes,
         ),
       ),
       providers: [

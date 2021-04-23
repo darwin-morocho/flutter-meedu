@@ -28,7 +28,7 @@ abstract class StateWidget<T extends StateNotifier<S>, S>
     return StateBuilder<T, S>(
       tag: this.tag,
       buildWhen: this.buildWhen,
-      builder: (controller) => buildChild(
+      builder: (context, controller) => buildChild(
         context,
         controller,
       ),

@@ -71,7 +71,7 @@ class HomePage extends ProviderPage<Controller> {
   Widget buildPage(BuildContext context, Controller controller) {
     return Scaffold(
       body: SimpleBuilder<Controller>(
-        builder: (_) => Text("${_.counter}"),
+        builder: (context, _) => Text("${_.counter}"),
       ),
       floatingActionButton: TextButton(
         child: Text("add"),

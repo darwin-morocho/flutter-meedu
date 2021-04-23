@@ -1,3 +1,6 @@
+## [3.0.0-prev.8]
+- Added buildWhen, buildByIds and buildBySelect in the `watch` method of `ConsumerWidget`.
+
 ## [3.0.0-prev.7]
 - improved code.
 ## [3.0.0-prev.6]

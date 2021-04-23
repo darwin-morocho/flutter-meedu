@@ -33,7 +33,8 @@ abstract class BaseProvider<T> {
   /// set the arguments to be available in the ProviderReference
   T setArguments(Object arguments) {
     if (_ref == null) {
-      _ref = ProviderReference(arguments: arguments, providerDisposeCallback: _dispose);
+      _ref = ProviderReference(
+          arguments: arguments, providerDisposeCallback: _dispose);
     }
     return this.read;
   }

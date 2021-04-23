@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/pages/home/home_page.dart';
 import 'package:meedu_example/routes/routes.dart';
 import 'login_controller.dart';
 import 'login_provider.dart';
@@ -43,30 +42,34 @@ class LoginPage extends StatelessWidget {
                 },
               ),
               Consumer(builder: (_, watch, ___) {
-                // print("email");
+                print("email");
                 final email = watch<LoginController, String>(
-                  loginProvider.select((_) => _.email),
+                  loginProvider,
+                  WatchFilter(select: (_) => _.email),
                 ).email;
                 return Text(email);
               }),
               Consumer(builder: (_, watch, ___) {
-                // print("password");
+                print("password");
                 final password = watch<LoginController, String>(
-                  loginProvider.select((_) => _.password),
+                  loginProvider,
+                  WatchFilter(select: (_) => _.password),
                 ).password;
                 return Text(password);
               }),
               Consumer(builder: (_, watch, ___) {
-                // print("password by id");
-                final password = watch<LoginController, String>(
-                  loginProvider.selectByIds((_) => ['password']),
+                print("password by id");
+                final password = watch(
+                  loginProvider,
+                  WatchFilter(ids: ['password']),
                 ).password;
                 return Text("password by Id $password");
               }),
               Consumer(builder: (_, watch, ___) {
-                // print("email by id");
-                final email = watch<LoginController, String>(
-                  loginProvider.selectByIds((_) => ['email']),
+                print("email by id");
+                final email = watch(
+                  loginProvider,
+                  WatchFilter(ids: ['email']),
                 ).email;
                 return Text("email by Id $email");
               }),
