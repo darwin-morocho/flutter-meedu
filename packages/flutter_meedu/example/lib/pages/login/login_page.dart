@@ -41,6 +41,16 @@ class LoginPage extends StatelessWidget {
                   // Navigator.push(context, route);
                 },
               ),
+              SizedBox(
+                height: 10,
+              ),
+              CupertinoButton(
+                color: Colors.blue,
+                child: Text("GO TO TABS"),
+                onPressed: () async {
+                  router.pushNamed(Routes.TABS);
+                },
+              ),
               Consumer(builder: (_, watch, ___) {
                 print("email");
                 final email = watch<LoginController, String>(

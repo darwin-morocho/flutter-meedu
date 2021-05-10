@@ -51,7 +51,7 @@ void main() {
       final c2 = Get.i.find<Person>();
       expect(c1, isNotNull);
       expect(c2, isNotNull);
-      expect(c1.hashCode == c2.hashCode, false);
+      expect(c1.hashCode == c2.hashCode, true);
 
       Person? t1;
       try {
@@ -69,7 +69,9 @@ void main() {
       );
       expect(t1, isNotNull);
       expect(t2, isNotNull);
-      expect(t1.hashCode == t2.hashCode, false);
+      expect(t1.hashCode == t2.hashCode, true);
+      Get.i.remove<Person>();
+      Get.i.remove<Person>(tag: 't');
       Get.i.lazyRemove<Person>();
       Get.i.lazyRemove<Person>(tag: 't');
       try {

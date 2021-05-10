@@ -16,8 +16,10 @@ abstract class BaseNotifier<T> {
   /// list to save the subscribers
   LinkedList<_ListenerEntry<T>>? _listeners = LinkedList<_ListenerEntry<T>>();
 
+  bool _disposed = false;
+
   /// Tell us if the controller was disposed
-  bool get disposed => _listeners == null;
+  bool get disposed => _disposed;
 
   bool get hasListeners => !disposed ? _listeners!.isNotEmpty : false;
 
@@ -33,7 +35,7 @@ abstract class BaseNotifier<T> {
 
   /// check if the controller is mounted
   void _debugAssertNotDisposed() {
-    assert(_listeners != null, 'A $runtimeType was used after being disposed.');
+    assert(!_disposed, 'A $runtimeType was used after being disposed.');
   }
 
   /// add a new listener
@@ -42,7 +44,7 @@ abstract class BaseNotifier<T> {
     _listeners!.add(_ListenerEntry<T>(listener, autoDispose));
   }
 
-  /// remove a listener
+  /// remove a listener from the notifier
   void removeListener(ListenerCallback<T> listener) {
     if (_listeners != null) {
       for (final _ListenerEntry<T> entry in _listeners!) {
@@ -62,9 +64,10 @@ abstract class BaseNotifier<T> {
 
   /// notify to listeners and rebuild the widgets
   ///
-  /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
+  /// only SimpleNotifier or StateNotifier are allowed to call this method, DON'T  call to this method since
+  /// a sub-type of SimpleNotifier or StateNotifier
   @protected
-  void notifyListeners(T data) {
+  void notify(T data) {
     _debugAssertNotDisposed();
 
     _isBusy = Completer();
@@ -90,7 +93,7 @@ abstract class BaseNotifier<T> {
   @mustCallSuper
   void onDispose() async {
     _debugAssertNotDisposed();
-
+    _disposed = true;
     _controller?.close();
     if (_isBusy != null) {
       await _isBusy!.future;

@@ -14,8 +14,8 @@ class _RouterObserver extends RouteObserver<PageRoute> {
   void _checkAutoDispose(Route? route) async {
     if (route is PageRoute) {
       final routeName = this._getRouteName(route);
-      if (BaseProvider.containers.isNotEmpty) {
-        final containers = BaseProvider.containers.values.where(
+      if (ProviderScope.containers.isNotEmpty) {
+        final containers = ProviderScope.containers.values.where(
           (e) => e.routeName == routeName,
         );
         List<int> keysToRemove = [];
@@ -28,7 +28,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
           }
 
           if (keysToRemove.isNotEmpty) {
-            BaseProvider.containers.removeWhere(
+            ProviderScope.containers.removeWhere(
               (key, value) => keysToRemove.contains(key),
             );
           }
@@ -37,32 +37,35 @@ class _RouterObserver extends RouteObserver<PageRoute> {
     }
   }
 
+  void _setCurrentRoute(Route? route) {
+    if (route is PageRoute) {
+      BaseProvider.flutterCurrentRoute = this._getRouteName(route);
+    }
+  }
+
   @override
   void didRemove(Route route, Route? previousRoute) {
     _checkAutoDispose(route);
+    _setCurrentRoute(previousRoute);
     super.didRemove(route, previousRoute);
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
     _checkAutoDispose(route);
+    _setCurrentRoute(previousRoute);
     super.didPop(route, previousRoute);
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
-    if (route is PageRoute) {
-      BaseProvider.flutterCurrentRoute = this._getRouteName(route);
-    }
+    _setCurrentRoute(route);
     super.didPush(route, previousRoute);
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
-    if (newRoute is PageRoute) {
-      BaseProvider.flutterCurrentRoute = this._getRouteName(newRoute);
-    }
-
+    _setCurrentRoute(newRoute);
     _checkAutoDispose(oldRoute);
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
   }

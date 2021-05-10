@@ -1,3 +1,5 @@
+## [3.0.0-prev.9]
+- updated tests and added ProviderScope class.
 ## [3.0.0-prev.8]
 - Added buildWhen, buildByIds and buildBySelect in the `watch` method of `ConsumerWidget`.
 

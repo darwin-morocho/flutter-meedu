@@ -1,7 +1,12 @@
+## [3.0.0-prev.15]
+- Fixed routeName on NavigatorObserver.
+
 ## [3.0.0-prev.14]
+
 - Fixed `Provider` widget.
 
 ## [3.0.0-prev.13]
+
 - Added WatchFilter class.
 
 ## [3.0.0-prev.12]

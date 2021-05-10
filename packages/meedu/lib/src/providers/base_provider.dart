@@ -1,10 +1,11 @@
 import 'package:meta/meta.dart' show sealed;
 import '../notifiers/base_notifier.dart';
 import '../notifiers/state_notifier.dart';
+import 'provider_scope.dart';
+import 'provider_container.dart';
 
 part 'simple_provider.dart';
 part 'state_provider.dart';
-part 'provider_container.dart';
 part 'provider_reference.dart';
 
 typedef _LazyCallback<T> = T Function(ProviderReference ref);
@@ -13,9 +14,6 @@ typedef _LazyCallback<T> = T Function(ProviderReference ref);
 abstract class BaseProvider<T> {
   /// save the current route name in flutter apps
   static String? flutterCurrentRoute;
-
-  /// save the notifiers in one instance of PtoviderContainer
-  static final containers = <int, ProviderContainer>{};
 
   /// callback to create one Instance of [T] when it was need it
   _LazyCallback<T> _create;
@@ -43,7 +41,7 @@ abstract class BaseProvider<T> {
   T get read {
     // if the notifier was created before
     if (_mounted) {
-      return containers[this.hashCode]!.notifier as T;
+      return ProviderScope.containers[this.hashCode]!.notifier as T;
     }
 
     // check if we have a previous reference
@@ -56,7 +54,7 @@ abstract class BaseProvider<T> {
     final notifier = _create(_ref!);
 
     // save the notifier into containers
-    BaseProvider.containers[this.hashCode] = ProviderContainer(
+    ProviderScope.containers[this.hashCode] = ProviderContainer(
       providerHashCode: this.hashCode,
       notifier: notifier as BaseNotifier,
       reference: _ref!,
@@ -69,7 +67,7 @@ abstract class BaseProvider<T> {
 
   /// remove the current Notifier from containers and delete a previous reference
   void _dispose() {
-    final container = BaseProvider.containers[this.hashCode];
+    final container = ProviderScope.containers[this.hashCode];
     if (container != null) {
       container.notifier.onDispose();
     }
@@ -83,7 +81,7 @@ abstract class BaseProvider<T> {
   void dispose() {
     assert(_mounted, 'this provider does not have a notifier linked yet');
     _ref!.dispose();
-    BaseProvider.containers.remove(this.hashCode);
+    ProviderScope.containers.remove(this.hashCode);
   }
 
   // Custom implementation of hash code optimized for reading providers.
