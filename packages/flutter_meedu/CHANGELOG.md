@@ -1,3 +1,6 @@
+## [3.0.0-prev.16]
+- ProviderListener onChange callback is called after next frame.
+
 ## [3.0.0-prev.15]
 - Fixed routeName on NavigatorObserver.
 

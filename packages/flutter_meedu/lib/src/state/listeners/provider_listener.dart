@@ -2,8 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
-typedef _ProviderListenerCallback<T> = void Function(
-    BuildContext _, T notifier);
+typedef _ProviderListenerCallback<T> = void Function(BuildContext _, T notifier);
 
 /// A widget to listen events in a SimpleProvider or a StateProvider
 ///
@@ -38,12 +37,12 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   _ProviderListenerState createState() => _ProviderListenerState<T>();
 }
 
-class _ProviderListenerState<T extends BaseNotifier>
-    extends State<ProviderListener<T>> {
+class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
   late T _notifier;
   @override
   void initState() {
     super.initState();
+
     _notifier = widget.provider.read;
     if (widget.onChange != null) {
       _notifier.addListener(_listener);
@@ -73,18 +72,21 @@ class _ProviderListenerState<T extends BaseNotifier>
 
   @override
   void didUpdateWidget(covariant ProviderListener<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
     if (oldWidget.onChange == null && widget.onChange != null) {
       _notifier.addListener(_listener);
     } else if (oldWidget.onChange != null && widget.onChange == null) {
       _notifier.removeListener(_listener);
     }
+    super.didUpdateWidget(oldWidget);
   }
 
   void _listener(_) {
     if (widget.onChange != null) {
-      widget.onChange!(context, _notifier);
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        if (mounted) {
+          widget.onChange!(context, _notifier);
+        }
+      });
     }
   }
 
