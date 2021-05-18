@@ -1,3 +1,5 @@
+## [3.0.0-prev.17]
+- Removed Logs on Consumer widget.
 ## [3.0.0-prev.16]
 - ProviderListener onChange callback is called after next frame.
 

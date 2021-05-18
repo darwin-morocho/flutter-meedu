@@ -82,7 +82,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.0.0-prev.16"
+    version: "3.0.0-prev.17"
   flutter_test:
     dependency: "direct dev"
     description: flutter

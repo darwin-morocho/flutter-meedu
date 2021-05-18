@@ -61,7 +61,6 @@ class _ConsumerState extends State<ConsumerWidget> {
   @override
   void initState() {
     super.initState();
-    print("consumer init");
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _afterFirstLayout = true;
     });
