@@ -1,3 +1,5 @@
+## [3.0.0-prev.11]
+- Added overrideProvider method;
 ## [3.0.0-prev.10]
 - Allow null arguments on setArguments method.
 ## [3.0.0-prev.9]

@@ -16,7 +16,9 @@ abstract class BaseProvider<T> {
   static String? flutterCurrentRoute;
 
   /// callback to create one Instance of [T] when it was need it
-  _LazyCallback<T> _create;
+  _LazyCallback<T> _creator;
+
+  _LazyCallback<T>? _overriddenCreator;
 
   /// reference to save arguments and a disposable callback for each notifier
   ProviderReference? _ref;
@@ -26,7 +28,13 @@ abstract class BaseProvider<T> {
   bool get mounted => _mounted;
 
   final bool _autoDispose;
-  BaseProvider(this._create, [this._autoDispose = false]);
+  BaseProvider(this._creator, [this._autoDispose = false]);
+
+  // Custom implementation of hash code optimized for reading providers.
+  @override
+  int get hashCode => _cachedHash;
+  final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
+  static int _nextHashCode = 1;
 
   /// set the arguments to be available in the ProviderReference
   T setArguments(Object? arguments) {
@@ -53,7 +61,7 @@ abstract class BaseProvider<T> {
         );
 
     // create a new Notifier
-    final notifier = _create(_ref!);
+    final notifier = _overriddenCreator != null ? _overriddenCreator!(_ref!) : _creator(_ref!);
 
     // save the notifier into containers
     ProviderScope.containers[this.hashCode] = ProviderContainer(
@@ -73,6 +81,9 @@ abstract class BaseProvider<T> {
     if (container != null) {
       container.notifier.onDispose();
     }
+    if (_overriddenCreator != null) {
+      _overriddenCreator = null;
+    }
     _ref = null;
     _mounted = false;
   }
@@ -86,9 +97,20 @@ abstract class BaseProvider<T> {
     ProviderScope.containers.remove(this.hashCode);
   }
 
-  // Custom implementation of hash code optimized for reading providers.
-  @override
-  int get hashCode => _cachedHash;
-  final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
-  static int _nextHashCode = 1;
+  /// overrides the creator function of this provider useful for unit test.
+  ///
+  /// [WARNING] if [force] is true the new creator callback becomes in the main creator
+  void overrideProvider(
+    _LazyCallback<T> creator, {
+    bool force = false,
+  }) {
+    if (mounted) {
+      dispose();
+    }
+    if (force) {
+      _creator = creator;
+    } else {
+      _overriddenCreator = creator;
+    }
+  }
 }

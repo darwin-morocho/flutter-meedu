@@ -71,11 +71,10 @@ abstract class BaseNotifier<T> {
     _debugAssertNotDisposed();
 
     _isBusy = Completer();
-
+    if (_controller != null && !_controller!.isClosed) {
+      _controller?.sink.add(data);
+    }
     if (_listeners!.isNotEmpty) {
-      if (_controller != null && !_controller!.isClosed) {
-        _controller?.sink.add(data);
-      }
       for (final _ListenerEntry<T> entry in _listeners!) {
         if (entry.list != null) entry.listener(data);
       }
