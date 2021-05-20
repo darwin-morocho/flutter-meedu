@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:meedu/meedu.dart';
-import 'package:meedu_example/pages/login/login_controller.dart';
+import 'package:flutter_meedu/meedu.dart';
+
 import 'home_state.dart';
 import 'package:dio/dio.dart';
 

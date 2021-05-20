@@ -1,4 +1,4 @@
-import 'package:meedu/meedu.dart';
+import 'package:flutter_meedu/meedu.dart';
 
 class HomeTabController extends SimpleNotifier {
   final counter = 0.obs;

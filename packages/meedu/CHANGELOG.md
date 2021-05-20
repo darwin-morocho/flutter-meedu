@@ -1,157 +1,136 @@
-## [3.0.0-prev.11]
-- Added overrideProvider method;
+## [3.0.0-prev.13]
+- Added clear method in Get class.
+## [3.0.0-prev.12]
+- Added clear method in ProviderScope class.
+
+### [3.0.0-prev.11]
+- Added overrideProvider method.
+
 ## [3.0.0-prev.10]
-- Allow null arguments on setArguments method.
+- Allow null arguments in setArguments method.
+
 ## [3.0.0-prev.9]
 - updated tests and added ProviderScope class.
+
 ## [3.0.0-prev.8]
 - Added buildWhen, buildByIds and buildBySelect in the `watch` method of `ConsumerWidget`.
 
 ## [3.0.0-prev.7]
 - improved code.
+
 ## [3.0.0-prev.6]
 - Fixed auto dispose. 
+
 ## [3.0.0-prev.5]
 - fixed read a notifier after dispose.
+
 ## [3.0.0-prev.4]
 - Fixed arguments in ProviderReference
 
 ## [3.0.0-prev.3]
-
 - fixed factoryPut.
 
 ## [3.0.0-prev.2]
-
 - Added `Get.i.factoryPut`.
 
 ## [3.0.0-prev.1]
-
 - Fixed `read` method into `ProviderReference`.
 
 ## [3.0.0-prev.0]
-
 - Prev version of 3.0.0
 
 ## [2.1.0]
-
 - Updated Get.i.find with lazy param.
 
 ## [2.0.1]
-
 - Removed T? in RxWorker.
 
 ## [2.0.0]
-
 - Added support for flutter 2 and null safety.
 
 ## [0.6.0-nullsafety.1]
-
 - Fixed Get.i.find<...>()
 
 ## [0.6.0-nullsafety.0]
-
 - Added support for null safety.
 
 ## [0.5.4]
-
 - Fixed \_debugAssertNotDisposed(); on removeListener.
 
 ## [0.5.3]
-
 - Removed unused imports.
 
 ## [0.5.2+2]
-
 - Removed Future<void> from onDispose().
 
 ## [0.5.2+1]
-
 - Added documentation url.
 
 ## [0.5.2]
-
 - Improved BaseController.
 
 ## [0.5.1]
-
 - Added Rx workers.
 
 ## [0.5.0]
-
 - Create 2 packages meedu and flutter_meedu.
 
 ## [0.4.2+1]
-
 - Fixed provider afterFirstlayout.
 
 ## [0.4.2]
-
 - Added MultiProvider.
 
 ## [0.4.1+2]
-
 - Animate transition to named route.
 
 ## [0.4.1+1]
-
 - Updated code documentation.
 
 ## [0.4.1]
-
 - Removed streams from BaseController.
 - Updated documentation.
 
 ## [0.4.0+1]
-
 - Updated documentation.
 
 ## [0.4.0]
-
 - Updated documentation.
 - Updated Tests.
 - Added onStateWillChange and onStateChanged on StateController.
 - Added initialState on StateController's constructor.
 
 ## [0.3.1]
-
 - Fixed popUntil and pushNamedAndRemoveUntil.
 - Added Tests.
 
 ## [0.3.0]
-
 - Renamed MeeduProvider to Provider.
 - Renamed MeeduBuilder to SimpleBuilder.
 - Added SimpleController and StateController.
 - Added StateBuilder.
 
 ## [0.2.2]
-
 - Added page transitions.
 - MeeduProvider inject the MeeduController using Get.i.put.
 
 ## [0.2.1+1]
-
 - Updated Callbacks.
 
 ## [0.2.1]
-
 - Removed State param from MeeduBuilder callbacks.
 
 ## [0.2.0+1]
-
 - Removed logs.
 
 ## [0.2.0]
-
 - Updated RxBuilder
 
 ## [0.1.1]
-
 - Renamed MGet to Get
 - Renamed MController to MeeduController
 - Renamed MBuilder to MeeduBuilder
 - Updated documentation
 
 ## [0.1.0]
-
 - Initial version

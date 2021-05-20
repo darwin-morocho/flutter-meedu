@@ -1,4 +1,4 @@
-import 'package:meedu/state.dart';
+import 'package:flutter_meedu/meedu.dart';
 
 class LoginController extends SimpleNotifier {
   String _email = '', _password = '';

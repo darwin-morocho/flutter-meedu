@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
-import 'package:meedu/provider.dart';
-import 'package:meedu/state.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
 class ExamplePage extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/rx.dart';
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu_example/main.dart';
 import 'package:meedu_example/pages/home/home_controller.dart';

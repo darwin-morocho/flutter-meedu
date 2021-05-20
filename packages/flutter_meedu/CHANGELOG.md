@@ -1,3 +1,8 @@
+## [3.0.0-prev.19]
+- Updated to meedu: ^3.0.0-prev.13
+## [3.0.0-prev.18]
+- Updated to meedu: ^3.0.0-prev.11
+
 ## [3.0.0-prev.17]
 - Removed Logs on Consumer widget.
 ## [3.0.0-prev.16]

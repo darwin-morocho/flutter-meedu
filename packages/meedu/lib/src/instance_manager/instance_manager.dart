@@ -88,6 +88,13 @@ class Get {
     final key = _getKey(T, tag);
     _factoryVars.putIfAbsent(key, () => _Lazy(builder));
   }
+
+  /// delete all dependencies
+  void clear() {
+    _factoryVars.clear();
+    _vars.clear();
+    _lazyVars.clear();
+  }
 }
 
 class _Lazy {

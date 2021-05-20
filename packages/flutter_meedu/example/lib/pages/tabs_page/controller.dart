@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meedu/meedu.dart';
-import 'package:meedu/state.dart';
+import 'package:flutter_meedu/meedu.dart';
 
 class TabsController extends SimpleNotifier {
   final TabController tabController = TabController(
