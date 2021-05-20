@@ -24,6 +24,13 @@ void _validateRouterState() {
   );
 }
 
+/// use this method to destroy the current navigatorKey attached to the app
+///
+/// useful for widget testing
+void dispose() {
+  MeeduNavigator.i.dispose();
+}
+
 /// Push the given [page] onto the navigator.
 ///
 /// [transitionDuration] will be [Duration.zero] when [transition] is equals to [Transition.none]

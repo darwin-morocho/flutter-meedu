@@ -6,8 +6,19 @@ class MeeduNavigator {
   MeeduNavigator._();
   static final MeeduNavigator i = MeeduNavigator._();
 
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>? _naviatorKey;
+
+  GlobalKey<NavigatorState> get navigatorKey {
+    _naviatorKey ??= GlobalKey<NavigatorState>();
+    return _naviatorKey!;
+  }
+
   Transition transition = Transition.material;
   Duration transitionDuration = const Duration(milliseconds: 300);
+
+  /// use this method for widget testing
+  void dispose() {
+    _naviatorKey?.currentState?.dispose();
+    _naviatorKey = null;
+  }
 }

@@ -1,3 +1,5 @@
+## [3.0.0-prev.20]
+- Added dispose method in router module.
 ## [3.0.0-prev.19]
 - Updated to meedu: ^3.0.0-prev.13
 ## [3.0.0-prev.18]
