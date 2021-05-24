@@ -9,8 +9,7 @@ part 'provider_filter.dart';
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
 /// [filter] one instance of SimpleFilter or StateFilter, use this to avoid unnecessary  updates
-typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider,
-    [WatchFilter<T, S>? filter]);
+typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]);
 
 class WatchFilter<T, S> {
   final BuildWhen<S>? when;
@@ -86,8 +85,13 @@ class _ConsumerState extends State<ConsumerWidget> {
   }
 
   @override
-  void dispose() {
+  void deactivate() {
     _clearDependencies();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
     super.dispose();
   }
 

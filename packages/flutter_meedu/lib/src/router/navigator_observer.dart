@@ -13,6 +13,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   void _checkAutoDispose(Route? route) async {
     if (route is PageRoute) {
+      await route.completed;
       final routeName = this._getRouteName(route);
       if (ProviderScope.containers.isNotEmpty) {
         final containers = ProviderScope.containers.values.where(
@@ -45,28 +46,28 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   @override
   void didRemove(Route route, Route? previousRoute) {
+    super.didRemove(route, previousRoute);
     _checkAutoDispose(route);
     _setCurrentRoute(previousRoute);
-    super.didRemove(route, previousRoute);
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
+    super.didPop(route, previousRoute);
     _checkAutoDispose(route);
     _setCurrentRoute(previousRoute);
-    super.didPop(route, previousRoute);
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
-    _setCurrentRoute(route);
     super.didPush(route, previousRoute);
+    _setCurrentRoute(route);
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     _setCurrentRoute(newRoute);
     _checkAutoDispose(oldRoute);
-    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
   }
 }

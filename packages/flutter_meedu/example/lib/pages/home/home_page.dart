@@ -10,13 +10,11 @@ import 'home_state.dart';
 
 class HomePage extends StatelessWidget {
   @override
-  Widget build(_) {
+  Widget build(context) {
     // final dateTime = router.arguments<DateTime?>(_);
     // print("dateTime!=null ${dateTime != null}");
-    homeProvider.setArguments(DateTime.now());
-
-    final dateTime = router.arguments(_) as DateTime?;
-    homeProvider.setArguments(dateTime ?? DateTime.now());
+    // final dateTime = router.arguments(context) as DateTime?;
+    // homeProvider.setArguments(dateTime ?? DateTime.now());
     return Scaffold(
       appBar: AppBar(
         // title: RxBuilder(
@@ -63,8 +61,8 @@ class HomePage extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () => {
-              router.pushNamedAndRemoveUntil(Routes.SPLASH),
+            onPressed: () {
+              router.pushNamedAndRemoveUntil(Routes.SPLASH);
             },
           ),
         ],

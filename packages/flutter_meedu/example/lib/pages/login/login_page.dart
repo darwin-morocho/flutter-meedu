@@ -51,6 +51,16 @@ class LoginPage extends StatelessWidget {
                   router.pushNamed(Routes.TABS);
                 },
               ),
+              SizedBox(
+                height: 10,
+              ),
+              CupertinoButton(
+                color: Colors.blue,
+                child: Text("GO TO VIDEO PAGE"),
+                onPressed: () async {
+                  router.pushNamed(Routes.VIDEO);
+                },
+              ),
               Consumer(builder: (_, watch, ___) {
                 print("email");
                 final email = watch<LoginController, String>(

@@ -27,12 +27,11 @@ class MyApp extends StatelessWidget {
           themeMode: controller.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          // initialRoute: Routes.SPLASH,
-          home: ExamplePage(),
+          initialRoute: Routes.SPLASH,
           navigatorObservers: [
             router.observer,
           ],
-          // routes: Pages.routes,
+          routes: Pages.routes,
         ),
       ),
       providers: [

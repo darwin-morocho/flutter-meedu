@@ -3,6 +3,7 @@ import 'package:meedu_example/pages/home/home_page.dart';
 import 'package:meedu_example/pages/login/login_page.dart';
 import 'package:meedu_example/pages/splash/splash_page.dart';
 import 'package:meedu_example/pages/tabs_page/tabs_page.dart';
+import 'package:meedu_example/pages/video/video_page.dart';
 
 import 'routes.dart';
 
@@ -13,5 +14,6 @@ abstract class Pages {
     Routes.LOGIN: (_) => LoginPage(),
     Routes.HOME: (_) => HomePage(),
     Routes.TABS: (_) => TabsPage(),
+    Routes.VIDEO: (_) => VideoPage(),
   };
 }

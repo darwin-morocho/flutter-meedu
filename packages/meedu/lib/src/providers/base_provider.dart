@@ -37,14 +37,13 @@ abstract class BaseProvider<T> {
   static int _nextHashCode = 1;
 
   /// set the arguments to be available in the ProviderReference
-  T setArguments(Object? arguments) {
+  void setArguments(Object? arguments) {
     if (_ref == null) {
       _ref = ProviderReference(
         arguments: arguments,
         providerDisposeCallback: _dispose,
       );
     }
-    return this.read;
   }
 
   /// returs always the same instance of [T], if it is not created yet this will create it.
@@ -55,15 +54,10 @@ abstract class BaseProvider<T> {
     }
 
     // check if we have a previous reference
-    _ref = _ref ??
-        ProviderReference(
-          providerDisposeCallback: _dispose,
-        );
+    _ref ??= ProviderReference(providerDisposeCallback: _dispose);
 
     // create a new Notifier
-    final notifier = _overriddenCreator != null
-        ? _overriddenCreator!(_ref!)
-        : _creator(_ref!);
+    final notifier = _overriddenCreator != null ? _overriddenCreator!(_ref!) : _creator(_ref!);
 
     // save the notifier into containers
     ProviderScope.containers[this.hashCode] = ProviderContainer(
