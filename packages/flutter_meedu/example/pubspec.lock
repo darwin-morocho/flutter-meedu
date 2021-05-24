@@ -82,7 +82,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.0.0-prev.20"
+    version: "3.0.0-prev.21"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -117,10 +117,10 @@ packages:
   meedu:
     dependency: transitive
     description:
-      path: "../../meedu"
-      relative: true
-    source: path
-    version: "3.0.0-prev.13"
+      name: meedu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0-prev.14"
   meta:
     dependency: transitive
     description:

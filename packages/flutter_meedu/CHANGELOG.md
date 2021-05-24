@@ -1,3 +1,6 @@
+## [3.0.0-prev.21]
+- Updated to meedu: ^3.0.0-prev.14
+- call AutoDispose after route dismiss animation.
 ## [3.0.0-prev.20]
 - Added dispose method in router module.
 ## [3.0.0-prev.19]
