@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/meedu.dart';
 
 part 'utils.dart';
-part 'provider_filter.dart';
 
 /// A function to read SimpleProvider or a StateProvider and subscribe to the events.
 ///

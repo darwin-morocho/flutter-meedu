@@ -37,7 +37,7 @@ abstract class BaseProvider<T> {
   static int _nextHashCode = 1;
 
   /// set the arguments to be available in the ProviderReference
-  void setArguments(Object? arguments) {
+  void setArguments(dynamic arguments) {
     if (_ref == null) {
       _ref = ProviderReference(
         arguments: arguments,

@@ -2,7 +2,14 @@ import 'package:meedu/get.dart';
 import 'package:test/test.dart';
 
 void main() {
+  setUp(() {
+    Get.i.clear();
+  });
   group('dependecy injection', () {
+    test('has', () {
+      final has = Get.i.has<Person>();
+      expect(has, false);
+    });
     test('put', () {
       Person? c1;
       try {
@@ -85,6 +92,13 @@ void main() {
       }
       expect(c1, isNull);
       expect(t1, isNull);
+    });
+
+    test('factory put', () {
+      Get.i.factoryPut<Person>(() => Person());
+      final p1 = Get.i.find<Person>();
+      final p2 = Get.i.find<Person>();
+      expect(p1.hashCode != p2.hashCode, true);
     });
   });
 }

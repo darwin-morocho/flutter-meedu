@@ -3,9 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   tearDown(() {
-    if (simpleProvider.mounted) {
-      simpleProvider.dispose();
-    }
+    ProviderScope.clear();
   });
   group('normal flow', () {
     test('> not mounted', () {
@@ -15,6 +13,11 @@ void main() {
     test('> mounted', () {
       simpleProvider.read;
       expect(simpleProvider.mounted, true);
+    });
+
+    test('> arguments', () {
+      simpleProvider.setArguments(100);
+      expect(simpleProvider.read.counter, 100);
     });
 
     test('> notify', () async {
@@ -32,7 +35,7 @@ void main() {
       controller.increment();
       controller.increment();
       controller.increment();
-      controller.increment();
+      simpleProvider.read.increment();
       simpleProvider.dispose();
       expect(
         () {
@@ -55,6 +58,10 @@ void main() {
       simpleProvider.dispose();
       expect(secondController.disposed, true);
       expect(simpleProvider.read.counter, 0);
+      simpleProvider.overrideProvider((_) => Controller(counter: 10), force: true);
+      expect(simpleProvider.read.counter, 10);
+      simpleProvider.dispose();
+      expect(simpleProvider.read.counter, 10);
     });
   });
 }
@@ -78,6 +85,6 @@ class Controller extends SimpleNotifier {
 }
 
 final simpleProvider = SimpleProvider(
-  (_) => Controller(),
+  (_) => Controller(counter: _.arguments ?? 0),
   autoDispose: false,
 );

@@ -1,3 +1,5 @@
+## [3.0.0-prev.15]
+- changed arguments type to dynamic in setArguments method.
 ## [3.0.0-prev.14]
 - change return type in setArguments method.
 ## [3.0.0-prev.13]

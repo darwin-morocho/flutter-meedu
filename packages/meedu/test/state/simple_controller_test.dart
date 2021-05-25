@@ -13,6 +13,7 @@ void main() {
     expect(value, 0);
     c.onInit();
     c.onAfterFirstLayout();
+    expect(c.hasListeners, false);
     final _Subscriber subscribe = (List<String> listeners) {
       value = c.counter;
       if (value == times) {
@@ -20,6 +21,7 @@ void main() {
       }
     };
     c.addListener(subscribe);
+    expect(c.hasListeners, true);
     for (int i = 1; i <= times; i++) {
       c.counter = i;
       c.notify();

@@ -109,6 +109,7 @@ class SearchController extends SimpleNotifier {
     _text.close();
     _debounceWorker?.dispose();
     _everWorker?.dispose();
+    print("_onceWorker!=null ${_onceWorker != null}");
     _onceWorker?.dispose();
     _intervalWorker?.dispose();
     _onceWithOutConditionWorker?.dispose();

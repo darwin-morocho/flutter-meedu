@@ -1,3 +1,5 @@
+## [3.0.0-prev.22]
+- Updated to meedu: ^3.0.0-prev.15
 ## [3.0.0-prev.21]
 - Updated to meedu: ^3.0.0-prev.14
 - call AutoDispose after route dismiss animation.

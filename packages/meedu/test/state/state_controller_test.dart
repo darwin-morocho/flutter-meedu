@@ -20,11 +20,12 @@ void main() {
 
     c.onEmailChanged("test@test.com");
     c.onPasswordChanged("test");
-
+    expect(password, "test");
+    c.onPasswordChanged("newpassword");
+    expect(c.oldState.password, "test");
     c.removeListener(subscribe);
     c.onDispose();
     expect(email, "test@test.com");
-    expect(password, "test");
     expect(c.disposed, true);
     expect(() {
       c.onEmailChanged("test@test.com");

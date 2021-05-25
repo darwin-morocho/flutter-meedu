@@ -8,7 +8,7 @@ class RxNotifier<T> {
   final Map<Rx, List<StreamSubscription>> _subscriptions = {};
   Map<Rx, List<StreamSubscription>> get subscriptions => _subscriptions;
 
-  bool get canUpdate => _subscriptions.isNotEmpty;
+  bool get canUpdate => subscriptions.isNotEmpty;
 
   void addListener(Rx<T> rx) {
     if (!_subscriptions.containsKey(rx)) {

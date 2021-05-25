@@ -1,7 +1,7 @@
 part of 'base_provider.dart';
 
 class ProviderReference {
-  final Object? arguments;
+  final dynamic arguments;
   final void Function() _providerDisposeCallback;
   void Function()? _disposableCallback;
   bool _disposed = false;
