@@ -7,25 +7,25 @@ void main() {
   });
   group('normal flow', () {
     test('> not mounted', () {
-      expect(simpleProvider.mounted, false);
+      expect(_simpleProvider.mounted, false);
     });
 
     test('> mounted', () {
-      simpleProvider.read;
-      expect(simpleProvider.mounted, true);
+      _simpleProvider.read;
+      expect(_simpleProvider.mounted, true);
     });
 
     test('> arguments', () {
-      simpleProvider.setArguments(100);
-      expect(simpleProvider.read.counter, 100);
+      _simpleProvider.setArguments(100);
+      expect(_simpleProvider.read.counter, 100);
     });
 
     test('> notify', () async {
-      expect(simpleProvider.mounted, false);
-      final controller = simpleProvider.read;
+      expect(_simpleProvider.mounted, false);
+      final controller = _simpleProvider.read;
       expect(controller.disposeCalled, false);
       final stream = controller.stream;
-      expect(simpleProvider.mounted, true);
+      expect(_simpleProvider.mounted, true);
       stream.listen(
         expectAsync1((_) {
           expect(_.length, 0);
@@ -35,8 +35,8 @@ void main() {
       controller.increment();
       controller.increment();
       controller.increment();
-      simpleProvider.read.increment();
-      simpleProvider.dispose();
+      _simpleProvider.read.increment();
+      _simpleProvider.dispose();
       expect(
         () {
           controller.increment();
@@ -49,26 +49,26 @@ void main() {
 
   group('overrride flow', () {
     test('> update provider', () async {
-      final firstController = simpleProvider.read;
+      final firstController = _simpleProvider.read;
       expect(firstController.counter, 0);
-      simpleProvider.overrideProvider((_) => Controller(counter: 10));
+      _simpleProvider.overrideProvider((_) => CounterController(counter: 10));
       expect(firstController.disposed, true);
-      final secondController = simpleProvider.read;
+      final secondController = _simpleProvider.read;
       expect(secondController.counter, 10);
-      simpleProvider.dispose();
+      _simpleProvider.dispose();
       expect(secondController.disposed, true);
-      expect(simpleProvider.read.counter, 0);
-      simpleProvider.overrideProvider((_) => Controller(counter: 10), force: true);
-      expect(simpleProvider.read.counter, 10);
-      simpleProvider.dispose();
-      expect(simpleProvider.read.counter, 10);
+      expect(_simpleProvider.read.counter, 0);
+      _simpleProvider.overrideProvider((_) => CounterController(counter: 10), force: true);
+      expect(_simpleProvider.read.counter, 10);
+      _simpleProvider.dispose();
+      expect(_simpleProvider.read.counter, 10);
     });
   });
 }
 
-class Controller extends SimpleNotifier {
+class CounterController extends SimpleNotifier {
   int counter;
-  Controller({this.counter = 0});
+  CounterController({this.counter = 0});
 
   bool disposeCalled = false;
 
@@ -84,7 +84,7 @@ class Controller extends SimpleNotifier {
   }
 }
 
-final simpleProvider = SimpleProvider(
-  (_) => Controller(counter: _.arguments ?? 0),
+final _simpleProvider = SimpleProvider(
+  (_) => CounterController(counter: _.arguments ?? 0),
   autoDispose: false,
 );

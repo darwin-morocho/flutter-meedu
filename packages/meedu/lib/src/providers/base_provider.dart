@@ -1,11 +1,14 @@
-import 'package:meta/meta.dart' show sealed;
+import 'package:meedu/meedu.dart';
+import 'package:meta/meta.dart' show sealed, visibleForTesting;
 import '../notifiers/base_notifier.dart';
 import '../notifiers/state_notifier.dart';
 import 'provider_scope.dart';
 import 'provider_container.dart';
 
-part 'simple_provider.dart';
-part 'state_provider.dart';
+part 'simple/simple_tag_provider.dart';
+part 'simple/simple_provider.dart';
+part 'state/state_tag_provider.dart';
+part 'state/state_provider.dart';
 part 'provider_reference.dart';
 
 typedef _LazyCallback<T> = T Function(ProviderReference ref);
@@ -28,7 +31,13 @@ abstract class BaseProvider<T> {
   bool get mounted => _mounted;
 
   final bool _autoDispose;
-  BaseProvider(this._creator, [this._autoDispose = false]);
+  void Function()? _onDisposed;
+  BaseProvider(
+    this._creator, {
+    bool autoDispose = false,
+    void Function()? onDisposed,
+  })  : _autoDispose = autoDispose,
+        _onDisposed = onDisposed;
 
   // Custom implementation of hash code optimized for reading providers.
   @override
@@ -57,9 +66,7 @@ abstract class BaseProvider<T> {
     _ref ??= ProviderReference(providerDisposeCallback: _dispose);
 
     // create a new Notifier
-    final notifier = _overriddenCreator != null
-        ? _overriddenCreator!(_ref!)
-        : _creator(_ref!);
+    final notifier = _overriddenCreator != null ? _overriddenCreator!(_ref!) : _creator(_ref!);
 
     // save the notifier into containers
     ProviderScope.containers[this.hashCode] = ProviderContainer(
@@ -84,13 +91,19 @@ abstract class BaseProvider<T> {
     }
     _ref = null;
     _mounted = false;
+    if (_onDisposed != null) {
+      _onDisposed!();
+    }
   }
 
   /// dispose the notifier linked to this provider
   ///
   /// Only call this if autoDispose is disabled
-  void dispose() {
+  void dispose({bool avoidOnDisposeCallback = false}) {
     assert(_mounted, 'this provider does not have a notifier linked yet');
+    if (avoidOnDisposeCallback) {
+      _onDisposed = null;
+    }
     _ref!.dispose();
     ProviderScope.containers.remove(this.hashCode);
   }
