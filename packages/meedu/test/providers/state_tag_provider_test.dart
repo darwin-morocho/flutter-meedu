@@ -14,7 +14,7 @@ void main() {
     expect(_stateTagProvider.count, 2);
     provider1.read.onEmailChanged("test@test.com");
 
-    expect(provider1.read.state.email, "test@test.com");
+    expect(_stateTagProvider.find('1').read.state.email, "test@test.com");
     expect(provider2.read.state.email, "");
 
     provider1.dispose();
