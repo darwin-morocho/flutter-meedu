@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
+import 'package:meedu_example/controllers/counter_controller.dart';
 
 class ProviderWidgetPage extends StatelessWidget {
   const ProviderWidgetPage({Key? key}) : super(key: key);
@@ -34,14 +35,5 @@ class ProviderWidgetPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CounterController extends SimpleNotifier {
-  int counter = 0;
-
-  void increment() {
-    counter++;
-    notify();
   }
 }

@@ -117,9 +117,9 @@ packages:
   meedu:
     dependency: transitive
     description:
-      name: meedu
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../meedu"
+      relative: true
+    source: path
     version: "3.0.0-prev.15"
   meta:
     dependency: transitive

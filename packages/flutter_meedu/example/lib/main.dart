@@ -6,8 +6,6 @@ import 'package:meedu_example/pages/example_page.dart';
 import 'package:meedu_example/routes/pages.dart';
 import 'package:meedu_example/routes/routes.dart';
 
-import 'pages/provider_widget_page.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   router.setDefaultTransition(router.Transition.upToDown);
@@ -27,7 +25,7 @@ class MyApp extends StatelessWidget {
           themeMode: controller.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          initialRoute: Routes.SPLASH,
+          initialRoute: Routes.MENU,
           navigatorObservers: [
             router.observer,
           ],
