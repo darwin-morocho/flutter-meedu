@@ -8,12 +8,12 @@ void Function(dynamic) createSimpleProviderListener<T, S>({
 }) {
   final notifier = provider.read;
 
-  Object? prevValue;
+  Object? prevValue = buildBySelect != null ? buildBySelect(notifier) : null;
   final listener = (dynamic _) {
     final listeners = _ as List<String>;
     if (buildBySelect != null) {
       final value = buildBySelect(notifier);
-      if (prevValue != value) {
+      if (prevValue != value || (value is bool && value)) {
         rebuild();
       }
       prevValue = value;

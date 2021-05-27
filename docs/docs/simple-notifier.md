@@ -17,85 +17,23 @@ class CounterController extends SimpleNotifier{
         _counter++;
         notify(); // notify to all listeners
     }
+ 
+    // override the next method is OPTIONAL
+    @override
+    void onDispose() {
+      // YOUR CODE HERE
+      super.onDispose();// <-- you must call to the super method
+    }
 }
 ```
 
-## Working with the **Provider** widget
 
-You can use the `Provider` widget to create and inject a new `CounterController`.
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/controllers/counter_controller.dart';
-
-class CounterPageWithProviderWidget extends StatelessWidget {
-  const CounterPageWithProviderWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Provider<CounterController>(
-      create: (_) => CounterController(),
-      builder: (_, controller, __) => Scaffold(
-        body: Center(
-          // The SimpleBuilder listen the changes in our CounterController
-          // and rebuild the widget when is need it
-          child: SimpleBuilder<CounterController>(
-            builder: (_, controller) => Text("${controller.counter}"),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            controller.increment(); // or Get.i.find<CounterController>().increment();
-          },
-        ),
-      ),
-    );
-  }
-}
-```
-
-🔥🔥 **IMPORTANT** 🔥🔥 The `Provider` widget automatically inject your controller using `Get.i.put<YourController>()` so you can call to `Get.i.find<YourController>()` from anywhere of your code while your Provider is inside the **_widget tree_**. When the `Provider` widget is **_destroyed_** your controller will be removed using `Get.i.remove<YourController>()`.
-
-### Life cycle
-
-When a `SimpleController` or a `StateController` is passed to the `Provider` widget you can track the Life cycle of this widget since your controller.
-
-Just override the respective methods.
-
-```dart
-class CounterController extends SimpleNotifier {
-
-  /// called when the controller is inserted into the widget tree by one Provider
-  @override
-  void onInit() {
-
-  }
-
-  /// called when the provider and its child is rendered for the first time
-  @override
-  void onAfterFirstLayout() {
-
-  }
-
-  /// called when the controller is removed because the Provider widget was destroyed
-  @override
-  void onDispose() {
-    // YOUR CODE HERE
-    super.onDispose();// <-- you must call to the super method
-  }
-}
-```
-
----
-
-## Working with the **SimpleProvider** class
-
-This is my favorite option because the **life cycle** of our controller is attached to one `Route` instead of a `Provider` widget.
+## **SimpleProvider**
+The **life cycle** of our controller is attached to one `Route`.
 
 First **flutter_meedu** needs to listen the changes in your route navigator. This is very simple in your `main.dart` file add the next code
 
-```dart
+```dart {15}
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
@@ -110,7 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(    
        home: YourHomePage(),
        navigatorObservers: [
-         router.observer,// <--this allows to flutter_meedu listen the changes in your navigator
+         router.observer,// <-- this allows to flutter_meedu listen the changes in your navigator
        ],
     );
   }
@@ -162,18 +100,19 @@ By default the `counterProvider` variable doesn't create one instance of `Counte
 widget call to the `read` method of our `counterProvider` and check if the `CounterController` was created and return the `CounterController` that was created before or create a new `CounterController`.
 
 
-When a `provider` is created  using the `SimpleProvider` class the controller returned by the `provider` doen't have a **life cycle** with the 
-`onInit` and `onAfterFirstLayout` methods, only the `onDispose` method works and the `onDispose` will be called when the `route` who created the `CounterController` is popped.
+The `onDispose` method in our `CounterController` will be called when the `route` who created the `CounterController` is popped.
 
 If you don't want to call to the `onDispose` method when the `route` who created the `CounterController` is popped you could use.
-```dart
+```dart {3}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),
   autoDispose: false,// <-- ADD THIS TO DISABLE THE AUTO DISPOSE
 );
 ```
+:::danger
 When you disable the `autoDispose` of your `provider` you need to handle it manually. For example 
-```dart
+:::
+```dart {18}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),
   autoDispose: false,
@@ -213,4 +152,147 @@ class _CounterPageState extends State<CounterPage> {
     );
   }
 }
+```
+
+### Listen the changes in your Controller
+You could use the `ProviderListener` Widget to listen the changes in our `CounterController`
+```dart {3-7}
+ ProviderListener<CounterController>(
+      provider: counterProvider,
+      onChange: (context, controller) {
+        // YOUR CODE HERE
+        // This method is called every time that one Instance
+        // of our CounterController calls to the notify() method
+      },
+      builder: (_, controller) => Scaffold(
+        body: Center(
+          // The Consumer widget listen the changes in your CounterController
+          // and rebuild the widget when is need it
+          child: Consumer(
+            builder: (_, watch, __) {
+              final controller = watch(counterProvider);
+              return Text("${controller.counter}");
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // you can use the read method to access to your CounterController
+            counterProvider.read.increment();
+          },
+        ),
+      ),
+    )
+```
+
+Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
+```dart {1,5-7,12}
+  StreamSubscription? _subscription;
+  @override
+  void initState() {
+    super.initState();
+    _subscription = counterProvider.read.stream.listen((_) {
+      // YOUR CODE HERE
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
+```
+
+If you have multiples `Consumer` widgets in your and you only want rebuild certain Consumer you can use the `WatchFilter`
+:::note
+When you use the `WatchFilter` class you need to define the **generic types** in the `watch` method.
+The second generic type in the next code in our `WatchFilter` is a `List` beacuse we are using a list of strings (ids) to listen the changes.
+:::
+
+```dart {8,21,23}
+class CounterController extends SimpleNotifier {
+  int _counter = 0;
+  int get counter => _counter;
+
+  void increment() {
+    _counter++;
+    // notify to all listeners but only rebuild the widgets with the id 'text'
+    notify(['text']);
+  }
+}
+
+.
+.
+.
+
+Scaffold(
+  body: Column(
+    children: [
+      Consumer(
+        builder: (_, watch, __) {
+          final controller = watch<CounterController, List>(
+            counterProvider,
+            WatchFilter(ids: ['text']),
+          );
+          return Text("${controller.counter}");
+        },
+      ),
+      Consumer(
+        builder: (_, watch, __) {
+          final controller = watch(counterProvider);
+          return Text("${controller.counter}");
+        },
+      )
+    ],
+  ),
+  floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      // you can use the read method to access to your CounterController
+      counterProvider.read.increment();
+    },
+  ),
+)
+```
+
+If you don't want to use `ids` to rebuild your `Consumer` you can use the `select` param in the `WatchFilter` instance.
+The next code rebuilds the first `Consumer` only when the counter is highest than 5.
+
+:::note
+The second **generic type** in the next code in our `WatchFilter` is a `bool` beacuse we are using a **boolean condition** to listen the changes.
+:::
+
+```dart {19,21}
+class CounterController extends SimpleNotifier {
+  int _counter = 0;
+  int get counter => _counter;
+
+  void increment() {
+    _counter++;
+    notify();
+  }
+}
+
+.
+.
+.
+
+Scaffold(
+  body: Center(
+    child: Consumer(
+        builder: (_, watch, __) {
+          final controller = watch<CounterController, bool>(
+            counterProvider,
+            WatchFilter(select: (controller) => controller.counter > 5),
+          );
+          return Text("${controller.counter}");
+        },
+    )
+  ),
+  floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      // you can use the read method to access to your CounterController
+      counterProvider.read.increment();
+    },
+  ),
+)
 ```

@@ -3,6 +3,7 @@ import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu_example/pages/example_page.dart';
+import 'package:meedu_example/pages/without_provider_widget/counter_page.dart';
 import 'package:meedu_example/routes/pages.dart';
 import 'package:meedu_example/routes/routes.dart';
 
@@ -25,11 +26,12 @@ class MyApp extends StatelessWidget {
           themeMode: controller.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          initialRoute: Routes.MENU,
+          // initialRoute: Routes.MENU,
+          home: CounterPage(),
           navigatorObservers: [
             router.observer,
           ],
-          routes: Pages.routes,
+          // routes: Pages.routes,
         ),
       ),
       providers: [

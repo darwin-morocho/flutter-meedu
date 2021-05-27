@@ -77,6 +77,7 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
     },
     prism: {
+      theme: require('prism-react-renderer/themes/dracula'),
       additionalLanguages: ['powershell','dart'],
     },
   },
