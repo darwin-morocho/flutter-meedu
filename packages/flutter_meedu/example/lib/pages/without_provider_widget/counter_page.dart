@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:meedu_example/controllers/counter_controller.dart';
 
-final counterProvider = SimpleProvider(
-  (ref) => CounterController(),
-  autoDispose: false,
+final counterProvider = SimpleProvider<CounterController>(
+  (ref) {
+    ref.onDispose(() {
+      // YOUR CODE HERE
+    });
+    return CounterController();
+  },
 );
 
 class CounterPage extends StatefulWidget {

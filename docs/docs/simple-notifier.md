@@ -203,7 +203,9 @@ Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
   }
 ```
 
-If you have multiples `Consumer` widgets in your and you only want rebuild certain Consumer you can use the `WatchFilter`
+### watch method with WatchFilter
+
+If you have multiples `Consumer` widgets in View and you only want rebuild certain Consumer you can use the `WatchFilter`
 :::note
 When you use the `WatchFilter` class you need to define the **generic types** in the `watch` method.
 The second generic type in the next code in our `WatchFilter` is a `List` beacuse we are using a list of strings (ids) to listen the changes.
