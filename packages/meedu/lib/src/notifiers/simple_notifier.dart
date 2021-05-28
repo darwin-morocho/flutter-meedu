@@ -9,11 +9,11 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
     super.notify(listeners);
   }
 
-  /// Called when this object is inserted into the tree using a [MeeduBuilder].
+  /// Called when this object is inserted into the tree using a [Provider].
   @override
   void onInit() {}
 
-  /// when the MeeduBuilder was mounted
+  /// when the Provider widget was redered once
   @override
   void onAfterFirstLayout() {}
 

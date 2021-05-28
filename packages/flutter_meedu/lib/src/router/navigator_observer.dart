@@ -40,7 +40,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   void _setCurrentRoute(Route? route) {
     if (route is PageRoute) {
-      BaseProvider.flutterCurrentRoute = this._getRouteName(route);
+      BaseProvider.creatorName = this._getRouteName(route);
     }
   }
 

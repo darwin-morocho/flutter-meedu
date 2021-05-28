@@ -4,11 +4,17 @@ part 'rx_notifier.dart';
 
 /// Rx class to work with observables
 class Rx<T> {
+  /// store the value for this observable
   late T _value;
+
+  /// StreamController to emit the changes in the current observable
   StreamController<T> _controller = StreamController.broadcast();
   StreamController<T> get controller => _controller;
 
+  /// stream for the current observable
   Stream<T> get stream => _controller.stream;
+
+  /// returns true if the current observable has listeners
   bool get hasListeners => _controller.hasListener;
 
   /// Constructor
@@ -18,7 +24,7 @@ class Rx<T> {
     _value = initalValue;
   }
 
-  /// update the value and add a event sink to the [StreaMeeduController]
+  /// update the value and add a event sink to the [StreamController]
   set value(T newValue) {
     if (_value != newValue) {
       _value = newValue;
@@ -26,6 +32,7 @@ class Rx<T> {
     }
   }
 
+  /// returns the current value for this observable
   T get value {
     // if we have a RxBuilder accessing to the current value
     // we add a listener for that Widget

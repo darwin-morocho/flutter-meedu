@@ -11,16 +11,18 @@ part 'state/state_tag_provider.dart';
 part 'state/state_provider.dart';
 part 'provider_reference.dart';
 
+/// defines the creator function structure
 typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
 @sealed
 abstract class BaseProvider<T> {
   /// save the current route name in flutter apps
-  static String? flutterCurrentRoute;
+  static String? creatorName;
 
   /// callback to create one Instance of [T] when it was need it
   _LazyCallback<T> _creator;
 
+  /// callback to override the main creator callback
   _LazyCallback<T>? _overriddenCreator;
 
   /// reference to save arguments and a disposable callback for each notifier
@@ -30,8 +32,12 @@ abstract class BaseProvider<T> {
   bool _mounted = false;
   bool get mounted => _mounted;
 
+  /// used to check if the notifier must be disposed when the route who creates this notifier is popped
   final bool _autoDispose;
+
+  /// callback to be called when the notifier is disposed
   void Function()? _onDisposed;
+
   BaseProvider(
     this._creator, {
     bool autoDispose = false,
@@ -74,7 +80,7 @@ abstract class BaseProvider<T> {
       notifier: notifier as BaseNotifier,
       reference: _ref!,
       autoDispose: this._autoDispose,
-      routeName: BaseProvider.flutterCurrentRoute,
+      routeName: BaseProvider.creatorName,
     );
     _mounted = true;
     return notifier;
@@ -85,14 +91,14 @@ abstract class BaseProvider<T> {
     final container = ProviderScope.containers[this.hashCode];
     if (container != null) {
       container.notifier.onDispose();
-    }
-    if (_overriddenCreator != null) {
-      _overriddenCreator = null;
-    }
-    _ref = null;
-    _mounted = false;
-    if (_onDisposed != null) {
-      _onDisposed!();
+      if (_overriddenCreator != null) {
+        _overriddenCreator = null;
+      }
+      _ref = null;
+      _mounted = false;
+      if (_onDisposed != null) {
+        _onDisposed!();
+      }
     }
   }
 

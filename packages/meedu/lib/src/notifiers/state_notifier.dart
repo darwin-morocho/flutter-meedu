@@ -33,11 +33,11 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
   /// this method is called when the state has been changed
   void onStateChanged(State oldState, State currentState) {}
 
-  /// Called when this object is inserted into the tree using a [MeeduBuilder].
+  /// Called when this object is inserted into the tree using a [Provider].
   @override
   void onInit() {}
 
-  /// when the MeeduBuilder was mounted
+  /// when the Provider widget was redered once
   @override
   void onAfterFirstLayout() {}
 

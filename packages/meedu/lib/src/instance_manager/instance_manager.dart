@@ -1,16 +1,19 @@
-typedef InstanceBuilderCallback<S> = S Function();
+typedef _InstanceBuilderCallback<S> = S Function();
 
+/// Singleton to save dependencies
 class Get {
   /// private contructor
   Get._();
   static Get i = Get._();
 
+  /// used to save singletons using put or lazyPut
   Map<String, dynamic> _vars = {};
 
   /// Holds a reference to every registered callback when using
   /// [Get.i.lazyPut()]
   final Map<String, _Lazy> _lazyVars = {};
 
+  /// used to save factory dependencies
   final Map<String, _Lazy> _factoryVars = {};
 
   /// check if one dependency is available to call to the find method
@@ -33,16 +36,17 @@ class Get {
   /// Search and return one instance T from the hashmap
   T find<T>({String? tag}) {
     final String key = _getKey(T, tag);
-
+    // check if the dependency is a factory
     final inFactoryVars = _factoryVars.containsKey(key);
     if (inFactoryVars) {
       return _factoryVars[key]!.builder();
     }
-
+    // check if the dependency was already injected
     final inVars = _vars.containsKey(key);
     if (inVars) {
       return _vars[key];
     }
+    // if the dependency is a lazy
     final inLazyVars = _lazyVars.containsKey(key);
     if (inLazyVars) {
       final dependency = _lazyVars[key]!.builder();
@@ -73,7 +77,7 @@ class Get {
 
   /// Creates a new Instance<S> lazily from the [<S>builder()] callback.
   void lazyPut<T>(
-    InstanceBuilderCallback<T> builder, {
+    _InstanceBuilderCallback<T> builder, {
     String? tag,
   }) {
     final key = _getKey(T, tag);
@@ -82,7 +86,7 @@ class Get {
 
   /// Creates a new Instance<S> from the [<S>builder()] callback.
   void factoryPut<T>(
-    InstanceBuilderCallback<T> builder, {
+    _InstanceBuilderCallback<T> builder, {
     String? tag,
   }) {
     final key = _getKey(T, tag);
@@ -98,6 +102,6 @@ class Get {
 }
 
 class _Lazy {
-  InstanceBuilderCallback builder;
+  _InstanceBuilderCallback builder;
   _Lazy(this.builder);
 }

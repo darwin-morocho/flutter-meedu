@@ -11,20 +11,24 @@ class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
   _ListenerEntry(this.listener, this.autoDispose);
 }
 
-/// Define a base controller for SimpleController and StateController
+/// Define a base notifier for SimpleNotifier and StateNotifier
 abstract class BaseNotifier<T> {
   /// list to save the subscribers
   LinkedList<_ListenerEntry<T>>? _listeners = LinkedList<_ListenerEntry<T>>();
 
+  /// used to check if a notifier was disposed
   bool _disposed = false;
 
   /// Tell us if the controller was disposed
   bool get disposed => _disposed;
 
+  /// returns true when the current notifier has subscribers
   bool get hasListeners => !disposed ? _listeners!.isNotEmpty : false;
 
+  /// StreamController to allow us listen the notify events as a Stream
   StreamController<T>? _controller;
 
+  /// completer to check if we are emiting events before call dispose
   Completer<void>? _isBusy;
 
   /// A broadcast stream representation of a [StateNotifier].
@@ -82,10 +86,10 @@ abstract class BaseNotifier<T> {
     _complete();
   }
 
-  /// Called when this object is inserted into the tree using a [MeeduBuilder].
+  /// Called when this object is inserted into the tree using a [Provider].
   void onInit();
 
-  /// when the MeeduBuilder was mounted
+  /// when the MeeduBuilder was redered once
   void onAfterFirstLayout();
 
   /// use to listen when the controller was deleted from memory
