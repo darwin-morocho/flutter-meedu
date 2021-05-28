@@ -7,13 +7,20 @@ part 'utils.dart';
 ///
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
-/// [filter] one instance of SimpleFilter or StateFilter, use this to avoid unnecessary  updates
-typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider,
-    [WatchFilter<T, S>? filter]);
+/// [filter] one instance of WatchFilter, use this to avoid unnecessary rebuilds
+typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]);
 
 class WatchFilter<T, S> {
+  /// only use this with a StateNotifier
+  /// listen and rebuild a [Consumer] using a value returned for this callback
   final BuildWhen<S>? when;
+
+  /// only use this with a SimpleNotifier
+  /// listen and rebuild a [Consumer] using a list of String
   final List<String>? ids;
+
+  /// only use this with a SimpleNotifier
+  /// listen and rebuild a [Consumer] using a value returned for this callback
   final BuildBySelect<T, S>? select;
 
   WatchFilter({
@@ -107,6 +114,9 @@ class _ConsumerState extends State<ConsumerWidget> {
     _dependencies = {};
   }
 
+  /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
+  ///
+  /// [filter] optional parameter to avoid unnecessary rebuilds
   T _reader<T, S>(BaseProvider<T> target, [WatchFilter<T, S>? filter]) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
