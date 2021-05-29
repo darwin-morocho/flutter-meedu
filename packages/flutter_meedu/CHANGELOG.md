@@ -1,3 +1,6 @@
+## [3.0.0+1]
+- Updated README.MD
+
 ## [3.0.0]
 - Ready for production
 
