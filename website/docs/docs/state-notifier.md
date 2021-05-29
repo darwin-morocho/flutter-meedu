@@ -148,6 +148,7 @@ When you use the `WatchFilter` to listen the changes in a `StateNotifier` you ne
 in the watch method.
 - The first generic type is the class witch extends of StateNotifier.
 - The second generic type is the class used to manage our state.
+- The `ids` and `select` params only work with a `SimpleNotifier`.
 :::
 
 :::info

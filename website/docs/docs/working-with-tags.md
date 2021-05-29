@@ -108,7 +108,35 @@ counterProviderWithTag.find(tagName).setArguments('initial argument');
 
 Also for `StateNotifier` you can use the `withTag` method but you need to define the generic types
 ```dart
-final loginProvider = StateProvider.withTag<LoginController, LoginState>(
+final loginProviderWithTag = StateProvider.withTag<LoginController, LoginState>(
   (_) => LoginController(),
 );
 ```
+
+:::warning
+If you want to use the `withTag` method to have the same route open multiple times at the same time with its own state, in that case you should disable the `autoDispose` feature to avoid destroying all your notifiers and **handle it manually**.
+
+
+For example using a StatefulWidget.
+```dart
+final loginProviderWithTag = StateProvider.withTag<LoginController, LoginState>(
+  (_) => LoginController(),
+  autoDispose: false,
+);
+
+.
+.
+.
+
+@override
+void dispose() {
+  // handle the dispose event manually
+  // check if the provider has a Controller created before
+  final provider = loginProviderWithTag.find('tagName');
+  if (provider.mounted) {
+    provider.dispose();
+  }
+  super.dispose();
+}
+```
+:::

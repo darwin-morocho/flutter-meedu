@@ -272,3 +272,48 @@ Scaffold(
   ),
 )
 ```
+
+
+## ConsumerWidget
+
+Also you can extend from `ConsumerWidget` to create a widget and listen the changes in your notifier
+```dart {7}
+class CounterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: CounterView(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          counterProvider.read.increment();
+        },
+      ),
+    );
+  }
+}
+
+class CounterView extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    final controller = watch(counterProvider);
+    return Text("${controller.counter}");
+  }
+}
+```
+
+:::success
+The `watch` method in a `Consumer` or a `ConsumerWidget` can be used to listen multiples providers.
+```dart
+class CounterView extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    final counterController = watch(counterProvider);
+    final loginController = watch(loginProvider);
+    return Text("${counterController.counter}");
+  }
+}
+```
+:::

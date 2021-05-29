@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # Introduction
 
-A simple State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
+A **powerful** State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
 ## Features
-- A Simple State Managment
-- Navigate without BuildContext
-- Simple dependecy injection
-- Reactive programming 
+- A State Managment for simple and complex states.
+- Navigate without BuildContext.
+- Simple dependecy injection.
+- Reactive programming.
 
 ## Getting Started
 
