@@ -2,7 +2,7 @@
 module.exports = {
   title: "Flutter - Meedu",
   tagline: "Dinosaurs are cool",
-  url: "https://github.com/darwin-morocho",
+  url: "https://flutter.meedu.app",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
