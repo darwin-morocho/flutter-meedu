@@ -23,7 +23,8 @@ class RxNotifier<T> {
       final StreamSubscription subs = rx.stream.listen(subject.controller.add);
 
       /// get the subscriptions for this Rx and add the new subscription
-      final List<StreamSubscription> listSubscriptions = _subscriptions[rx] ?? [];
+      final List<StreamSubscription> listSubscriptions =
+          _subscriptions[rx] ?? [];
       listSubscriptions.add(subs);
       _subscriptions[rx] = listSubscriptions;
     }

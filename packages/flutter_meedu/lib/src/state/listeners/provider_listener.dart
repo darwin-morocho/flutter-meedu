@@ -40,7 +40,8 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   _ProviderListenerState createState() => _ProviderListenerState<T>();
 }
 
-class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
+class _ProviderListenerState<T extends BaseNotifier>
+    extends State<ProviderListener<T>> {
   late T _notifier;
   @override
   void initState() {

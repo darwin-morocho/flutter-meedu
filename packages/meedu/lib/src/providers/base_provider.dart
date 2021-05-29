@@ -72,7 +72,9 @@ abstract class BaseProvider<T> {
     _ref ??= ProviderReference(providerDisposeCallback: _dispose);
 
     // create a new Notifier
-    final notifier = _overriddenCreator != null ? _overriddenCreator!(_ref!) : _creator(_ref!);
+    final notifier = _overriddenCreator != null
+        ? _overriddenCreator!(_ref!)
+        : _creator(_ref!);
 
     // save the notifier into containers
     ProviderScope.containers[this.hashCode] = ProviderContainer(

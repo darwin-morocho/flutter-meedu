@@ -22,7 +22,8 @@ Route<T> getRoute<T>(
 
   final _transition = transition ?? MeeduNavigator.i.transition;
 
-  final _transitionDuration = transitionDuration ?? MeeduNavigator.i.transitionDuration;
+  final _transitionDuration =
+      transitionDuration ?? MeeduNavigator.i.transitionDuration;
 
   switch (_transition) {
     case Transition.material:
@@ -45,7 +46,9 @@ Route<T> getRoute<T>(
         page,
         settings: settings,
         maintainState: maintainState,
-        transitionDuration: _transition == Transition.none ? Duration.zero : _transitionDuration,
+        transitionDuration: _transition == Transition.none
+            ? Duration.zero
+            : _transitionDuration,
         fullscreenDialog: fullscreenDialog,
         transition: _transition,
         backGestureEnabled: backGestureEnabled,

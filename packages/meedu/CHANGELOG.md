@@ -1,3 +1,5 @@
+## [3.0.0]
+- Ready for production
 ## [3.0.0-prev.15]
 - changed arguments type to dynamic in setArguments method.
 ## [3.0.0-prev.14]

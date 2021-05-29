@@ -1,3 +1,6 @@
+## [3.0.0]
+- Ready for production
+
 ## [3.0.0-prev.22]
 - Updated to meedu: ^3.0.0-prev.15
 ## [3.0.0-prev.21]
