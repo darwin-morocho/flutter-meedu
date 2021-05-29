@@ -1,17 +1,17 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: "My Site",
+  title: "Flutter - Meedu",
   tagline: "Dinosaurs are cool",
-  url: "https://flutter.meedu.app",
+  url: "https://github.com/darwin-morocho",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "facebook", // Usually your GitHub org/user name.
-  projectName: "docusaurus", // Usually your repo name.
+  organizationName: "darwin-morocho", // Usually your GitHub org/user name.
+  projectName: "flutter-meedu", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "flutter_meedu",
+      title: "",
       logo: {
         alt: "Flutter Meedu",
         src: "img/logo.svg",
@@ -45,16 +45,17 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
+          
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:
-            "https://github.com/facebook/docusaurus/edit/master/website/",
+            "https://github.com/darwin-morocho/flutter-meedu/edit/master/website/",
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            "https://github.com/facebook/docusaurus/edit/master/website/blog/",
+            "https://github.com/darwin-morocho/flutter-meedu/edit/master/website/blog/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),

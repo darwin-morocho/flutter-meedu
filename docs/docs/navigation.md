@@ -1,11 +1,13 @@
 ---
-sidebar_position: 11
+sidebar_position: 12
 ---
 
 # Navigation
+
 To navigate between page without a BuildContext you can use the meedu's router module.
 
 In your MaterialApp
+
 ```dart
 import 'package:flutter_meedu/router.dart' as router;
 
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
 ```
 
 Now you can navigate without BuildContext
+
 ```dart
 import 'package:flutter_meedu/router.dart' as router;
 .
@@ -31,6 +34,7 @@ router.pushNamed('detail-page', arguments: "your-arguments");
 ```
 
 If you want get your arguments
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
@@ -40,7 +44,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // WARNING: when you use ModalRoute.of(context).settings.arguments 
+    // WARNING: when you use ModalRoute.of(context).settings.arguments
     // inside a build method this could rebuild your widget when it is destroyed.
     // router.arguments<String>(context) uses  ModalRoute.of(context).settings.arguments
     // in that cases I recommend get your arguments before create your Page
@@ -49,4 +53,26 @@ class DetailPage extends StatelessWidget {
     return YOUR_WIDGET;
   }
 }
+```
+
+## Testing
+
+For widget testing you will need to dispose the NavigatorState created by `router.navigatorKey` before or after each test
+
+```dart
+import 'package:flutter_meedu/router.dart' as router;
+
+.
+.
+.
+
+setUp((){
+  router.dispose();
+});
+
+// or
+
+tearDown((){
+  router.dispose();
+});
 ```

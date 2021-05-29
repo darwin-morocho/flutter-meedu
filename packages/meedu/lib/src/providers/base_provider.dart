@@ -42,7 +42,7 @@ abstract class BaseProvider<T> {
     this._creator, {
     bool autoDispose = false,
     void Function()? onDisposed,
-  })  : _autoDispose = autoDispose,
+  })  : _autoDispose = autoDispose && creatorName != null,
         _onDisposed = onDisposed;
 
   // Custom implementation of hash code optimized for reading providers.

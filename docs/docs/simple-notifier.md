@@ -29,32 +29,6 @@ class CounterController extends SimpleNotifier{
 
 
 ## **SimpleProvider**
-The **life cycle** of our controller is attached to one `Route`.
-
-First **flutter_meedu** needs to listen the changes in your route navigator. This is very simple in your `main.dart` file add the next code
-
-```dart {15}
-import 'package:flutter/material.dart';
-import 'package:flutter_meedu/router.dart' as router;
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(    
-       home: YourHomePage(),
-       navigatorObservers: [
-         router.observer,// <-- this allows to flutter_meedu listen the changes in your navigator
-       ],
-    );
-  }
-}
-```
-
 Now you need to create a `provider` as a global variable using the `SimpleProvider` class.
 
 ```dart
