@@ -1,5 +1,12 @@
 part of 'consumer_widget.dart';
 
+/// this function create a listener for a Consumer widget when the watch function is used to listen
+/// the changes in one SimpleNotifier
+///
+/// [provider] the provider that contains the notifier to watch
+/// [rebuild] callback to rebuild the Consumer when it is need it
+/// [buildByIds] a list of ids to be used as a condition for rebuilds
+/// [buildBySelect] callback to be used as a condition for rebuilds
 void Function(dynamic) createSimpleProviderListener<T, S>({
   required SimpleProvider<T> provider,
   required void Function() rebuild,
@@ -36,6 +43,12 @@ void Function(dynamic) createSimpleProviderListener<T, S>({
   return listener;
 }
 
+/// this function create a listener for a Consumer widget when the watch function is used to listen
+/// the changes in one StateNotifier
+///
+/// [provider] the provider that contains the notifier to watch
+/// [rebuild] callback to rebuild the Consumer when it is need it
+/// [buildWhen] callback to be used as a condition for rebuilds
 void Function(dynamic) createStateProviderListener<S>({
   required StateProvider<StateNotifier<S>, S> provider,
   required void Function() rebuild,

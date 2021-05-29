@@ -28,16 +28,6 @@ class HomePage extends ProviderPage<Controller> {
   @override
   void onInit(BuildContext context, Controller controller) {
     super.onInit(context, controller);
-    print("👏 provider page test onInit");
-    print("GetPlatform.isAndroid ${GetPlatform.isAndroid}");
-    print("GetPlatform.isIOS ${GetPlatform.isIOS}");
-    print("GetPlatform.isFuchsia ${GetPlatform.isFuchsia}");
-    print("GetPlatform.isLinux ${GetPlatform.isLinux}");
-    print("GetPlatform.isMacOS ${GetPlatform.isMacOS}");
-    print("GetPlatform.isWindows ${GetPlatform.isWindows}");
-    print("GetPlatform.isWeb ${GetPlatform.isWeb}");
-    print("GetPlatform.isDesktop ${GetPlatform.isDesktop}");
-    print("GetPlatform.isMobile ${GetPlatform.isMobile}");
   }
 
   @override

@@ -42,7 +42,7 @@ Future<T?> push<T>(
   bool maintainState = true,
   bool fullscreenDialog = false,
   Transition? transition,
-  Duration transitionDuration = const Duration(milliseconds: 300),
+  Duration? transitionDuration,
   bool backGestureEnabled = false,
 }) {
   _validateRouterState();
@@ -113,8 +113,7 @@ Future<T?> pushNamedAndRemoveUntil<T>(
   Object? arguments,
 }) {
   _validateRouterState();
-  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false,
-      arguments: arguments);
+  return _state!.pushNamedAndRemoveUntil(routeName, predicate ?? (_) => false, arguments: arguments);
 }
 
 /// Consults the current route's [Route.willPop] method,

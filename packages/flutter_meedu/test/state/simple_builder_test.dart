@@ -76,20 +76,20 @@ void main() {
       );
 
       expect(find.text("0"), findsWidgets);
-      // await test.tap(find.byKey(incrementButtonIdKey));
-      // await test.pump();
-      // expect(find.text("0"), findsWidgets);
-      // expect(find.text("1"), findsOneWidget);
-      // await test.tap(find.byKey(incrementButtonKey));
-      // await test.tap(find.byKey(incrementButtonKey));
-      // await test.pump();
-      // expect(find.text("0"), findsOneWidget);
-      // expect(find.text("3"), findsWidgets);
-      // expect(find.text(":: 3"), findsOneWidget);
-      // await test.tap(find.text("add"));
-      // await test.pump();
-      // expect(find.text("4"), findsWidgets);
-      // expect(find.text(":: 4"), findsOneWidget);
+      await test.tap(find.byKey(incrementButtonIdKey));
+      await test.pump();
+      expect(find.text("0"), findsWidgets);
+      expect(find.text("1"), findsOneWidget);
+      await test.tap(find.byKey(incrementButtonKey));
+      await test.tap(find.byKey(incrementButtonKey));
+      await test.pump();
+      expect(find.text("0"), findsOneWidget);
+      expect(find.text("3"), findsWidgets);
+      expect(find.text(":: 3"), findsOneWidget);
+      await test.tap(find.text("add"));
+      await test.pump();
+      expect(find.text("4"), findsWidgets);
+      expect(find.text(":: 4"), findsOneWidget);
     });
   });
 }

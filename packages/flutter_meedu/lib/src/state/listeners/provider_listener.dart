@@ -3,7 +3,9 @@ import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
 typedef _ProviderListenerCallback<T> = void Function(
-    BuildContext _, T notifier);
+  BuildContext _,
+  T notifier,
+);
 
 /// A widget to listen events in a SimpleProvider or a StateProvider
 ///
@@ -38,8 +40,7 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   _ProviderListenerState createState() => _ProviderListenerState<T>();
 }
 
-class _ProviderListenerState<T extends BaseNotifier>
-    extends State<ProviderListener<T>> {
+class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
   late T _notifier;
   @override
   void initState() {

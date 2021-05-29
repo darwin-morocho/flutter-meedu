@@ -11,6 +11,9 @@ void main() {
   setUp(() {
     router.dispose();
   });
+  tearDown(() {
+    ProviderScope.clear();
+  });
   testWidgets('provider listener test', (tester) async {
     int counter = 0;
     bool disposed = false, afterFirstlayout = false;
@@ -21,9 +24,27 @@ void main() {
         initialRoute: '/',
         routes: {
           '/': (_) => Scaffold(
-                body: TextButton(
-                  child: Text("GO"),
-                  onPressed: () => router.pushNamed('/counter'),
+                body: Column(
+                  children: [
+                    TextButton(
+                      child: Text("GO"),
+                      onPressed: () => router.pushNamed('/counter'),
+                    ),
+                    TextButton(
+                      child: Text("replace"),
+                      onPressed: () => router.pushReplacementNamed('/meedu'),
+                    ),
+                  ],
+                ),
+              ),
+          '/meedu': (_) => Scaffold(
+                body: Column(
+                  children: [
+                    TextButton(
+                      child: Text("MEEDU"),
+                      onPressed: () => router.pushNamedAndRemoveUntil('/'),
+                    ),
+                  ],
                 ),
               ),
           '/counter': (_) => _CounterPage(
@@ -58,6 +79,11 @@ void main() {
     expect(find.text("TAP"), findsNothing);
     expect(disposed, true);
     expect(afterFirstlayout, true);
+    await tester.tap(find.text("replace"));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text("MEEDU"));
+    await tester.pumpAndSettle();
+    expect(await router.maybePop(), false);
   });
 }
 

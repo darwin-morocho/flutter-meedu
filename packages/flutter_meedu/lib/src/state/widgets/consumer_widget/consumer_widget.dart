@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:meedu/meedu.dart';
+import 'watch_filter.dart';
 
 part 'utils.dart';
 
@@ -9,29 +10,6 @@ part 'utils.dart';
 ///
 /// [filter] one instance of WatchFilter, use this to avoid unnecessary rebuilds
 typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]);
-
-class WatchFilter<T, S> {
-  /// only use this with a StateNotifier
-  /// listen and rebuild a [Consumer] using a value returned for this callback
-  final BuildWhen<S>? when;
-
-  /// only use this with a SimpleNotifier
-  /// listen and rebuild a [Consumer] using a list of String
-  final List<String>? ids;
-
-  /// only use this with a SimpleNotifier
-  /// listen and rebuild a [Consumer] using a value returned for this callback
-  final BuildBySelect<T, S>? select;
-
-  WatchFilter({
-    this.when,
-    this.ids,
-    this.select,
-  });
-}
-
-typedef BuildWhen<S> = bool Function(S prev, S current);
-typedef BuildBySelect<T, S> = S Function(T);
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
@@ -117,73 +95,37 @@ class _ConsumerState extends State<ConsumerWidget> {
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
   ///
   /// [filter] optional parameter to avoid unnecessary rebuilds
-  T _reader<T, S>(BaseProvider<T> target, [WatchFilter<T, S>? filter]) {
+  T _reader<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    final insideDependencies = _dependencies.containsKey(target);
+    final insideDependencies = _dependencies.containsKey(provider);
 
     // add a new listener if the provider is not into dependencies
     if (!insideDependencies) {
-      if (target is SimpleProvider) {
-        // if (filter != null && !(filter is SimpleFilter)) {
-        //   throw AssertionError('filter must be a SimpleFilter');
-        // }
-        _dependencies[target] = createSimpleProviderListener<T, S>(
-          provider: target as SimpleProvider<T>,
+      if (provider is SimpleProvider) {
+        _dependencies[provider] = createSimpleProviderListener<T, S>(
+          provider: provider as SimpleProvider<T>,
           rebuild: _rebuild,
           buildByIds: filter?.ids,
           buildBySelect: filter?.select,
         );
       } else {
-        // if (filter != null && !(filter is StateFilter)) {
-        //   throw AssertionError('filter must be a StateFilter');
-        // }
-
-        _dependencies[target] = createStateProviderListener<S>(
-          provider: target as StateProvider<StateNotifier<S>, S>,
+        _dependencies[provider] = createStateProviderListener<S>(
+          provider: provider as StateProvider<StateNotifier<S>, S>,
           rebuild: _rebuild,
           buildWhen: filter?.when,
           // filter: filter as StateFilter?,
         );
       }
     }
-    return target.read;
+    return provider.read;
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.build(context, _reader);
-  }
-}
-
-/// A function that can also listen to providers
-///
-/// See also [Consumer]
-typedef ConsumerBuilder = Widget Function(
-  BuildContext context,
-  ScopedReader watch,
-  Widget? child,
-);
-
-/// A widget to listen the events in a SimpleNotifier or StateNotifier
-///
-/// [builder]
-/// [child] use this to pass a pre-built widget
-class Consumer extends ConsumerWidget {
-  final ConsumerBuilder builder;
-  final Widget? child;
-
-  Consumer({
-    Key? key,
-    required this.builder,
-    this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    return builder(context, watch, this.child);
   }
 }
