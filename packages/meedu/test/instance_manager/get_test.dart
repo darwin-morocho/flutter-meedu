@@ -1,6 +1,9 @@
 import 'package:meedu/get.dart';
 import 'package:test/test.dart';
 
+final TypeMatcher<AssertionError> isAssertionError = isA<AssertionError>();
+final Matcher throwsAssertionError = throwsA(isAssertionError);
+
 void main() {
   setUp(() {
     Get.i.clear();
@@ -81,26 +84,33 @@ void main() {
       Get.i.remove<Person>(tag: 't');
       Get.i.lazyRemove<Person>();
       Get.i.lazyRemove<Person>(tag: 't');
-      try {
-        c1 = Get.i.find<Person>();
-        t1 = Get.i.find<Person>(
-          tag: 't',
-        );
-      } catch (e) {
-        c1 = null;
-        t1 = null;
-      }
-      expect(c1, isNull);
-      expect(t1, isNull);
+
+      expect(() => Get.i.find<Person>(), throwsAssertionError);
+      expect(() => Get.i.find<Person>(tag: 't'), throwsAssertionError);
     });
 
     test('factory put', () {
-      Get.i.factoryPut<Person>(() => Person());
-      final p1 = Get.i.find<Person>();
-      final p2 = Get.i.find<Person>();
+      Get.i.factoryPut<Person, String>((arguments) => Person(arguments ?? ""));
+      final p1 = Get.i.factoryFind<Person, String>(arguments: "Darwin");
+      final p2 = Get.i.factoryFind<Person, String>(arguments: "Santiago");
+      expect(p1.name, "Darwin");
+      expect(p2.name, "Santiago");
+      expect(p1.hashCode != p2.hashCode, true);
+    });
+
+    test('factory put without arguments', () {
+      expect(() => Get.i.factoryFind<Person, void>(), throwsAssertionError);
+      Get.i.factoryPut<Person, void>((_) => Person());
+      final p1 = Get.i.factoryFind<Person, void>();
+      final p2 = Get.i.factoryFind<Person, void>();
+      expect(p1.name, "");
+      expect(p2.name, "");
       expect(p1.hashCode != p2.hashCode, true);
     });
   });
 }
 
-class Person {}
+class Person {
+  final String name;
+  Person([this.name = '']);
+}

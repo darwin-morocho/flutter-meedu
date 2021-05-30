@@ -1,3 +1,5 @@
+## [3.0.1]
+- Added arguments in Get.i.factoryPut.
 ## [3.0.0]
 - Ready for production
 ## [3.0.0-prev.15]

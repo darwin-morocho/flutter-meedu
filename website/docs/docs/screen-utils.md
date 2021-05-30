@@ -4,7 +4,7 @@ sidebar_position: 11
 
 # Screen Utils
 When use:
-- When you want to check if the current device is a tablet or smartphone.
+- If you want to check if the current device is a tablet or smartphone.
 - Check the device orientation.
 - Get the app Theme.
 - Get Text Theme.

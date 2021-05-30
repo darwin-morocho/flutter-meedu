@@ -83,7 +83,7 @@ final counterProvider = SimpleProvider(
   autoDispose: false,// <-- ADD THIS TO DISABLE THE AUTO DISPOSE
 );
 ```
-:::danger
+:::danger WARNING
 When you disable the `autoDispose` of your `provider` you need to handle it manually. For example 
 :::
 ```dart {18}
@@ -304,7 +304,7 @@ class CounterView extends ConsumerWidget {
 }
 ```
 
-:::success
+:::success NOTE
 The `watch` method in a `Consumer` or a `ConsumerWidget` can be used to listen multiples providers.
 ```dart
 class CounterView extends ConsumerWidget {

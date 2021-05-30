@@ -1,4 +1,5 @@
-typedef _InstanceBuilderCallback<S> = S Function();
+typedef _LazyBuilderCallback<T> = T Function();
+typedef _FactoryBuilderCallback<T, A> = T Function(A? arguments);
 
 /// Singleton to save dependencies
 class Get {
@@ -14,7 +15,7 @@ class Get {
   final Map<String, _Lazy> _lazyVars = {};
 
   /// used to save factory dependencies
-  final Map<String, _Lazy> _factoryVars = {};
+  final Map<String, _Factory> _factoryVars = {};
 
   /// check if one dependency is available to call to the find method
   bool has<T>({String? tag}) {
@@ -36,11 +37,6 @@ class Get {
   /// Search and return one instance T from the hashmap
   T find<T>({String? tag}) {
     final String key = _getKey(T, tag);
-    // check if the dependency is a factory
-    final inFactoryVars = _factoryVars.containsKey(key);
-    if (inFactoryVars) {
-      return _factoryVars[key]!.builder();
-    }
     // check if the dependency was already injected
     final inVars = _vars.containsKey(key);
     if (inVars) {
@@ -54,13 +50,29 @@ class Get {
       return dependency;
     }
 
-    throw "Cannot find $key, make sure call to Get.i.put<${T.toString()}>(), Get.i.lazyPut<${T.toString()}>(), or Get.i.factoryPut<${T.toString()}>() before call find.";
+    throw AssertionError(
+      "Cannot find $key, make sure call to Get.i.put<${T.toString()}>(), Get.i.lazyPut<${T.toString()}>(), or Get.i.factoryPut<${T.toString()}>() before call find.",
+    );
+  }
+
+  /// Search and return one instance T from the hashmap
+  T factoryFind<T, A>({A? arguments}) {
+    final String key = _getKey(T, null);
+    // check if the dependency is a factory
+    final inFactoryVars = _factoryVars.containsKey(key);
+    if (inFactoryVars) {
+      return (_factoryVars[key] as _Factory<T, A>).builder(arguments);
+    }
+
+    throw AssertionError(
+      "Cannot find $key, make sure call to Get.i.factoryPut<${T.toString()}>() before call factoryFind.",
+    );
   }
 
   /// removes an instance from the hasmap
-  void remove<T>({String? tag}) {
+  T? remove<T>({String? tag}) {
     final String key = _getKey(T, tag);
-    _vars.remove(key);
+    _vars.remove(key) as T?;
   }
 
   /// removes an instance from the lazy hasmap
@@ -77,7 +89,7 @@ class Get {
 
   /// Creates a new Instance<S> lazily from the [<S>builder()] callback.
   void lazyPut<T>(
-    _InstanceBuilderCallback<T> builder, {
+    _LazyBuilderCallback<T> builder, {
     String? tag,
   }) {
     final key = _getKey(T, tag);
@@ -85,12 +97,9 @@ class Get {
   }
 
   /// Creates a new Instance<S> from the [<S>builder()] callback.
-  void factoryPut<T>(
-    _InstanceBuilderCallback<T> builder, {
-    String? tag,
-  }) {
-    final key = _getKey(T, tag);
-    _factoryVars.putIfAbsent(key, () => _Lazy(builder));
+  void factoryPut<T, A>(_FactoryBuilderCallback<T, A> builder) {
+    final key = _getKey(T, null);
+    _factoryVars.putIfAbsent(key, () => _Factory<T, A>(builder));
   }
 
   /// delete all dependencies
@@ -102,6 +111,11 @@ class Get {
 }
 
 class _Lazy {
-  _InstanceBuilderCallback builder;
+  _LazyBuilderCallback builder;
   _Lazy(this.builder);
+}
+
+class _Factory<T, A> {
+  _FactoryBuilderCallback<T, A> builder;
+  _Factory(this.builder);
 }
