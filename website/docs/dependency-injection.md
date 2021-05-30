@@ -30,7 +30,7 @@ Get.i.lazyPut<AuthRepository>(()=>new AuthRepositoryImpl());
 
 ## Factory
 
-If you want to get a new instance every time you call finf in that case you could use `factoryPut`
+If you want to get a new instance every time you call find in that case you could use `factoryPut`
 
 ```dart
 class AuthRepository {
