@@ -1,3 +1,6 @@
+## [3.0.6]
+- Updated to meedu: ^3.0.5
+
 ## [3.0.5]
 - Updated Navigator Observer.
 ## [3.0.4]

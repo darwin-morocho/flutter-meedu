@@ -1,3 +1,6 @@
+## [3.0.5]
+- Added overrideTagProvider.
+
 ## [3.0.4]
 - Added _oldState again from StateNotifier.
 

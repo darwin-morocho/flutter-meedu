@@ -7,6 +7,7 @@ void main() {
   setUp(() {
     _simpleTagProvider.clear();
   });
+
   test('SimpleTagProvider', () {
     expect(_simpleTagProvider.count, 0);
     _simpleTagProvider.setArguments('1', 10);
@@ -33,6 +34,17 @@ void main() {
     expect(_simpleTagProvider.count, 1);
     _simpleTagProvider.clear();
     expect(_simpleTagProvider.count, 0);
+  });
+
+  test('SimpleTagProvider override creator', () {
+    expect(_simpleTagProvider.count, 0);
+    CounterController controller = _simpleTagProvider.find('tagName').read;
+    expect(controller.counter, 0);
+    _simpleTagProvider.overrideTagProvider(
+      (ref) => CounterController(counter: 20),
+    );
+    controller = _simpleTagProvider.find('tagName').read;
+    expect(controller.counter, 20);
   });
 }
 

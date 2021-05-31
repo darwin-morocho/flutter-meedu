@@ -1,5 +1,6 @@
 import 'package:meedu/meedu.dart';
-import 'package:meta/meta.dart' show sealed, visibleForTesting;
+import 'package:meta/meta.dart'
+    show sealed, visibleForOverriding, visibleForTesting;
 import '../notifiers/base_notifier.dart';
 import '../notifiers/state_notifier.dart';
 import 'provider_scope.dart';
@@ -121,7 +122,7 @@ abstract class BaseProvider<T> {
   }
 
   /// overrides the creator function of this provider useful for unit test.
-  ///
+  @visibleForTesting
   void overrideProvider(
     _LazyCallback<T> creator, {
     bool? autoDispose,

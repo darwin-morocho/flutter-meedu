@@ -14,6 +14,7 @@ class SimpleTagProvider<T extends SimpleNotifier> extends TagProvider<T> {
         autoDispose: autoDispose,
         onDisposed: () {
           _providers.remove(tagName);
+          clearOverridden();
         },
       );
       _providers[tagName] = provider;
