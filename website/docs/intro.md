@@ -22,5 +22,5 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
-  flutter_meedu: "^3.0.3"
+  flutter_meedu: "^3.0.4"
 ```

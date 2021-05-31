@@ -14,13 +14,13 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
   /// Update the State and  notify to listeners and rebuild the widgets
   ///
   /// [state] must be different of the current state
-  set state(State state) {
+  set state(State newState) {
     assert(!disposed, 'A $runtimeType was used after being disposed.');
-    if (onStateWillChange(_oldState, state)) {
+    if (onStateWillChange(_state, newState)) {
       _oldState = _state;
-      _state = state;
+      _state = newState;
       onStateChanged(_oldState, _state);
-      super.notify(state);
+      super.notify(_state);
     }
   }
 
@@ -28,7 +28,8 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
   /// By default this method returns true, you can use this method to intercept the [newState]
   /// and check if the new state is valid.
   /// If this method returns false the new state will be igonored
-  bool onStateWillChange(State oldState, State newState) => true;
+  bool onStateWillChange(State oldState, State newState) =>
+      oldState != newState;
 
   /// this method is called when the state has been changed
   void onStateChanged(State oldState, State currentState) {}

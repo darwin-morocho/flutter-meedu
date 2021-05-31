@@ -13,7 +13,10 @@ void main() {
         home: Scaffold(
           body: Consumer(
             builder: (_, watch, __) {
-              final controller = watch(_counterProvider);
+              final controller = watch<CounterController, List>(
+                _counterProvider,
+                WatchFilter(ids: ['66']),
+              );
               return Text("${controller.counter}");
             },
           ),

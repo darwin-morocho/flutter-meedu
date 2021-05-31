@@ -1,3 +1,6 @@
+## [3.0.4]
+- Updated to meedu: ^3.0.4
+
 ## [3.0.3]
 - Updated to meedu: ^3.0.2
 

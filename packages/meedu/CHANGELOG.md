@@ -1,3 +1,8 @@
+## [3.0.4]
+- Added _oldState again from StateNotifier.
+
+## [3.0.3]
+- Revomed _oldState from StateNotifier.
 ## [3.0.2]
 - Added _overriddenAutoDispose in overrideProvider method.
 ## [3.0.1]
