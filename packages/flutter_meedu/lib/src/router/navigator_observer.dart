@@ -11,7 +11,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
   /// return a name for a route
   String _getRouteName(PageRoute route) {
-    return route.settings.name ?? "${route.hashCode}";
+    return "${route.hashCode}";
   }
 
   /// check if the popped routes has notifier attached to it and dispose
