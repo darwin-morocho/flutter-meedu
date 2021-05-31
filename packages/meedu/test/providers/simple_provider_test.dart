@@ -58,10 +58,6 @@ void main() {
       _simpleProvider.dispose();
       expect(secondController.disposed, true);
       expect(_simpleProvider.read.counter, 0);
-      _simpleProvider.overrideProvider((_) => CounterController(counter: 10), force: true);
-      expect(_simpleProvider.read.counter, 10);
-      _simpleProvider.dispose();
-      expect(_simpleProvider.read.counter, 10);
     });
   });
 }

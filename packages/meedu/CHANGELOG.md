@@ -1,3 +1,5 @@
+## [3.0.2]
+- Added _overriddenAutoDispose in overrideProvider method.
 ## [3.0.1]
 - Added arguments in Get.i.factoryPut.
 ## [3.0.0]

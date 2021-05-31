@@ -24,7 +24,7 @@ void Function(dynamic) createSimpleProviderListener<T, S>({
         rebuild();
       }
       prevValue = value;
-    } else if (buildByIds != null && listeners.isNotEmpty) {
+    } else if (listeners.isNotEmpty && buildByIds != null) {
       // if the update method was called with ids
       //  if the current MeeduBuilder id is inside the listeners
       final ids = buildByIds;
@@ -34,7 +34,7 @@ void Function(dynamic) createSimpleProviderListener<T, S>({
           break;
         }
       }
-    } else {
+    } else if (listeners.isEmpty) {
       // update the widget if  listeners is empty
       rebuild();
     }

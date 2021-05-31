@@ -1,3 +1,8 @@
+## [3.0.3]
+- Updated to meedu: ^3.0.2
+
+## [3.0.2]
+- Updated tests
 ## [3.0.1]
 - Updated to meedu: ^3.0.1
 ## [3.0.0+1]

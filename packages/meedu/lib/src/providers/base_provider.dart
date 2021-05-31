@@ -35,6 +35,9 @@ abstract class BaseProvider<T> {
   /// used to check if the notifier must be disposed when the route who creates this notifier is popped
   final bool _autoDispose;
 
+  /// boolean to override the main autoDispose
+  bool? _overriddenAutoDispose;
+
   /// callback to be called when the notifier is disposed
   void Function()? _onDisposed;
 
@@ -81,7 +84,7 @@ abstract class BaseProvider<T> {
       providerHashCode: this.hashCode,
       notifier: notifier as BaseNotifier,
       reference: _ref!,
-      autoDispose: this._autoDispose,
+      autoDispose: _overriddenAutoDispose ?? _autoDispose,
       routeName: BaseProvider.creatorName,
     );
     _mounted = true;
@@ -95,6 +98,7 @@ abstract class BaseProvider<T> {
       container.notifier.onDispose();
       if (_overriddenCreator != null) {
         _overriddenCreator = null;
+        _overriddenAutoDispose = null;
       }
       _ref = null;
       _mounted = false;
@@ -118,18 +122,14 @@ abstract class BaseProvider<T> {
 
   /// overrides the creator function of this provider useful for unit test.
   ///
-  /// [WARNING] if [force] is true the new creator callback becomes in the main creator
   void overrideProvider(
     _LazyCallback<T> creator, {
-    bool force = false,
+    bool? autoDispose,
   }) {
     if (mounted) {
       dispose();
     }
-    if (force) {
-      _creator = creator;
-    } else {
-      _overriddenCreator = creator;
-    }
+    _overriddenCreator = creator;
+    _overriddenAutoDispose = autoDispose;
   }
 }
