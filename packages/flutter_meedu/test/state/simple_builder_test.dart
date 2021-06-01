@@ -48,7 +48,6 @@ void main() {
                       id: 'id',
                       builder: (context, _) => Text("${_.counter}"),
                     ),
-                    CounterDetail(),
                   ],
                 ),
               ),
@@ -85,11 +84,26 @@ void main() {
       await test.pump();
       expect(find.text("0"), findsOneWidget);
       expect(find.text("3"), findsWidgets);
-      expect(find.text(":: 3"), findsOneWidget);
+    });
+
+    testWidgets("SimpleWidget counter", (test) async {
+      await test.pumpWidget(
+        MaterialApp(
+          home: Provider<Controller>(
+            create: (_) => Controller(),
+            builder: (_, controller, ___) => Scaffold(
+              body: Center(
+                child: CounterDetail(),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text("0"), findsWidgets);
       await test.tap(find.text("add"));
       await test.pump();
-      expect(find.text("4"), findsWidgets);
-      expect(find.text(":: 4"), findsOneWidget);
+      expect(find.text("1"), findsWidgets);
     });
   });
 }
@@ -114,17 +128,18 @@ class Controller extends SimpleNotifier {
 }
 
 class CounterDetail extends SimpleWidget<Controller> {
-  String get id => 'id'; //  to allow rebuilds when the update(['counter']) method is called
+  @override
+  String? get id => 'id'; //  to allow rebuilds when the update(['id']) method is called
 
   void onPressed() {
-    controller.increment();
+    controller.incrementWithId();
   }
 
   @override
   Widget buildChild(BuildContext context, Controller controller) {
     return Column(
       children: [
-        Text(":: ${controller.counter}"),
+        Text("${controller.counter}"),
         TextButton(
           onPressed: onPressed,
           child: Text("add"),

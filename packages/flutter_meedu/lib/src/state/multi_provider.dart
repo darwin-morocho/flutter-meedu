@@ -31,14 +31,11 @@ class _MultiProviderState extends State<MultiProvider> {
       _providers[notifier] = provider;
       notifier.onInit();
     }
-
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       // if the controller is not disposed
       _providers.forEach((notifier, provider) {
         if (!notifier.disposed && this.mounted) {
           notifier.onAfterFirstLayout();
-          if (provider.onAfterFirstLayout != null)
-            provider.onAfterFirstLayout!(context, notifier);
         }
       });
     });
@@ -49,7 +46,6 @@ class _MultiProviderState extends State<MultiProvider> {
     _providers.forEach((notifier, provider) {
       if (!notifier.disposed) {
         notifier.onDispose();
-        if (provider.onDispose != null) provider.onDispose!(context, notifier);
       }
     });
     super.dispose();
@@ -72,21 +68,9 @@ class MultiProviderItem<T extends BaseNotifier> {
   /// its own controller
   final String? tag;
 
-  /// use this callback to listen when the provider is inserted into the widget tree
-  final ProviderCallback<T>? onInit;
-
-  /// use this callback to listen when the provider was rendered
-  final ProviderCallback<T>? onAfterFirstLayout;
-
-  /// use this callback to listen when the provider is disposed
-  final ProviderCallback<T>? onDispose;
-
   MultiProviderItem({
     required this.create,
     this.tag,
-    this.onInit,
-    this.onAfterFirstLayout,
-    this.onDispose,
   });
 
   void saveNotifierIntoDependencies(T value, {String? tag}) {

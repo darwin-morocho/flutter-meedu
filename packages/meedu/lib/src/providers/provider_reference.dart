@@ -64,6 +64,6 @@ class ProviderReference {
 
   /// called when the notifier linked to this reference is destroyed
   void onDispose(void Function() cb) {
-    this._disposableCallback = cb;
+    _disposableCallback = cb;
   }
 }

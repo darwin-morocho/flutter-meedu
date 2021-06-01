@@ -117,6 +117,35 @@ void main() {
     expect(find.text("2"), findsOneWidget);
     expect(number, 2);
   });
+
+  testWidgets('consumer - notify without ids', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Consumer(
+            builder: (_, watch, __) {
+              final controller = watch<CounterController, List>(
+                _counterProvider,
+                WatchFilter(ids: ['66']),
+              );
+              return Text("${controller.counter}");
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _counterProvider.read.incrementWithoutIds(),
+            key: Key('button'),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text("0"), findsOneWidget);
+    await tester.tap(
+      find.byKey(Key('button')),
+    );
+    await tester.pump();
+    expect(find.text("1"), findsOneWidget);
+  });
 }
 
 class CounterController extends SimpleNotifier {
@@ -129,6 +158,11 @@ class CounterController extends SimpleNotifier {
   void incrementById() {
     counter++;
     notify(['1']);
+  }
+
+  void incrementWithoutIds() {
+    counter++;
+    notify();
   }
 }
 

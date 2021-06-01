@@ -7,7 +7,7 @@ import '../state/state_controller_test.dart';
 
 void main() {
   test('state provider', () async {
-    Completer<bool> completer = Completer();
+    var completer = Completer();
     final loginProvider2 = StateProvider<LoginController, LoginState>(
       (_) {
         return LoginController();

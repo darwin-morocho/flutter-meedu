@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/pages/example_page.dart';
-import 'package:meedu_example/pages/without_provider_widget/counter_page.dart';
-import 'package:meedu_example/pages/without_provider_widget/login_page.dart';
-import 'package:meedu_example/routes/pages.dart';
-import 'package:meedu_example/routes/routes.dart';
 
 import 'pages/rx_page.dart';
 

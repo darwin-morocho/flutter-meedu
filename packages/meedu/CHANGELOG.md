@@ -1,3 +1,5 @@
+## [3.0.6]
+- Added lint rules.
 ## [3.0.5]
 - Added overrideTagProvider.
 

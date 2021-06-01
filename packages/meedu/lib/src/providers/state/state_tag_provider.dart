@@ -7,6 +7,7 @@ class StateTagProvider<T extends StateNotifier<S>, S> extends TagProvider<T> {
   }) : super(creator, autoDispose);
 
   /// get or create a provider by a tag name
+  @override
   StateProvider<T, S> find(String tagName) {
     if (!_providers.containsKey(tagName)) {
       final provider = StateProvider<T, S>(

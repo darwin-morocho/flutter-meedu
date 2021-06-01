@@ -12,10 +12,10 @@ void main() {
     final provider1 = _stateTagProvider.find('1');
     final provider2 = _stateTagProvider.find('2');
     expect(_stateTagProvider.count, 2);
-    provider1.read.onEmailChanged("test@test.com");
+    provider1.read.onEmailChanged('test@test.com');
 
-    expect(_stateTagProvider.find('1').read.state.email, "test@test.com");
-    expect(provider2.read.state.email, "");
+    expect(_stateTagProvider.find('1').read.state.email, 'test@test.com');
+    expect(provider2.read.state.email, '');
 
     provider1.dispose();
     expect(_stateTagProvider.count, 1);

@@ -9,7 +9,7 @@ abstract class SimpleWidget<T extends SimpleNotifier> extends StatelessWidget {
   String? get tag => null;
 
   /// override this value if you want updates by id
-  String? get id => null;
+  String? get id;
 
   const SimpleWidget({Key? key}) : super(key: key);
 

@@ -5,8 +5,8 @@ import 'package:test/test.dart';
 
 void main() {
   test('rx notifier', () async {
-    Completer<int> completer = Completer();
-    RxNotifier observer = RxNotifier();
+    var completer = Completer<int>();
+    var observer = RxNotifier();
     RxNotifier.proxy = observer;
     expect(observer.canUpdate, false);
     final counter = 0.obs;

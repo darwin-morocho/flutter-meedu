@@ -5,7 +5,7 @@ abstract class ProviderScope {
   static final containers = <int, ProviderContainer>{};
 
   /// delete all providers from the ProviderScope
-  static clear() {
+  static void clear() {
     for (final container in containers.values) {
       container.reference.dispose();
     }

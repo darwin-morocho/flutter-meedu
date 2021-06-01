@@ -6,14 +6,14 @@ void main() {
     final counter = Rx<int>(0);
     expect(counter.value, 0);
     // check the stream events
-    List<int?> values = [counter.value];
+    var values = <int?>[counter.value];
     counter.stream.listen((event) {
       values.add(event);
     });
 
     // after 5 iterations the Rx must notified 5 times
     const length = 5;
-    for (int i = 1; i <= length; i++) {
+    for (var i = 1; i <= length; i++) {
       counter.value = i;
     }
     await Future.delayed(Duration(seconds: 1));

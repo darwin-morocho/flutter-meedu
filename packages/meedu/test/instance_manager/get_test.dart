@@ -17,6 +17,7 @@ void main() {
       Person? c1;
       try {
         c1 = Get.i.find<Person>();
+        // ignore: empty_catches
       } catch (e) {}
       expect(c1, isNull);
       Get.i.put<Person>(Person());
@@ -30,6 +31,7 @@ void main() {
       Person? t1;
       try {
         t1 = Get.i.find<Person>(tag: 't');
+        // ignore: empty_catches
       } catch (e) {}
       expect(t1, isNull);
       Get.i.put<Person>(Person(), tag: 't');
@@ -54,6 +56,7 @@ void main() {
       Person? c1;
       try {
         c1 = Get.i.find()<Person>();
+        // ignore: empty_catches
       } catch (e) {}
       expect(c1, isNull);
       Get.i.lazyPut<Person>(() => Person());
@@ -68,6 +71,7 @@ void main() {
         t1 = Get.i.find<Person>(
           tag: 't',
         );
+        // ignore: empty_catches
       } catch (e) {}
       expect(t1, isNull);
       Get.i.lazyPut<Person>(() => Person(), tag: 't');
@@ -90,11 +94,11 @@ void main() {
     });
 
     test('factory put', () {
-      Get.i.factoryPut<Person, String>((arguments) => Person(arguments ?? ""));
-      final p1 = Get.i.factoryFind<Person, String>(arguments: "Darwin");
-      final p2 = Get.i.factoryFind<Person, String>(arguments: "Santiago");
-      expect(p1.name, "Darwin");
-      expect(p2.name, "Santiago");
+      Get.i.factoryPut<Person, String>((arguments) => Person(arguments ?? ''));
+      final p1 = Get.i.factoryFind<Person, String>(arguments: 'Darwin');
+      final p2 = Get.i.factoryFind<Person, String>(arguments: 'Santiago');
+      expect(p1.name, 'Darwin');
+      expect(p2.name, 'Santiago');
       expect(p1.hashCode != p2.hashCode, true);
     });
 
@@ -103,8 +107,8 @@ void main() {
       Get.i.factoryPut<Person, void>((_) => Person());
       final p1 = Get.i.factoryFind<Person, void>();
       final p2 = Get.i.factoryFind<Person, void>();
-      expect(p1.name, "");
-      expect(p2.name, "");
+      expect(p1.name, '');
+      expect(p2.name, '');
       expect(p1.hashCode != p2.hashCode, true);
     });
   });

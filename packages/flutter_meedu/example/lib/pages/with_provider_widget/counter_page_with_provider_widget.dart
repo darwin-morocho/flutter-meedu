@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu_example/controllers/counter_controller.dart';
 

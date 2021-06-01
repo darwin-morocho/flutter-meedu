@@ -6,6 +6,25 @@ import 'package:meedu/meedu.dart';
 
 void main() {
   group('provider page', () {
+    testWidgets('provider assert', (tester) async {
+      expect(() async {
+        await tester.pumpWidget(
+          Provider(create: (_) => Controller()),
+        );
+      }, throwsAssertionError);
+    });
+
+    testWidgets('provider child', (tester) async {
+      await tester.pumpWidget(
+        Provider(
+          create: (_) => Controller(),
+          child: MaterialApp(
+            home: Text("0"),
+          ),
+        ),
+      );
+      expect(find.text("0"), findsOneWidget);
+    });
     testWidgets('provider page', (test) async {
       await test.pumpWidget(
         MaterialApp(
@@ -28,6 +47,7 @@ class HomePage extends ProviderPage<Controller> {
   @override
   void onInit(BuildContext context, Controller controller) {
     super.onInit(context, controller);
+    print("👏👏👏 provider page onInit");
   }
 
   @override

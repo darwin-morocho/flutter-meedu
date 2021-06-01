@@ -5,6 +5,7 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
   /// notify to listeners and rebuild the widgets
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
+  @override
   void notify([List<String> listeners = const []]) {
     super.notify(listeners);
   }
@@ -18,6 +19,7 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
   void onAfterFirstLayout() {}
 
   /// use to listen when the controller was deleted from memory
+  @override
   @mustCallSuper
   void onDispose() async {
     super.onDispose();

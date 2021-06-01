@@ -61,7 +61,7 @@ class _ProviderState<T extends BaseNotifier> extends State<Provider<T>> {
     super.initState();
     _notifier = widget.create(context);
     Get.i.put<T>(_notifier, tag: widget.tag);
-
+    if (widget.onInit != null) widget.onInit!(context, _notifier);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       // if the controller is not disposed
       if (!_notifier.disposed) {

@@ -51,16 +51,16 @@ class _ConsumerState extends State<ConsumerWidget> {
     });
   }
 
-  @override
+  @override // coverage:ignore-line
   void didUpdateWidget(ConsumerWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _isExternalBuild = true;
+    super.didUpdateWidget(oldWidget); // coverage:ignore-line
+    _isExternalBuild = true; // coverage:ignore-line
   }
 
-  @override
+  @override // coverage:ignore-line
   void reassemble() {
-    super.reassemble();
-    _isExternalBuild = true;
+    super.reassemble(); // coverage:ignore-line
+    _isExternalBuild = true; // coverage:ignore-line
   }
 
   /// force the widget update

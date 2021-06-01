@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meedu_example/pages/home/home_provider.dart';
 import 'package:meedu_example/pages/tabs_page/controller.dart';
 import 'package:meedu_example/pages/tabs_page/tabs/home/home_tab.dart';
 import 'package:flutter_meedu/router.dart' as router;

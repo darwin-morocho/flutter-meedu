@@ -38,7 +38,7 @@ void main() {
 
   test('SimpleTagProvider override creator', () {
     expect(_simpleTagProvider.count, 0);
-    CounterController controller = _simpleTagProvider.find('tagName').read;
+    var controller = _simpleTagProvider.find('tagName').read;
     expect(controller.counter, 0);
     _simpleTagProvider.overrideTagProvider(
       (ref) => CounterController(counter: 20),

@@ -2,33 +2,31 @@ import 'package:equatable/equatable.dart';
 import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
-typedef _Subscriber = void Function(LoginState);
-
 void main() {
   test('StateController', () async {
     final c = LoginController();
-    String email = c.state.email;
-    String password = c.state.password;
+    var email = c.state.email;
+    var password = c.state.password;
     expect(email, '');
     c.onInit();
     c.onAfterFirstLayout();
-    final _Subscriber subscribe = (LoginState state) {
+    final subscribe = (LoginState state) {
       email = state.email;
       password = state.password;
     };
     c.addListener(subscribe);
 
-    c.onEmailChanged("test@test.com");
-    c.onPasswordChanged("test");
-    expect(password, "test");
-    c.onPasswordChanged("newpassword");
-    expect(c.oldState.password, "test");
+    c.onEmailChanged('test@test.com');
+    c.onPasswordChanged('test');
+    expect(password, 'test');
+    c.onPasswordChanged('newpassword');
+    expect(c.oldState.password, 'test');
     c.removeListener(subscribe);
     c.onDispose();
-    expect(email, "test@test.com");
+    expect(email, 'test@test.com');
     expect(c.disposed, true);
     expect(() {
-      c.onEmailChanged("test@test.com");
+      c.onEmailChanged('test@test.com');
     }, throwsA(isA<AssertionError>()));
   });
 }
@@ -52,7 +50,7 @@ class LoginState extends Equatable {
     );
   }
 
-  Map toJson() => {"email": this.email, "password": this.password};
+  Map toJson() => {'email': email, 'password': password};
 
   @override
   List<Object> get props => [email, password];
@@ -62,30 +60,30 @@ class LoginController extends StateNotifier<LoginState> {
   LoginController() : super(LoginState.initialState);
 
   void onEmailChanged(String email) {
-    state = this.state.copyWith(email: email);
+    state = state.copyWith(email: email);
   }
 
   void onPasswordChanged(String password) {
-    state = this.state.copyWith(password: password);
+    state = state.copyWith(password: password);
   }
 
   @override
   bool onStateWillChange(LoginState oldState, LoginState newState) {
     if (oldState.email != newState.email) {
-      return newState.email.contains("@");
+      return newState.email.contains('@');
     }
     return true;
   }
 
   @override
   void onStateChanged(LoginState oldState, LoginState currentState) {
-    print("oldState ${oldState.toJson()}");
-    print("currentState ${currentState.toJson()}\n\n");
+    print('oldState ${oldState.toJson()}');
+    print('currentState ${currentState.toJson()}\n\n');
   }
 
   @override
   void onDispose() {
-    print(":::: dispose login page");
+    print(':::: dispose login page');
     super.onDispose();
   }
 }

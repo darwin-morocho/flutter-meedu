@@ -8,7 +8,7 @@ class Get {
   static Get i = Get._();
 
   /// used to save singletons using put or lazyPut
-  Map<String, dynamic> _vars = {};
+  final Map<String, dynamic> _vars = {};
 
   /// Holds a reference to every registered callback when using
   /// [Get.i.lazyPut()]
@@ -19,7 +19,7 @@ class Get {
 
   /// check if one dependency is available to call to the find method
   bool has<T>({String? tag}) {
-    final String key = _getKey(T, tag);
+    final key = _getKey(T, tag);
     final inVars = _vars.containsKey(key);
     if (inVars) return true;
     final inFactoryVars = _factoryVars.containsKey(key);
@@ -30,13 +30,13 @@ class Get {
 
   /// Insert a Instance into the hashmap
   void put<T>(T value, {String? tag}) {
-    final String key = _getKey(T, tag);
+    final key = _getKey(T, tag);
     _vars[key] = value;
   }
 
   /// Search and return one instance T from the hashmap
   T find<T>({String? tag}) {
-    final String key = _getKey(T, tag);
+    final key = _getKey(T, tag);
     // check if the dependency was already injected
     final inVars = _vars.containsKey(key);
     if (inVars) {
@@ -51,13 +51,13 @@ class Get {
     }
 
     throw AssertionError(
-      "Cannot find $key, make sure call to Get.i.put<${T.toString()}>(), Get.i.lazyPut<${T.toString()}>(), or Get.i.factoryPut<${T.toString()}>() before call find.",
+      'Cannot find $key, make sure call to Get.i.put<${T.toString()}>(), Get.i.lazyPut<${T.toString()}>(), or Get.i.factoryPut<${T.toString()}>() before call find.',
     );
   }
 
   /// Search and return one instance T from the hashmap
   T factoryFind<T, A>({A? arguments}) {
-    final String key = _getKey(T, null);
+    final key = _getKey(T, null);
     // check if the dependency is a factory
     final inFactoryVars = _factoryVars.containsKey(key);
     if (inFactoryVars) {
@@ -65,19 +65,19 @@ class Get {
     }
 
     throw AssertionError(
-      "Cannot find $key, make sure call to Get.i.factoryPut<${T.toString()}>() before call factoryFind.",
+      'Cannot find $key, make sure call to Get.i.factoryPut<${T.toString()}>() before call factoryFind.',
     );
   }
 
   /// removes an instance from the hasmap
   T? remove<T>({String? tag}) {
-    final String key = _getKey(T, tag);
+    final key = _getKey(T, tag);
     _vars.remove(key) as T?;
   }
 
   /// removes an instance from the lazy hasmap
   void lazyRemove<T>({String? tag}) {
-    final String key = _getKey(T, tag);
+    final key = _getKey(T, tag);
     _lazyVars.remove(key);
   }
 

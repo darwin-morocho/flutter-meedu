@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
+// ignore: unused_element
 typedef _Subscriber = void Function(List<String>);
 void main() {
   test('SimpleController', () async {
     const times = 50;
-    final Completer completer = Completer();
+    final completer = Completer();
     final c = Controller();
-    int value = c.counter;
+    var value = c.counter;
     expect(value, 0);
     c.onInit();
     c.onAfterFirstLayout();
     expect(c.hasListeners, false);
-    final _Subscriber subscribe = (List<String> listeners) {
+    final subscribe = (List<String> listeners) {
       value = c.counter;
       if (value == times) {
         completer.complete();
@@ -22,7 +23,7 @@ void main() {
     };
     c.addListener(subscribe);
     expect(c.hasListeners, true);
-    for (int i = 1; i <= times; i++) {
+    for (var i = 1; i <= times; i++) {
       c.counter = i;
       c.notify();
     }
@@ -43,18 +44,18 @@ class Controller extends SimpleNotifier {
   @override
   void onInit() {
     super.onInit();
-    print("😜 onInit");
+    print('😜 onInit');
   }
 
   @override
   void onAfterFirstLayout() {
     super.onAfterFirstLayout();
-    print("😜 afterFirstLayout");
+    print('😜 afterFirstLayout');
   }
 
   @override
   void onDispose() {
-    print("😜 onDispose");
+    print('😜 onDispose');
     super.onDispose();
   }
 }

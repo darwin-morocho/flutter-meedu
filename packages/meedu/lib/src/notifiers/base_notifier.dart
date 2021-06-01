@@ -51,7 +51,7 @@ abstract class BaseNotifier<T> {
   /// remove a listener from the notifier
   void removeListener(ListenerCallback<T> listener) {
     if (_listeners != null) {
-      for (final _ListenerEntry<T> entry in _listeners!) {
+      for (final entry in _listeners!) {
         if (entry.listener == listener) {
           entry.unlink();
           return;
@@ -60,7 +60,7 @@ abstract class BaseNotifier<T> {
     }
   }
 
-  _complete() {
+  void _complete() {
     if (_isBusy != null && !_isBusy!.isCompleted) {
       _isBusy!.complete();
     }
@@ -79,7 +79,7 @@ abstract class BaseNotifier<T> {
       _controller?.sink.add(data);
     }
     if (_listeners!.isNotEmpty) {
-      for (final _ListenerEntry<T> entry in _listeners!) {
+      for (final entry in _listeners!) {
         if (entry.list != null) entry.listener(data);
       }
     }
@@ -97,6 +97,7 @@ abstract class BaseNotifier<T> {
   void onDispose() async {
     _debugAssertNotDisposed();
     _disposed = true;
+    // ignore: unawaited_futures
     _controller?.close();
     if (_isBusy != null) {
       await _isBusy!.future;

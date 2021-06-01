@@ -38,7 +38,7 @@ const times = 3000;
 // }
 
 Future<void> dartStream() {
-  Completer completer = Completer();
+  var completer = Completer();
   final value = StreamController<int>();
 
   DateTime startTime = DateTime.now(), endTime;
@@ -46,7 +46,7 @@ Future<void> dartStream() {
     if (times == v) {
       endTime = DateTime.now();
       final diff = endTime.difference(startTime).inMilliseconds;
-      print("""$v listeners notified | [STREAM] time: ${diff}ms""");
+      print('''$v listeners notified | [STREAM] time: ${diff}ms''');
       value.close();
       completer.complete();
     }
@@ -97,7 +97,7 @@ Future<void> dartStream() {
 // }
 
 Future<void> meedu() {
-  Completer completer = Completer();
+  var completer = Completer();
   final controller = MyController();
 
   DateTime startTime = DateTime.now(), endTime;
@@ -105,7 +105,7 @@ Future<void> meedu() {
     if (times == value) {
       endTime = DateTime.now();
       final diff = endTime.difference(startTime).inMilliseconds;
-      print("""$value listeners notified | [MEEDU STATE CONTROLLER] time: ${diff}ms""");
+      print('''$value listeners notified | [MEEDU STATE CONTROLLER] time: ${diff}ms''');
       completer.complete();
     }
   });

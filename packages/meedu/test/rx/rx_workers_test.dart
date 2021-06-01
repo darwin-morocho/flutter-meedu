@@ -4,42 +4,42 @@ import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test("RxWorkers", () async {
-    Completer completer = Completer();
+  test('RxWorkers', () async {
+    var completer = Completer();
     late Timer timer;
     final times = 10;
-    int i = 0;
+    var i = 0;
     final c = SearchController();
-    expect(c.text, "");
+    expect(c.text, '');
     expect(c.hasListeners, false);
     c.onAfterFirstLayout();
     timer = Timer.periodic(Duration(milliseconds: 50), (_) {
       if (i == 1) {
-        c.onTextChange("${c.text}-");
+        c.onTextChange('${c.text}-');
       } else if (i < times - 1) {
-        c.onTextChange("${c.text}@");
+        c.onTextChange('${c.text}@');
       } else {
-        c.onTextChange("${c.text}-");
+        c.onTextChange('${c.text}-');
       }
 
       i++;
-      print("$i ---    ${c.text}");
+      print('$i ---    ${c.text}');
       if (i == times) {
         timer.cancel();
         completer.complete();
       }
     });
-    expect(c.once, "");
+    expect(c.once, '');
     await completer.future;
 
-    expect(c.debounce, "");
+    expect(c.debounce, '');
     await Future.delayed(Duration(milliseconds: 100));
-    expect(c.once, "@-");
-    expect(c.onceWithOutCondition, "@");
+    expect(c.once, '@-');
+    expect(c.onceWithOutCondition, '@');
     expect(c.interval.length >= 9, true);
-    expect(c.debounce, "@-@@@@@@@-");
-    expect(c.everWithOutCondition, "@-@@@@@@@-");
-    expect(c.ever, "@-@@@@@@@");
+    expect(c.debounce, '@-@@@@@@@-');
+    expect(c.everWithOutCondition, '@-@@@@@@@-');
+    expect(c.ever, '@-@@@@@@@');
     expect(c.hasListeners, true);
     c.onDispose();
     expect(c.hasListeners, false);
@@ -47,16 +47,19 @@ void main() {
 }
 
 class SearchController extends SimpleNotifier {
-  final Rx<String> _text = "".obs;
+  final Rx<String> _text = ''.obs;
   String? get text => _text.value;
+
+  @override
   bool get hasListeners => _text.hasListeners;
+
   RxWorker? _debounceWorker,
       _everWorker,
       _everWithOutConditionWorker,
       _onceWorker,
       _onceWithOutConditionWorker,
       _intervalWorker;
-  String debounce = "", ever = "", everWithOutCondition = "", once = "", onceWithOutCondition = "", interval = "";
+  String debounce = '', ever = '', everWithOutCondition = '', once = '', onceWithOutCondition = '', interval = '';
 
   void onTextChange(String text) {
     _text.value = text;
@@ -74,7 +77,7 @@ class SearchController extends SimpleNotifier {
       (value) {
         ever = value;
       },
-      condition: ((value) => value[value.length - 1] == "@"),
+      condition: ((value) => value[value.length - 1] == '@'),
     );
 
     _everWithOutConditionWorker = _text.ever(
@@ -93,7 +96,7 @@ class SearchController extends SimpleNotifier {
       (value) {
         once = value;
       },
-      condition: ((value) => value.contains("-")),
+      condition: ((value) => value.contains('-')),
     );
 
     _intervalWorker = _text.interval(

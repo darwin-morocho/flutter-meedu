@@ -8,14 +8,18 @@ class Rx<T> {
   late T _value;
 
   /// StreamController to emit the changes in the current observable
-  StreamController<T> _controller = StreamController.broadcast();
-  StreamController<T> get controller => _controller;
+  StreamController<T>? _controller;
+
+  StreamController<T> get controller {
+    _controller ??= StreamController.broadcast();
+    return _controller!;
+  }
 
   /// stream for the current observable
-  Stream<T> get stream => _controller.stream;
+  Stream<T> get stream => controller.stream;
 
   /// returns true if the current observable has listeners
-  bool get hasListeners => _controller.hasListener;
+  bool get hasListeners => controller.hasListener;
 
   /// Constructor
   ///
@@ -28,7 +32,7 @@ class Rx<T> {
   set value(T newValue) {
     if (_value != newValue) {
       _value = newValue;
-      _controller.sink.add(_value);
+      controller.sink.add(_value);
     }
   }
 
@@ -43,5 +47,5 @@ class Rx<T> {
   }
 
   /// close the [StreaMeeduController] for this observable
-  Future<void> close() => _controller.close();
+  FutureOr<void> close() => _controller?.close();
 }

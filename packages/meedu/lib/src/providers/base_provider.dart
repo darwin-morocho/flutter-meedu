@@ -21,7 +21,7 @@ abstract class BaseProvider<T> {
   static String? creatorName;
 
   /// callback to create one Instance of [T] when it was need it
-  _LazyCallback<T> _creator;
+  final _LazyCallback<T> _creator;
 
   /// callback to override the main creator callback
   _LazyCallback<T>? _overriddenCreator;
@@ -57,19 +57,17 @@ abstract class BaseProvider<T> {
 
   /// set the arguments to be available in the ProviderReference
   void setArguments(dynamic arguments) {
-    if (_ref == null) {
-      _ref = ProviderReference(
-        arguments: arguments,
-        providerDisposeCallback: _dispose,
-      );
-    }
+    _ref ??= ProviderReference(
+      arguments: arguments,
+      providerDisposeCallback: _dispose,
+    );
   }
 
   /// returs always the same instance of [T], if it is not created yet this will create it.
   T get read {
     // if the notifier was created before
     if (_mounted) {
-      return ProviderScope.containers[this.hashCode]!.notifier as T;
+      return ProviderScope.containers[hashCode]!.notifier as T;
     }
 
     // check if we have a previous reference
@@ -81,8 +79,8 @@ abstract class BaseProvider<T> {
         : _creator(_ref!);
 
     // save the notifier into containers
-    ProviderScope.containers[this.hashCode] = ProviderContainer(
-      providerHashCode: this.hashCode,
+    ProviderScope.containers[hashCode] = ProviderContainer(
+      providerHashCode: hashCode,
       notifier: notifier as BaseNotifier,
       reference: _ref!,
       autoDispose: _overriddenAutoDispose ?? _autoDispose,
@@ -94,7 +92,7 @@ abstract class BaseProvider<T> {
 
   /// remove the current Notifier from containers and delete a previous reference
   void _dispose() {
-    final container = ProviderScope.containers[this.hashCode];
+    final container = ProviderScope.containers[hashCode];
     if (container != null) {
       container.notifier.onDispose();
       if (_overriddenCreator != null) {
@@ -118,7 +116,7 @@ abstract class BaseProvider<T> {
       _onDisposed = null;
     }
     _ref!.dispose();
-    ProviderScope.containers.remove(this.hashCode);
+    ProviderScope.containers.remove(hashCode);
   }
 
   /// overrides the creator function of this provider useful for unit test.

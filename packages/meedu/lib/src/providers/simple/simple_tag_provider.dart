@@ -7,6 +7,7 @@ class SimpleTagProvider<T extends SimpleNotifier> extends TagProvider<T> {
   }) : super(creator, autoDispose);
 
   /// get or create a provider by a tag name
+  @override
   SimpleProvider<T> find(String tagName) {
     if (!_providers.containsKey(tagName)) {
       final provider = SimpleProvider<T>(

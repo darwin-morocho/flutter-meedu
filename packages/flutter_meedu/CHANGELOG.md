@@ -1,3 +1,6 @@
+## [3.0.7]
+- Updated to meedu: ^3.0.6
+- Added lint rules.
 ## [3.0.6]
 - Updated to meedu: ^3.0.5
 
