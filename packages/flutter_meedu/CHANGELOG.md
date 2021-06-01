@@ -1,45 +1,75 @@
+## [3.0.8]
+
+- Updated to meedu: ^3.0.7
+
 ## [3.0.7]
+
 - Updated to meedu: ^3.0.6
 - Added lint rules.
+
 ## [3.0.6]
+
 - Updated to meedu: ^3.0.5
 
 ## [3.0.5]
+
 - Updated Navigator Observer.
+
 ## [3.0.4]
+
 - Updated to meedu: ^3.0.4
 
 ## [3.0.3]
+
 - Updated to meedu: ^3.0.2
 
 ## [3.0.2]
+
 - Updated tests
+
 ## [3.0.1]
+
 - Updated to meedu: ^3.0.1
+
 ## [3.0.0+1]
+
 - Updated README.MD
 
 ## [3.0.0]
+
 - Ready for production
 
 ## [3.0.0-prev.22]
+
 - Updated to meedu: ^3.0.0-prev.15
+
 ## [3.0.0-prev.21]
+
 - Updated to meedu: ^3.0.0-prev.14
 - call AutoDispose after route dismiss animation.
+
 ## [3.0.0-prev.20]
+
 - Added dispose method in router module.
+
 ## [3.0.0-prev.19]
+
 - Updated to meedu: ^3.0.0-prev.13
+
 ## [3.0.0-prev.18]
+
 - Updated to meedu: ^3.0.0-prev.11
 
 ## [3.0.0-prev.17]
+
 - Removed Logs on Consumer widget.
+
 ## [3.0.0-prev.16]
+
 - ProviderListener onChange callback is called after next frame.
 
 ## [3.0.0-prev.15]
+
 - Fixed routeName on NavigatorObserver.
 
 ## [3.0.0-prev.14]

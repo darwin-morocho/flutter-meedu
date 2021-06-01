@@ -1,3 +1,5 @@
+## [3.0.7]
+- ProviderScope as a singleton.
 ## [3.0.6]
 - Added lint rules.
 ## [3.0.5]

@@ -2,13 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/provider.dart';
 
 /// the observer to listen the changes in the stack route
-RouteObserver<PageRoute> get observer => _RouterObserver.i;
+RouteObserver<PageRoute> get observer => _RouterObserver();
 
 /// this class is used to listen the changed in the stack route
 class _RouterObserver extends RouteObserver<PageRoute> {
-  _RouterObserver._();
-  static _RouterObserver i = _RouterObserver._();
-
   /// return a name for a route
   String _getRouteName(PageRoute route) {
     return "${route.hashCode}";
@@ -17,14 +14,14 @@ class _RouterObserver extends RouteObserver<PageRoute> {
   /// check if the popped routes has notifier attached to it and dispose
   /// the notifiers and delete its from the ProviderScope
   void _checkAutoDispose(Route? route) async {
-    if (route is PageRoute) {
+    if (route is PageRoute && ProviderScope.initialized) {
       await route.completed; // wait to the animation transisiton
       final routeName = this._getRouteName(route);
 
       /// if we have notifiers into the ProviderScope
-      if (ProviderScope.containers.isNotEmpty) {
+      if (ProviderScope.instance.containers.isNotEmpty) {
         /// get all notifiers attached to the current route
-        final containers = ProviderScope.containers.values.where(
+        final containers = ProviderScope.instance.containers.values.where(
           (e) => e.routeName == routeName,
         );
         List<int> keysToRemove = []; // save the notifier's keys to be disposed
@@ -42,7 +39,7 @@ class _RouterObserver extends RouteObserver<PageRoute> {
 
           // remove the notifiers for the ProviderScope
           if (keysToRemove.isNotEmpty) {
-            ProviderScope.containers.removeWhere(
+            ProviderScope.instance.containers.removeWhere(
               (key, value) => keysToRemove.contains(key),
             );
           }

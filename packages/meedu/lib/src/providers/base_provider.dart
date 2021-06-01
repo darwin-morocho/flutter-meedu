@@ -67,7 +67,7 @@ abstract class BaseProvider<T> {
   T get read {
     // if the notifier was created before
     if (_mounted) {
-      return ProviderScope.containers[hashCode]!.notifier as T;
+      return ProviderScope.instance.containers[hashCode]!.notifier as T;
     }
 
     // check if we have a previous reference
@@ -79,7 +79,7 @@ abstract class BaseProvider<T> {
         : _creator(_ref!);
 
     // save the notifier into containers
-    ProviderScope.containers[hashCode] = ProviderContainer(
+    ProviderScope.instance.containers[hashCode] = ProviderContainer(
       providerHashCode: hashCode,
       notifier: notifier as BaseNotifier,
       reference: _ref!,
@@ -92,7 +92,7 @@ abstract class BaseProvider<T> {
 
   /// remove the current Notifier from containers and delete a previous reference
   void _dispose() {
-    final container = ProviderScope.containers[hashCode];
+    final container = ProviderScope.instance.containers[hashCode];
     if (container != null) {
       container.notifier.onDispose();
       if (_overriddenCreator != null) {
@@ -116,7 +116,7 @@ abstract class BaseProvider<T> {
       _onDisposed = null;
     }
     _ref!.dispose();
-    ProviderScope.containers.remove(hashCode);
+    ProviderScope.instance.containers.remove(hashCode);
   }
 
   /// overrides the creator function of this provider useful for unit test.

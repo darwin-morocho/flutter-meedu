@@ -5,7 +5,13 @@ typedef _FactoryBuilderCallback<T, A> = T Function(A? arguments);
 class Get {
   /// private contructor
   Get._();
-  static Get i = Get._();
+
+  static Get? _instance;
+
+  static Get get i {
+    _instance ??= Get._();
+    return _instance!;
+  }
 
   /// used to save singletons using put or lazyPut
   final Map<String, dynamic> _vars = {};
