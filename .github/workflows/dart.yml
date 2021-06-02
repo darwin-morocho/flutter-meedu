@@ -1,0 +1,32 @@
+name: Dart
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.2.0'
+      - name: Install facebook_auth dependencies 
+        run: cd packages/meedu && flutter pub get
+
+      - name: Run meedu tests
+        run: cd packages/meedu && flutter test --coverage
+  
+
+      - name: Install flutter_meedu dependencies 
+        run: cd packages/flutter_meedu && flutter pub get
+
+      - name: Run flutter_meedu tests 
+        run: cd packages/flutter_meedu && flutter test --coverage
+
+      - name: Upload coverage to Codecov
+        run: curl -s https://codecov.io/bash | bash
