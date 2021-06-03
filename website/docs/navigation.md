@@ -1,7 +1,3 @@
----
-sidebar_position: 12
----
-
 # Navigation
 
 To navigate between page without a BuildContext you can use the meedu's router module.

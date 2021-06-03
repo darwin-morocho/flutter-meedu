@@ -24,7 +24,7 @@ A **powerful** State Managment, Dependency Injection, Reactive programming and N
 - Simple dependecy injection.
 - Reactive programming.
 
-## Getting Started
+## Install
 
 Add the following to your `pubspec.yaml`
 

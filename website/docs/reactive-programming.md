@@ -1,7 +1,3 @@
----
-sidebar_position: 10
----
-
 # Reactive programming
 
 The next example create on instance of `Rx` to save int values, every time that `_counter.value++` is called
@@ -51,7 +47,7 @@ You can create observables for String,int,double ot booleans using the `.obs` ex
 - `final _enabled = false.obs; // equals to final Rx<bool> _enabled = Rx(false);`
 - `final _query = "".obs; // equals to final Rx<String> _query = Rx("");`
 - `final _price = 9.99.obs; // equals to final Rx<double> _price = Rx(9.99);`
-:::
+  :::
 
 ## Working with List and Map.
 

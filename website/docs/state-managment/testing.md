@@ -36,6 +36,13 @@ setUp((){
 Before or after each test you will need the default state of all SimpleNotifier or StateNotifier. So you can use `ProviderScope.clear();` to clear all provider saved in the ProviderScope.
 
 ```dart
+setUp((){
+  ProviderScope.clear();
+});
+
+or 
+
+
 tearDown((){
   ProviderScope.clear();
 });

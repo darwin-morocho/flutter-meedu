@@ -1,7 +1,3 @@
----
-sidebar_position: 9
----
-
 # Dependency Injection
 
 With the `Get` module you can easy inject your dependencies as a singleton, lazy singleton or as a factory.
@@ -44,9 +40,11 @@ Get.i.factoryPut<AuthRepository, void>((_) => AuthRepository());
 // get a new instance of AuthRepository
 final repository = Get.i.factoryFind<AuthRepository, void>();
 ```
+
 :::success NOTE
 
 If you want pass an initial value to **AuthRepository**
+
 ```dart
 Get.i.factoryPut<AuthRepository, String>(
     (String? arguments) => AuthRepository(arguments ?? "https://dev.api.com"),
@@ -56,6 +54,7 @@ Get.i.factoryPut<AuthRepository, String>(
 final testRepo = Get.i.factoryFind<AuthRepository, String>(arguments:"https://test.api.com");
 final liveRepo = Get.i.factoryFind<AuthRepository, String>(arguments:"https://live.api.com");
 ```
+
 :::
 
 ## Testing
