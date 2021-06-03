@@ -1,3 +1,5 @@
+## [3.0.8+1]
+- Updated README.
 ## [3.0.8]
 
 - Updated to meedu: ^3.0.7
