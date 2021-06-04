@@ -3,8 +3,8 @@ import 'package:meedu_example/routes/routes.dart';
 
 class SplashController extends SimpleNotifier {
   SplashController() {
-    Future.delayed(Duration(seconds: 2)).then((_) {
-      _routeName = Routes.LOGIN;
+    Future.delayed(Duration(seconds: 1)).then((_) {
+      _routeName = Routes.MENU;
       notify();
     });
   }

@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
 
 class TabsController extends SimpleNotifier {
-  final TabController tabController = TabController(
-    length: 2,
-    vsync: NavigatorState(),
-  );
+  TabsController({int? initialIndex}) {
+    print("tabs initialized");
+    tabController = TabController(
+      length: 2,
+      vsync: NavigatorState(),
+      initialIndex: initialIndex ?? 0,
+    );
+  }
+
+  late TabController tabController;
 
   @override
   void onDispose() {
     tabController.dispose();
+    print("tabs disposed");
     super.onDispose();
   }
 }
 
 final tabsProvider = SimpleProvider(
-  (_) => TabsController(),
-  autoDispose: false,
+  (_) => TabsController(initialIndex: _.arguments),
 );

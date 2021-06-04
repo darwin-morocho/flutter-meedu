@@ -29,9 +29,9 @@ module.exports = {
         "state-managment/testing",
       ],
     },
-    "dependency-injection", 
-    "reactive-programming", 
-    "navigation", 
-    "screen-utils", 
+    "dependency-injection",
+    "reactive-programming",
+    "navigation",
+    "screen-utils",
   ],
 };

@@ -21,6 +21,7 @@ class VideoPageController extends SimpleNotifier {
   @override
   void onDispose() {
     _controller.dispose();
+    print("video disposed");
     super.onDispose();
   }
 }

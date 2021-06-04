@@ -22,7 +22,6 @@ class HomePage extends StatelessWidget {
         // ),
         title: Consumer(
           builder: (_, watch, __) {
-            print("object");
             final users = watch<HomeController, HomeState>(
               homeProvider,
               WatchFilter(
@@ -62,7 +61,10 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              router.pushNamedAndRemoveUntil(Routes.SPLASH);
+              router.pushNamed(
+                Routes.TABS,
+                arguments: 1,
+              );
             },
           ),
         ],

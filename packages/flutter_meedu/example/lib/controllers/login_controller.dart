@@ -12,6 +12,12 @@ class LoginController extends StateNotifier<LoginState> {
   void onPasswordChanged(String password) {
     state = state.copyWith(password: password);
   }
+
+  @override
+  void onDispose() {
+    print("Login disposed");
+    super.onDispose();
+  }
 }
 
 class LoginState extends Equatable {

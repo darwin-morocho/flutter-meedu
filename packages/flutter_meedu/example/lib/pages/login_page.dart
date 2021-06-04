@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:meedu_example/controllers/login_controller.dart';
+import 'package:flutter_meedu/router.dart' as router;
+import 'package:meedu_example/routes/routes.dart';
 
 final loginProvider = StateProvider<LoginController, LoginState>(
   (_) => LoginController(),
@@ -12,6 +14,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -41,6 +44,10 @@ class LoginPage extends StatelessWidget {
 
                   return Text(email);
                 },
+              ),
+              ElevatedButton(
+                onPressed: () => router.pushNamed(Routes.HOME),
+                child: Text("SIGN IN"),
               )
             ],
           ),

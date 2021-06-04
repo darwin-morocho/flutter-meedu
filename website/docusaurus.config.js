@@ -10,6 +10,10 @@ module.exports = {
   organizationName: "darwin-morocho", // Usually your GitHub org/user name.
   projectName: "flutter-meedu", // Usually your repo name.
   themeConfig: {
+    algolia: {
+      apiKey: "6c5197db7b9f081004b66fd142ac6627",
+      indexName: "flutter-meedu"
+    },
     navbar: {
       title: "",
       logo: {
@@ -23,7 +27,6 @@ module.exports = {
           position: "left",
           label: "Docs",
         },
-
         {
           href: "https://github.com/darwin-morocho/flutter-meedu",
           label: "GitHub",
@@ -37,15 +40,15 @@ module.exports = {
     },
     prism: {
       theme: require("prism-react-renderer/themes/dracula"),
-      additionalLanguages: ["powershell", "dart"],
+      additionalLanguages: ["powershell", "dart", "yaml"],
     },
+   
   },
   presets: [
     [
       "@docusaurus/preset-classic",
       {
         docs: {
-          
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:

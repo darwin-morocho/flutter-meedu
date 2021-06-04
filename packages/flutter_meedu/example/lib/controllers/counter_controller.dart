@@ -6,7 +6,12 @@ class CounterController extends SimpleNotifier {
 
   void increment() {
     _counter++;
-    // notify to all listeners but only rebuild the widgets with the id 'text'
-    notify(['text']);
+    notify();
+  }
+
+  @override
+  void onDispose() {
+    print("counter disposed");
+    super.onDispose();
   }
 }

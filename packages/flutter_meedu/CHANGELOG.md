@@ -1,3 +1,5 @@
+## [3.0.10]
+- Added PageWithArguments Widget.
 ## [3.0.9]
 - Updated to meedu: ^3.0.8
 ## [3.0.8+1]

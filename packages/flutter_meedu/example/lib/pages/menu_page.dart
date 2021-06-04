@@ -11,6 +11,18 @@ class MenuPage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
+            title: Text("Counter"),
+            onTap: () => router.pushNamed(Routes.COUNTER),
+          ),
+          ListTile(
+            title: Text("Login Form"),
+            onTap: () => router.pushNamed(Routes.LOGIN),
+          ),
+          ListTile(
+            title: Text("Video player"),
+            onTap: () => router.pushNamed(Routes.VIDEO),
+          ),
+          ListTile(
             title: Text("Simple Tag Example"),
             onTap: () => router.pushNamed(Routes.SIMPLE_TAG),
           ),

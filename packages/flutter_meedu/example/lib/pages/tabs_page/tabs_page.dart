@@ -13,14 +13,9 @@ class _TabsPageState extends State<TabsPage> {
   final _controller = tabsProvider.read;
 
   @override
-  void dispose() {
-    tabsProvider.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: TabBarView(
           controller: _controller.tabController,
@@ -29,9 +24,12 @@ class _TabsPageState extends State<TabsPage> {
             Container(
               alignment: Alignment.center,
               child: TextButton(
-                child: Text("log out"),
+                child: Text("Push to VIDEO\n and remove until MENU"),
                 onPressed: () {
-                  router.pushNamedAndRemoveUntil(Routes.LOGIN);
+                  router.pushNamedAndRemoveUntil(
+                    Routes.VIDEO,
+                    predicate: (route) => route.settings.name == Routes.MENU,
+                  );
                 },
               ),
             ),

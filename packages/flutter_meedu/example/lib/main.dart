@@ -3,11 +3,12 @@ import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
 
-import 'pages/rx_page.dart';
+import 'routes/pages.dart';
+import 'routes/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  router.setDefaultTransition(router.Transition.upToDown);
+  router.setDefaultTransition(router.Transition.fadeIn);
   runApp(MyApp());
 }
 
@@ -24,12 +25,11 @@ class MyApp extends StatelessWidget {
           themeMode: controller.themeMode,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          // initialRoute: Routes.MENU,
-          home: RxPage(),
+          initialRoute: Routes.SPLASH,
           navigatorObservers: [
             router.observer,
           ],
-          // routes: Pages.routes,
+          routes: Pages.routes,
         ),
       ),
       providers: [
