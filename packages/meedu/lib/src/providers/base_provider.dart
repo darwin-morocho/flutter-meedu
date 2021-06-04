@@ -57,10 +57,12 @@ abstract class BaseProvider<T> {
 
   /// set the arguments to be available in the ProviderReference
   void setArguments(dynamic arguments) {
-    _ref ??= ProviderReference(
-      arguments: arguments,
-      providerDisposeCallback: _dispose,
-    );
+    if (!_mounted) {
+      _ref ??= ProviderReference(
+        arguments: arguments,
+        providerDisposeCallback: _dispose,
+      );
+    }
   }
 
   /// returs always the same instance of [T], if it is not created yet this will create it.
@@ -111,12 +113,14 @@ abstract class BaseProvider<T> {
   ///
   /// Only call this if autoDispose is disabled
   void dispose({bool avoidOnDisposeCallback = false}) {
-    assert(_mounted, 'this provider does not have a notifier linked yet');
-    if (avoidOnDisposeCallback) {
-      _onDisposed = null;
+    //  assert(_mounted, 'this provider does not have a notifier linked yet');
+    if (_mounted) {
+      if (avoidOnDisposeCallback) {
+        _onDisposed = null;
+      }
+      _ref!.dispose();
+      ProviderScope.instance.containers.remove(hashCode);
     }
-    _ref!.dispose();
-    ProviderScope.instance.containers.remove(hashCode);
   }
 
   /// overrides the creator function of this provider useful for unit test.

@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# What is flutter_meedu?
 
-A **powerful** State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
+Is a **powerful** State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
 <p align="center">
   <a href="https://pub.dev/packages/flutter_meedu"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_meedu?include_prereleases&label=flutter_meedu"/></a>
@@ -20,9 +20,18 @@ A **powerful** State Managment, Dependency Injection, Reactive programming and N
 
 ## Features
 - A State Managment for simple and complex states.
+
+  flutter_meedu helps you to manage the state of your flutter app without boilerplate, code generators or InheritedWidget.
+
 - Navigate without BuildContext.
+ 
+  Navigate to your app without a custom Page class, a custom MaterialApp.
+
 - Simple dependecy injection.
+
 - Reactive programming.
+
+- Easy to test.
 
 ## Install
 
@@ -34,5 +43,14 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
-  flutter_meedu: "^3.0.8"
-```
+  flutter_meedu: "^3.0.9"
+``` 
+
+
+
+
+:::note
+**Spanish course with unit testing and widget testing**
+
+You can find a complete video course (**Spanish**) about how to use **flutter_meedu** [here](https://meedu.app/curso/flutter-gestion-de-estados-con-meedu)
+:::

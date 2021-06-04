@@ -1,3 +1,5 @@
+## [3.0.8]
+- Updated setArguments
 ## [3.0.7]
 - ProviderScope as a singleton.
 ## [3.0.6]
