@@ -9,8 +9,7 @@ part 'utils.dart';
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
 /// [filter] one instance of WatchFilter, use this to avoid unnecessary rebuilds
-typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider,
-    [WatchFilter<T, S>? filter]);
+typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]);
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
