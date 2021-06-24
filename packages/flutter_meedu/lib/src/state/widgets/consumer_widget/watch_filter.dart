@@ -1,22 +1,39 @@
-class WatchFilter<T, S> {
-  /// only use this with a StateNotifier
-  /// listen and rebuild a [Consumer] using a value returned for this callback
-  final BuildWhen<S>? when;
-
-  /// only use this with a SimpleNotifier
-  /// listen and rebuild a [Consumer] using a list of String
-  final List<String>? ids;
-
-  /// only use this with a SimpleNotifier
-  /// listen and rebuild a [Consumer] using a value returned for this callback
-  final BuildBySelect<T, S>? select;
-
-  WatchFilter({
-    this.when,
-    this.ids,
-    this.select,
-  });
-}
+part of 'consumer_widget.dart';
 
 typedef BuildWhen<S> = bool Function(S prev, S current);
 typedef BuildBySelect<T, S> = S Function(T);
+
+class Target<Notifier, S> extends Provider<Notifier> {
+  final BaseProvider<Notifier> provider;
+  final BuildBySelect<Notifier, Object?>? select;
+  final BuildBySelect<S, Object?>? stateSelect;
+  final List<String>? ids;
+  final BuildWhen<S>? when;
+  Target({
+    required this.provider,
+    this.select,
+    this.ids,
+    this.when,
+    this.stateSelect,
+  });
+}
+
+extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
+  Target<Notifier, List> select(BuildBySelect<Notifier, Object?> cb) {
+    return Target(provider: this, select: cb);
+  }
+
+  Target<Notifier, List> ids(List<String> Function() cb) {
+    return Target(provider: this, ids: cb());
+  }
+}
+
+extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
+  Target<Notifier, S> when(BuildWhen<S> cb) {
+    return Target<Notifier, S>(provider: this, when: cb);
+  }
+
+  Target<Notifier, S> select(BuildBySelect<S, Object?> cb) {
+    return Target(provider: this, stateSelect: cb);
+  }
+}

@@ -13,9 +13,8 @@ void main() {
         home: Scaffold(
           body: Consumer(
             builder: (_, watch, __) {
-              final controller = watch<CounterController, List>(
-                _counterProvider,
-                WatchFilter(ids: ['66']),
+              final controller = watch(
+                _counterProvider.ids(() => ['66']),
               );
               return Text("${controller.counter}");
             },
@@ -43,9 +42,8 @@ void main() {
         home: Scaffold(
           body: Consumer(
             builder: (_, watch, __) {
-              final controller = watch<CounterController, int>(
-                _counterProvider,
-                WatchFilter(select: (_) => _.counter),
+              final controller = watch(
+                _counterProvider.select((_) => _.counter),
               );
               number++;
               return Text("${controller.counter}");
@@ -86,9 +84,8 @@ void main() {
           ),
           body: Consumer(
             builder: (_, watch, __) {
-              final controller = watch<CounterController, int>(
-                _counterProvider,
-                WatchFilter(ids: ['1']),
+              final controller = watch(
+                _counterProvider.ids(() => ['1']),
               );
               number++;
               return Text("${controller.counter}");
@@ -124,11 +121,10 @@ void main() {
         home: Scaffold(
           body: Consumer(
             builder: (_, watch, __) {
-              final controller = watch<CounterController, List>(
-                _counterProvider,
-                WatchFilter(ids: ['66']),
-              );
-              return Text("${controller.counter}");
+              final counter = watch<CounterController, List>(
+                _counterProvider.ids(() => ['66']),
+              ).counter;
+              return Text("${counter}");
             },
           ),
           floatingActionButton: FloatingActionButton(
