@@ -7,11 +7,11 @@ part of 'consumer_widget.dart';
 /// [rebuild] callback to rebuild the Consumer when it is need it
 /// [buildByIds] a list of ids to be used as a condition for rebuilds
 /// [buildBySelect] callback to be used as a condition for rebuilds
-void Function(dynamic) createSimpleProviderListener<T, S>({
+void Function(dynamic) createSimpleProviderListener<T>({
   required SimpleProvider<T> provider,
   required void Function() rebuild,
   required List<String>? buildByIds,
-  required BuildBySelect<T, S>? buildBySelect,
+  required BuildBySelect<T, Object?>? buildBySelect,
 }) {
   final notifier = provider.read;
 

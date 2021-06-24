@@ -3,12 +3,7 @@ import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:meedu_example/controllers/counter_controller.dart';
 
 final counterProvider = SimpleProvider<CounterController>(
-  (ref) {
-    ref.onDispose(() {
-      // YOUR CODE HERE
-    });
-    return CounterController();
-  },
+  (_) => CounterController(),
 );
 
 class CounterPage extends StatelessWidget {
@@ -22,12 +17,39 @@ class CounterPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: CounterView(),
+        child: Column(
+          children: [
+            CounterView(),
+            Consumer(builder: (_, watch, __) {
+              final counter = watch(
+                counterProvider.select((_) => _.counter >= 10),
+              ).counter;
+              return Text("${counter}");
+            }),
+            Consumer(builder: (_, watch, __) {
+              final counter = watch(
+                counterProvider.select((_) => _.demo),
+              ).demo.counter;
+              return Text("Demo ${counter}");
+            }),
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          counterProvider.read.increment();
-        },
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            child: Icon(Icons.sim_card),
+            onPressed: () {
+              counterProvider.read.incrementDemo();
+            },
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              counterProvider.read.increment();
+            },
+          ),
+        ],
       ),
     );
   }
@@ -36,7 +58,9 @@ class CounterPage extends StatelessWidget {
 class CounterView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final controller = watch(counterProvider);
+    final controller = watch(
+      counterProvider.ids(() => ['id']),
+    );
     return Text("${controller.counter}");
   }
 }

@@ -12,8 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   # meedu: ^3.0.8
-  # meedu:
-  #   path: ../meedu
+  
+  meedu:
+    path: ../meedu
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,7 @@ part 'utils.dart';
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
 /// [filter] one instance of WatchFilter, use this to avoid unnecessary rebuilds
-typedef ScopedReader = T Function<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]);
+typedef ScopedReader = T Function<T, S>(Provider<T> provider);
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
@@ -95,29 +95,36 @@ class _ConsumerState extends State<ConsumerWidget> {
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
   ///
   /// [filter] optional parameter to avoid unnecessary rebuilds
-  T _reader<T, S>(BaseProvider<T> provider, [WatchFilter<T, S>? filter]) {
+  T _reader<T, S>(Provider<T> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
     }
     _isExternalBuild = false;
+    late BaseProvider<T> provider;
+    final target = providerOrTarget is Target ? providerOrTarget as Target<T, S> : null;
+
+    if (target != null) {
+      provider = target.provider;
+    } else {
+      provider = providerOrTarget as BaseProvider<T>;
+    }
     final insideDependencies = _dependencies.containsKey(provider);
 
     // add a new listener if the provider is not into dependencies
     if (!insideDependencies) {
       if (provider is SimpleProvider) {
-        _dependencies[provider] = createSimpleProviderListener<T, S>(
+        _dependencies[provider] = createSimpleProviderListener<T>(
           provider: provider as SimpleProvider<T>,
           rebuild: _rebuild,
-          buildByIds: filter?.ids,
-          buildBySelect: filter?.select,
+          buildByIds: target?.ids,
+          buildBySelect: target?.select,
         );
       } else {
         _dependencies[provider] = createStateProviderListener<S>(
           provider: provider as StateProvider<StateNotifier<S>, S>,
           rebuild: _rebuild,
-          buildWhen: filter?.when,
-          // filter: filter as StateFilter?,
+          buildWhen: target?.when,
         );
       }
     }
@@ -127,5 +134,34 @@ class _ConsumerState extends State<ConsumerWidget> {
   @override
   Widget build(BuildContext context) {
     return widget.build(context, _reader);
+  }
+}
+
+class Target<Notifier, S> extends Provider<Notifier> {
+  final BaseProvider<Notifier> provider;
+  final BuildBySelect<Notifier, Object?>? select;
+  final List<String>? ids;
+  final BuildWhen<S>? when;
+  Target({
+    required this.provider,
+    this.select,
+    this.ids,
+    this.when,
+  });
+}
+
+extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
+  Target<Notifier, List> select(BuildBySelect<Notifier, Object?> cb) {
+    return Target(provider: this, select: cb);
+  }
+
+  Target<Notifier, List> ids(List<String> Function() cb) {
+    return Target(provider: this, ids: cb());
+  }
+}
+
+extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
+  Target<Notifier, S> when(BuildWhen<S> cb) {
+    return Target<Notifier, S>(provider: this, when: cb);
   }
 }

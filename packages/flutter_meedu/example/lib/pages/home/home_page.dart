@@ -24,9 +24,9 @@ class HomePage extends StatelessWidget {
           builder: (_, watch, __) {
             final users = watch<HomeController, HomeState>(
               homeProvider,
-              WatchFilter(
-                when: (prev, current) => prev.users.length != current.users.length,
-              ),
+              // WatchFilter(
+              //   when: (prev, current) => prev.users.length != current.users.length,
+              // ),
             ).state.users;
 
             if (users.length == 0) return Text("lalalalal");
@@ -50,14 +50,14 @@ class HomePage extends StatelessWidget {
           },
         ),
         actions: [
-          SimpleBuilder<AppThemeController>(
-            builder: (context, _) => CupertinoSwitch(
-              value: _.darkMode,
-              onChanged: _.onToggleTheme,
-              trackColor: Colors.black26,
-              activeColor: Colors.blue,
-            ),
-          ),
+          // SimpleBuilder<AppThemeController>(
+          //   builder: (context, _) => CupertinoSwitch(
+          //     value: _.darkMode,
+          //     onChanged: _.onToggleTheme,
+          //     trackColor: Colors.black26,
+          //     activeColor: Colors.blue,
+          //   ),
+          // ),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
@@ -73,9 +73,9 @@ class HomePage extends StatelessWidget {
         builder: (_, watch, __) {
           final users = watch<HomeController, HomeState>(
             homeProvider,
-            WatchFilter(
-              when: (prev, current) => prev.users.length != current.users.length,
-            ),
+            // WatchFilter(
+            //   when: (prev, current) => prev.users.length != current.users.length,
+            // ),
           ).state.users;
           if (users.isEmpty)
             return Center(

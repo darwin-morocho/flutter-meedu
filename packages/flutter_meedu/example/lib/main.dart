@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
+import 'package:meedu_example/pages/counter_page.dart';
+import 'package:meedu_example/pages/login_page.dart';
 
 import 'routes/pages.dart';
 import 'routes/routes.dart';
@@ -16,27 +18,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      child: SimpleBuilder<AppThemeController>(
-        builder: (_, controller) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          navigatorKey: router.navigatorKey,
-          themeMode: controller.themeMode,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          initialRoute: Routes.SPLASH,
-          navigatorObservers: [
-            router.observer,
-          ],
-          routes: Pages.routes,
-        ),
-      ),
-      providers: [
-        MultiProviderItem<AppThemeController>(
-          create: (_) => AppThemeController(),
-        )
-      ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      navigatorKey: router.navigatorKey,
+      //  themeMode: controller.themeMode,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: CounterPage(),
+      // navigatorObservers: [
+      //   router.observer,
+      // ],
+      // routes: Pages.routes,
     );
   }
 }
