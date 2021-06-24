@@ -121,10 +121,11 @@ class _ConsumerState extends State<ConsumerWidget> {
           buildBySelect: target?.select,
         );
       } else {
-        _dependencies[provider] = createStateProviderListener<S>(
+        _dependencies[provider] = createStateProviderListener(
           provider: provider as StateProvider<StateNotifier<S>, S>,
           rebuild: _rebuild,
           buildWhen: target?.when,
+          buildBySelect: target?.stateSelect,
         );
       }
     }
@@ -140,6 +141,7 @@ class _ConsumerState extends State<ConsumerWidget> {
 class Target<Notifier, S> extends Provider<Notifier> {
   final BaseProvider<Notifier> provider;
   final BuildBySelect<Notifier, Object?>? select;
+  final BuildBySelect<S, Object?>? stateSelect;
   final List<String>? ids;
   final BuildWhen<S>? when;
   Target({
@@ -147,6 +149,7 @@ class Target<Notifier, S> extends Provider<Notifier> {
     this.select,
     this.ids,
     this.when,
+    this.stateSelect,
   });
 }
 
@@ -163,5 +166,9 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
   Target<Notifier, S> when(BuildWhen<S> cb) {
     return Target<Notifier, S>(provider: this, when: cb);
+  }
+
+  Target<Notifier, S> select(BuildBySelect<S, Object?> cb) {
+    return Target(provider: this, stateSelect: cb);
   }
 }

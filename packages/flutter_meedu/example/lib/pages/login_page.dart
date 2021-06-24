@@ -36,11 +36,8 @@ class LoginPage extends StatelessWidget {
               Consumer(
                 builder: (_, watch, __) {
                   final email = watch<LoginController, LoginState>(
-                    loginProvider.when(
-                      (prev, current) => prev.email != current.email,
-                    ),
+                    loginProvider.select((_) => _.email),
                   ).state.email;
-
                   return Text(email);
                 },
               ),

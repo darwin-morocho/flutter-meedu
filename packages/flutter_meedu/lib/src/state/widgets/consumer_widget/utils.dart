@@ -49,16 +49,23 @@ void Function(dynamic) createSimpleProviderListener<T>({
 /// [provider] the provider that contains the notifier to watch
 /// [rebuild] callback to rebuild the Consumer when it is need it
 /// [buildWhen] callback to be used as a condition for rebuilds
-void Function(dynamic) createStateProviderListener<S>({
-  required StateProvider<StateNotifier<S>, S> provider,
+void Function(dynamic) createStateProviderListener<Notifier extends StateNotifier<S>, S>({
+  required StateProvider<Notifier, S> provider,
   required void Function() rebuild,
   required BuildWhen<S>? buildWhen,
+  required BuildBySelect<S, Object?>? buildBySelect,
 }) {
   final notifier = provider.read;
-
+  Object? prevValue = buildBySelect != null ? buildBySelect(notifier.state) : null;
   final listener = (dynamic newState) {
-    // if the buildWhen param is defined
-    if (buildWhen != null) {
+    if (buildBySelect != null) {
+      final value = buildBySelect(notifier.state);
+      if (prevValue != value || (value is bool && value)) {
+        rebuild();
+      }
+      prevValue = value;
+    } else if (buildWhen != null) {
+      // if the buildWhen param is defined
       // print(filter.buildWhen);
       /// check if the condition allows the rebuild
       final allowRebuild = buildWhen(notifier.oldState, newState);
