@@ -35,8 +35,10 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 30),
               Consumer(
                 builder: (_, watch, __) {
-                  final email = watch<LoginController, LoginState>(
-                    loginProvider.select((_) => _.email),
+                  final email = watch(
+                    loginProvider.select(
+                      (_) => _.email,
+                    ),
                   ).state.email;
                   return Text(email);
                 },

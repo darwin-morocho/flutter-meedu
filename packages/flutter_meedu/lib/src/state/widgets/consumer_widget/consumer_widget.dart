@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meedu/meedu.dart';
 
@@ -102,7 +103,7 @@ class _ConsumerState extends State<ConsumerWidget> {
     }
     _isExternalBuild = false;
     late BaseProvider<T> provider;
-    final target = providerOrTarget is Target ? providerOrTarget as Target<T, S> : null;
+    final target = providerOrTarget is _Target ? providerOrTarget as _Target<T, S> : null;
 
     if (target != null) {
       provider = target.provider;
@@ -112,24 +113,22 @@ class _ConsumerState extends State<ConsumerWidget> {
     final insideDependencies = _dependencies.containsKey(provider);
 
     // add a new listener if the provider is not into dependencies
+    final notifier = provider.read;
+
     if (!insideDependencies) {
-      if (provider is SimpleProvider) {
-        _dependencies[provider] = createSimpleProviderListener<T>(
-          provider: provider as SimpleProvider<T>,
-          rebuild: _rebuild,
-          buildByIds: target?.ids,
-          buildBySelect: target?.select,
-        );
+      late void Function(dynamic) listener;
+      if (target != null) {
+        target.rebuild = _rebuild;
+        listener = target.listener;
       } else {
-        _dependencies[provider] = createStateProviderListener(
-          provider: provider as StateProvider<StateNotifier<S>, S>,
-          rebuild: _rebuild,
-          buildWhen: target?.when,
-          buildBySelect: target?.stateSelect,
-        );
+        listener = (_) => _rebuild();
       }
+
+      _dependencies[provider] = listener;
+      (notifier as BaseNotifier).addListener(listener);
     }
-    return provider.read;
+
+    return notifier;
   }
 
   @override
