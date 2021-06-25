@@ -9,7 +9,7 @@ part 'watch_filter.dart';
 /// [provider] must be a SimpleProvider or a BaseProvider.
 ///
 /// [filter] one instance of WatchFilter, use this to avoid unnecessary rebuilds
-typedef ScopedReader = T Function<T, S>(Provider<T> provider);
+typedef ScopedReader = T Function<T>(Provider<T> provider);
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
@@ -95,17 +95,17 @@ class _ConsumerState extends State<ConsumerWidget> {
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
   ///
   /// [filter] optional parameter to avoid unnecessary rebuilds
-  T _reader<T, S>(Provider<T> providerOrTarget) {
+  T _reader<T>(Provider<T> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
     }
     _isExternalBuild = false;
     late BaseProvider<T> provider;
-    final target = providerOrTarget is _Target ? providerOrTarget as _Target<T, S> : null;
+    final target = providerOrTarget is _Target ? providerOrTarget as _Target : null;
 
     if (target != null) {
-      provider = target.provider;
+      provider = target.provider as BaseProvider<T>;
     } else {
       provider = providerOrTarget as BaseProvider<T>;
     }

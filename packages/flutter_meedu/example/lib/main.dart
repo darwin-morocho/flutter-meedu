@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       //  themeMode: controller.themeMode,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: CounterPage(),
+      home: LoginPage(),
       // navigatorObservers: [
       //   router.observer,
       // ],

@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         // ),
         title: Consumer(
           builder: (_, watch, __) {
-            final users = watch<HomeController, HomeState>(
+            final users = watch(
               homeProvider,
               // WatchFilter(
               //   when: (prev, current) => prev.users.length != current.users.length,
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Consumer(
         builder: (_, watch, __) {
-          final users = watch<HomeController, HomeState>(
+          final users = watch(
             homeProvider,
             // WatchFilter(
             //   when: (prev, current) => prev.users.length != current.users.length,

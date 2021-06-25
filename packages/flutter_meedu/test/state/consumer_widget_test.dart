@@ -121,7 +121,7 @@ void main() {
         home: Scaffold(
           body: Consumer(
             builder: (_, watch, __) {
-              final counter = watch<CounterController, List>(
+              final counter = watch(
                 _counterProvider.ids(() => ['66']),
               ).counter;
               return Text("${counter}");
