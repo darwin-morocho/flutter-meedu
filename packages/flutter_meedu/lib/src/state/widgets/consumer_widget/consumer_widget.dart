@@ -120,7 +120,16 @@ class _ConsumerState extends State<ConsumerWidget> {
         target.rebuild = _rebuild;
         listener = target.listener;
       } else {
-        listener = (_) => _rebuild();
+        if (notifier is SimpleNotifier) {
+          listener = (_) {
+            final listeners = _ as List<String>;
+            if (listeners.isEmpty) {
+              _rebuild();
+            }
+          };
+        } else {
+          listener = (_) => _rebuild();
+        }
       }
 
       _dependencies[provider] = listener;
