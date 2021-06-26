@@ -12,8 +12,6 @@ void main() {
     final c = Controller();
     var value = c.counter;
     expect(value, 0);
-    c.onInit();
-    c.onAfterFirstLayout();
     expect(c.hasListeners, false);
     final subscribe = (List<String> listeners) {
       value = c.counter;
@@ -40,18 +38,6 @@ void main() {
 
 class Controller extends SimpleNotifier {
   int counter = 0;
-
-  @override
-  void onInit() {
-    super.onInit();
-    print('😜 onInit');
-  }
-
-  @override
-  void onAfterFirstLayout() {
-    super.onAfterFirstLayout();
-    print('😜 afterFirstLayout');
-  }
 
   @override
   void onDispose() {

@@ -1,5 +1,6 @@
 import 'package:meedu/meedu.dart';
-import 'package:meta/meta.dart' show sealed, visibleForOverriding, visibleForTesting;
+import 'package:meta/meta.dart'
+    show sealed, visibleForOverriding, visibleForTesting;
 import '../notifiers/base_notifier.dart';
 import '../notifiers/state_notifier.dart';
 import 'provider_scope.dart';
@@ -77,7 +78,9 @@ abstract class BaseProvider<T> extends Provider<T> {
     _ref ??= ProviderReference(providerDisposeCallback: _dispose);
 
     // create a new Notifier
-    final notifier = _overriddenCreator != null ? _overriddenCreator!(_ref!) : _creator(_ref!);
+    final notifier = _overriddenCreator != null
+        ? _overriddenCreator!(_ref!)
+        : _creator(_ref!);
 
     // save the notifier into containers
     ProviderScope.instance.containers[hashCode] = ProviderContainer(

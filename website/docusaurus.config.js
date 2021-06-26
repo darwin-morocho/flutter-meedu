@@ -12,7 +12,7 @@ module.exports = {
   themeConfig: {
     algolia: {
       apiKey: "6c5197db7b9f081004b66fd142ac6627",
-      indexName: "flutter-meedu"
+      indexName: "flutter-meedu",
     },
     navbar: {
       title: "",
@@ -32,6 +32,11 @@ module.exports = {
           label: "GitHub",
           position: "right",
         },
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+          dropdownActiveClassDisabled: true,
+        },
       ],
     },
     footer: {
@@ -42,7 +47,6 @@ module.exports = {
       theme: require("prism-react-renderer/themes/dracula"),
       additionalLanguages: ["powershell", "dart", "yaml"],
     },
-   
   },
   presets: [
     [
@@ -53,6 +57,17 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             "https://github.com/darwin-morocho/flutter-meedu/edit/master/website/",
+          lastVersion: "current",
+          versions: {
+            current: {
+              label: "4.0.0",
+              path: "4.x.x",
+            },
+            "3.x.x": {
+              label: "3.x.x",
+              path: "3.x.x",
+            },
+          },
         },
         blog: {
           showReadingTime: true,

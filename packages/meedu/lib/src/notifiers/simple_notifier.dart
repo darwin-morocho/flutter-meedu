@@ -10,14 +10,6 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
     super.notify(listeners);
   }
 
-  /// Called when this object is inserted into the tree using a [Provider].
-  @override
-  void onInit() {}
-
-  /// when the Provider widget was redered once
-  @override
-  void onAfterFirstLayout() {}
-
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper

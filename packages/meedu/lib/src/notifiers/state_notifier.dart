@@ -34,14 +34,6 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
   /// this method is called when the state has been changed
   void onStateChanged(State oldState, State currentState) {}
 
-  /// Called when this object is inserted into the tree using a [Provider].
-  @override
-  void onInit() {}
-
-  /// when the Provider widget was redered once
-  @override
-  void onAfterFirstLayout() {}
-
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper

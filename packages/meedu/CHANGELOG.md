@@ -1,3 +1,5 @@
+## [4.0.0-dev.0]
+- Added base class Provider.
 ## [3.0.8]
 - Updated setArguments
 ## [3.0.7]

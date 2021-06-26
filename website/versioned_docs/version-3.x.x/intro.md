@@ -39,11 +39,11 @@ Add the following to your `pubspec.yaml`
 
 ```yaml
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=2.0.0"
 
 dependencies:
-  flutter_meedu: "^4.0.0"
+  flutter_meedu: "^3.0.10"
 ``` 
 
 

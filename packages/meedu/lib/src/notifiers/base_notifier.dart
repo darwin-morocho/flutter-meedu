@@ -86,12 +86,6 @@ abstract class BaseNotifier<T> {
     _complete();
   }
 
-  /// Called when this object is inserted into the tree using a [Provider].
-  void onInit();
-
-  /// when the MeeduBuilder was redered once
-  void onAfterFirstLayout();
-
   /// use to listen when the controller was deleted from memory
   @mustCallSuper
   void onDispose() async {

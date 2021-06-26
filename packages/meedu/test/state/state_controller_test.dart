@@ -8,8 +8,6 @@ void main() {
     var email = c.state.email;
     var password = c.state.password;
     expect(email, '');
-    c.onInit();
-    c.onAfterFirstLayout();
     final subscribe = (LoginState state) {
       email = state.email;
       password = state.password;

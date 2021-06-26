@@ -177,15 +177,15 @@ Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
   }
 ```
 
-### Avoid rebuilds using the .ids and .select methods
+### watch method with WatchFilter
 
-If you have multiples `Consumer` widgets in your Views and you only want rebuild certain Consumer you can use the `.ids` and `.select` methods.
-
+If you have multiples `Consumer` widgets in your Views and you only want rebuild certain Consumer you can use the `WatchFilter`
 :::note
-The `WatchFilter` class was removed.
+When you use the `WatchFilter` class you need to define the **generic types** in the `watch` method.
+The second generic type in the next code in our `WatchFilter` is a `List` beacuse we are using a list of strings (ids) to listen the changes.
 :::
 
-```dart {8,22}
+```dart {8,21,23}
 class CounterController extends SimpleNotifier {
   int _counter = 0;
   int get counter => _counter;
@@ -206,8 +206,9 @@ Scaffold(
     children: [
       Consumer(
         builder: (_, watch, __) {
-          final controller = watch(
-            counterProvider.ids(()=>['text']),
+          final controller = watch<CounterController, List>(
+            counterProvider,
+            WatchFilter(ids: ['text']),
           );
           return Text("${controller.counter}");
         },
@@ -229,10 +230,14 @@ Scaffold(
 )
 ```
 
-If you don't want to use `ids` to rebuild your `Consumer` you can use the `select` method.
+If you don't want to use `ids` to rebuild your `Consumer` you can use the `select` param in the `WatchFilter` instance.
 The next code rebuilds the first `Consumer` only when the counter is highest than 5.
 
-```dart {20}
+:::note
+The second **generic type** in the next code in our `WatchFilter` is a `bool` beacuse we are using a **boolean condition** to listen the changes.
+:::
+
+```dart {19,21}
 class CounterController extends SimpleNotifier {
   int _counter = 0;
   int get counter => _counter;
@@ -251,8 +256,9 @@ Scaffold(
   body: Center(
     child: Consumer(
         builder: (_, watch, __) {
-          final controller = watch(
-            counterProvider.select((controller) => controller.counter > 5)),
+          final controller = watch<CounterController, bool>(
+            counterProvider,
+            WatchFilter(select: (controller) => controller.counter > 5),
           );
           return Text("${controller.counter}");
         },
@@ -266,21 +272,6 @@ Scaffold(
   ),
 )
 ```
-
-:::note
-Also you can use the `select` method to listen when a value has changed and rebuild your Consumer.
-The next code rebuild your `Consumer` only when the `counter` value has changed in your CounterController.
-```dart
-Consumer(
-  builder: (_, watch, __) {
-    final controller = watch(
-      counterProvider.select((_) => _.counter),
-    );
-    return Text("${controller.counter}");
-  },
-)
-```
-:::
 
 
 ## ConsumerWidget

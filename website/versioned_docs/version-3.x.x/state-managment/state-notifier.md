@@ -125,15 +125,18 @@ class LoginPage extends StatelessWidget {
 }
 ```
 
-Also you can use the `select` method to only rebuild your `Consumer` when is need it.
+Also you can use the `WatchFilter` class to only rebuild your `Consumer` when is need it.
 
 For example the next code only rebuilds the Consumer widget when the `email` in our `LoginState` has changed.
 
-```dart {4}
+```dart {3,6}
 Consumer(
   builder: (_, watch, __) {
-    final email = watch(
-      loginProvider.select((_)=>_.email),
+    final email = watch<LoginController, LoginState>(
+      loginProvider,
+      WatchFilter(
+        when: (prev, current) => prev.email != current.email,
+      ),
     ).state.email;
     return Text(email);
   },
@@ -141,17 +144,11 @@ Consumer(
 ```
 
 :::note
-Also you can use the `when` method for a more complex condition.
-```dart {4}
-Consumer(
-  builder: (_, watch, __) {
-    final email = watch(
-      loginProvider.when((prev, current) => prev.email != current.email),
-    ).state.email;
-    return Text(email);
-  },
-)
-```
+When you use the `WatchFilter` to listen the changes in a `StateNotifier` you need to define the generic types 
+in the watch method.
+- The first generic type is the class witch extends of StateNotifier.
+- The second generic type is the class used to manage our state.
+- The `ids` and `select` params only work with a `SimpleNotifier`.
 :::
 
 :::info

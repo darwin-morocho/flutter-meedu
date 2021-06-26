@@ -37,6 +37,7 @@ extension RxExtensions<T> on Rx<T> {
       }
     });
     rxWorker = RxWorker(subscription, null);
+    // coverage:ignore-line
     return rxWorker;
   }
 
