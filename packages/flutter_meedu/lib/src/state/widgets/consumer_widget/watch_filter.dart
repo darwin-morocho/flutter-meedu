@@ -62,7 +62,8 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
+extension StateProviderExt<Notifier extends StateNotifier<S>, S>
+    on StateProvider<Notifier, S> {
   _Target<Notifier, S> when(BuildWhen<S> cb) {
     final notifier = this.read;
     final target = _Target<Notifier, S>(provider: this);

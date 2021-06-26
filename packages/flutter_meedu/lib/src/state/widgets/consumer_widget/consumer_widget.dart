@@ -102,7 +102,8 @@ class _ConsumerState extends State<ConsumerWidget> {
     }
     _isExternalBuild = false;
     late BaseProvider<T> provider;
-    final target = providerOrTarget is _Target ? providerOrTarget as _Target : null;
+    final target =
+        providerOrTarget is _Target ? providerOrTarget as _Target : null;
 
     if (target != null) {
       provider = target.provider as BaseProvider<T>;

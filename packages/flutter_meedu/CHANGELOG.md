@@ -1,3 +1,7 @@
+## [4.0.0-dev.0]
+- Removed WatchFilter class.
+- Added .ids, .select and .when methods in SimpleProvider and StateProvider.
+
 ## [3.0.10]
 - Added PageWithArguments Widget.
 ## [3.0.9]
