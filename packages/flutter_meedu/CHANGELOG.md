@@ -1,3 +1,5 @@
+## [4.0.0+1]
+- Added comments in the consumer widget.
 ## [4.0.0-dev.0]
 - Removed WatchFilter class.
 - Added .ids, .select and .when methods in SimpleProvider and StateProvider.

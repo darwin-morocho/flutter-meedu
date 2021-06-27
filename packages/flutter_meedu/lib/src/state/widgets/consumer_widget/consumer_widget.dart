@@ -64,8 +64,8 @@ class _ConsumerState extends State<ConsumerWidget> {
 
   /// force the widget update
   void _rebuild() {
-    if (_afterFirstLayout) {
-      (context as Element).markNeedsBuild();
+    if (_afterFirstLayout && this.mounted) {
+      setState(() {});
     }
   }
 
@@ -73,11 +73,6 @@ class _ConsumerState extends State<ConsumerWidget> {
   void deactivate() {
     _clearDependencies();
     super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   /// clear the listeners for this widget
@@ -102,8 +97,7 @@ class _ConsumerState extends State<ConsumerWidget> {
     }
     _isExternalBuild = false;
     late BaseProvider<T> provider;
-    final target =
-        providerOrTarget is _Target ? providerOrTarget as _Target : null;
+    final target = providerOrTarget is _Target ? providerOrTarget as _Target : null;
 
     if (target != null) {
       provider = target.provider as BaseProvider<T>;
@@ -115,24 +109,31 @@ class _ConsumerState extends State<ConsumerWidget> {
     // add a new listener if the provider is not into dependencies
     final notifier = provider.read;
 
+    // if there is not a listener for the current provider
     if (!insideDependencies) {
       late void Function(dynamic) listener;
+      // if the data passed to the watch function
+      // was gotten using the .ids, .select or .when methods
       if (target != null) {
         target.rebuild = _rebuild;
         listener = target.listener;
       } else {
+        // if the notifier is a SimpleNotifier
         if (notifier is SimpleNotifier) {
           listener = (_) {
             final listeners = _ as List<String>;
+            // only rebuild the Consumer if the notify method was called
+            // without ids
             if (listeners.isEmpty) {
               _rebuild();
             }
           };
         } else {
+          // if the notifier is a StateNotifier
           listener = (_) => _rebuild();
         }
       }
-
+      // add the listener to the current notifier
       _dependencies[provider] = listener;
       (notifier as BaseNotifier).addListener(listener);
     }
