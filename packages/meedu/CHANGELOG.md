@@ -1,3 +1,5 @@
+## [4.0.0+1]
+- Added custom hash code in BaseNotifier.
 ## [4.0.0-dev.0]
 - Added base class Provider.
 ## [3.0.8]

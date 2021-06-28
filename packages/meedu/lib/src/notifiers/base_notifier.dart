@@ -99,4 +99,10 @@ abstract class BaseNotifier<T> {
     _listeners!.clear();
     _listeners = null;
   }
+
+  // Custom implementation of hash code optimized for reading notifiers.
+  @override
+  int get hashCode => _cachedHash;
+  final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
+  static int _nextHashCode = 1;
 }

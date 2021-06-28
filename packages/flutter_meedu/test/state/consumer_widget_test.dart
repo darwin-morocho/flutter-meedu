@@ -122,7 +122,7 @@ void main() {
           body: Consumer(
             builder: (_, watch, __) {
               final counter = watch(
-                _counterProvider.ids(() => ['66']),
+                _counterProvider,
               ).counter;
               return Text("${counter}");
             },

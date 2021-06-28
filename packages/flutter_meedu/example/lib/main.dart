@@ -25,11 +25,12 @@ class MyApp extends StatelessWidget {
       //  themeMode: controller.themeMode,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: LoginPage(),
-      // navigatorObservers: [
-      //   router.observer,
-      // ],
-      // routes: Pages.routes,
+      // home: LoginPage(),
+      navigatorObservers: [
+        router.observer,
+      ],
+      initialRoute: Routes.MENU,
+      routes: Pages.routes,
     );
   }
 }

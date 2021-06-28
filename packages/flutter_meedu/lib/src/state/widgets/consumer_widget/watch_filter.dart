@@ -3,10 +3,10 @@ part of 'consumer_widget.dart';
 typedef BuildWhen<S> = bool Function(S prev, S current);
 typedef BuildBySelect<T, S> = S Function(T);
 
-/// class to save a Provider, the listener and the rebuild function
+/// class to save a Notifier, the listener and the rebuild function
 class _Target<Notifier, S> extends Provider<Notifier> {
-  /// a SimpleProvider or a StateProvider
-  final BaseProvider<Notifier> provider;
+  /// a SimpleNotifier or a StateNotifier
+  final Notifier notifier;
 
   /// listaner to listen the changes in our Notifiers
   late Function(dynamic) listener;
@@ -14,9 +14,7 @@ class _Target<Notifier, S> extends Provider<Notifier> {
   /// function to rebuild the Consumer
   void Function()? rebuild;
 
-  _Target({
-    required this.provider,
-  });
+  _Target(this.notifier);
 }
 
 /// extension for SimpleProvider
@@ -28,7 +26,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
     final notifier = this.read;
     // get an initial value using the callback
     Object? prevValue = cb(notifier);
-    final target = _Target<Notifier, List>(provider: this);
+    final target = _Target<Notifier, List>(notifier);
 
     // listener with  the logic to rebuild the Consumer
     final listener = (dynamic _) {
@@ -49,7 +47,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
   /// use this method to rebuild your [Consumer] using ids (a list of strings)
   /// passed when you call [notify(['id1','id2',...])]
   _Target<Notifier, List> ids(List<String> Function() cb) {
-    final target = _Target<Notifier, List>(provider: this);
+    final target = _Target<Notifier, List>(this.read);
     final listener = (dynamic _) {
       // get the ids passed in the notify method
       final listeners = _ as List<String>;
@@ -78,12 +76,13 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
+extension StateProviderExt<Notifier extends StateNotifier<S>, S>
+    on StateProvider<Notifier, S> {
   /// use this method to rebuild your [Consumer] using the previous state and the current
   /// state to return a boolean
   _Target<Notifier, S> when(BuildWhen<S> cb) {
     final notifier = this.read;
-    final target = _Target<Notifier, S>(provider: this);
+    final target = _Target<Notifier, S>(notifier);
 
     final Function(dynamic) listener = (dynamic newState) {
       // rebuild the Consumer using the boolean returned by the callback
@@ -104,7 +103,7 @@ extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvide
     final notifier = this.read;
     // get an initial value using the callback
     Object? prevValue = cb(notifier.state);
-    final target = _Target<Notifier, S>(provider: this);
+    final target = _Target<Notifier, S>(notifier);
     final Function(dynamic) listener = (dynamic newState) {
       final value = cb(notifier.state);
       // check if the value has changed

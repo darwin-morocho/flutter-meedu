@@ -34,7 +34,7 @@ abstract class ConsumerWidget extends StatefulWidget {
 }
 
 class _ConsumerState extends State<ConsumerWidget> {
-  Map<BaseProvider, ListenerCallback> _dependencies = {};
+  Map<BaseNotifier, ListenerCallback> _dependencies = {};
 
   // initialized at true for the first build
   bool _isExternalBuild = true;
@@ -78,9 +78,9 @@ class _ConsumerState extends State<ConsumerWidget> {
   /// clear the listeners for this widget
   void _clearDependencies() {
     _dependencies.forEach(
-      (provider, listener) {
-        if (provider.mounted) {
-          provider.read.removeListener(listener);
+      (notifier, listener) {
+        if (!notifier.disposed) {
+          notifier.removeListener(listener);
         }
       },
     );
@@ -96,18 +96,16 @@ class _ConsumerState extends State<ConsumerWidget> {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    late BaseProvider<T> provider;
-    final target = providerOrTarget is _Target ? providerOrTarget as _Target : null;
+    final target =
+        providerOrTarget is _Target ? providerOrTarget as _Target : null;
 
+    late T notifier;
     if (target != null) {
-      provider = target.provider as BaseProvider<T>;
+      notifier = target.notifier as T;
     } else {
-      provider = providerOrTarget as BaseProvider<T>;
+      notifier = (providerOrTarget as BaseProvider<T>).read;
     }
-    final insideDependencies = _dependencies.containsKey(provider);
-
-    // add a new listener if the provider is not into dependencies
-    final notifier = provider.read;
+    final insideDependencies = _dependencies.containsKey(notifier);
 
     // if there is not a listener for the current provider
     if (!insideDependencies) {
@@ -134,11 +132,10 @@ class _ConsumerState extends State<ConsumerWidget> {
         }
       }
       // add the listener to the current notifier
-      _dependencies[provider] = listener;
-      (notifier as BaseNotifier).addListener(listener);
+      _dependencies[notifier as BaseNotifier] = listener;
+      notifier.addListener(listener);
     }
-
-    return notifier;
+    return notifier; // coverage:ignore-line
   }
 
   @override

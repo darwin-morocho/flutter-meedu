@@ -37,8 +37,7 @@ extension RxExtensions<T> on Rx<T> {
       }
     });
     rxWorker = RxWorker(subscription, null);
-    // coverage:ignore-line
-    return rxWorker;
+    return rxWorker; // coverage:ignore-line
   }
 
   /// the [callback] will be called every certain time interval ignoring the other changes

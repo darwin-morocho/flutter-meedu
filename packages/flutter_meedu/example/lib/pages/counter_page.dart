@@ -40,6 +40,7 @@ class CounterPage extends StatelessWidget {
         children: [
           FloatingActionButton(
             child: Icon(Icons.sim_card),
+            heroTag: 'demo',
             onPressed: () {
               counterProvider.read.incrementDemo();
             },
@@ -48,6 +49,7 @@ class CounterPage extends StatelessWidget {
             onPressed: () {
               counterProvider.read.increment();
             },
+            heroTag: 'increment',
           ),
         ],
       ),
