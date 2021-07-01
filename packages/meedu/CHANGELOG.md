@@ -1,3 +1,6 @@
+## [4.1.0]
+- Renamed `onDispose` to `dispose`.
+- Added `onlyUpdate` method in StateNotifier.
 ## [4.0.0+1]
 - Added custom hash code in BaseNotifier.
 ## [4.0.0-dev.0]

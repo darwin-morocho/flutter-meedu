@@ -119,6 +119,7 @@ class LoginPage extends StatelessWidget {
 class LoginDetail extends ConsumerWidget {
   void reset() {
     final controller = _provider.read;
+    // ignore: invalid_use_of_protected_member
     controller.state = controller.state.copyWith(email: '@', password: '');
   }
 
@@ -193,8 +194,8 @@ class LoginController extends StateNotifier<LoginState> {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     print(":::: dispose login page");
-    super.onDispose();
+    super.dispose();
   }
 }

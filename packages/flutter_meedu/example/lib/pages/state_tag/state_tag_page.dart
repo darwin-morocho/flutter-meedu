@@ -69,9 +69,9 @@ class _LoginController extends StateNotifier<_LoginState> {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     print("Disposed _LoginController ${this.hashCode}");
-    super.onDispose();
+    super.dispose();
   }
 }
 

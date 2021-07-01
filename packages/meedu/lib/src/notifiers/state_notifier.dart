@@ -1,5 +1,5 @@
 import 'base_notifier.dart';
-import 'package:meta/meta.dart' show mustCallSuper;
+import 'package:meta/meta.dart' show mustCallSuper, protected;
 
 abstract class StateNotifier<State> extends BaseNotifier<State> {
   late State _state, _oldState;
@@ -11,16 +11,31 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
     _oldState = _state;
   }
 
-  /// Update the State and  notify to listeners and rebuild the widgets
+  /// Updates the State and notify to listeners and rebuild the widgets
   ///
   /// [state] must be different of the current state
+  @protected
   set state(State newState) {
+    _update(newState);
+  }
+
+  /// updates the state but does not notify to the listeners
+  @protected
+  void onlyUpdate(State newState) {
+    _update(newState, false);
+  }
+
+  /// changes the state value
+  /// if [notify] is false it doesn't notify to all listeners
+  void _update(State newState, [bool notify = true]) {
     assert(!disposed, 'A $runtimeType was used after being disposed.');
     if (onStateWillChange(_state, newState)) {
       _oldState = _state;
       _state = newState;
       onStateChanged(_oldState, _state);
-      super.notify(_state);
+      if (notify) {
+        super.notify(_state);
+      }
     }
   }
 
@@ -37,7 +52,7 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper
-  void onDispose() async {
-    super.onDispose();
+  void dispose() async {
+    super.dispose();
   }
 }

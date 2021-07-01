@@ -87,8 +87,8 @@ class _CounterController extends SimpleNotifier {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     print("Disposed _CounterController ${this.hashCode}");
-    super.onDispose();
+    super.dispose();
   }
 }

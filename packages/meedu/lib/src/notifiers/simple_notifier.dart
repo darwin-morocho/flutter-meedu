@@ -13,7 +13,7 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper
-  void onDispose() async {
-    super.onDispose();
+  void dispose() async {
+    super.dispose();
   }
 }

@@ -28,7 +28,7 @@ void main() {
     await completer.future;
     expect(value, times);
     c.removeListener(subscribe);
-    c.onDispose();
+    c.dispose();
     expect(c.disposed, true);
     expect(() {
       c.notify();
@@ -38,10 +38,4 @@ void main() {
 
 class Controller extends SimpleNotifier {
   int counter = 0;
-
-  @override
-  void onDispose() {
-    print('😜 onDispose');
-    super.onDispose();
-  }
 }

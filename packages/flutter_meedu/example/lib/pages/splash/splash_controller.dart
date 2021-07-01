@@ -13,8 +13,8 @@ class SplashController extends SimpleNotifier {
   String? get routeName => _routeName;
 
   @override
-  void onDispose() {
+  void dispose() {
     print("SplashController disposed");
-    super.onDispose();
+    super.dispose();
   }
 }

@@ -61,9 +61,9 @@ class ExampleController extends SimpleNotifier {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     print("dispose ExampleController");
-    super.onDispose();
+    super.dispose();
   }
 }
 

@@ -12,7 +12,7 @@ void main() {
     final c = SearchController();
     expect(c.text, '');
     expect(c.hasListeners, false);
-    c.onAfterFirstLayout();
+    c.init();
     timer = Timer.periodic(Duration(milliseconds: 50), (_) {
       if (i == 1) {
         c.onTextChange('${c.text}-');
@@ -41,7 +41,7 @@ void main() {
     expect(c.everWithOutCondition, '@-@@@@@@@-');
     expect(c.ever, '@-@@@@@@@');
     expect(c.hasListeners, true);
-    c.onDispose();
+    c.dispose();
     expect(c.hasListeners, false);
   });
 }
@@ -65,8 +65,7 @@ class SearchController extends SimpleNotifier {
     _text.value = text;
   }
 
-  @override
-  void onAfterFirstLayout() {
+  void init() {
     _debounceWorker = _text.debounce(
       Duration(milliseconds: 100),
       (value) {
@@ -108,7 +107,7 @@ class SearchController extends SimpleNotifier {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     _text.close();
     _debounceWorker?.dispose();
     _everWorker?.dispose();
@@ -116,6 +115,6 @@ class SearchController extends SimpleNotifier {
     _intervalWorker?.dispose();
     _onceWithOutConditionWorker?.dispose();
     _everWithOutConditionWorker?.dispose();
-    super.onDispose();
+    super.dispose();
   }
 }

@@ -43,7 +43,7 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
-  flutter_meedu: "^4.0.0"
+  flutter_meedu: "^4.1.0"
 ``` 
 
 

@@ -98,7 +98,7 @@ abstract class BaseProvider<T> extends Provider<T> {
   void _dispose() {
     final container = ProviderScope.instance.containers[hashCode];
     if (container != null) {
-      container.notifier.onDispose();
+      container.notifier.dispose();
       if (_overriddenCreator != null) {
         _overriddenCreator = null;
         _overriddenAutoDispose = null;

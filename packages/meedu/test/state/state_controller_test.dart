@@ -20,12 +20,26 @@ void main() {
     c.onPasswordChanged('newpassword');
     expect(c.oldState.password, 'test');
     c.removeListener(subscribe);
-    c.onDispose();
+    c.dispose();
     expect(email, 'test@test.com');
     expect(c.disposed, true);
     expect(() {
       c.onEmailChanged('test@test.com');
     }, throwsA(isA<AssertionError>()));
+  });
+
+  test('StateController onlyUpdate', () async {
+    final c = LoginController();
+    var email = c.state.email;
+    expect(email, '');
+    final subscribe = (LoginState state) {
+      email = state.email;
+    };
+    c.addListener(subscribe);
+    print(c.hashCode);
+    c.onlyUpdateEmail('test@test.com');
+    expect(email, '');
+    expect(c.state.email, 'test@test.com');
   });
 }
 
@@ -65,6 +79,10 @@ class LoginController extends StateNotifier<LoginState> {
     state = state.copyWith(password: password);
   }
 
+  void onlyUpdateEmail(String email) {
+    onlyUpdate(state.copyWith(email: email));
+  }
+
   @override
   bool onStateWillChange(LoginState oldState, LoginState newState) {
     if (oldState.email != newState.email) {
@@ -77,11 +95,5 @@ class LoginController extends StateNotifier<LoginState> {
   void onStateChanged(LoginState oldState, LoginState currentState) {
     print('oldState ${oldState.toJson()}');
     print('currentState ${currentState.toJson()}\n\n');
-  }
-
-  @override
-  void onDispose() {
-    print(':::: dispose login page');
-    super.onDispose();
   }
 }

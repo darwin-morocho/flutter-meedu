@@ -14,10 +14,10 @@ class TabsController extends SimpleNotifier {
   late TabController tabController;
 
   @override
-  void onDispose() {
+  void dispose() {
     tabController.dispose();
     print("tabs disposed");
-    super.onDispose();
+    super.dispose();
   }
 }
 

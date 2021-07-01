@@ -14,9 +14,9 @@ class LoginController extends StateNotifier<LoginState> {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     print("Login disposed");
-    super.onDispose();
+    super.dispose();
   }
 }
 

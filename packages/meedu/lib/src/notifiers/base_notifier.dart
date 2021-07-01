@@ -88,7 +88,7 @@ abstract class BaseNotifier<T> {
 
   /// use to listen when the controller was deleted from memory
   @mustCallSuper
-  void onDispose() async {
+  void dispose() async {
     _debugAssertNotDisposed();
     _disposed = true;
     // ignore: unawaited_futures

@@ -59,6 +59,26 @@ class LoginController extends StateNotifier<LoginState> {
   }
 }
 ```
+:::info
+If you only want to update the state of your `StateNotifier` but you don't want to notify to the listeners (don't rebuild the `Consumer` widgets and don't listen the changes in the `ProviderListener` widget)
+you can use the `onlyUpdate` method in your `StateNotifier`.
+
+```dart {7}
+class LoginController extends StateNotifier<LoginState> {
+  // you need pass an inital state using super
+  LoginController():super(LoginState.initialState);
+
+  void onEmailChanged(String email) {
+    // only update the state
+    onlyUpdate(state.copyWith(email: email));
+  }
+  .
+  .
+  .
+
+}
+```
+:::
 
 Next you need to create a `StateNotifier` and use the `Consumer` widget to listen the changes in your state
 

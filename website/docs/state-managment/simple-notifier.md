@@ -20,9 +20,9 @@ class CounterController extends SimpleNotifier{
  
     // override the next method is OPTIONAL
     @override
-    void onDispose() {
+    void dispose() {
       // YOUR CODE HERE
-      super.onDispose();// <-- you must call to the super method
+      super.dispose();// <-- you must call to the super method
     }
 }
 ```

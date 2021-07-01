@@ -35,10 +35,10 @@ class HomeController extends StateNotifier<HomeState> {
   }
 
   @override
-  void onDispose() {
+  void dispose() {
     print("HomeController disposed");
     _counter.close();
     _timer?.cancel();
-    super.onDispose();
+    super.dispose();
   }
 }

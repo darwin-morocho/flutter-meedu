@@ -4,10 +4,10 @@ class HomeTabController extends SimpleNotifier {
   final counter = 0.obs;
 
   @override
-  void onDispose() {
+  void dispose() {
     counter.close();
     print("HomeTabController disposed");
-    super.onDispose();
+    super.dispose();
   }
 }
 

@@ -1,3 +1,6 @@
+## [4.1.0]
+- Updated to meedu: ^4.1.0
+
 ## [4.0.0+2]
 - Updated to meedu: ^4.0.0+1
 - Improved ConsumerWidget class.
