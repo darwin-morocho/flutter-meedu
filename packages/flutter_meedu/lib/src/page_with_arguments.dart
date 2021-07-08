@@ -61,8 +61,8 @@ abstract class PageWithArgumentsWidget extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  void onInit(RouteSettings);
-  Widget build(BuildContext);
+  void onInit(RouteSettings settings);
+  Widget build(BuildContext context);
 
   @override
   _PageWithArgumentsWidgetState createState() =>
@@ -83,6 +83,6 @@ class _PageWithArgumentsWidgetState extends State<PageWithArgumentsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.build(BuildContext);
+    return widget.build(context);
   }
 }
