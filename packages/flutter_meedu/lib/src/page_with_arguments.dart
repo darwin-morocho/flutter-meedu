@@ -1,12 +1,14 @@
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart'
     show
-        StatefulWidget,
         BuildContext,
-        RouteSettings,
-        Widget,
         Key,
+        ModalRoute,
+        RouteSettings,
         State,
-        ModalRoute;
+        StatefulWidget,
+        StatelessElement,
+        Widget;
 
 /// A simple Widget with a callback useful to set arguments for one SimpleProvider or a StateProvider
 /// ```dart
@@ -38,10 +40,6 @@ class PageWithArguments extends StatefulWidget {
 
 class _PageWithArgumentsState extends State<PageWithArguments> {
   bool _ready = false;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
@@ -55,5 +53,32 @@ class _PageWithArgumentsState extends State<PageWithArguments> {
   @override
   Widget build(BuildContext context) {
     return widget.builder(context);
+  }
+}
+
+abstract class PageWithArgumentsWidget extends StatefulWidget {
+  void onInit(RouteSettings);
+  Widget build(BuildContext);
+
+  @override
+  _PageWithArgumentsWidgetState createState() =>
+      _PageWithArgumentsWidgetState();
+}
+
+class _PageWithArgumentsWidgetState extends State<PageWithArgumentsWidget> {
+  bool _ready = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_ready) {
+      widget.onInit(ModalRoute.of(context)!.settings);
+      _ready = true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.build(BuildContext);
   }
 }
