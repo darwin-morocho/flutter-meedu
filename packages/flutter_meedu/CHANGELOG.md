@@ -1,3 +1,5 @@
+## [4.1.0+2]
+- Added const constructor in PageWithArgumentsWidget class.
 ## [4.1.0+1]
 - Added PageWithArgumentsWidget class.
 ## [4.1.0]

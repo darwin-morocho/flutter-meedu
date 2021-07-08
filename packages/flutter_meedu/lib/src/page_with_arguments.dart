@@ -57,6 +57,10 @@ class _PageWithArgumentsState extends State<PageWithArguments> {
 }
 
 abstract class PageWithArgumentsWidget extends StatefulWidget {
+  const PageWithArgumentsWidget({
+    Key? key,
+  }) : super(key: key);
+
   void onInit(RouteSettings);
   Widget build(BuildContext);
 
