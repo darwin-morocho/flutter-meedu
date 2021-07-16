@@ -74,9 +74,9 @@ By default the `counterProvider` variable doesn't create one instance of `Counte
 widget call to the `read` method of our `counterProvider` and check if the `CounterController` was created and return the `CounterController` that was created before or create a new `CounterController`.
 
 
-The `onDispose` method in our `CounterController` will be called when the `route` who created the `CounterController` is popped.
+The `dispose` method in our `CounterController` will be called when the `route` who created the `CounterController` is popped.
 
-If you don't want to call to the `onDispose` method when the `route` who created the `CounterController` is popped you could use.
+If you don't want to call to the `dispose` method when the `route` who created the `CounterController` is popped you could use.
 ```dart {3}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),

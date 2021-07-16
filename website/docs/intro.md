@@ -17,6 +17,11 @@ Is a **powerful** State Managment, Dependency Injection, Reactive programming an
   <img style={{marginLeft:10}} alt="stars" src="https://img.shields.io/github/stars/darwin-morocho/flutter-meedu?style=social"/>
 </p>
 
+:::note INFO
+This project was inspired by **GetX, riverpod** and **flutter_bloc**. We don't use any code of these projects only get the best fetaures
+of them and we have implemented them with a total refactoring.
+:::
+
 
 ## Features
 - A State Managment for simple and complex states.

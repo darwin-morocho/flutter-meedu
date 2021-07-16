@@ -80,7 +80,7 @@ class LoginController extends StateNotifier<LoginState> {
 ```
 :::
 
-Next you need to create a `StateNotifier` and use the `Consumer` widget to listen the changes in your state
+Next you need to create a `StateProvider` and use the `Consumer` widget to listen the changes in your state
 
 ```dart
 import 'package:flutter/material.dart';

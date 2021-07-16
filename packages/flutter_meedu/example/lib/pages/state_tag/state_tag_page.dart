@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/page.dart';
 import 'package:flutter_meedu/state.dart';
 
 class StateTagPage extends StatelessWidget {

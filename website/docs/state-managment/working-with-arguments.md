@@ -93,3 +93,35 @@ MaterialApp(
 ) 
 ```
 
+
+Or you can create yourn own widget using `PageWithArgumentsWidget` class.
+```dart
+
+import 'package:flutter/material.dart';
+import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/page.dart';
+
+final loginProvider = SimpleProvider(
+  (ref) => LoginController(ref.arguments),
+);
+
+class LoginPage extends PageWithArgumentsWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  void onInit(RouteSettings settings) {
+    /// you can use settings to get data passed as an argument
+    /// using Navigator.pushName(context,'rpute-name', arguments: data);
+    loginProvider.setArguments(settings.arguments);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      .
+      .
+      .
+    );
+  }
+}
+```
