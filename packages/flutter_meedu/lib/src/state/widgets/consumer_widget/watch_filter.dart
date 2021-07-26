@@ -63,7 +63,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
             break;
           }
         }
-      } else if (listeners.isEmpty) {
+      } else {
         // update the widget if listeners is empty
         if (target.rebuild != null) {
           target.rebuild!();
@@ -76,8 +76,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<Notifier extends StateNotifier<S>, S>
-    on StateProvider<Notifier, S> {
+extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
   /// use this method to rebuild your [Consumer] using the previous state and the current
   /// state to return a boolean
   _Target<Notifier, S> when(BuildWhen<S> cb) {

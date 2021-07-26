@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart'
         RouteSettings,
         State,
         StatefulWidget,
-        StatelessElement,
         Widget;
 
 /// A simple Widget with a callback useful to set arguments for one SimpleProvider or a StateProvider
@@ -38,6 +37,7 @@ class PageWithArguments extends StatefulWidget {
   _PageWithArgumentsState createState() => _PageWithArgumentsState();
 }
 
+
 class _PageWithArgumentsState extends State<PageWithArguments> {
   bool _ready = false;
 
@@ -56,6 +56,38 @@ class _PageWithArgumentsState extends State<PageWithArguments> {
   }
 }
 
+
+/// uses this class to create a page and define the arguments for a SimpleProvider or a StateProvider
+/// 
+/// ``` dart
+/// import 'package:flutter/material.dart';
+/// import 'package:flutter_meedu/meedu.dart';
+/// import 'package:flutter_meedu/page.dart';
+/// 
+/// final loginProvider = SimpleProvider(
+///   (ref) => LoginController(ref.arguments),
+/// );
+/// 
+/// class LoginPage extends PageWithArgumentsWidget {
+///   const LoginPage({Key? key}) : super(key: key);
+/// 
+///   @override
+///   void onInit(RouteSettings settings) {
+///     /// you can use settings to get data passed as an argument
+///     /// using Navigator.pushName(context,'rpute-name', arguments: data);
+///     loginProvider.setArguments(settings.arguments);
+///   }
+/// 
+///   @override
+///   Widget build(BuildContext context) {
+///     return Scaffold(
+///       .
+///       .
+///       .
+///     );
+///   }
+/// }
+/// ```
 abstract class PageWithArgumentsWidget extends StatefulWidget {
   const PageWithArgumentsWidget({
     Key? key,

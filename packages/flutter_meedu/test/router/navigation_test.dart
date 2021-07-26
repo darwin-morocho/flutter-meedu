@@ -3,9 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
 void main() {
+  setUp(() {
+    router.dispose();
+  });
   group('navigation', () {
     testWidgets('normal navigation', (test) async {
-      router.setDefaultTransition(router.Transition.material, duration: Duration(milliseconds: 100));
+      router.setDefaultTransition(router.Transition.material,
+          duration: Duration(milliseconds: 100));
       await test.pumpWidget(
         MaterialApp(
           navigatorKey: router.navigatorKey,
@@ -29,6 +33,23 @@ void main() {
       expect(router.canPop(), false);
     });
   });
+
+  testWidgets('popAndPushNamed', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        initialRoute: '/',
+        navigatorKey: router.navigatorKey,
+        routes: {
+          '/': (_) => HomePage(),
+          '/detail': (_) => DetailPage(),
+        },
+      ),
+    );
+    await tester.tap(find.text("popAndPushNamed"));
+    await tester.pumpAndSettle();
+    expect(find.text("meedu"), findsOneWidget);
+    expect(find.text("popAndPushNamed"), findsNothing);
+  });
 }
 
 class HomePage extends StatelessWidget {
@@ -49,6 +70,12 @@ class HomePage extends StatelessWidget {
               );
             },
             child: Text("pushReplacement"),
+          ),
+          TextButton(
+            onPressed: () {
+              router.popAndPushNamed('/detail', arguments: 'meedu');
+            },
+            child: Text("popAndPushNamed"),
           ),
           TextButton(
             onPressed: () {

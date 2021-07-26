@@ -25,9 +25,7 @@ extension ContextExtensionss on BuildContext {
   /// [reducedBy] is a percentage value of how much of the height you want
   /// if you for example want 46% of the height, then you reduce it by 56%.
   double heightTransformer({double dividedBy = 1, double reducedBy = 0.0}) {
-    return (mediaQuerySize.height -
-            ((mediaQuerySize.height / 100) * reducedBy)) /
-        dividedBy;
+    return (mediaQuerySize.height - ((mediaQuerySize.height / 100) * reducedBy)) / dividedBy;
   }
 
   /// Gives you the power to get a portion of the width.
@@ -40,8 +38,7 @@ extension ContextExtensionss on BuildContext {
   /// [reducedBy] is a percentage value of how much of the width you want
   /// if you for example want 46% of the width, then you reduce it by 56%.
   double widthTransformer({double dividedBy = 1, double reducedBy = 0.0}) {
-    return (mediaQuerySize.width - ((mediaQuerySize.width / 100) * reducedBy)) /
-        dividedBy;
+    return (mediaQuerySize.width - ((mediaQuerySize.width / 100) * reducedBy)) / dividedBy;
   }
 
   /// Divide the height proportionally by the given value
@@ -53,6 +50,9 @@ extension ContextExtensionss on BuildContext {
     return heightTransformer(dividedBy: dividedBy, reducedBy: reducedByH) /
         widthTransformer(dividedBy: dividedBy, reducedBy: reducedByW);
   }
+
+  /// return true if the current app mode is dark
+  bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
 
   /// similar to [MediaQuery.of(context).padding]
   ThemeData get theme => Theme.of(this);
@@ -89,9 +89,6 @@ extension ContextExtensionss on BuildContext {
 
   /// get the shortestSide from screen
   double get mediaQueryShortestSide => mediaQuerySize.shortestSide;
-
-  /// True if width be larger than 800
-  bool get showNavbar => (width > 800);
 
   /// True if the shortestSide is smaller than 600p
   bool get isPhone => (mediaQueryShortestSide < 600);

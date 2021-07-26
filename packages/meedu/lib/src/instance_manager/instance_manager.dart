@@ -34,7 +34,7 @@ class Get {
     return inLazyVars;
   }
 
-  /// Insert a Instance into the hashmap
+  /// Insert an Instance into the hashmap
   void put<T>(T value, {String? tag}) {
     final key = _getKey(T, tag);
     _vars[key] = value;

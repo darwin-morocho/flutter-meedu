@@ -43,6 +43,7 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
     super.dispose();
   }
 
+  // coverage:ignore-line
   void _handleDragStart(DragStartDetails details) {
     assert(mounted);
     assert(_backGestureController == null);
@@ -52,15 +53,15 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
   void _handleDragUpdate(DragUpdateDetails details) {
     assert(mounted);
     assert(_backGestureController != null);
-    _backGestureController!.dragUpdate(
-        _convertToLogical(details.primaryDelta! / context.size!.width));
+    _backGestureController!
+        .dragUpdate(_convertToLogical(details.primaryDelta! / context.size!.width));
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    assert(mounted);
+    assert(mounted); // coverage:ignore-line
     assert(_backGestureController != null);
-    _backGestureController!.dragEnd(_convertToLogical(
-        details.velocity.pixelsPerSecond.dx / context.size!.width));
+    _backGestureController!
+        .dragEnd(_convertToLogical(details.velocity.pixelsPerSecond.dx / context.size!.width));
     _backGestureController = null;
   }
 
@@ -79,7 +80,7 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
   double _convertToLogical(double value) {
     switch (Directionality.of(context)) {
       case TextDirection.rtl:
-        return -value;
+        return -value; // coverage:ignore-line
       case TextDirection.ltr:
         return value;
     }

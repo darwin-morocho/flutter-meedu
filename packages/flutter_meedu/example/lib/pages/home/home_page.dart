@@ -7,7 +7,7 @@ import 'package:meedu_example/pages/home/home_provider.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:meedu_example/routes/routes.dart';
 import 'home_state.dart';
-
+ 
 class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
