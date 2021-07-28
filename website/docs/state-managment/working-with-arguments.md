@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Working with arguments
 
-Some times you need to pass a initial values to your `SimpleNotifier` or `StateNotifier` in that cases you can sue the `setArguments` method of your provider.
+Some times you need to pass an initial values to your `SimpleNotifier` or `StateNotifier` in that cases you can sue the `setArguments` method of your provider.
 
 In the next example to create a new instance of **LoginController** we need a initial email value
 
