@@ -1,3 +1,6 @@
+## [4.2.0]
+- Added custom transitions for named routes.
+- Updated docs.
 ## [4.1.1]
 - Added isDarkMode extension.
 ## [4.1.0+3]
