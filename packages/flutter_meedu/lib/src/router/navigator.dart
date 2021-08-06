@@ -7,11 +7,17 @@ class MeeduNavigator {
   static final MeeduNavigator i = MeeduNavigator._();
 
   GlobalKey<NavigatorState>? _naviatorKey;
+  GlobalKey? _appKey;
 
   /// return the navigator key
   GlobalKey<NavigatorState> get navigatorKey {
     _naviatorKey ??= GlobalKey<NavigatorState>();
     return _naviatorKey!;
+  }
+
+  GlobalKey get appKey {
+    _appKey ??= GlobalKey();
+    return _appKey!;
   }
 
   /// use material transition as default transition
@@ -22,6 +28,7 @@ class MeeduNavigator {
 
   /// use this method for widget testing
   void dispose() {
+    _appKey = null;
     _naviatorKey?.currentState?.dispose();
     _naviatorKey = null;
   }

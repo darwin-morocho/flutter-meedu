@@ -60,7 +60,9 @@ class BackGestureController<T> {
       // to determine it.
       // coverage:ignore-line
       final int droppedPageForwardAnimationTime = min(
-        lerpDouble(_kMaxDroppedSwipePageForwardAnimationTime, 0, controller.value)!.floor(),
+        lerpDouble(
+                _kMaxDroppedSwipePageForwardAnimationTime, 0, controller.value)!
+            .floor(),
         _kMaxPageBackAnimationTime,
       ); // coverage:ignore-line
       // coverage:ignore-line
@@ -74,10 +76,12 @@ class BackGestureController<T> {
       // The popping may have finished inline if already at the target destination.
       if (controller.isAnimating) {
         // Otherwise, use a custom popping animation duration and curve.
-        final int droppedPageBackAnimationTime =
-            lerpDouble(0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)!.floor();
+        final int droppedPageBackAnimationTime = lerpDouble(
+                0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)!
+            .floor();
         controller.animateBack(0.0,
-            duration: Duration(milliseconds: droppedPageBackAnimationTime), curve: animationCurve);
+            duration: Duration(milliseconds: droppedPageBackAnimationTime),
+            curve: animationCurve);
       }
     }
 

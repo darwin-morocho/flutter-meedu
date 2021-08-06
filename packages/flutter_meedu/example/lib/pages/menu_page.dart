@@ -12,7 +12,11 @@ class MenuPage extends StatelessWidget {
         children: [
           ListTile(
             title: Text("Counter"),
-            onTap: () => router.pushNamed(Routes.COUNTER),
+            onTap: () => router.pushNamed(
+              Routes.COUNTER,
+              transition: router.Transition.upToDown,
+              backGestureEnabled: false,
+            ),
           ),
           ListTile(
             title: Text("Login Form"),

@@ -11,6 +11,7 @@ void main() {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
     await tester.pumpWidget(
       MaterialApp(
+     
         navigatorKey: router.navigatorKey,
         home: Scaffold(
           body: Center(

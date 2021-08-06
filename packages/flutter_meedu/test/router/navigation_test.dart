@@ -35,8 +35,10 @@ void main() {
   });
 
   testWidgets('popAndPushNamed', (tester) async {
+    router.setDefaultTransition(router.Transition.downToUp);
     await tester.pumpWidget(
       MaterialApp(
+        key: router.appKey,
         initialRoute: '/',
         navigatorKey: router.navigatorKey,
         routes: {

@@ -1,3 +1,5 @@
+## [4.1.1]
+- Added isDarkMode extension.
 ## [4.1.0+3]
 - Added const constructor in PageWithArgumentsWidget class.
 ## [4.1.0+2]

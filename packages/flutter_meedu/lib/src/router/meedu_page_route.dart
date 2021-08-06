@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart' show CupertinoApp;
 import 'package:flutter/material.dart';
+import '../../router.dart';
 import 'gesture_detector/back_gesture_controller.dart';
 import 'gesture_detector/gesture_detector.dart';
 import 'transitions/down_to_up.dart';
@@ -12,11 +14,13 @@ class MeeduPageRoute<T> extends PageRoute<T> {
   final Color? barrierColor;
   final String? barrierLabel;
   final Transition transition;
-  final Widget child;
+  late Widget child;
+  final String? routeName;
   final bool backGestureEnabled;
 
-  MeeduPageRoute(
-    this.child, {
+  MeeduPageRoute({
+    Widget? child,
+    this.routeName,
     @required RouteSettings? settings,
     required this.maintainState,
     required this.transitionDuration,
@@ -28,15 +32,19 @@ class MeeduPageRoute<T> extends PageRoute<T> {
   }) : super(
           settings: settings,
           fullscreenDialog: fullscreenDialog,
-        );
+        ) {
+    if (child != null) {
+      this.child = child;
+    }
+  }
 
-  @override
+  @override // coverage:ignore-line
   Widget buildPage(
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return this.child;
+    return this.child; // coverage:ignore-line
   }
 
   @override
@@ -50,39 +58,58 @@ class MeeduPageRoute<T> extends PageRoute<T> {
       case Transition.downToUp:
         return DownToUpTransition().buildTransition(
           animation: animation,
-          child: _child,
+          child: _getChild(context),
         );
       case Transition.upToDown:
         return UpToDownTransition().buildTransition(
           animation: animation,
-          child: _child,
+          child: _getChild(context),
         );
 
       case Transition.rightToLeft:
         return RightToLeftTransition().buildTransition(
           animation: animation,
-          child: _child,
+          child: _getChild(context),
         );
 
       case Transition.fadeIn:
         return FadeTransition(
           opacity: animation,
-          child: _child,
+          child: _getChild(context),
         );
 
       case Transition.zoom:
         return ScaleTransition(
           scale: animation,
-          child: _child,
+          child: _getChild(context),
         );
 
       default:
-        return child;
+        return _getChild(context);
     }
   }
 
   /// check if [backGestureEnabled]is true and envolves it into a BackGestureDetector
-  Widget get _child {
+  Widget _getChild(BuildContext context) {
+    if (routeName != null) {
+      final app = appKey.currentWidget;
+      late Map<String, Widget Function(BuildContext)>? routes;
+      if (app is MaterialApp) {
+        routes = app.routes;
+      } else {
+        routes = (app as CupertinoApp).routes;
+      }
+
+      assert(
+        routes != null,
+        'routes is null in your MaterialApp or CupertinoApp',
+      );
+      assert(
+        routes!.containsKey(routeName),
+        'route name not found in your routes',
+      );
+      child = routes![routeName]!(context);
+    }
     return this.backGestureEnabled
         ? BackGestureDetector(
             enabledCallback: _isPopGestureEnabled,
