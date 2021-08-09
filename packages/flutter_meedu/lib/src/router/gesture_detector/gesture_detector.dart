@@ -53,18 +53,19 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
   void _handleDragUpdate(DragUpdateDetails details) {
     assert(mounted);
     assert(_backGestureController != null);
-    _backGestureController!.dragUpdate(
-        _convertToLogical(details.primaryDelta! / context.size!.width));
+    _backGestureController!
+        .dragUpdate(_convertToLogical(details.primaryDelta! / context.size!.width));
   }
 
   void _handleDragEnd(DragEndDetails details) {
     assert(mounted); // coverage:ignore-line
     assert(_backGestureController != null);
-    _backGestureController!.dragEnd(_convertToLogical(
-        details.velocity.pixelsPerSecond.dx / context.size!.width));
+    _backGestureController!
+        .dragEnd(_convertToLogical(details.velocity.pixelsPerSecond.dx / context.size!.width));
     _backGestureController = null;
   }
 
+  // coverage:ignore-start
   void _handleDragCancel() {
     assert(mounted);
     // This can be called even if start is not called, paired with the "down" event
@@ -72,20 +73,23 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
     _backGestureController?.dragEnd(0.0);
     _backGestureController = null;
   }
+  // coverage:ignore-end
 
   void _handlePointerDown(PointerDownEvent event) {
     if (widget.enabledCallback()) _recognizer.addPointer(event);
   }
 
   double _convertToLogical(double value) {
+    // coverage:ignore-start
     switch (Directionality.of(context)) {
       case TextDirection.rtl:
-        return -value; // coverage:ignore-line
+        return -value;
       case TextDirection.ltr:
         return value;
-    }
+    } // coverage:ignore-end
   }
 
+  // coverage:ignore-start
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasDirectionality(context));
@@ -112,4 +116,5 @@ class _BackGestureDetectorState<T> extends State<BackGestureDetector<T>> {
       ],
     );
   }
+  // coverage:ignore-end
 }

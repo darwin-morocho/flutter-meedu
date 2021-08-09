@@ -7,11 +7,49 @@ import 'navigator.dart';
 
 export 'transition.dart';
 
+/// a GlobalKey<NavigatorState> to navigate without BuildContext
+/// ```dart
+///import 'package:flutter_meedu/router.dart' as router;
+///class MyApp extends StatelessWidget {
+///  @override
+///  Widget build(BuildContext context) {
+///    return MaterialApp(
+///      navigatorKey: router.navigatorKey, // add the navigator key
+///      home: HomePage(),
+///      routes: {YOUR_ROUTES},
+///    );
+///  }
+///}
+///```
 GlobalKey<NavigatorState> get navigatorKey => MeeduNavigator.i.navigatorKey;
+
+/// GlobalKey to detenrminate if a MaterialApp or CupertinoApp
+/// is using the [onGenerateRoute] paremeter or for custom transitions
+/// using named routes we need to now the value of `routes` parameter
+///
+///```dart
+///import 'package:flutter_meedu/router.dart' as router;
+///class MyApp extends StatelessWidget {
+///  @override
+///  Widget build(BuildContext context) {
+///    return MaterialApp(
+///      key: router.appKey,
+///      navigatorKey: router.navigatorKey, // add the navigator key
+///      home: HomePage(),
+///      routes: {YOUR_ROUTES},
+///    );
+///  }
+///}
+///```
 GlobalKey get appKey => MeeduNavigator.i.appKey;
+
+/// current state of navigatorKey to be used to navigate without BuildContext
 NavigatorState? get _state => MeeduNavigator.i.navigatorKey.currentState;
 
 /// set the default transition for all pages
+///
+/// [duration] set the transition duration for all pages
+/// by default duration is 300 milliseconds
 void setDefaultTransition(Transition transition, {Duration? duration}) {
   MeeduNavigator.i.transition = transition;
   if (duration != null) {
@@ -19,6 +57,7 @@ void setDefaultTransition(Transition transition, {Duration? duration}) {
   }
 }
 
+/// validate if the navigator key was assigned to one MaterialApp or CupertinoApp
 void _validateRouterState() {
   assert(
     _state != null,
@@ -265,17 +304,20 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
   } else if (app is CupertinoApp) {
     onGenerateRoute = app.onGenerateRoute;
   }
+
+  // if the MaterialApp or CupertinoApp is using onGenerateRoute custom
+  // transitions are not allowed
   if (onGenerateRoute != null) {
     return null;
   }
 
   final _transition = transition ?? MeeduNavigator.i.transition;
-  if (_transition == Transition.material ||
-      _transition == Transition.cupertino) {
+  if (_transition == Transition.material || _transition == Transition.cupertino) {
     return null;
   }
-  final _transitionDuration =
-      transitionDuration ?? MeeduNavigator.i.transitionDuration;
+  final _transitionDuration = transitionDuration ?? MeeduNavigator.i.transitionDuration;
+  
+  // create a custom route with a custom transition
   return MeeduPageRoute<T>(
     routeName: routeName,
     settings: RouteSettings(
@@ -283,8 +325,7 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
       arguments: arguments,
     ),
     maintainState: true,
-    transitionDuration:
-        _transition == Transition.none ? Duration.zero : _transitionDuration,
+    transitionDuration: _transition == Transition.none ? Duration.zero : _transitionDuration,
     fullscreenDialog: false,
     transition: _transition,
     backGestureEnabled: backGestureEnabled,

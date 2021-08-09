@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:math';
 import 'dart:ui' show lerpDouble;
 
@@ -49,26 +50,35 @@ class BackGestureController<T> {
     // If the user releases the page before mid screen with sufficient velocity,
     // or after mid screen, we should animate the page out. Otherwise, the page
     // should be animated back in.
-    if (velocity.abs() >= _kMinFlingVelocity)
+    if (velocity.abs() >= _kMinFlingVelocity) {
       animateForward = velocity <= 0; // coverage:ignore-line
-    else
+    } else {
       animateForward = controller.value > 0.5;
+    }
 
     if (animateForward) {
       // The closer the panel is to dismissing, the shorter the animation is.
       // We want to cap the animation time, but we want to use a linear curve
       // to determine it.
-      // coverage:ignore-line
       final int droppedPageForwardAnimationTime = min(
         lerpDouble(
-                _kMaxDroppedSwipePageForwardAnimationTime, 0, controller.value)!
+          _kMaxDroppedSwipePageForwardAnimationTime,
+          0,
+          controller.value,
+        )!
             .floor(),
         _kMaxPageBackAnimationTime,
-      ); // coverage:ignore-line
-      // coverage:ignore-line
-      controller.animateTo(1.0,
-          duration: Duration(milliseconds: droppedPageForwardAnimationTime),
-          curve: animationCurve); // coverage:ignore-line
+      );
+
+      // coverage:ignore-start
+      controller.animateTo(
+        1.0,
+        duration: Duration(
+          milliseconds: droppedPageForwardAnimationTime,
+        ),
+        curve: animationCurve,
+      );
+      // coverage:ignore-end
     } else {
       // This route is destined to pop at this point. Reuse navigator's pop.
       navigator.pop();
@@ -76,12 +86,10 @@ class BackGestureController<T> {
       // The popping may have finished inline if already at the target destination.
       if (controller.isAnimating) {
         // Otherwise, use a custom popping animation duration and curve.
-        final int droppedPageBackAnimationTime = lerpDouble(
-                0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)!
-            .floor();
+        final int droppedPageBackAnimationTime =
+            lerpDouble(0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)!.floor();
         controller.animateBack(0.0,
-            duration: Duration(milliseconds: droppedPageBackAnimationTime),
-            curve: animationCurve);
+            duration: Duration(milliseconds: droppedPageBackAnimationTime), curve: animationCurve);
       }
     }
 
@@ -96,7 +104,7 @@ class BackGestureController<T> {
       };
       controller.addStatusListener(animationStatusCallback);
     } else {
-      navigator.didStopUserGesture();
+      navigator.didStopUserGesture(); // coverage:ignore-line
     }
   }
 }

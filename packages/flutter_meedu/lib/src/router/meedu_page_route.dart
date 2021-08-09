@@ -93,22 +93,18 @@ class MeeduPageRoute<T> extends PageRoute<T> {
   Widget _getChild(BuildContext context) {
     if (routeName != null) {
       final app = appKey.currentWidget;
-      late Map<String, Widget Function(BuildContext)>? routes;
+      late Map<String, Widget Function(BuildContext)> routes;
       if (app is MaterialApp) {
-        routes = app.routes;
+        routes = app.routes ?? {};
       } else {
-        routes = (app as CupertinoApp).routes;
+        routes = (app as CupertinoApp).routes ?? {};
       }
 
       assert(
-        routes != null,
-        'routes is null in your MaterialApp or CupertinoApp',
-      );
-      assert(
-        routes!.containsKey(routeName),
+        routes.containsKey(routeName),
         'route name not found in your routes',
       );
-      child = routes![routeName]!(context);
+      child = routes[routeName]!(context);
     }
     return this.backGestureEnabled
         ? BackGestureDetector(
