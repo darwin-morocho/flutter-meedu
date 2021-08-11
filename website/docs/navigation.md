@@ -44,7 +44,7 @@ class DetailPage extends StatelessWidget {
     // inside a build method this could rebuild your widget when it is destroyed.
     // router.arguments<String>(context) uses  ModalRoute.of(context).settings.arguments
     // in that cases I recommend get your arguments before create your Page
-    // for example in the routes parameter of your MaterialApp
+    // in that case you can use the PageWithArgumentsWidget class
     final arguments = router.arguments<String>(context);
     return YOUR_WIDGET;
   }

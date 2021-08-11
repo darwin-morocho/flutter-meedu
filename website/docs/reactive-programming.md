@@ -41,7 +41,7 @@ class _RxPageState extends State<RxPage> {
 ```
 
 :::note
-You can create observables for String,int,double ot booleans using the `.obs` extension
+You can create observables for String, int, double or booleans using the `.obs` extension
 
 - `final _counter = 0.obs; // equals to final Rx<int> _counter = Rx(0);`
 - `final _enabled = false.obs; // equals to final Rx<bool> _enabled = Rx(false);`

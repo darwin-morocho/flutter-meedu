@@ -7,11 +7,13 @@ If you have a more complex state consider using the StateNotifier class instead 
 
 A StateNotifier stores a single immutable state.
 
-An immutable state is an instance of one Class that overrides `==` and `hashCode`. For example you could use [equatable](https://pub.dev/packages/equatable) to create an immutable Class.
+An immutable state is an instance of one Class that overrides `==` and `hashCode`. For example you could use [equatable](https://pub.dev/packages/equatable) or [freezed](https://pub.dev/packages/freezed) to create an immutable Class.
 
+
+### With equatable
 Add equatable as a dependency in your `pubspec.yaml` file
 ```yaml
-equatable: "^2.0.2"
+equatable: last_version
 ```
 Now you can create a Class to manage your state
 ```dart
@@ -39,6 +41,48 @@ class LoginState extends Equatable {
   @override
   List<Object?> get props => [email, password];
 }
+```
+
+### With freezed
+To use freezed you need [build_runner](https://pub.dev/packages/build_runner) and [freezed_annotation](https://pub.dev/packages/freezed_annotation)
+
+
+
+in your `pubspec.yaml` file (replace `last_version` with the lastest version of each dependency)
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  freezed_annotation: last_version
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: last_version
+  freezed: last_version
+```
+
+If you have conflicts when you try to install freezed check the oficial
+documentation https://pub.dev/packages/freezed
+
+```dart
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'login_state.freezed.dart';
+@freezed
+class LoginState with _$LoginState {
+  const LoginState({
+    @Default('') String this.email,
+    @Default('') String this.password,
+  }) = _LoginState;
+
+  static LoginState get initialState => LoginState();
+}
+```
+
+next run the next command to generate the `.frezeed.dart` files
+```shell
+flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 

@@ -73,24 +73,6 @@ class ProductDetail extends StatelessWidget {
     );
   }
 }
-
-
-// or in your MaterialApp
-MaterialApp(
-  initialRoute: Routes.SPLASH,
-  navigatorObservers: [
-    router.observer,
-  ],
-  routes: {
-    'product-detail': (_) => PageWithArguments(
-      onReady: (RouteSettings settings) {
-         final arguments = settings.arguments;
-         tabsProvider.setArguments(arguments);
-      },
-      builder: (_) => ProductPage(),
-    ),
-  },
-) 
 ```
 
 
@@ -111,7 +93,7 @@ class LoginPage extends PageWithArgumentsWidget {
   @override
   void onInit(RouteSettings settings) {
     /// you can use settings to get data passed as an argument
-    /// using Navigator.pushName(context,'rpute-name', arguments: data);
+    /// using Navigator.pushName(context,'route-name', arguments: data);
     loginProvider.setArguments(settings.arguments);
   }
 
