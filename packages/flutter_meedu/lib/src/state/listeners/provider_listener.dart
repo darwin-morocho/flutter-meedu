@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
+/// a typedef for a common callback
 typedef _ProviderListenerCallback<T> = void Function(
   BuildContext _,
   T notifier,
@@ -40,19 +41,31 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   _ProviderListenerState createState() => _ProviderListenerState<T>();
 }
 
-class _ProviderListenerState<T extends BaseNotifier>
-    extends State<ProviderListener<T>> {
+class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
+  /// the notifier attached to widget.provider
   late T _notifier;
+
   @override
   void initState() {
     super.initState();
 
+    /// read and save the provider
     _notifier = widget.provider.read;
+
+    /// check if the onChange callback is defined
     if (widget.onChange != null) {
+      // add a listener for the current notifier
       _notifier.addListener(_listener);
     }
-    if (widget.onInitState != null) widget.onInitState!(context, _notifier);
+
+    // check if the onInitState callback needs to be called
+    if (widget.onInitState != null) {
+      widget.onInitState!(context, _notifier);
+    }
+
+    // check if the onAfterFirstLayout callback needs to be called
     if (widget.onAfterFirstLayout != null) {
+      // wait after first frame
       WidgetsBinding.instance!.addPostFrameCallback((_) {
         if (mounted) {
           widget.onAfterFirstLayout!(context, _notifier);
@@ -61,11 +74,16 @@ class _ProviderListenerState<T extends BaseNotifier>
     }
   }
 
+  /// listen when the widget is disposed
+  /// and remove the listeners
   @override
   void dispose() {
     if (widget.onChange != null) {
       _notifier.removeListener(_listener);
     }
+
+    // check if the onDispose callback
+    // needs to be called
     if (widget.onDispose != null)
       widget.onDispose!(
         this.context,
@@ -74,6 +92,8 @@ class _ProviderListenerState<T extends BaseNotifier>
     super.dispose();
   }
 
+  /// listen when the widget is updated
+  /// due to the properties has changes or for hot reaload
   @override
   void didUpdateWidget(covariant ProviderListener<T> oldWidget) {
     if (oldWidget.onChange == null && widget.onChange != null) {
@@ -84,9 +104,13 @@ class _ProviderListenerState<T extends BaseNotifier>
     super.didUpdateWidget(oldWidget);
   }
 
+  /// listen all notify events of one notifier
+  /// and call to onChange callback
   void _listener(_) {
     if (widget.onChange != null) {
       WidgetsBinding.instance!.addPostFrameCallback((_) {
+        // before call onChange we need to check
+        // if the widget is mounted
         if (mounted) {
           widget.onChange!(context, _notifier);
         }

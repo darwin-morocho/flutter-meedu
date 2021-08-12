@@ -89,22 +89,31 @@ class _ConsumerState extends State<ConsumerWidget> {
 
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
   ///
-  /// [filter] optional parameter to avoid unnecessary rebuilds
+  /// [providerOrTarget] this param is required to decide when the Consumer
+  /// needs to be rebuilded, if [providerOrTarget] is a [SimpleProvider] or a
+  /// [StateProvider] the  widget will be rebuilded when the notify method is called
+  /// inside a SimpleNotifier or StateNotifier.
+  ///
+  /// If [providerOrTarget] is a value gotten from .select, .ids or .when
+  /// the  widget only will be rebuilded depending of the condition of each method.
   T _reader<T>(Provider<T> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    final target =
-        providerOrTarget is _Target ? providerOrTarget as _Target : null;
+    final target = providerOrTarget is _Target ? providerOrTarget as _Target : null;
 
     late T notifier;
+
     if (target != null) {
+      // If [providerOrTarget] is a value gotten from .select, .ids or .when
       notifier = target.notifier as T;
     } else {
+      // if [providerOrTarget] is a [SimpleProvider] or a [StateProvider]
       notifier = (providerOrTarget as BaseProvider<T>).read;
     }
+    
     final insideDependencies = _dependencies.containsKey(notifier);
 
     // if there is not a listener for the current provider
