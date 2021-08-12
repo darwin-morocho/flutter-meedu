@@ -13,7 +13,7 @@ An immutable state is an instance of one Class that overrides `==` and `hashCode
 ### With equatable
 Add equatable as a dependency in your `pubspec.yaml` file
 ```yaml
-equatable: last_version
+equatable: latest_version
 ```
 Now you can create a Class to manage your state
 ```dart
