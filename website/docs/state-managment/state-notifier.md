@@ -48,19 +48,19 @@ To use freezed you need [build_runner](https://pub.dev/packages/build_runner) an
 
 
 
-in your `pubspec.yaml` file (replace `last_version` with the lastest version of each dependency)
+in your `pubspec.yaml` file (replace `latest_version` with the latest version of each dependency)
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-  freezed_annotation: last_version
+  freezed_annotation: latest_version
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: last_version
-  freezed: last_version
+  build_runner: latest_version
+  freezed: latest_version
 ```
 
 If you have conflicts when you try to install freezed check the oficial
