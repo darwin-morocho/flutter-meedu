@@ -11,8 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   meedu: ^4.1.0
-  
   # meedu:
   #   path: ../meedu
 

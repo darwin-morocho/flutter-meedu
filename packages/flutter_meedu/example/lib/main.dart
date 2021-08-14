@@ -1,16 +1,20 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
+import 'package:flutter_meedu/url_strategy.dart';
 
 import 'my_app_with_navigator_2.dart';
 import 'navigator_1/routes/pages.dart';
 import 'navigator_1/routes/routes.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  router.setDefaultTransition(router.Transition.downToUp);
+  // router.setDefaultTransition(router.Transition.downToUp);
+  if (kIsWeb) {
+    setPathUrlStrategy();
+  }
   runApp(MyApp2());
 }
 
@@ -70,6 +74,3 @@ class AppThemeController extends SimpleNotifier {
     notify();
   }
 }
-
-
-

@@ -7,16 +7,30 @@ import '../../router.dart' as router;
 
 class MyRouterDelegate extends RouterDelegate<RouteData>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteData> {
+  /// all routes from this app using navigation 2.0
   final Map<String, Page<dynamic> Function(RouteData)> routes;
 
+  /// stores all [Page]'s and their [RouteData]
   List<PageContainer> _containers = [];
 
+  /// get the RouterState from a singleton
   RouterState get state => RouterState.i;
+
+  /// get the current [RouteData] into state
   RouteData get currentRoute => state.currentRoute;
 
+  /// check if the first route was rendered to avoid a
+  /// duplicated initial route
   bool _initialized = false;
 
+  /// A list of observers for the navigator created by [MyRouterDelegate]
+  ///
+  /// by default [MyRouterDelegate] always add the [router.observer] from flutter_meedu
   final List<NavigatorObserver> observers;
+
+  /// use this parameter to catch when a route
+  /// has been popped
+  bool Function(Route<dynamic>, dynamic)? onPopPage;
 
   MyRouterDelegate({
     required this.routes,
@@ -37,25 +51,34 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
         ...observers,
       ],
       onPopPage: (route, result) {
-        final popped = route.didPop(result);
-        if (popped) {
-          final copy = [..._containers];
+        late bool popped;
+        if (onPopPage != null) {
+          popped = onPopPage!(route, result);
+        } else {
+          popped = route.didPop(result);
+        }
 
-          final index = copy.indexWhere(
-            (e) => e.data.uri.path == currentRoute.uri.path,
-          );
-          print("index $index");
-          if (index != -1) {
-            copy.removeAt(index);
-            _containers = copy;
-            state.setState(_containers.last.data);
-            notifyListeners();
-            print("removed");
-          }
+        if (popped) {
+          _handlePopPage(route, result);
         }
         return popped;
       },
     );
+  }
+
+  void _handlePopPage(Route route, dynamic result) {
+    final copy = [..._containers];
+    final index = copy.indexWhere(
+      (e) => e.data.uri.path == currentRoute.uri.path,
+    );
+    print("index $index");
+    if (index != -1) {
+      copy.removeAt(index);
+      _containers = copy;
+      state.setState(_containers.last.data);
+      notifyListeners();
+      print("removed");
+    }
   }
 
   @override
@@ -71,11 +94,7 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   List<Page> get pages {
     if (_containers.isEmpty) {
       print("🔥");
-      if (!routes.containsKey('/')) {
-        throw AssertionError("/ default page not defined");
-      }
-      final routeData = _insertPageFromPath('/');
-      state.setState(routeData);
+      _setInitialRoute();
     }
     print("🥶 ${_containers.length}");
     return _containers.map((e) => e.page).toList();
@@ -87,21 +106,14 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   @override
   RouteData? get currentConfiguration => currentRoute;
 
-  RouteData _insertPageFromPath(String path) {
-    final uri = Uri.parse(path);
-    final routeData = RouteData(
-      uri: uri,
-      state: null,
-      parameters: {},
-    );
+  void _setInitialRoute() {
     _containers = [
       ..._containers,
       PageContainer(
-        routes[path]!(routeData),
-        routeData,
+        routes[currentRoute.uri.path]!(currentRoute),
+        currentRoute,
       ),
     ];
-    return routeData;
   }
 
   void _insertPageFromData(RouteData routeData) {
