@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meedu_example/pages/tabs_page/controller.dart';
-import 'package:meedu_example/pages/tabs_page/tabs/home/home_tab.dart';
 import 'package:flutter_meedu/router.dart' as router;
-import 'package:meedu_example/routes/routes.dart';
+import 'package:meedu_example/navigator_1/routes/routes.dart';
+
+import 'controller.dart';
+import 'tabs/home/home_tab.dart';
+
 
 class TabsPage extends StatefulWidget {
   @override

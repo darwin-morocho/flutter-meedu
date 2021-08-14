@@ -1,5 +1,5 @@
 import 'package:flutter_meedu/meedu.dart';
-import 'package:meedu_example/routes/routes.dart';
+import 'package:meedu_example/navigator_1/routes/routes.dart';
 
 class SplashController extends SimpleNotifier {
   SplashController() {

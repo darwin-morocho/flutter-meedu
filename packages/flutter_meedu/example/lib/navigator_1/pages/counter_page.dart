@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
-import 'package:meedu_example/controllers/counter_controller.dart';
+import 'package:meedu_example/my_app_with_navigator_2.dart';
+import 'package:meedu_example/navigator_1/controllers/counter_controller.dart';
 
 final counterProvider = SimpleProvider<CounterController>(
   (_) => CounterController(),
@@ -15,6 +16,15 @@ class CounterPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           icon: Icon(Icons.arrow_back_outlined),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // router2.push('/test');
+              router2.push('/test');
+            },
+            icon: Icon(Icons.emoji_emotions),
+          )
+        ],
       ),
       body: Center(
         child: Column(

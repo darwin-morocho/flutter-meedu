@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
-import 'package:meedu_example/controllers/login_controller.dart';
 import 'package:flutter_meedu/router.dart' as router;
-import 'package:meedu_example/routes/routes.dart';
+import 'package:meedu_example/navigator_1/controllers/login_controller.dart';
+import 'package:meedu_example/navigator_1/routes/routes.dart';
+
 
 final loginProvider = StateProvider<LoginController, LoginState>(
   (_) => LoginController(),

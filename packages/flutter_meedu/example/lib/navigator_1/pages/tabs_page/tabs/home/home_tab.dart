@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
-import 'package:meedu_example/pages/tabs_page/tabs/home/controller.dart';
+
+import 'controller.dart';
 
 class HomeTab extends StatefulWidget {
   @override

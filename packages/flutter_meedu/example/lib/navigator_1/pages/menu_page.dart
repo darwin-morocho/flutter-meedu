@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
-import 'package:meedu_example/routes/routes.dart';
+import 'package:meedu_example/navigator_1/pages/counter_page.dart';
+import 'package:meedu_example/navigator_1/routes/routes.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({Key? key}) : super(key: key);
@@ -12,11 +13,14 @@ class MenuPage extends StatelessWidget {
         children: [
           ListTile(
             title: Text("Counter"),
-            onTap: () => router.pushNamed(
-              Routes.COUNTER,
-              transition: router.Transition.upToDown,
-              backGestureEnabled: false,
-            ),
+            onTap: () {
+              // router.pushNamed(
+              //   Routes.COUNTER,
+              //   transition: router.Transition.upToDown,
+              //   backGestureEnabled: false,
+              // );
+              router.push(CounterPage());
+            },
           ),
           ListTile(
             title: Text("Login Form"),

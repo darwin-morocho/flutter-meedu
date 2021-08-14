@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/pages/counter_page.dart';
-import 'package:meedu_example/pages/login_page.dart';
-import 'package:meedu_example/pages/menu_page.dart';
 
-import 'routes/pages.dart';
-import 'routes/routes.dart';
+import 'my_app_with_navigator_2.dart';
+import 'navigator_1/routes/pages.dart';
+import 'navigator_1/routes/routes.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   router.setDefaultTransition(router.Transition.downToUp);
-  runApp(MyApp());
+  runApp(MyApp2());
 }
 
 class MyApp extends StatelessWidget {
@@ -71,3 +70,6 @@ class AppThemeController extends SimpleNotifier {
     notify();
   }
 }
+
+
+

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_meedu/meedu.dart';
-import 'package:meedu_example/pages/video/video_page_controller.dart';
 import 'package:video_player/video_player.dart';
 
-final videoPageProvider = SimpleProvider((_) => VideoPageController());
+import 'video_page_controller.dart';
+
+final videoPageProvider = SimpleProvider(
+  (_) => VideoPageController(),
+);
 
 class VideoPage extends StatelessWidget {
   const VideoPage({Key? key}) : super(key: key);

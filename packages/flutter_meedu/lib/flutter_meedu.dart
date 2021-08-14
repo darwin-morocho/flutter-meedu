@@ -6,3 +6,4 @@ export 'rx.dart';
 export 'state.dart';
 export 'screen_utils.dart';
 export 'page.dart';
+export 'router2.dart';

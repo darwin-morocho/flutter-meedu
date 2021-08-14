@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
 import 'package:meedu_example/main.dart';
-import 'package:meedu_example/pages/home/home_controller.dart';
-import 'package:meedu_example/pages/home/home_provider.dart';
 import 'package:flutter_meedu/router.dart' as router;
-import 'package:meedu_example/routes/routes.dart';
+import 'package:meedu_example/navigator_1/routes/routes.dart';
+import 'home_provider.dart';
 import 'home_state.dart';
  
 class HomePage extends StatelessWidget {

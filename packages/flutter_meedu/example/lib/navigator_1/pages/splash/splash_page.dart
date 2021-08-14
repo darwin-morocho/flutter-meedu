@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
-import 'package:meedu_example/pages/splash/splash_controller.dart';
-import 'package:meedu_example/pages/splash/splash_provider.dart';
 import 'package:flutter_meedu/router.dart' as router;
+
+import 'splash_controller.dart';
+import 'splash_provider.dart';
 
 class SplashPage extends StatelessWidget {
   @override

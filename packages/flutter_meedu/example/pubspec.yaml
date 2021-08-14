@@ -26,6 +26,7 @@ dependencies:
   equatable: ^2.0.0
   dio: ^4.0.0
   video_player: ^2.1.1
+  routemaster: ^0.9.5
   flutter_meedu:
     path: ../
     
