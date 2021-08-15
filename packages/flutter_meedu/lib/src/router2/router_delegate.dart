@@ -16,6 +16,8 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   /// all routes from this app using navigation 2.0
   final Map<String, PageBuilderCallback> routes;
 
+  /// callback to render a view when a page is not
+  /// registered into [routes]
   final PageBuilderCallback onNotFoundPage;
 
   /// stores all [Page]'s and their [RouteData]
@@ -115,6 +117,7 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
     }
   }
 
+  /// return all pages to be rendered in the Navigator
   List<Page> get pages {
     if (_history.isEmpty) {
       _setInitialRoute();
@@ -128,6 +131,8 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   @override
   RouteData? get currentConfiguration => currentRoute;
 
+  /// if the history is empty we use the current route data
+  /// as the first element in the history
   void _setInitialRoute() {
     _insertPageFromData(currentRoute);
   }
