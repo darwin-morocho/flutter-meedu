@@ -10,15 +10,54 @@ class MyApp2 extends StatelessWidget {
     return MaterialApp.router(
       routeInformationParser: RouteParser(),
       routerDelegate: MyRouterDelegate(
+        onNotFoundPage: (info) => MaterialPage(
+          child: Scaffold(
+            body: Center(
+              child: Text("page not found"),
+            ),
+          ),
+        ),
         routes: {
           '/': (info) => MaterialPage(
                 child: Scaffold(
                   body: Center(
-                    child: TextButton(
-                      child: Text("counter"),
-                      onPressed: () {
-                        router2.push('/counter');
-                      },
+                    child: Column(
+                      children: [
+                        Text(
+                          info.uri.queryParameters.toString(),
+                        ),
+                        TextButton(
+                          child: Text("counter"),
+                          onPressed: () {
+                            router2.push('/counter');
+                          },
+                        ),
+                        TextButton(
+                          child: Text("go to product"),
+                          onPressed: () {
+                            router2.push(
+                              '/user/Darwin Morocho/product/2',
+                              queryParameters: {
+                                'darkMode': 'true',
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+          '/user/:userId/product/:id': (info) => MaterialPage(
+                child: Scaffold(
+                  appBar: AppBar(),
+                  body: Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          info.parameters.toString(),
+                        ),
+                      ],
                     ),
                   ),
                 ),

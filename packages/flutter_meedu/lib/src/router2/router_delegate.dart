@@ -5,10 +5,14 @@ import 'route_data.dart';
 import 'router_state.dart';
 import '../../router.dart' as router;
 
+typedef PageBuilderCallback = Page<dynamic> Function(RouteData);
+
 class MyRouterDelegate extends RouterDelegate<RouteData>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteData> {
   /// all routes from this app using navigation 2.0
-  final Map<String, Page<dynamic> Function(RouteData)> routes;
+  final Map<String, PageBuilderCallback> routes;
+
+  final PageBuilderCallback onNotFoundPage;
 
   /// stores all [Page]'s and their [RouteData]
   List<PageContainer> _containers = [];
@@ -34,8 +38,12 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
 
   MyRouterDelegate({
     required this.routes,
+    required this.onNotFoundPage,
     this.observers = const [],
   }) {
+    state.setPaths(
+      routes.keys.toList(),
+    );
     state.addListener(() {
       setNewRoutePath(currentRoute);
     });
@@ -71,20 +79,19 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
     final index = copy.indexWhere(
       (e) => e.data.uri.path == currentRoute.uri.path,
     );
-    print("index $index");
+    // print("index $index");
     if (index != -1) {
       copy.removeAt(index);
       _containers = copy;
       state.setState(_containers.last.data);
       notifyListeners();
-      print("removed");
+      // print("removed");
     }
   }
 
   @override
   Future<void> setNewRoutePath(RouteData routeData) async {
     if (_initialized) {
-      print("setNewRoutePath ${routeData.uri.path}");
       _insertPageFromData(routeData);
       notifyListeners();
     }
@@ -93,10 +100,9 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
 
   List<Page> get pages {
     if (_containers.isEmpty) {
-      print("🔥");
       _setInitialRoute();
     }
-    print("🥶 ${_containers.length}");
+    // print("🥶 ${_containers.length}");
     return _containers.map((e) => e.page).toList();
   }
 
@@ -109,18 +115,31 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   void _setInitialRoute() {
     _containers = [
       ..._containers,
-      PageContainer(
-        routes[currentRoute.uri.path]!(currentRoute),
+      _getPageContainer(
         currentRoute,
       ),
     ];
   }
 
+  /// get the page countainer for a given route data
+  PageContainer _getPageContainer(RouteData routeData) {
+    if (routeData.key != null) {
+      return PageContainer(
+        routes[routeData.key]!(routeData),
+        routeData,
+      );
+    }
+
+    return PageContainer(
+      onNotFoundPage(routeData),
+      routeData,
+    );
+  }
+
   void _insertPageFromData(RouteData routeData) {
     _containers = [
       ..._containers,
-      PageContainer(
-        routes[routeData.uri.path]!(routeData),
+      _getPageContainer(
         routeData,
       ),
     ];

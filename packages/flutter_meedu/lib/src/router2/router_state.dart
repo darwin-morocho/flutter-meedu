@@ -1,41 +1,45 @@
 import 'package:flutter/widgets.dart' show ChangeNotifier;
 import 'package:flutter_meedu/flutter_meedu.dart';
 
+import 'path_parser.dart';
 import 'route_data.dart';
 
 class RouterState extends ChangeNotifier {
   RouterState._();
   static final RouterState i = RouterState._();
 
-  String _intialPath = '';
-  String get intialPath => _intialPath;
+  /// routes all paths (key) from [routes] property of [MyRouterDelegate]
+  List<String> _routerKeys = [];
+  List<String> get routerKeys => _routerKeys;
 
   late RouteData _currentRoute;
   RouteData get currentRoute => _currentRoute;
 
-  void setInitialPath(String location) {
-    if (_intialPath.isEmpty) {
-      _intialPath = location;
-    }
+  void setPaths(List<String> keys) {
+    _routerKeys = keys;
   }
 
   void push(
     String path, {
     Map<String, String> queryParameters = const {},
   }) {
-    if (currentRoute.uri.path != path) {
-      final tmpUri = Uri.parse(path);
+    final tmpUri = Uri.parse(path);
+    final uri = Uri(
+      path: getPathWithoutQuery(path),
+      queryParameters: {
+        ...tmpUri.queryParameters,
+        ...queryParameters,
+      },
+    );
 
+    /// check to avoid duplicated pages
+    if (uri.toString() != currentRoute.fullPath) {
+      final keyAndParameters = getRouteKeyAndParameters(uri);
       final routeData = RouteData(
-        uri: Uri(
-          path: getPathWithoutQuery(path),
-          queryParameters: {
-            ...tmpUri.queryParameters,
-            ...queryParameters,
-          },
-        ),
+        key: keyAndParameters?.routeKey,
+        uri: uri,
         state: null,
-        parameters: {},
+        parameters: keyAndParameters?.parameters ?? {},
       );
       _currentRoute = routeData;
       notifyListeners();
