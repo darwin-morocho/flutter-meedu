@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:meedu_example/my_app_with_navigator_2.dart';
 import 'package:meedu_example/navigator_1/controllers/counter_controller.dart';
+import 'package:routemaster/routemaster.dart';
 
 final counterProvider = SimpleProvider<CounterController>(
   (_) => CounterController(),
@@ -12,15 +13,12 @@ class CounterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_outlined),
-        ),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               // router2.push('/test');
-              router2.push('/test');
+              final result = await router2.push<DateTime>('/test');
+              print("result $result");
             },
             icon: Icon(Icons.emoji_emotions),
           )

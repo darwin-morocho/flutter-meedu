@@ -27,7 +27,6 @@ KeyWithParameters? getRouteKeyAndParameters(Uri uri) {
     }
 
     final segments = uri.pathSegments;
-    print("👀👀 key: $splitKey, path: ${segments}");
     // check if the current key has the same segmets
     // of uri.path
     if (splitKey.length == segments.length) {
@@ -47,9 +46,6 @@ KeyWithParameters? getRouteKeyAndParameters(Uri uri) {
           pathIdentifer += segment;
         }
       }
-
-      print("keyIdentifier:: $keyIdentifier");
-      print("pathIdentifer:: $pathIdentifer");
 
       /// if keyIdentifier and pathIdentifer are equals
       /// we found the routeKey for the current uri.path

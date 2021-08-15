@@ -9,13 +9,17 @@ typedef PageBuilderCallback = Page<dynamic> Function(RouteData);
 
 class MyRouterDelegate extends RouterDelegate<RouteData>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteData> {
+  /// The name of the first route to show when the current URL is '/'
+  static String _initialRoute = '/';
+  static String get initialRoute => _initialRoute;
+
   /// all routes from this app using navigation 2.0
   final Map<String, PageBuilderCallback> routes;
 
   final PageBuilderCallback onNotFoundPage;
 
   /// stores all [Page]'s and their [RouteData]
-  List<PageContainer> _containers = [];
+  List<PageContainer> _history = [];
 
   /// get the RouterState from a singleton
   RouterState get state => RouterState.i;
@@ -25,7 +29,7 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
 
   /// check if the first route was rendered to avoid a
   /// duplicated initial route
-  bool _initialized = false;
+  bool get _initialized => state.initialized;
 
   /// A list of observers for the navigator created by [MyRouterDelegate]
   ///
@@ -37,10 +41,12 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   bool Function(Route<dynamic>, dynamic)? onPopPage;
 
   MyRouterDelegate({
+    String initialRoute = '/',
     required this.routes,
     required this.onNotFoundPage,
     this.observers = const [],
   }) {
+    _initialRoute = initialRoute;
     state.setPaths(
       routes.keys.toList(),
     );
@@ -74,36 +80,46 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
     );
   }
 
+  /// search the popped route and delete it from history
   void _handlePopPage(Route route, dynamic result) {
-    final copy = [..._containers];
+    final copy = [..._history]; // create a copy from current history
+    // get the position of the popped route into history
     final index = copy.indexWhere(
-      (e) => e.data.uri.path == currentRoute.uri.path,
+      (e) => e.data.fullPath == currentRoute.fullPath,
     );
-    // print("index $index");
     if (index != -1) {
-      copy.removeAt(index);
-      _containers = copy;
-      state.setState(_containers.last.data);
-      notifyListeners();
-      // print("removed");
+      final removedContainer = copy.removeAt(index);
+      // use  the pop completer to return a result value
+      // after pop event
+      removedContainer.data.popCompleter.complete(result);
+
+      // update history and current route data with the last page in history
+      _history = copy;
+      state.setState(_history.last.data);
+      notifyListeners(); // this is need it to update the route URL in browsers
     }
   }
 
   @override
   Future<void> setNewRoutePath(RouteData routeData) async {
     if (_initialized) {
+      /// a push event has been called
+      /// and we need to update the history
       _insertPageFromData(routeData);
+
+      /// notify to rebuild the Navigator
       notifyListeners();
+    } else {
+      /// if the first route is rendering
+      state.initialize();
     }
-    _initialized = true;
   }
 
   List<Page> get pages {
-    if (_containers.isEmpty) {
+    if (_history.isEmpty) {
       _setInitialRoute();
     }
-    // print("🥶 ${_containers.length}");
-    return _containers.map((e) => e.page).toList();
+    return _history.map((e) => e.page).toList();
   }
 
   @override
@@ -113,15 +129,10 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   RouteData? get currentConfiguration => currentRoute;
 
   void _setInitialRoute() {
-    _containers = [
-      ..._containers,
-      _getPageContainer(
-        currentRoute,
-      ),
-    ];
+    _insertPageFromData(currentRoute);
   }
 
-  /// get the page countainer for a given route data
+  /// get the page container for a given route data
   PageContainer _getPageContainer(RouteData routeData) {
     if (routeData.key != null) {
       return PageContainer(
@@ -130,15 +141,19 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
       );
     }
 
+    /// if the passed route data doesn't match with
+    /// any key into [routes] not found page will be rendered
     return PageContainer(
       onNotFoundPage(routeData),
       routeData,
     );
   }
 
+  /// recive a [routeData] and create its [PageContainer] to
+  /// insert it in the history
   void _insertPageFromData(RouteData routeData) {
-    _containers = [
-      ..._containers,
+    _history = [
+      ..._history,
       _getPageContainer(
         routeData,
       ),
