@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router2.dart';
+import 'package:routemaster/routemaster.dart';
 
 class HomePage2 extends StatelessWidget {
   const HomePage2({
@@ -25,7 +26,8 @@ class HomePage2 extends StatelessWidget {
             TextButton(
               child: Text("go to product"),
               onPressed: () {
-                router2.push(
+                // Routemaster.of(context).replace('/counter');
+                router2.pushReplacement(
                   '/user/Darwin Morocho/product/2',
                   queryParameters: {
                     'darkMode': 'true',

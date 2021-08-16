@@ -21,7 +21,7 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   final PageBuilderCallback onNotFoundPage;
 
   /// stores all [Page]'s and their [RouteData]
-  List<PageContainer> _history = [];
+  List<PageContainer> get _history => state.history;
 
   /// get the RouterState from a singleton
   RouterState get state => RouterState.i;
@@ -55,6 +55,8 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
     state.addListener(() {
       setNewRoutePath(currentRoute);
     });
+    state.updateNavigator = notifyListeners;
+    state.isEnabled = true;
   }
 
   @override
@@ -67,39 +69,14 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
         ...observers,
       ],
       onPopPage: (route, result) {
-        late bool popped;
-        if (onPopPage != null) {
-          popped = onPopPage!(route, result);
-        } else {
-          popped = route.didPop(result);
-        }
-
+        final popped = route.didPop(result);
         if (popped) {
-          _handlePopPage(route, result);
+          state.handlePopPage(currentRoute, result);
+          notifyListeners(); // this is need it to update the route URL in browsers
         }
         return popped;
       },
     );
-  }
-
-  /// search the popped route and delete it from history
-  void _handlePopPage(Route route, dynamic result) {
-    final copy = [..._history]; // create a copy from current history
-    // get the position of the popped route into history
-    final index = copy.indexWhere(
-      (e) => e.data.fullPath == currentRoute.fullPath,
-    );
-    if (index != -1) {
-      final removedContainer = copy.removeAt(index);
-      // use  the pop completer to return a result value
-      // after pop event
-      removedContainer.data.popCompleter.complete(result);
-
-      // update history and current route data with the last page in history
-      _history = copy;
-      state.setState(_history.last.data);
-      notifyListeners(); // this is need it to update the route URL in browsers
-    }
   }
 
   @override
@@ -157,11 +134,13 @@ class MyRouterDelegate extends RouterDelegate<RouteData>
   /// recive a [routeData] and create its [PageContainer] to
   /// insert it in the history
   void _insertPageFromData(RouteData routeData) {
-    _history = [
+    final container = _getPageContainer(
+      routeData,
+    );
+
+    state.updateHistory([
       ..._history,
-      _getPageContainer(
-        routeData,
-      ),
-    ];
+      container,
+    ]);
   }
 }

@@ -16,7 +16,7 @@ class RouteParser extends RouteInformationParser<RouteData> {
     final initialRoute = MyRouterDelegate.initialRoute;
 
     /// check if the user defined an initial toute
-    if (!RouterState.i.initialized && initialRoute != path) {
+    if (!RouterState.i.initialized && path == '/' && initialRoute != path) {
       path = initialRoute;
     }
 

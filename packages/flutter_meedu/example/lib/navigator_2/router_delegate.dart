@@ -12,13 +12,15 @@ MyRouterDelegate get routerDelegate => MyRouterDelegate(
           ),
         ),
       ),
-      // initialRoute: '/counter',
-      initialRoute: '/counter',
       routes: {
         '/': (info) => MaterialPage(
+              key: ValueKey(info.fullPath),
+              name: info.fullPath,
               child: HomePage2(),
             ),
         '/user/:userId/product/:id': (info) => MaterialPage(
+              key: ValueKey(info.fullPath),
+              name: info.fullPath,
               child: Scaffold(
                 appBar: AppBar(),
                 body: Center(
@@ -33,15 +35,19 @@ MyRouterDelegate get routerDelegate => MyRouterDelegate(
               ),
             ),
         '/counter': (info) => MaterialPage(
+              key: ValueKey(info.fullPath),
+              name: info.fullPath,
               child: CounterPage(),
             ),
         '/test': (info) => MaterialPage(
+              key: ValueKey(info.fullPath),
+              name: info.fullPath,
               child: Scaffold(
                 appBar: AppBar(),
                 body: Builder(
                   builder: (context) => Center(
                     child: ElevatedButton(
-                      child: Text("Porp with result"),
+                      child: Text("Pop with result"),
                       onPressed: () {
                         Navigator.pop(
                           context,

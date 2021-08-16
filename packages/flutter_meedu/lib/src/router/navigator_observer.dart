@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:meedu/provider.dart';
+
+import '../router2/router_state.dart';
 
 /// the observer to listen the changes in the stack route
 NavigatorObserver get observer => _NavigatorObserver();
@@ -48,11 +52,21 @@ class _NavigatorObserver extends NavigatorObserver {
   }
 
   /// set the current route name
-  void _setCurrentRoute(Route? route) {
+  void _setCurrentRoute(
+    Route? route, {
+    bool checkAutoDispose = false,
+  }) {
     if (route is PageRoute && route.isCurrent) {
       BaseProvider.creatorName = this._getRouteName(route);
-      // wait to the popped animation transisiton
-      route.completed.then((_) => _checkAutoDispose(route));
+      if (checkAutoDispose) {
+        // wait to the popped animation transisiton
+        route.completed.then((_) => _checkAutoDispose(route));
+        if (RouterState.i.isEnabled) {
+          Timer(route.transitionDuration, () {
+            RouterState.i.onTransitionFinisehd(route);
+          });
+        }
+      }
     }
   }
 
@@ -60,26 +74,29 @@ class _NavigatorObserver extends NavigatorObserver {
   void didRemove(Route route, Route? previousRoute) {
     super.didRemove(route, previousRoute);
     _setCurrentRoute(previousRoute);
-    // _checkAutoDispose(route);
   }
 
   @override
   void didPop(Route route, Route? previousRoute) {
     super.didPop(route, previousRoute);
     _setCurrentRoute(previousRoute);
-    // _checkAutoDispose(route);
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
     super.didPush(route, previousRoute);
-    _setCurrentRoute(route);
+    _setCurrentRoute(
+      route,
+      checkAutoDispose: true,
+    );
   }
 
   @override
   void didReplace({Route? newRoute, Route? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
-    _setCurrentRoute(newRoute);
-    // _checkAutoDispose(oldRoute);
+    _setCurrentRoute(
+      newRoute,
+      checkAutoDispose: true,
+    );
   }
 }

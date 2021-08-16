@@ -16,6 +16,17 @@ class CounterPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
+              router2.pushReplacement(
+                '/user/Darwin Morocho/product/2',
+                queryParameters: {
+                  'darkMode': 'true',
+                },
+              );
+            },
+            icon: Icon(Icons.person),
+          ),
+          IconButton(
+            onPressed: () async {
               // router2.push('/test');
               final result = await router2.push<DateTime>('/test');
               print("result $result");
