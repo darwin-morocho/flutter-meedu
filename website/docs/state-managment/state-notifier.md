@@ -72,8 +72,8 @@ part 'login_state.freezed.dart';
 @freezed
 class LoginState with _$LoginState {
   const LoginState({
-    @Default('') String this.email,
-    @Default('') String this.password,
+    @Default('') String email,
+    @Default('') String password,
   }) = _LoginState;
 
   static LoginState get initialState => LoginState();
