@@ -58,14 +58,13 @@ class _NavigatorObserver extends NavigatorObserver {
   }) {
     if (route is PageRoute && route.isCurrent) {
       BaseProvider.creatorName = this._getRouteName(route);
+
+      if (RouterState.i.isEnabled) {
+        RouterState.i.setCurrentRoute(route);
+      }
       if (checkAutoDispose) {
         // wait to the popped animation transisiton
         route.completed.then((_) => _checkAutoDispose(route));
-        if (RouterState.i.isEnabled) {
-          Timer(route.transitionDuration, () {
-            RouterState.i.onTransitionFinisehd(route);
-          });
-        }
       }
     }
   }

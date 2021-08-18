@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart' show ChangeNotifier, PageRoute, Route;
+import 'package:flutter/widgets.dart' show ChangeNotifier, Route, WidgetsBinding;
 import '../../router.dart' as router;
 
 import 'page_container.dart';
@@ -20,12 +20,20 @@ class RouterState extends ChangeNotifier {
   List<PageContainer> _history = [];
   List<PageContainer> get history => _history;
 
-  late RouteData _currentRoute;
+  /// the initial route data for the first page in the navigator
+  RouteData? _initialRouteData;
+  RouteData? get initialRouteData => _initialRouteData;
 
-  late void Function() updateNavigator;
+  /// callback to notify to a MyRouterDelegate that it needs
+  /// to add a new page into the navigator
+  late void Function(RouteData routeData) onAddPage;
+
+  /// store the current route in the navigator
+  late Route _currentRoute;
+  Route get currentRoute => _currentRoute;
 
   /// returns the current route data
-  RouteData get currentRoute => _currentRoute;
+  RouteData get currentData => _history.last.data;
 
   /// is true when navigator 2.0 is using
   bool _isEnabled = false;
@@ -33,12 +41,8 @@ class RouterState extends ChangeNotifier {
   /// is true when navigator 2.0 is using
   bool get isEnabled => _isEnabled;
 
-  /// its  value will be true after first page is into history
-  bool _initialized = false;
-  bool get initialized => _initialized;
-
-  Completer? _transitionCompleter;
-
+  /// update the _isEnabled property to know
+  /// if the app is using navigator 2.0
   void set isEnabled(bool enabled) {
     _isEnabled = enabled;
   }
@@ -48,41 +52,35 @@ class RouterState extends ChangeNotifier {
     _routerKeys = keys;
   }
 
-  ///
-  void setState(RouteData routeData) {
-    _currentRoute = routeData;
+  /// the the initial route data for the first page that will
+  /// be rendered into navigator
+  void setInitialRouteData(RouteData routeData) {
+    _initialRouteData = routeData;
   }
 
-  ///
-  void initialize() {
-    _initialized = true;
-  }
-
-  void updateHistory(List<PageContainer> history) {
-    _history = history;
-  }
-
-  void onTransitionFinisehd(PageRoute route) {
-    _transitionCompleter?.complete();
-    _transitionCompleter = null;
+  /// save the current route in the navigator
+  void setCurrentRoute(Route route) {
+    _currentRoute = route;
   }
 
   /// search the popped route and delete it from history
-  void handlePopPage(RouteData routeData, dynamic result) {
-    final copy = [..._history]; // create a copy from current history
+  void handlePopPage(
+    RouteData routeData,
+    dynamic result, {
+    bool notify = true,
+  }) {
     // get the position of the popped route into history
-    final index = copy.indexWhere(
+    final index = _history.indexWhere(
       (e) => e.data.fullPath == routeData.fullPath,
     );
     if (index != -1) {
-      final removedContainer = copy.removeAt(index);
+      final removedContainer = _history.removeAt(index);
       // use  the pop completer to return a result value
       // after pop event
+      if (notify) {
+        notifyListeners(); // this is need it to update the route URL in browsers
+      }
       removedContainer.data.popCompleter.complete(result);
-
-      // update history and current route data with the last page in history
-      _history = copy;
-      _currentRoute = _history.last.data;
     }
   }
 
@@ -116,7 +114,7 @@ class RouterState extends ChangeNotifier {
     );
 
     /// check to avoid duplicated pages
-    if (uri.toString() != currentRoute.fullPath) {
+    if (uri.toString() != currentData.fullPath) {
       final keyAndParameters = getRouteKeyAndParameters(uri);
       final routeData = RouteData<T>(
         key: keyAndParameters?.routeKey,
@@ -125,29 +123,27 @@ class RouterState extends ChangeNotifier {
         parameters: parameters,
         pathParameters: keyAndParameters?.parameters ?? {},
       );
-      _currentRoute = routeData;
-      notifyListeners();
+      onAddPage(routeData);
       return routeData.popCompleter.future;
     }
   }
 
   /// Replace the current page of the history by pushing the given page and
-  /// then disposing the previous page once the new page has finished
-  /// animating in.
-  ///
-  ///
+  /// then disposing the previous page
   FutureOr<T?> pushReplacement<T extends Object?, TO extends Object?>(
     String path, {
     Map<String, String> queryParameters = const {},
     dynamic parameters,
     TO? result,
   }) {
-    final prevRoute = currentRoute;
-    _transitionCompleter = Completer();
-    _transitionCompleter?.future.then(
+    final prevRoute = currentData;
+    WidgetsBinding.instance!.addPostFrameCallback(
       (_) {
-        handlePopPage(prevRoute, result);
-        updateNavigator(); // this is need it to update the route URL in browsers
+        handlePopPage(
+          prevRoute,
+          result,
+          // notify: false,
+        );
       },
     );
     return push<T>(

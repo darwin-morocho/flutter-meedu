@@ -10,13 +10,16 @@ class RouteParser extends RouteInformationParser<RouteData> {
 
   @override
   Future<RouteData> parseRouteInformation(RouteInformation info) async {
+    print("parseRouteInformation");
     final location = info.location ?? '/';
     // extract the route path without query parameters
     String path = getPathWithoutQuery(location);
     final initialRoute = MyRouterDelegate.initialRoute;
 
+    final initialized = RouterState.i.initialRouteData != null;
+
     /// check if the user defined an initial toute
-    if (!RouterState.i.initialized && path == '/' && initialRoute != path) {
+    if (!initialized && path == '/' && initialRoute != path) {
       path = initialRoute;
     }
 
@@ -44,7 +47,9 @@ class RouteParser extends RouteInformationParser<RouteData> {
       parameters: null,
     );
 
-    RouterState.i.setState(routeData);
+    if (!initialized) {
+      RouterState.i.setInitialRouteData(routeData);
+    }
 
     return routeData;
   }

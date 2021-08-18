@@ -5,6 +5,12 @@ import 'package:meedu_example/navigator_1/pages/counter_page.dart';
 import 'pages/home_page_2.dart';
 
 MyRouterDelegate get routerDelegate => MyRouterDelegate(
+      onBackButton: (route, data) async {
+        return BackButtonResponse(
+          allowPop: false,
+          result: null,
+        );
+      },
       onNotFoundPage: (info) => MaterialPage(
         child: Scaffold(
           body: Center(

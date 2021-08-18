@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              router.pushNamed(
+              router.pushReplacementNamed(
                 Routes.TABS,
                 arguments: 1,
               );

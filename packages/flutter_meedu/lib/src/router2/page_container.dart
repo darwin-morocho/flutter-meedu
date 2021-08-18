@@ -5,4 +5,7 @@ class PageContainer {
   final Page page;
   final RouteData data;
   PageContainer(this.page, this.data);
+
+  /// returns data.fullPath
+  String get id => data.fullPath;
 }

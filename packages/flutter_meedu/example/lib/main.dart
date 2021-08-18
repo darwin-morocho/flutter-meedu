@@ -16,6 +16,7 @@ void main() {
     setPathUrlStrategy();
   }
   runApp(MyApp2());
+  // runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
