@@ -129,6 +129,7 @@ class __CounterPageState extends State<_CounterPage> {
       ),
       body: ProviderListener<CounterController>(
         provider: _counterProvider,
+        onInitState: (_, __) {},
         onChange: enabled
             ? (_, controller) {
                 widget.onCounterChanged(controller.counter);
