@@ -1,3 +1,5 @@
+## [4.2.1]
+- Added **result** parameter on `pushReplacementNamed`.
 ## [4.2.0]
 - Added custom transitions for named routes.
 - Updated docs.

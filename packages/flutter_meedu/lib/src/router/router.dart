@@ -106,7 +106,7 @@ Future<T?> push<T>(
 /// [transitionDuration] will be [Duration.zero] when [transition] is equals to [Transition.none]
 ///
 /// [backGestureEnabled] ignored when [transition] is [Transition.material] or [Transition.cupertino]
-Future<T?> pushReplacement<T>(
+Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
   Widget page, {
   Object? arguments,
   bool maintainState = true,
@@ -114,9 +114,10 @@ Future<T?> pushReplacement<T>(
   Transition? transition,
   Duration transitionDuration = const Duration(milliseconds: 300),
   bool backGestureEnabled = false,
+  TO? result,
 }) {
   _validateRouterState();
-  return _state!.pushReplacement(
+  return _state!.pushReplacement<T, TO>(
     getRoute(
       page,
       arguments: arguments,
@@ -126,6 +127,7 @@ Future<T?> pushReplacement<T>(
       transitionDuration: transitionDuration,
       backGestureEnabled: backGestureEnabled,
     ),
+    result: result,
   );
 }
 
@@ -316,7 +318,7 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
     return null;
   }
   final _transitionDuration = transitionDuration ?? MeeduNavigator.i.transitionDuration;
-  
+
   // create a custom route with a custom transition
   return MeeduPageRoute<T>(
     routeName: routeName,
