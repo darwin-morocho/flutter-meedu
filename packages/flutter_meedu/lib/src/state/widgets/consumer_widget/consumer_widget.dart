@@ -102,7 +102,8 @@ class _ConsumerState extends State<ConsumerWidget> {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    final target = providerOrTarget is _Target ? providerOrTarget as _Target : null;
+    final target =
+        providerOrTarget is _Target ? providerOrTarget as _Target : null;
 
     late T notifier;
 
@@ -113,7 +114,7 @@ class _ConsumerState extends State<ConsumerWidget> {
       // if [providerOrTarget] is a [SimpleProvider] or a [StateProvider]
       notifier = (providerOrTarget as BaseProvider<T>).read;
     }
-    
+
     final insideDependencies = _dependencies.containsKey(notifier);
 
     // if there is not a listener for the current provider

@@ -314,10 +314,12 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
   }
 
   final _transition = transition ?? MeeduNavigator.i.transition;
-  if (_transition == Transition.material || _transition == Transition.cupertino) {
+  if (_transition == Transition.material ||
+      _transition == Transition.cupertino) {
     return null;
   }
-  final _transitionDuration = transitionDuration ?? MeeduNavigator.i.transitionDuration;
+  final _transitionDuration =
+      transitionDuration ?? MeeduNavigator.i.transitionDuration;
 
   // create a custom route with a custom transition
   return MeeduPageRoute<T>(
@@ -327,7 +329,8 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
       arguments: arguments,
     ),
     maintainState: true,
-    transitionDuration: _transition == Transition.none ? Duration.zero : _transitionDuration,
+    transitionDuration:
+        _transition == Transition.none ? Duration.zero : _transitionDuration,
     fullscreenDialog: false,
     transition: _transition,
     backGestureEnabled: backGestureEnabled,
