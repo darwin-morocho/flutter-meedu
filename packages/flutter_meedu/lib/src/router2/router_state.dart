@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart' show ChangeNotifier, Route, WidgetsBinding;
+import 'package:flutter/widgets.dart' show ChangeNotifier, Route;
+import 'web/export.dart';
 import '../../router.dart' as router;
 
 import 'page_container.dart';
@@ -12,13 +13,18 @@ class RouterState extends ChangeNotifier {
   RouterState._();
   static final RouterState i = RouterState._();
 
+  final _web = WebUtils();
+
   /// routes all paths (key) from [routes] property of [MyRouterDelegate]
   List<String> _routerKeys = [];
   List<String> get routerKeys => _routerKeys;
 
   /// stores all [Page]'s and their [RouteData]
-  List<PageContainer> _history = [];
-  List<PageContainer> get history => _history;
+  List<PageContainer> _pages = [];
+  List<PageContainer> get pages => _pages;
+
+  List<String> _history = [];
+  List<String> get history => _history;
 
   /// the initial route data for the first page in the navigator
   RouteData? _initialRouteData;
@@ -33,10 +39,12 @@ class RouterState extends ChangeNotifier {
   Route get currentRoute => _currentRoute;
 
   /// returns the current route data
-  RouteData get currentData => _history.last.data;
+  RouteData? get currentData => _pages.isNotEmpty ? _pages.last.data : null;
 
   /// is true when navigator 2.0 is using
   bool _isEnabled = false;
+
+  bool isReplacement = false;
 
   /// is true when navigator 2.0 is using
   bool get isEnabled => _isEnabled;
@@ -70,11 +78,12 @@ class RouterState extends ChangeNotifier {
     bool notify = true,
   }) {
     // get the position of the popped route into history
-    final index = _history.indexWhere(
-      (e) => e.data.fullPath == routeData.fullPath,
+    final index = _pages.indexWhere(
+      (e) => e.data.id == routeData.id,
     );
     if (index != -1) {
-      final removedContainer = _history.removeAt(index);
+      final removedContainer = _pages.removeAt(index);
+      _history.add(removedContainer.data.id);
       // use  the pop completer to return a result value
       // after pop event
       if (notify) {
@@ -99,6 +108,7 @@ class RouterState extends ChangeNotifier {
     String path, {
     Map<String, String> queryParameters = const {},
     dynamic parameters,
+    bool isReplacement = false,
   }) {
     /// create a tmp uri to get some query parameters
     /// from [path]
@@ -114,16 +124,22 @@ class RouterState extends ChangeNotifier {
     );
 
     /// check to avoid duplicated pages
-    if (uri.toString() != currentData.fullPath) {
+    if (uri.toString() != currentData?.fullPath) {
       final keyAndParameters = getRouteKeyAndParameters(uri);
       final routeData = RouteData<T>(
-        key: keyAndParameters?.routeKey,
+        requestSource: RequestSource.system,
+        routeKey: keyAndParameters?.routeKey,
         uri: uri,
-        state: null,
+        state: RouteState(isReplacement: isReplacement),
         parameters: parameters,
         pathParameters: keyAndParameters?.parameters ?? {},
       );
+      if (isReplacement && kIsWeb) {
+        this.isReplacement = true;
+        _web.replaceState(null, 'el exito', routeData.fullPath);
+      }
       onAddPage(routeData);
+
       return routeData.popCompleter.future;
     }
   }
@@ -136,20 +152,17 @@ class RouterState extends ChangeNotifier {
     dynamic parameters,
     TO? result,
   }) {
-    final prevRoute = currentData;
-    WidgetsBinding.instance!.addPostFrameCallback(
-      (_) {
-        handlePopPage(
-          prevRoute,
-          result,
-          // notify: false,
-        );
-      },
+    final popedRouteData = _pages.removeLast().data;
+    popedRouteData.popCompleter.complete(
+      result,
     );
+    _history.add(popedRouteData.fullPath);
+
     return push<T>(
       path,
       queryParameters: queryParameters,
       parameters: parameters,
+      isReplacement: true,
     );
   }
 

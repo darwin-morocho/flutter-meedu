@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' show RouteInformation, RouteInformationParser;
 
 import 'path_parser.dart';
@@ -9,8 +10,7 @@ class RouteParser extends RouteInformationParser<RouteData> {
   const RouteParser();
 
   @override
-  Future<RouteData> parseRouteInformation(RouteInformation info) async {
-    print("parseRouteInformation");
+  SynchronousFuture<RouteData> parseRouteInformation(RouteInformation info) {
     final location = info.location ?? '/';
     // extract the route path without query parameters
     String path = getPathWithoutQuery(location);
@@ -40,31 +40,35 @@ class RouteParser extends RouteInformationParser<RouteData> {
     final keyAndParameters = getRouteKeyAndParameters(uri);
 
     final routeData = RouteData(
-      key: keyAndParameters?.routeKey,
+      routeKey: keyAndParameters?.routeKey,
       uri: uri,
       pathParameters: keyAndParameters?.parameters ?? {},
-      state: info.state,
+      state: RouteState.fromJSon(
+        info.state,
+      ),
       parameters: null,
+      requestSource: RequestSource.system,
     );
 
     if (!initialized) {
       RouterState.i.setInitialRouteData(routeData);
     }
 
-    return routeData;
+    return SynchronousFuture(routeData);
   }
 
   @override
   RouteInformation? restoreRouteInformation(RouteData configuration) {
-    String location = configuration.fullPath;
-    // removes '?' if the given location doesn't have a query
-    final withoutQueryParameters = configuration.uri.queryParameters.isEmpty;
-    if (withoutQueryParameters && location.contains("?")) {
-      location = location.replaceFirst("?", "");
+    if (RouterState.i.isReplacement) {
+      RouterState.i.isReplacement = false;
+      return null;
     }
+    String location = configuration.fullPath;
+    print("🔥");
+
     return RouteInformation(
       location: location,
-      state: configuration.state,
+      state: configuration.state?.toJson(),
     );
   }
 }

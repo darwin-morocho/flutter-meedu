@@ -11,16 +11,6 @@ class MyApp2 extends StatelessWidget {
 
   final _delegate = routerDelegate;
 
-  final routes = RouteMap(
-    routes: {
-      '/': (_) => MaterialPage(
-            child: HomePage2(),
-          ),
-      '/counter': (_) => MaterialPage(
-            child: CounterPage(),
-          ),
-    },
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +19,8 @@ class MyApp2 extends StatelessWidget {
     //   routerDelegate: RoutemasterDelegate(
     //     routesBuilder: (context) => routes,
     //   ),
-    // ); 
+    // );
+
     return MaterialApp.router(
       routeInformationParser: const RouteParser(),
       routerDelegate: _delegate,
