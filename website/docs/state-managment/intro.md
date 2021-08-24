@@ -40,5 +40,5 @@ class MyApp extends StatelessWidget {
 
 
 :::info With Navigator 2.0
-If you are using navigator 2.0 or any package to navigate using navigator 2.0 to enable the auto dispose feature make sure that you must add the meedu observer (`router.observer`) in your delegate or in your Navigator widget.
+If you are using navigator 2.0 or any package to navigate using navigator 2.0 to enable the auto dispose feature you must add the meedu observer (`router.observer`) inside the navigatorObservers of your delegate or your Navigator widget.
 :::
