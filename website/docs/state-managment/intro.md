@@ -2,7 +2,9 @@
 sidebar_position: 2
 ---
 
-# How it works?
+# Configuration
+
+## How it works?
 
 You have to ways to manage the state of your widgets or pages:
 - Using a  `SimpleNotifier` similiar to `ChangeNotifier` for a simple state.
@@ -35,3 +37,8 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
+
+:::info With Navigator 2.0
+If you are using navigator 2.0 or any package to navigate using navigator 2.0 to enable the auto dispose feature make sure that you must add the meedu observer (`router.observer`) in your delegate or in your Navigator widget.
+:::

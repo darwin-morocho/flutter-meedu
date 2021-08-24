@@ -1,4 +1,9 @@
 # Navigation
+:::note
+**flutter_meedu** uses **navigator 1.0** in its router module and there is not planned add **navigator 2.0** as a new router module because there is not an easy way to create a router package with navigator 2.0 that fits all posible navigation flows that a developer might want to create.
+
+In that case you can use any other package on [pub.dev](https://pub.dev) to manage your navigation with navigation 2.0 and use flutter_meedu to manage your state without any problem just be sure to add the flutter_meedu observer in your `navigatorObservers`.
+:::
 
 To navigate between page without a BuildContext you can use the meedu's router module.
 
@@ -130,6 +135,9 @@ enum Transition {
 }
 ```
 :::
+
+
+
 
 ## Testing
 
