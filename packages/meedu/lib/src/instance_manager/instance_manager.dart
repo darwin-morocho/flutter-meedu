@@ -1,5 +1,5 @@
-typedef _LazyBuilderCallback<T> = T Function();
-typedef _FactoryBuilderCallback<T, A> = T Function(A? arguments);
+import '../providers/base_provider.dart';
+part 'injectable.dart';
 
 /// Singleton to save dependencies
 class Get {
@@ -14,7 +14,8 @@ class Get {
   }
 
   /// used to save singletons using put or lazyPut
-  final Map<String, dynamic> _vars = {};
+  final Map<String, Singleton> _vars = {};
+  Map<String, Singleton> get dependencies => _vars;
 
   /// Holds a reference to every registered callback when using
   /// [Get.i.lazyPut()]
@@ -35,9 +36,24 @@ class Get {
   }
 
   /// Insert an Instance into the hashmap
-  void put<T>(T value, {String? tag}) {
+  ///
+  /// [autoRemove] set this value to true when you  want to remove
+  /// this dependency when the route who creates this dependency
+  /// is popped
+  ///
+  /// [onRemove] callback to be called when this dependency is removed
+  void put<T>(
+    T value, {
+    String? tag,
+    bool autoRemove = false,
+    _RemoveCallback<T>? onRemove,
+  }) {
     final key = _getKey(T, tag);
-    _vars[key] = value;
+    _vars[key] = Singleton<T>(
+      value,
+      autoRemove: autoRemove,
+      onRemove: onRemove,
+    );
   }
 
   /// Search and return one instance T from the hashmap
@@ -46,13 +62,19 @@ class Get {
     // check if the dependency was already injected
     final inVars = _vars.containsKey(key);
     if (inVars) {
-      return _vars[key];
+      return _vars[key]!.dependency as T;
     }
     // if the dependency is a lazy
     final inLazyVars = _lazyVars.containsKey(key);
     if (inLazyVars) {
-      final dependency = _lazyVars[key]!.builder();
-      _vars[key] = dependency;
+      final lazy = _lazyVars[key]!;
+      final dependency = lazy.builder();
+
+      _vars[key] = Singleton<T>(
+        dependency,
+        autoRemove: lazy.autoRemove,
+        onRemove: lazy.onRemove,
+      );
       return dependency;
     }
 
@@ -78,7 +100,13 @@ class Get {
   /// removes an instance from the hasmap
   T? remove<T>({String? tag}) {
     final key = _getKey(T, tag);
-    _vars.remove(key) as T?;
+    final _singleton = _vars.remove(key) as Singleton<T>?;
+    if (_singleton?.onRemove != null) {
+      _singleton!.onRemove!(
+        _singleton.dependency,
+      );
+    }
+    return _singleton?.dependency;
   }
 
   /// removes an instance from the lazy hasmap
@@ -94,18 +122,42 @@ class Get {
   }
 
   /// Creates a new Instance<S> lazily from the [<S>builder()] callback.
+  ///
+  /// [autoRemove] set this value to true when you  want to remove
+  /// this dependency when the route who creates this dependency
+  /// is popped
+  ///
+  /// [onRemove] callback to be called when this dependency is removed
   void lazyPut<T>(
     _LazyBuilderCallback<T> builder, {
     String? tag,
+    bool autoRemove = false,
+    _RemoveCallback<T>? onRemove,
   }) {
     final key = _getKey(T, tag);
-    _lazyVars.putIfAbsent(key, () => _Lazy(builder));
+    _lazyVars.putIfAbsent(
+      key,
+      () => _Lazy<T>(
+        builder,
+        autoRemove: autoRemove,
+        onRemove: onRemove,
+      ),
+    );
   }
 
   /// Creates a new Instance<S> from the [<S>builder()] callback.
+  ///
+  /// [autoRemove] set this value to true when you  want to remove
+  /// this dependency when the route who creates this dependency
+  /// is popped
+  ///
+  /// [onRemove] callback to be called when this dependency is removed
   void factoryPut<T, A>(_FactoryBuilderCallback<T, A> builder) {
     final key = _getKey(T, null);
-    _factoryVars.putIfAbsent(key, () => _Factory<T, A>(builder));
+    _factoryVars.putIfAbsent(
+      key,
+      () => _Factory<T, A>(builder),
+    );
   }
 
   /// delete all dependencies
@@ -114,14 +166,4 @@ class Get {
     _vars.clear();
     _lazyVars.clear();
   }
-}
-
-class _Lazy {
-  _LazyBuilderCallback builder;
-  _Lazy(this.builder);
-}
-
-class _Factory<T, A> {
-  _FactoryBuilderCallback<T, A> builder;
-  _Factory(this.builder);
 }

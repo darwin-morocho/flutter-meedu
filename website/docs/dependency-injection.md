@@ -24,6 +24,26 @@ Get.i.remove<AuthRepository>();
 Get.i.lazyPut<AuthRepository>(()=>new AuthRepositoryImpl());
 ```
 
+## Auto remove
+First make sure that you have added the meedu observer in your navigator observers [more info](/docs/4.x.x/state-managment/intro#how-it-works).
+
+Now when tou call to `Get.i.put` or `Get.i.lazyPut` you can use the `autoRemove` parameter and set the value to `true` then when the router who created the dependency
+is popped the dependency will be deleted from memory.
+
+## Listen when a singleton was removed
+You can use the `onRemove` to define a callback to listen when a dependency will be deleted from memory, so when you call to `Get.i.remove` or when you called to `Get.i.put` or `Get.i.lazyPut` using `autoRemove` equals to `true` the onRemove callback will be called.
+
+```dart
+Get.i.lazyPut<AuthRepository>(
+  () => new AuthRepositoryImpl(),
+  onRemove: (authRepository) {
+      /// YOUR CODE HERE
+    authRepository.dispose();
+  }
+);
+```
+
+
 ## Factory
 
 If you want to get a new instance every time you call find in that case you could use `factoryPut`

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:meedu/get.dart';
 import 'package:test/test.dart';
 
@@ -111,6 +113,27 @@ void main() {
       expect(p2.name, '');
       expect(p1.hashCode != p2.hashCode, true);
     });
+
+    test(
+      'test onRemove',
+      () async {
+        Person? p;
+        final completer = Completer();
+        Get.i.put<Person>(
+          Person('darwin'),
+          onRemove: (person) {
+            p = person;
+            completer.complete();
+          },
+        );
+        expect(Get.i.dependencies.isNotEmpty, true);
+        Get.i.remove<Person>();
+        await completer.future;
+        expect(p != null, true);
+      },
+    );
+
+
   });
 }
 

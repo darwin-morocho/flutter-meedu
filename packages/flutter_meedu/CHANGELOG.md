@@ -1,3 +1,5 @@
+## [4.3.0]
+- Added `autoRemove` and `onRemove` in dependency injection.
 ## [4.2.1]
 - Added **result** parameter in `pushReplacementNamed`.
 ## [4.2.0]

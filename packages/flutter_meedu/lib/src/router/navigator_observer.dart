@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_meedu/meedu.dart';
+import 'package:meedu/get.dart';
 import 'package:meedu/provider.dart';
 
 /// the observer to listen the changes in the stack route
@@ -14,15 +16,17 @@ class _NavigatorObserver extends NavigatorObserver {
   /// check if the popped routes has notifier attached to it and dispose
   /// the notifiers and delete its from the ProviderScope
   void _checkAutoDispose(Route? route) async {
-    if (route is PageRoute && ProviderScope.initialized) {
+    if (route is PageRoute) {
       final routeName = this._getRouteName(route);
 
       /// if we have notifiers into the ProviderScope
-      if (ProviderScope.instance.containers.isNotEmpty) {
+      if (ProviderScope.initialized &&
+          ProviderScope.instance.containers.isNotEmpty) {
         /// get all notifiers attached to the current route
         final containers = ProviderScope.instance.containers.values.where(
           (e) => e.routeName == routeName,
         );
+
         List<int> keysToRemove = []; // save the notifier's keys to be disposed
 
         // if the popped route has notifiers
@@ -44,6 +48,17 @@ class _NavigatorObserver extends NavigatorObserver {
           }
         }
       }
+
+      /// get all dependencies injected using put or lazyPut
+      Get.i.dependencies.removeWhere((key, value) {
+        final remove = value.creatorName == routeName && value.autoRemove;
+        final dependency = value.dependency;
+        final dynamicValue = value as dynamic;
+        if (remove && dynamicValue.onRemove != null) {
+          dynamicValue.onRemove(dependency);
+        }
+        return remove;
+      });
     }
   }
 
