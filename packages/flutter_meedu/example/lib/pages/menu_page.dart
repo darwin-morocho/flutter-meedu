@@ -33,6 +33,10 @@ class MenuPage extends StatelessWidget {
           ListTile(
             title: Text("State Tag Example"),
             onTap: () => router.pushNamed(Routes.STATE_TAG),
+          ),
+          ListTile(
+            title: Text("MultiProvider Example"),
+            onTap: () => router.pushNamed(Routes.MULTI_PROVIDER),
           )
         ],
       ),

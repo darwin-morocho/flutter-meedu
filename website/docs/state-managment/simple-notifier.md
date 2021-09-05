@@ -159,6 +159,48 @@ You could use the `ProviderListener` Widget to listen the changes in our `Counte
     )
 ```
 
+
+:::note
+if you want to listen multiples providers at the same time you can use
+the `MultiProviderListener` widget.
+```dart
+
+final conterProvider = SimpleProvider(
+  (_) => CounterController(),
+);
+
+final loginProvider = StateProvider<LoginController, LoginState>(
+  (_) => LoginController(),
+);
+
+class MultiProviderPage extends StatelessWidget {
+  const MultiProviderPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProviderListener(
+      items: [
+        MultiProviderListenerItem<CounterController>(
+          provider: conterProvider,
+          onChange: (_, controller) {
+              /// ADD YOUR CODE HERE
+          },
+        ),
+        MultiProviderListenerItem<LoginController>(
+          provider: loginProvider,
+          onChange: (_, controller) {
+             /// ADD YOUR CODE HERE
+          },
+        ),
+      ],
+      child: YOUR_WIDGET,
+    );
+  }
+}
+
+```
+:::
+
 Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
 ```dart {1,5-7,12}
   StreamSubscription? _subscription;

@@ -1,3 +1,5 @@
+## [4.4.0]
+- Added `MultiProviderListener` widget.
 ## [4.3.0]
 - Added `autoRemove` and `onRemove` in dependency injection.
 ## [4.2.1]

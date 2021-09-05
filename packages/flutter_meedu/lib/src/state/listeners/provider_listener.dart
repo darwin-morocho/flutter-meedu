@@ -22,6 +22,10 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
 
   /// callback when initState is called
   final _ProviderListenerCallback<T>? onInitState;
+
+  /// this callback will be called when the first frame was rendered
+  /// use this callback if you want to show a dialog, snackbar or navigate
+  /// after the first frame
   final _ProviderListenerCallback<T>? onAfterFirstLayout;
 
   /// callback when dispose is called

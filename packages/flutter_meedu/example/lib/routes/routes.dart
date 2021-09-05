@@ -9,4 +9,5 @@ abstract class Routes {
   static const SIMPLE_TAG = '/simple-tag';
   static const STATE_TAG = '/state-tag';
   static const RX = '/rx';
+  static const MULTI_PROVIDER = '/multi-provider';
 }

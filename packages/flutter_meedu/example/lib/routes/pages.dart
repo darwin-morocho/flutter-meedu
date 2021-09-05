@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:meedu_example/pages/home/home_page.dart';
 import 'package:meedu_example/pages/menu_page.dart';
+import 'package:meedu_example/pages/multi_provider/multi_provider_page.dart';
 import 'package:meedu_example/pages/rx_page.dart';
 import 'package:meedu_example/pages/simple_tag/simple_tag_page.dart';
 import 'package:meedu_example/pages/splash/splash_page.dart';
@@ -35,5 +36,6 @@ abstract class Pages {
     Routes.SIMPLE_TAG: (_) => SimpleTagPage(),
     Routes.STATE_TAG: (_) => StateTagPage(),
     Routes.COUNTER: (_) => CounterPage(),
+    Routes.MULTI_PROVIDER: (_) => MultiProviderPage(),
   };
 }
