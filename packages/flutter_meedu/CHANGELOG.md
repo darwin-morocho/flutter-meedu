@@ -1,3 +1,5 @@
+## [4.4.1]
+Fixed multiples builds during custom page transitions.
 ## [4.4.0]
 - Added `MultiProviderListener` widget.
 ## [4.3.0]
