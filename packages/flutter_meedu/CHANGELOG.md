@@ -40,7 +40,7 @@ with this to listen the changes you need to use `ref.watch`
     return Text("${controller.counter}");
  })
 ```
-or if you want to direct access to the value returned by ` counterProvider.select((_) => _.counter)` you can use `ref.select`
+or if you want direct access to the value returned by ` counterProvider.select((_) => _.counter)` you can use `ref.select`
 ```dart
  Consumer(builder: (_, ref, __) {
      final int counter = ref.select(
