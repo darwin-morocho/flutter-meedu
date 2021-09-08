@@ -1,5 +1,4 @@
 ## [5.0.0]
-- Fixed multiples builds during custom page transitions.
 - **BREAKING CHANGE:** Removed `ScopedReader` and replaced by `BuilderRef`.
 
 **Before:**
