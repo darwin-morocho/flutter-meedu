@@ -1,0 +1,66 @@
+{
+  "version-4.x.x/mySidebar": [
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Getting Started",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x.x/intro"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "State Managment",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/intro"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/simple-notifier"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/state-notifier"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/working-with-arguments"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/working-with-tags"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/listen-when-a-provider-dispose-a-notifier"
+        },
+        {
+          "type": "doc",
+          "id": "version-4.x.x/state-managment/testing"
+        }
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "version-4.x.x/dependency-injection"
+    },
+    {
+      "type": "doc",
+      "id": "version-4.x.x/reactive-programming"
+    },
+    {
+      "type": "doc",
+      "id": "version-4.x.x/navigation"
+    },
+    {
+      "type": "doc",
+      "id": "version-4.x.x/screen-utils"
+    }
+  ]
+}

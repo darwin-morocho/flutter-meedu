@@ -161,8 +161,8 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Consumer(
-                builder: (_, ref, __) {
-                  final controller = ref.watch(loginProvider);
+                builder: (_, watch, __) {
+                  final controller = watch(loginProvider);
                   final state = controller.state;
 
                   final email = state.email;
@@ -189,18 +189,16 @@ class LoginPage extends StatelessWidget {
 }
 ```
 
-Also you can use the `select` method of your provider to only rebuild your `Consumer` when is need it.
+Also you can use the `select` method to only rebuild your `Consumer` when is need it.
 
 For example the next code only rebuilds the Consumer widget when the `email` in our `LoginState` has changed.
 
-here we use `ref.select` to direct access to the value returned by `loginProvider.select` but if you want get the notifier linked to `loginProvider` you can use `ref.watch` with `loginProvider.select`
-
 ```dart {4}
 Consumer(
-  builder: (_, ref, __) {
-    final email = ref.select(
+  builder: (_, watch, __) {
+    final email = watch(
       loginProvider.select((_)=>_.email),
-    );
+    ).state.email;
     return Text(email);
   },
 )
@@ -210,23 +208,11 @@ Consumer(
 Also you can use the `when` method for a more complex condition.
 ```dart {4}
 Consumer(
-  builder: (_, ref, __) {
-    final email = ref.watch(
+  builder: (_, watch, __) {
+    final email = watch(
       loginProvider.when((prev, current) => prev.email != current.email),
     ).state.email;
     return Text(email);
-  },
-)
-```
-
-also you can use `ref.select` to access to the value returned by `loginProvider.when`
-```dart {4}
-Consumer(
-  builder: (_, ref, __) {
-    final bool emailHasChanged = ref.select(
-      loginProvider.when((prev, current) => prev.email != current.email),
-    );
-    return Text(email.toString());
   },
 )
 ```
