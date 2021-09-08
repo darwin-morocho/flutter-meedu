@@ -32,8 +32,8 @@ class ExamplePage extends StatelessWidget {
         ),
         body: SafeArea(
           child: Consumer(
-            builder: (_, watch, child) {
-              final dateAsString = watch(providerExample).dateAsString;
+            builder: (_, ref, child) {
+              final dateAsString = ref.watch(providerExample).dateAsString;
               return Column(
                 children: [
                   child!,

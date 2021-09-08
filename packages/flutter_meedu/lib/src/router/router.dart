@@ -334,5 +334,5 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
     fullscreenDialog: false,
     transition: _transition,
     backGestureEnabled: backGestureEnabled,
-  );
+  )..build();
 }

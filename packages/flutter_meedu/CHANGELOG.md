@@ -1,3 +1,63 @@
+## [5.0.0]
+- Fixed multiples builds during custom page transitions.
+- **BREAKING CHANGE:** Removed `ScopedReader` and replaced by `BuilderRef`.
+
+**Before:**
+the watch function allways return the notifier linked to the 
+provider passed as parameter to the watch function.
+
+```dart
+ Consumer(builder: (_, watch, __) {
+     final controller = watch(counterProvider);
+     return Text("${controller.counter}");
+ })
+```
+
+
+```dart
+ Consumer(builder: (_, watch, __) {
+     final controller = watch(
+       counterProvider.select((_) => _.counter),
+     );
+     return Text("${controller.counter}");
+ })
+```
+
+**After:**
+now the consumer has replaces the `watch` parameter for one instance of `BuilderRef`
+with this to listen the changes you need to use `ref.watch`
+```dart
+ Consumer(builder: (_, ref, __) {
+     final controller = ref.watch(counterProvider);
+    return Text("${controller.counter}");
+ })
+
+// or
+
+ Consumer(builder: (_, ref, __) {
+     final controller = ref.watch(
+       counterProvider.select((_) => _.counter),
+     );
+    return Text("${controller.counter}");
+ })
+```
+or if you want to direct access to the value returned by ` counterProvider.select((_) => _.counter)` you can use `ref.select`
+```dart
+ Consumer(builder: (_, ref, __) {
+     final int counter = ref.select(
+       counterProvider.select((_) => _.counter),
+     );
+    return Text("$counter");
+ })
+```
+
+- `ref.watch` can be used to listen the changes in a provider even you can use filters like `.ids, .select` and `.when` with `ref.watch` but it allways returns the notifier linked to the provider.
+
+- `ref.select` can be used to listen the changes in a provider only using filters like `.select` and `.when` and the value returned by `ref.select` depends of the value returned by the filters.
+
+**IMPORTANT:** the `.ids` filter only should be used with `ref.watch`.
+##
+
 ## [4.4.0]
 - Added `MultiProviderListener` widget.
 ## [4.3.0]

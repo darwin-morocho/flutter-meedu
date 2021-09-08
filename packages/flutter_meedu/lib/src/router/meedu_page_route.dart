@@ -47,45 +47,49 @@ class MeeduPageRoute<T> extends PageRoute<T> {
     return this.child; // coverage:ignore-line
   }
 
+  void build() {
+    this.child = _getChild(appKey.currentContext!);
+  }
+
   @override
   Widget buildTransitions(
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
-    Widget child,
+    Widget _,
   ) {
     switch (transition) {
       case Transition.downToUp:
         return DownToUpTransition().buildTransition(
           animation: animation,
-          child: _getChild(context),
+          child: this.child,
         );
       case Transition.upToDown:
         return UpToDownTransition().buildTransition(
           animation: animation,
-          child: _getChild(context),
+          child: this.child,
         );
 
       case Transition.rightToLeft:
         return RightToLeftTransition().buildTransition(
           animation: animation,
-          child: _getChild(context),
+          child: this.child,
         );
 
       case Transition.fadeIn:
         return FadeTransition(
           opacity: animation,
-          child: _getChild(context),
+          child: this.child,
         );
 
       case Transition.zoom:
         return ScaleTransition(
           scale: animation,
-          child: _getChild(context),
+          child: this.child,
         );
 
       default:
-        return _getChild(context);
+        return this.child;
     }
   }
 
@@ -112,22 +116,23 @@ class MeeduPageRoute<T> extends PageRoute<T> {
             onStartPopGesture: _startPopGesture,
             child: child,
           )
-        : this.child;
+        : this.child; // coverage:ignore-line
   }
 
-  ///
+  // coverage:ignore-start
   BackGestureController<T> _startPopGesture<T>() {
     return BackGestureController<T>(
       navigator: this.navigator!,
       controller: this.controller!,
     );
-  }
+  } // coverage:ignore-end
 
-  ///
+  // coverage:ignore-start
   bool get _isPopGestureInProgress {
     return this.navigator!.userGestureInProgress;
-  }
+  } // coverage:ignore-end
 
+  // coverage:ignore-start
   bool _isPopGestureEnabled<T>() {
     // ignore: lines_longer_than_80_chars
     if (this.isFirst ||
@@ -139,5 +144,5 @@ class MeeduPageRoute<T> extends PageRoute<T> {
         _isPopGestureInProgress) return false;
 
     return true;
-  }
+  } // coverage:ignore-end
 }

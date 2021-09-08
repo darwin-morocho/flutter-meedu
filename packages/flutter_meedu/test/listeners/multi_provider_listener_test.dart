@@ -113,8 +113,8 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
               children: [
                 Expanded(
                   child: Consumer(
-                    builder: (_, watch, __) {
-                      final counter = watch(
+                    builder: (_, ref, __) {
+                      final counter = ref.watch(
                         _conterProvider.ids(() => ['66']),
                       ).counter;
                       return Column(
@@ -136,8 +136,8 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
                 ),
                 Expanded(
                   child: Consumer(
-                    builder: (_, watch, __) {
-                      final controller = watch(_loginProvider);
+                    builder: (_, ref, __) {
+                      final controller = ref.watch(_loginProvider);
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(

@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:meedu/meedu.dart';
 
-part 'watch_filter.dart';
-
-/// A function to read SimpleProvider or a StateProvider and subscribe to the events.
-///
-/// [provider] must be a SimpleProvider or a BaseProvider.
-///
-/// [filter] one instance of WatchFilter, use this to avoid unnecessary rebuilds
-typedef ScopedReader = T Function<T>(Provider<T> provider);
+import '../watch_filter.dart';
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
@@ -27,13 +21,13 @@ typedef ScopedReader = T Function<T>(Provider<T> provider);
 /// {@endtemplate}
 abstract class ConsumerWidget extends StatefulWidget {
   const ConsumerWidget({Key? key}) : super(key: key);
-  Widget build(BuildContext context, ScopedReader watch);
+  Widget build(BuildContext context, BuilderRef ref);
 
   @override
   _ConsumerState createState() => _ConsumerState();
 }
 
-class _ConsumerState extends State<ConsumerWidget> {
+class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   Map<BaseNotifier, ListenerCallback> _dependencies = {};
 
   // initialized at true for the first build
@@ -96,14 +90,13 @@ class _ConsumerState extends State<ConsumerWidget> {
   ///
   /// If [providerOrTarget] is a value gotten from .select, .ids or .when
   /// the  widget only will be rebuilded depending of the condition of each method.
-  T _reader<T>(Provider<T> providerOrTarget) {
+  T watch<T>(Provider<T> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    final target =
-        providerOrTarget is _Target ? providerOrTarget as _Target : null;
+    final target = providerOrTarget is Target ? providerOrTarget as Target : null;
 
     late T notifier;
 
@@ -148,8 +141,48 @@ class _ConsumerState extends State<ConsumerWidget> {
     return notifier; // coverage:ignore-line
   }
 
+  /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
+  ///
+  /// [providerOrTarget] this param is required to decide when the Consumer
+  /// needs to be rebuilded, if [providerOrTarget] is a [SimpleProvider] or a
+  /// [StateProvider] the  widget will be rebuilded when the notify method is called
+  /// inside a SimpleNotifier or StateNotifier.
+  ///
+  /// If [providerOrTarget] is a value gotten from .select, .ids or .when
+  /// the  widget only will be rebuilded depending of the condition of each method.
+  R select<T, R>(Target<T, R> target) {
+    // if the widget was rebuilded
+    if (_isExternalBuild) {
+      _clearDependencies();
+    }
+    _isExternalBuild = false;
+    late T notifier = target.notifier;
+    final insideDependencies = _dependencies.containsKey(notifier);
+    // if there is not a listener for the current provider
+    if (!insideDependencies) {
+      target.rebuild = _rebuild;
+      void Function(dynamic) listener = target.listener;
+      // add the listener to the current notifier
+      _dependencies[notifier as BaseNotifier] = listener;
+      notifier.addListener(listener);
+    }
+    return target.selectValue; // coverage:ignore-line
+  }
+
   @override
   Widget build(BuildContext context) {
-    return widget.build(context, _reader);
+    return widget.build(context, this);
   }
+}
+
+abstract class BuilderRef {
+  /// A function to read SimpleProvider or a StateProvider and subscribe to the events.
+  ///
+  /// this method returns the Notifier linked to the provider
+  T watch<T>(Provider<T> providerOrTarget);
+
+  /// A function to read SimpleProvider or a StateProvider and subscribe to the events.
+  ///
+  /// this method returns the value returned by the select or when methods
+  R select<T, R>(Target<T, R> target);
 }

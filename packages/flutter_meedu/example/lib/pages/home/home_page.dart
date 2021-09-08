@@ -7,7 +7,7 @@ import 'package:meedu_example/pages/home/home_provider.dart';
 import 'package:flutter_meedu/router.dart' as router;
 import 'package:meedu_example/routes/routes.dart';
 import 'home_state.dart';
- 
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(context) {
@@ -21,18 +21,13 @@ class HomePage extends StatelessWidget {
         //   () => Text("${homeProvider.read.counter}"),
         // ),
         title: Consumer(
-          builder: (_, watch, __) {
-            final users = watch(
-              homeProvider,
-              // WatchFilter(
-              //   when: (prev, current) => prev.users.length != current.users.length,
-              // ),
-            ).state.users;
+          builder: (_, ref, __) {
+            final users = ref.watch(homeProvider).state.users;
 
             if (users.length == 0) return Text("lalalalal");
 
-            return Consumer(builder: (_, watch, __) {
-              final text = watch(homeProvider).state.randomText;
+            return Consumer(builder: (_, ref, __) {
+              final text = ref.watch(homeProvider).state.randomText;
               return Text(
                 text,
                 style: TextStyle(fontSize: 13),
@@ -70,13 +65,8 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Consumer(
-        builder: (_, watch, __) {
-          final users = watch(
-            homeProvider,
-            // WatchFilter(
-            //   when: (prev, current) => prev.users.length != current.users.length,
-            // ),
-          ).state.users;
+        builder: (_, ref, __) {
+          final users = ref.watch(homeProvider).state.users;
           if (users.isEmpty)
             return Center(
               child: CupertinoActivityIndicator(radius: 15),

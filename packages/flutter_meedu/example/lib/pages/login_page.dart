@@ -34,12 +34,12 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Consumer(
-                builder: (_, watch, __) {
-                  final email = watch(
+                builder: (_, ref, __) {
+                  final email = ref.select(
                     loginProvider.select(
                       (_) => _.email,
                     ),
-                  ).state.email;
+                  );
                   return Text(email);
                 },
               ),

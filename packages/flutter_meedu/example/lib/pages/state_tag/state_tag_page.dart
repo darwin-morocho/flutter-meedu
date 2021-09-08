@@ -37,8 +37,8 @@ class _LoginTagView extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, watch) {
-    final controller = watch(loginTagProvider.find(tagName));
+  Widget build(BuildContext context, ref) {
+    final controller = ref.watch(loginTagProvider.find(tagName));
 
     return Container(
       padding: EdgeInsets.all(15),

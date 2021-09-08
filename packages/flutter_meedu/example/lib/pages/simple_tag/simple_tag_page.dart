@@ -47,8 +47,8 @@ class SimpleConsumerWithTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (_, watch, __) {
-        final controller = watch(
+      builder: (_, ref, __) {
+        final controller = ref.watch(
           _counterProviderWithTag.find(tagName),
         );
         final counter = controller.counter;

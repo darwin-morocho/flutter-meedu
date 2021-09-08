@@ -11,7 +11,7 @@ import 'routes/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  router.setDefaultTransition(router.Transition.downToUp);
+  // router.setDefaultTransition(router.Transition.downToUp);
   runApp(MyApp());
 }
 

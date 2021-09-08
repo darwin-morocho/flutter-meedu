@@ -12,8 +12,8 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: Consumer(
-            builder: (_, watch, __) {
-              final controller = watch(
+            builder: (_, ref, __) {
+              final controller = ref.watch(
                 _counterProvider.ids(() => ['66']),
               );
               return Text("${controller.counter}");
@@ -40,14 +40,26 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: Consumer(
-            builder: (_, watch, __) {
-              final controller = watch(
-                _counterProvider.select((_) => _.counter),
-              );
-              number++;
-              return Text("${controller.counter}");
-            },
+          body: Column(
+            children: [
+              Consumer(
+                builder: (_, ref, __) {
+                  final controller = ref.watch(
+                    _counterProvider.select((_) => _.counter),
+                  );
+                  number++;
+                  return Text("consumer ${controller.counter}");
+                },
+              ),
+              Consumer(
+                builder: (_, ref, __) {
+                  final counter = ref.select(
+                    _counterProvider.select((_) => _.counter),
+                  );
+                  return Text("select $counter");
+                },
+              ),
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => _counterProvider.read.increment(),
@@ -57,12 +69,14 @@ void main() {
       ),
     );
 
-    expect(find.text("0"), findsOneWidget);
+    expect(find.text("consumer 0"), findsOneWidget);
+    expect(find.text("select 0"), findsOneWidget);
     await tester.tap(
       find.byKey(Key('button')),
     );
     await tester.pump();
-    expect(find.text("1"), findsOneWidget);
+    expect(find.text("consumer 1"), findsOneWidget);
+    expect(find.text("select 1"), findsOneWidget);
     expect(number, 2);
   });
 
@@ -83,8 +97,8 @@ void main() {
             ],
           ),
           body: Consumer(
-            builder: (_, watch, __) {
-              final controller = watch(
+            builder: (_, ref, __) {
+              final controller = ref.watch(
                 _counterProvider.ids(() => ['1']),
               );
               number++;
@@ -120,8 +134,8 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: Consumer(
-            builder: (_, watch, __) {
-              final counter = watch(
+            builder: (_, ref, __) {
+              final counter = ref.watch(
                 _counterProvider,
               ).counter;
               return Text("${counter}");

@@ -13,8 +13,8 @@ class VideoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Consumer(builder: (_, watch, __) {
-        final controller = watch(videoPageProvider);
+      body: Consumer(builder: (_, ref, __) {
+        final controller = ref.watch(videoPageProvider);
 
         return Column(
           children: [

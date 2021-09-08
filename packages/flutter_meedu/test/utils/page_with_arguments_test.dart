@@ -99,8 +99,8 @@ class _Page2 extends PageWithArgumentsWidget {
     return Scaffold(
       body: Column(
         children: [
-          Consumer(builder: (_, watch, __) {
-            final counter = watch(
+          Consumer(builder: (_, ref, __) {
+            final counter = ref.watch(
               _counterProvider.ids(() => ['1', '2']),
             ).counter;
             return Text(
