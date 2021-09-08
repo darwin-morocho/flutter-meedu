@@ -20,18 +20,30 @@ class CounterPage extends StatelessWidget {
         child: Column(
           children: [
             CounterView(),
-            Consumer(builder: (_, watch, __) {
-              final counter = watch(
-                counterProvider.select((_) => _.counter >= 10),
-              ).counter;
+            Consumer(builder: (_, ref, __) {
+              final counter = ref
+                  .watch(
+                    counterProvider.select((_) => _.counter >= 10),
+                  )
+                  .counter;
               return Text("${counter}");
             }),
-            Consumer(builder: (_, watch, __) {
-              final counter = watch(
-                counterProvider.select((_) => _.demo),
-              ).demo.counter;
+            Consumer(builder: (_, ref, __) {
+              print("build consumer");
+              final counter = ref
+                  .select(
+                    counterProvider.select((_) => _.demo),
+                  )
+                  .counter;
               return Text("Demo ${counter}");
             }),
+            Consumer(builder: (_, ref, __) {
+              print("build select");
+              final counter = ref.select(
+                counterProvider.select((_) => _.counter),
+              );
+              return Text("Select Widget ${counter}");
+            })
           ],
         ),
       ),
@@ -59,8 +71,8 @@ class CounterPage extends StatelessWidget {
 
 class CounterView extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final controller = watch(
+  Widget build(BuildContext context, ref) {
+    final controller = ref.watch(
       counterProvider.ids(() => ['id']),
     );
     return Text("${controller.counter}");

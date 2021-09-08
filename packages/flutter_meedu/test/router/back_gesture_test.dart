@@ -9,6 +9,7 @@ void main() {
   });
   testWidgets('back gesture', (tester) async {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+    router.setDefaultTransition(router.Transition.downToUp);
     await tester.pumpWidget(
       MaterialApp(
         navigatorKey: router.navigatorKey,
@@ -38,8 +39,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text("SECOND"), findsOneWidget);
     final size = _scaffoldKey.currentContext!.size!;
-    await tester.dragFrom(Offset.zero, Offset(size.width * 0.6, 0));
-    await tester.pumpAndSettle();
+    await tester.dragFrom(Offset(0, 100), Offset(size.width * 0.6, 100));
+    // await tester.pageBack();
+    await tester.pumpAndSettle(Duration(milliseconds: 200));
+
     // expect(find.text("SECOND"), findsNothing);
   });
 }

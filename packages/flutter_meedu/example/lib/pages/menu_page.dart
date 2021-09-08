@@ -14,7 +14,7 @@ class MenuPage extends StatelessWidget {
             title: Text("Counter"),
             onTap: () => router.pushNamed(
               Routes.COUNTER,
-              transition: router.Transition.upToDown,
+              // transition: router.Transition.upToDown,
               backGestureEnabled: false,
             ),
           ),

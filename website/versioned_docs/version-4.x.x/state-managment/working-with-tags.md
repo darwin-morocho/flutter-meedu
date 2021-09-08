@@ -1,6 +1,28 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+---
+sidebar_position: 6
+---
+
+# Working with tags
+
+If you need to have multiples providers using the same `SimpleNotifier` or `StateNotifier` class but you don't want create a provider for each notifier you could use the `withTag` method to create multiples providers for a single Notifier class with its own state.
+
+```dart
+class CounterController extends SimpleNotifier {
+  int counter = 0;
+  void increment() {
+    counter++;
+    notify();
+  }
+}
+```
+
+Now you can create yours provider using `SimpleProvider.withTag` or `StateProvider.withTag`
+
+```dart {1-3,21-24,27-30,55,69}
+final counterProviderWithTag = SimpleProvider.withTag(
+  (_) => CounterController(),
+);
+
 
 class SimpleTagPage extends StatelessWidget {
   const SimpleTagPage({Key? key}) : super(key: key);
@@ -15,6 +37,7 @@ class SimpleTagPage extends StatelessWidget {
           height: double.infinity,
           child: Column(
             children: [
+              // each SimpleConsumerWithTag has their own state
               Expanded(
                 child: SimpleConsumerWithTag(
                   tagName: 'counter1',
@@ -47,9 +70,10 @@ class SimpleConsumerWithTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (_, ref, __) {
-        final controller = ref.watch(
-          _counterProviderWithTag.find(tagName),
+      builder: (_, watch, __) {
+        // the find method creates a new unique provider using a string as key
+        final controller = watch(
+          counterProviderWithTag.find(tagName),
         );
         final counter = controller.counter;
         return Container(
@@ -74,21 +98,17 @@ class SimpleConsumerWithTag extends StatelessWidget {
     );
   }
 }
+```
 
-final _counterProviderWithTag = SimpleProvider.withTag(
-  (ref) => _CounterController(),
+Also you can use `counterProviderWithTag.find('tagName')` to pass an initial argument to your notifier
+
+```dart
+counterProviderWithTag.find(tagName).setArguments('initial argument');
+```
+
+Also for `StateNotifier` you can use the `withTag` method but you need to define the generic types
+```dart
+final loginProviderWithTag = StateProvider.withTag<LoginController, LoginState>(
+  (_) => LoginController(),
 );
-
-class _CounterController extends SimpleNotifier {
-  int counter = 0;
-  void increment() {
-    counter++;
-    notify();
-  }
-
-  @override
-  void dispose() {
-    print("Disposed _CounterController ${this.hashCode}");
-    super.dispose();
-  }
-}
+```

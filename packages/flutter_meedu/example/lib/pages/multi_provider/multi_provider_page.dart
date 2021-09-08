@@ -43,8 +43,8 @@ class MultiProviderPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: Consumer(
-                    builder: (_, watch, __) {
-                      final counter = watch(
+                    builder: (_, ref, __) {
+                      final counter = ref.watch(
                         _conterProvider.ids(() => ['id']),
                       ).counter;
                       return Column(
@@ -65,8 +65,8 @@ class MultiProviderPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: Consumer(
-                    builder: (_, watch, __) {
-                      final controller = watch(_loginProvider);
+                    builder: (_, ref, __) {
+                      final controller = ref.watch(_loginProvider);
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(

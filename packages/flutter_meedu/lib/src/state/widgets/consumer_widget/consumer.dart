@@ -6,7 +6,7 @@ import 'consumer_widget.dart';
 /// See also [Consumer]
 typedef ConsumerBuilder = Widget Function(
   BuildContext context,
-  ScopedReader watch,
+  BuilderRef ref,
   Widget? child,
 );
 
@@ -25,7 +25,7 @@ class Consumer extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    return builder(context, watch, this.child);
+  Widget build(BuildContext context, BuilderRef ref) {
+    return builder(context, ref, this.child);
   }
 }

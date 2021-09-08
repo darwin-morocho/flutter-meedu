@@ -54,8 +54,8 @@ class CounterPage extends StatelessWidget {
       body: Center(
         // The Consumer widget listen the changes in your CounterController
         // and rebuild the widget when is need it
-        child: Consumer(builder: (_, ref, __) {
-          final controller = ref.watch(counterProvider);
+        child: Consumer(builder: (_, watch, __) {
+          final controller = watch(counterProvider);
           return Text("${controller.counter}");
         }),
       ),
@@ -113,8 +113,8 @@ class _CounterPageState extends State<CounterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Consumer(builder: (_, ref, __) {
-          final controller = ref.watch(counterProvider);
+        child: Consumer(builder: (_, watch, __) {
+          final controller = watch(counterProvider);
           return Text("${controller.counter}");
         }),
       ),
@@ -143,8 +143,8 @@ You could use the `ProviderListener` Widget to listen the changes in our `Counte
           // The Consumer widget listen the changes in your CounterController
           // and rebuild the widget when is need it
           child: Consumer(
-            builder: (_, ref, __) {
-              final controller = ref.watch(counterProvider);
+            builder: (_, watch, __) {
+              final controller = watch(counterProvider);
               return Text("${controller.counter}");
             },
           ),
@@ -223,6 +223,10 @@ Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
 
 If you have multiples `Consumer` widgets in your Views and you only want rebuild certain Consumer you can use the `.ids` and `.select` methods.
 
+:::note
+The `WatchFilter` class was removed.
+:::
+
 ```dart {8,22}
 class CounterController extends SimpleNotifier {
   int _counter = 0;
@@ -243,16 +247,16 @@ Scaffold(
   body: Column(
     children: [
       Consumer(
-        builder: (_, ref, __) {
-          final controller = ref.watch(
+        builder: (_, watch, __) {
+          final controller = watch(
             counterProvider.ids(()=>['text']),
           );
           return Text("${controller.counter}");
         },
       ),
       Consumer(
-        builder: (_, ref, __) {
-          final controller = ref.watch(counterProvider);
+        builder: (_, watch, __) {
+          final controller = watch(counterProvider);
           return Text("${controller.counter}");
         },
       )
@@ -288,8 +292,8 @@ class CounterController extends SimpleNotifier {
 Scaffold(
   body: Center(
     child: Consumer(
-        builder: (_, ref, __) {
-          final controller = ref.watch(
+        builder: (_, watch, __) {
+          final controller = watch(
             counterProvider.select((controller) => controller.counter > 5)),
           );
           return Text("${controller.counter}");
@@ -310,29 +314,14 @@ Also you can use the `select` method to listen when a value has changed and rebu
 The next code rebuild your `Consumer` only when the `counter` value has changed in your CounterController.
 ```dart
 Consumer(
-  builder: (_, ref, __) {
-    final controller = ref.watch(
+  builder: (_, watch, __) {
+    final controller = watch(
       counterProvider.select((_) => _.counter),
     );
     return Text("${controller.counter}");
   },
 )
 ```
-
-
-If you want direct access to the value returned by `counterProvider.select((_) => _.counter)` you can use `ref.select`
-```dart
-Consumer(
-  builder: (_, ref, __) {
-    final counter = ref.select(
-      counterProvider.select((_) => _.counter),
-    );
-    return Text("$counter");
-  },
-)
-```
-
-**IMPORTANT:** the `.ids` filter only should be used with `ref.watch`.
 :::
 
 
@@ -359,21 +348,21 @@ class CounterPage extends StatelessWidget {
 
 class CounterView extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ref) {
-    final controller = ref.watch(counterProvider);
+  Widget build(BuildContext context, ScopedReader watch) {
+    final controller = watch(counterProvider);
     return Text("${controller.counter}");
   }
 }
 ```
 
 :::success NOTE
-The `ref` parameter in a `Consumer` or a `ConsumerWidget` can be used to listen multiples providers.
+The `watch` method in a `Consumer` or a `ConsumerWidget` can be used to listen multiples providers.
 ```dart
 class CounterView extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ref) {
-    final counterController = ref.watch(counterProvider);
-    final loginController = ref.watch(loginProvider);
+  Widget build(BuildContext context, ScopedReader watch) {
+    final counterController = watch(counterProvider);
+    final loginController = watch(loginProvider);
     return Text("${counterController.counter}");
   }
 }

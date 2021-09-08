@@ -97,16 +97,18 @@ class LoginPage extends StatelessWidget {
             },
             child: Text("set invalid value"),
           ),
-          Consumer(builder: (_, watch, __) {
-            final state = watch(
+          Consumer(builder: (_, ref, __) {
+            final email = ref.select(
               _provider.select((_) => _.email),
-            ).state;
-            return Text(state.email);
+            );
+            return Text(email);
           }),
-          Consumer(builder: (_, watch, __) {
-            final state = watch(
-              _provider.when((prev, current) => prev.password != current.password),
-            ).state;
+          Consumer(builder: (_, ref, __) {
+            final state = ref
+                .watch(
+                  _provider.when((prev, current) => prev.password != current.password),
+                )
+                .state;
             return Text(state.password);
           }),
           LoginDetail(),
@@ -124,8 +126,8 @@ class LoginDetail extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final controller = watch(_provider);
+  Widget build(BuildContext context, ref) {
+    final controller = ref.watch(_provider);
     final email = controller.state.email;
     final password = controller.state.password;
     return Column(
