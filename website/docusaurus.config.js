@@ -65,7 +65,7 @@ module.exports = {
             },
             "4.x.x": {
               label: "4.4.1",
-              path: "3.x.x",
+              path: "4.x.x",
             },
             "3.x.x": {
               label: "3.x.x",
