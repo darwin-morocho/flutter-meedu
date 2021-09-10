@@ -23,8 +23,8 @@ provider passed as parameter to the watch function.
 ```
 
 **After:**
-now the consumer has replaces the `watch` parameter for one instance of `BuilderRef`
-with this to listen the changes you need to use `ref.watch`
+now the consumer widget has replaced the `watch` parameter for one instance of `BuilderRef`
+with this change to listen the changes you need to use `ref.watch`
 ```dart
  Consumer(builder: (_, ref, __) {
      final controller = ref.watch(counterProvider);
@@ -56,6 +56,9 @@ or if you want direct access to the value returned by ` counterProvider.select((
 
 **IMPORTANT:** the `.ids` filter only should be used with `ref.watch`.
 ##
+
+## [4.4.1]
+- Fixed multiples rebuilds with custom transitions using named routes.
 
 ## [4.4.0]
 - Added `MultiProviderListener` widget.

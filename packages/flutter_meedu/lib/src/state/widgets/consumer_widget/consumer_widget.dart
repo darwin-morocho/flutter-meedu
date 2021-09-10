@@ -12,9 +12,9 @@ import '../watch_filter.dart';
 ///   const Example({Key? key}): super(key: key);
 ///
 ///   @override
-///   Widget build(BuildContext context, ScopedReader watch) {
-///     final value = watch(myProvider);
-///
+///   Widget build(BuildContext context, ref) {
+///     final value = ref.watch(myProvider);
+///     return YOUR_WIDGET;
 ///   }
 /// }
 /// ```
@@ -144,12 +144,8 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
 
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
   ///
-  /// [providerOrTarget] this param is required to decide when the Consumer
-  /// needs to be rebuilded, if [providerOrTarget] is a [SimpleProvider] or a
-  /// [StateProvider] the  widget will be rebuilded when the notify method is called
-  /// inside a SimpleNotifier or StateNotifier.
-  ///
-  /// If [providerOrTarget] is a value gotten from .select, .ids or .when
+  /// [target] is a value gotten from .select or .when
+  /// 
   /// the  widget only will be rebuilded depending of the condition of each method.
   R select<T, R>(Target<T, R> target) {
     // if the widget was rebuilded

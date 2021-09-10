@@ -15,6 +15,7 @@ class Target<Notifier, R> extends Provider<Notifier> {
   /// function to rebuild the Consumer
   void Function()? rebuild;
 
+  /// used to store the value returned by .select or .when
   late R selectValue;
 
   Target(this.notifier);
@@ -81,8 +82,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<Notifier extends StateNotifier<S>, S>
-    on StateProvider<Notifier, S> {
+extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
   /// use this method to rebuild your [Consumer] using the previous state and the current
   /// state to return a boolean
   Target<Notifier, bool> when(BuildWhen<S> cb) {
