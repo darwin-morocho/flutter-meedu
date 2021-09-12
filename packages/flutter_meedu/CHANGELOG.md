@@ -1,3 +1,6 @@
+## [5.0.1]
+- Updated to `meedu: ^4.2.1`
+
 ## [5.0.0]
 - **BREAKING CHANGE:** Removed `ScopedReader` and replaced by `BuilderRef`.
 

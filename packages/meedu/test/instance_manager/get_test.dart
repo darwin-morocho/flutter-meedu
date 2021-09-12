@@ -133,7 +133,25 @@ void main() {
       },
     );
 
-
+    test(
+      'test onRemove with lazy',
+      () async {
+        Person? p;
+        final completer = Completer();
+        Get.i.lazyPut<Person>(
+          () => Person('darwin'),
+          onRemove: (person) {
+            p = person;
+            completer.complete();
+          },
+        );
+        Get.i.find<Person>();
+        expect(Get.i.dependencies.isNotEmpty, true);
+        Get.i.remove<Person>();
+        await completer.future;
+        expect(p != null, true);
+      },
+    );
   });
 }
 

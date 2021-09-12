@@ -145,7 +145,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
   ///
   /// [target] is a value gotten from .select or .when
-  /// 
+  ///
   /// the  widget only will be rebuilded depending of the condition of each method.
   R select<T, R>(Target<T, R> target) {
     // if the widget was rebuilded

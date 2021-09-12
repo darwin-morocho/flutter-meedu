@@ -73,7 +73,7 @@ class Get {
       _vars[key] = Singleton<T>(
         dependency,
         autoRemove: lazy.autoRemove,
-        onRemove: lazy.onRemove,
+        onRemove: (lazy as dynamic).onRemove,
       );
       return dependency;
     }

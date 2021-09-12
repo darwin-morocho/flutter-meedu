@@ -1,3 +1,5 @@
+## [4.2.1]
+- Fixed `onRemove` callback with lazyPut.
 ## [4.2.0]
 - Added autoRemove and onRemove in dependency injection.
 ## [4.1.0]
