@@ -24,7 +24,7 @@ of them and we have implemented them with a total refactoring.
 
 
 ## Features
-- A State Managment for simple and complex states.
+- A State Management for simple and complex states.
 
   flutter_meedu helps you to manage the state of your flutter app without boilerplate, code generators or InheritedWidget.
 

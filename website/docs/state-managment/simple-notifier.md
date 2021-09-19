@@ -151,7 +151,7 @@ You could use the `ProviderListener` Widget to listen the changes in our `Counte
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // you can use the read method to access to your CounterController
+            // you can use the read property to access to your CounterController
             counterProvider.read.increment();
           },
         ),
