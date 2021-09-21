@@ -1,4 +1,5 @@
 import 'package:args/command_runner.dart';
+import 'package:meedu_cli/src/create/create.dart';
 import 'package:meedu_cli/src/initialize/initialize.dart';
 
 class Commands extends CommandRunner<void> {
@@ -8,5 +9,6 @@ class Commands extends CommandRunner<void> {
           '',
         ) {
     addCommand(InitializeCommand());
+    addCommand(CreateCommand());
   }
 }
