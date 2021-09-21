@@ -17,7 +17,6 @@ File get pubspecFile => File('${basePath}pubspec.yaml');
 
 Future<bool> addDependency(
   String package, {
-  bool runPubGet = false,
   bool isDev = false,
 }) async {
   try {
@@ -48,12 +47,6 @@ Future<bool> addDependency(
       stderr.writeln("🔥 Added $package: $version");
 
       pubspecFile.writeAsStringSync(newPubspec);
-
-      if (runPubGet) {
-        /// run flutter pub get
-        final results = await Shell().run('flutter pub get');
-        return results.first.exitCode == 0;
-      }
       return true;
     }
     return false;

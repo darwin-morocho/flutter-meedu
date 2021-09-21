@@ -159,8 +159,8 @@ class MyApp extends StatelessWidget {
 }
 
 void _generateTestFile() {
-  if (!Directory('test').existsSync()) {
-    Directory('test').createSync(recursive: true);
+  if (!Directory('${basePath}test').existsSync()) {
+    Directory('${basePath}test').createSync(recursive: true);
   }
 
   final projectName = pubspec['name'];

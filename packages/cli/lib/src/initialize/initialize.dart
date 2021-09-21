@@ -111,7 +111,9 @@ class InitializeCommand extends Command<void> {
         }
       }
 
-      final processResult = await Shell().run('flutter pub get');
+      final processResult = await Shell().run(
+        '${projectName != null ? "cd projectName &&" : ""} flutter pub get',
+      );
       final exitCode = processResult.first.exitCode;
       if (exitCode != 0) {
         throw Exception(
