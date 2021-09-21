@@ -16,7 +16,7 @@ ignore:
   - "**/example/"
   - "examples"
   - "website/"
-  - "cli/"
+  - "packgaes/cli/"
   - "**/*.g.dart"
   - "**/*.freezed.dart"
 

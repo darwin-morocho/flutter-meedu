@@ -1,7 +1,13 @@
 import 'dart:io';
 
+import 'package:meedu_cli/src/utils.dart';
+
 void createCleanStructure() {
   stderr.writeln("👊 creating clean architecture folder structure");
+  if (Directory('lib').existsSync()) {
+    Directory('lib').deleteSync(recursive: true);
+  }
+
   Directory('lib/app').createSync(recursive: true);
   Directory('lib/app/data/data_source').createSync(recursive: true);
   Directory('lib/app/data/helpers').createSync(recursive: true);
@@ -65,6 +71,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
         onPressed: homeProvider.read.increment,
       ),
     );
@@ -104,4 +111,96 @@ final homeProvider = SimpleProvider(
   """);
 
   homeProviderFile.createSync(recursive: true);
+
+  final mainFile = File('lib/main.dart');
+  mainFile.writeAsStringSync("""
+import 'package:flutter/material.dart';
+import 'app/my_app.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+  """);
+
+  mainFile.createSync(recursive: true);
+
+  final myAppFile = File('lib/app/my_app.dart');
+  myAppFile.writeAsStringSync("""
+import 'package:flutter/material.dart';
+import 'package:flutter_meedu/router.dart' as router;
+
+import 'ui/routes/app_routes.dart';
+import 'ui/routes/routes.dart';
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      key: router.appKey,
+      title: 'Hello world',
+      navigatorKey: router.navigatorKey,
+      navigatorObservers: [
+        router.observer,
+      ],
+      routes: appRoutes,
+      initialRoute: Routes.HOME,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+    );
+  }
+}
+  """);
+
+  myAppFile.createSync(recursive: true);
+  _generateTestFile();
+}
+
+void _generateTestFile() {
+  if (!Directory('test').existsSync()) {
+    Directory('test').createSync(recursive: true);
+  }
+
+  final projectName = pubspec['name'];
+  if (projectName == null) {
+    return;
+  }
+  final file = File('test/widget_test.dart');
+  file.writeAsStringSync("""
+// This is a basic Flutter widget test.
+//
+// To perform an interaction with a widget in your test, use the WidgetTester
+// utility that Flutter provides. For example, you can send tap and scroll
+// gestures. You can also use WidgetTester to find child widgets in the widget
+// tree, read text, and verify that the values of widget properties are correct.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:$projectName/app/my_app.dart';
+
+void main() {
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the '+' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsOneWidget);
+  });
+}
+  """);
+  file.createSync(recursive: true);
+
+  stderr.writeln("😎 clean architecture structure generated");
 }

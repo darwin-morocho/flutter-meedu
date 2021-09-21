@@ -6,10 +6,14 @@ import 'package:yaml/yaml.dart';
 
 final pubspecFile = File('pubspec.yaml');
 
-Future<bool> addDependency() async {
+Future<bool> addDependency(
+  String package, {
+  bool runPubGet = false,
+  bool isDev = false,
+}) async {
   try {
     final languageCode = Platform.localeName.split('_')[0];
-    final package = 'flutter_meedu';
+
     final url = languageCode == 'zh'
         ? 'https://pub.flutter-io.cn/api/packages/$package'
         : 'https://pub.dev/api/packages/$package';
@@ -21,7 +25,7 @@ Future<bool> addDependency() async {
       final version = jsonDecode(response.body)['latest']['version'] as String;
 
       final pubAsString = pubspecFile.readAsStringSync();
-      final key = "dependencies:";
+      final key = "${isDev ? "dev_" : ""}dependencies:";
       final index = pubAsString.indexOf(key);
 
       final firstPart = pubAsString.substring(0, index + key.length);
@@ -32,18 +36,20 @@ Future<bool> addDependency() async {
 
       final newPubspec = firstPart + "\n  $package: ^$version" + secondPart;
 
-      stderr.writeln("🔥 Added flutter_meedu: $version");
+      stderr.writeln("🔥 Added $package: $version");
 
       pubspecFile.writeAsStringSync(newPubspec);
 
-      /// run flutter pub get
-      await Shell(verbose: true).run('flutter pub get');
+      if (runPubGet) {
+        /// run flutter pub get
+        await Shell(verbose: true).run('flutter pub get');
+      }
       return true;
     }
     return false;
-  } catch (_,s) {
-    print(_);
-    print(s);
+  } catch (_, s) {
+    stderr.writeln(_);
+    stderr.writeln(s);
     return false;
   }
 }
