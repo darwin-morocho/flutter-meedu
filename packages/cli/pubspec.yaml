@@ -1,7 +1,8 @@
 name: meedu_cli
-description: A simple command-line application.
-version: 1.0.0
-# homepage: https://www.example.com
+description: A CLI generator for flutter_meedu
+version: 0.0.1
+homepage: https://github.com/darwin-morocho/flutter-meedu/tree/master/packages/meedu_cli
+documentation: https://flutter.meedu.app
 
 environment:
   sdk: '>=2.14.0 <3.0.0'

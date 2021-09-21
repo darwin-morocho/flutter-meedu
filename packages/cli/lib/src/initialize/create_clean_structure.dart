@@ -11,9 +11,11 @@ void createCleanStructure() {
   Directory('${basePath}lib/app').createSync(recursive: true);
   Directory('${basePath}lib/app/data/data_source').createSync(recursive: true);
   Directory('${basePath}lib/app/data/helpers').createSync(recursive: true);
-  Directory('${basePath}lib/app/data/repositories_impl').createSync(recursive: true);
+  Directory('${basePath}lib/app/data/repositories_impl')
+      .createSync(recursive: true);
   Directory('${basePath}lib/app/domain/models').createSync(recursive: true);
-  Directory('${basePath}lib/app/domain/repositories').createSync(recursive: true);
+  Directory('${basePath}lib/app/domain/repositories')
+      .createSync(recursive: true);
   Directory('${basePath}lib/app/ui/routes').createSync(recursive: true);
   Directory('${basePath}lib/app/ui/pages').createSync(recursive: true);
   Directory('${basePath}lib/app/ui/global_widgets').createSync(recursive: true);
@@ -44,10 +46,14 @@ Map<String, Widget Function(BuildContext)> get appRoutes {
   appRoutesFile.createSync(recursive: true);
 
   /// create home page demo
-  Directory('${basePath}lib/app/ui/pages/home/controller').createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages/home/utils').createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages/home/widgets').createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages/home/widgets').createSync(recursive: true);
+  Directory('${basePath}lib/app/ui/pages/home/controller')
+      .createSync(recursive: true);
+  Directory('${basePath}lib/app/ui/pages/home/utils')
+      .createSync(recursive: true);
+  Directory('${basePath}lib/app/ui/pages/home/widgets')
+      .createSync(recursive: true);
+  Directory('${basePath}lib/app/ui/pages/home/widgets')
+      .createSync(recursive: true);
 
   final homePageFile = File('${basePath}lib/app/ui/pages/home/home_page.dart');
   homePageFile.writeAsStringSync("""
@@ -81,7 +87,8 @@ class HomePage extends StatelessWidget {
 
   homePageFile.createSync(recursive: true);
 
-  final homeControllerFile = File('${basePath}lib/app/ui/pages/home/controller/home_controller.dart');
+  final homeControllerFile =
+      File('${basePath}lib/app/ui/pages/home/controller/home_controller.dart');
   homeControllerFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 
@@ -100,7 +107,8 @@ class HomeController extends SimpleNotifier {
 
   homePageFile.createSync(recursive: true);
 
-  final homeProviderFile = File('${basePath}lib/app/ui/pages/home/controller/home_provider.dart');
+  final homeProviderFile =
+      File('${basePath}lib/app/ui/pages/home/controller/home_provider.dart');
   homeProviderFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 import 'home_controller.dart';

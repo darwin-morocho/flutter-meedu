@@ -69,7 +69,8 @@ class InitializeCommand extends Command<void> {
       final equatable = dependencies['equatable'];
       final freezed = dependencies['freezed'] ?? devDependencies['freezed'];
 
-      final buildRunner = dependencies['build_runner'] ?? devDependencies['build_runner'];
+      final buildRunner =
+          dependencies['build_runner'] ?? devDependencies['build_runner'];
 
       if (equatable == null && freezed == null) {
         stderr.writeln(
