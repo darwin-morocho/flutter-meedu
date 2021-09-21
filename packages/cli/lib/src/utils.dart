@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:process_run/shell_run.dart';
 import 'package:yaml/yaml.dart';
 
-final pubspecFile = File('pubspec.yaml');
+final pubspecFile = File('example/pubspec.yaml');
 
 Future<bool> addDependency(
   String package, {
@@ -42,7 +42,8 @@ Future<bool> addDependency(
 
       if (runPubGet) {
         /// run flutter pub get
-        await Shell(verbose: true).run('flutter pub get');
+        final results = await Shell().run('flutter pub get');
+        return results.first.exitCode == 0;
       }
       return true;
     }
@@ -58,3 +59,4 @@ Map<String, dynamic> get pubspec {
   final doc = loadYaml(pubspecFile.readAsStringSync());
   return Map<String, dynamic>.from(doc);
 }
+

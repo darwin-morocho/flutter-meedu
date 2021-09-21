@@ -25,110 +25,106 @@ class InitializeCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    /// check if pubspec.yaml exists
-    if (!pubspecFile.existsSync()) {
-      stderr.writeln(
-        '❌  pubspec.yaml not found! Make sure you are in the root directory of your app',
-      );
-      return;
-    }
-
-    if (pubspec["dependencies"] == null) {
-      stderr.writeln(
-        '❌  dependencies bloc not found in your pubspec.yaml',
-      );
-      return;
-    }
-
-    if (pubspec["dev_dependencies"] == null) {
-      stderr.writeln(
-        '❌  dev_dependencies bloc not found in your pubspec.yaml',
-      );
-      return;
-    }
-
-    final flutter = pubspec['dependencies']["flutter"];
-    if (flutter == null) {
-      stderr.writeln(
-        '❌  no flutter project detected',
-      );
-    }
-
-    final meedu = pubspec["dependencies"]['flutter_meedu'];
-
-    if (meedu == null) {
-      final added = await addDependency("flutter_meedu");
-      if (!added) {
-        stderr.writeln(
-          '❌  flutter_meedu could not be added. Check your internet connection and try again.',
+    try {
+      /// check if pubspec.yaml exists
+      if (!pubspecFile.existsSync()) {
+        throw Exception(
+          '❌  pubspec.yaml not found! Make sure you are in the root directory of your app',
         );
-        return;
       }
-    }
 
-    final dependencies = pubspec["dependencies"];
-    final devDependencies = pubspec["dev_dependencies"];
+      if (pubspec["dependencies"] == null) {
+        throw Exception(
+          '❌  dependencies bloc not found in your pubspec.yaml',
+        );
+      }
 
-    final equatable = dependencies['equatable'];
-    final freezed = dependencies['freezed'] ?? devDependencies['freezed'];
+      if (pubspec["dev_dependencies"] == null) {
+        throw Exception(
+          '❌  dev_dependencies bloc not found in your pubspec.yaml',
+        );
+      }
 
-    final buildRunner = dependencies['build_runner'] ?? devDependencies['build_runner'];
+      final flutter = pubspec['dependencies']["flutter"];
+      if (flutter == null) {
+        throw Exception(
+          '❌  no flutter project detected',
+        );
+      }
 
-    if (equatable == null && freezed == null) {
-      stderr.writeln(
-        '\n\nWhat package do you want to use for your models and immutable states?',
-      );
-      final menu = Menu(['equatable', 'freezed', 'none']);
-      final result = menu.choose();
+      final meedu = pubspec["dependencies"]['flutter_meedu'];
 
-      if (result.value == 'equatable') {
-        final added = await addDependency('equatable');
+      if (meedu == null) {
+        final added = await addDependency("flutter_meedu");
         if (!added) {
-          stderr.writeln(
-            '❌  equatable could not be added. Check your internet connection and try again.',
+          throw Exception(
+            '❌  flutter_meedu could not be added. Check your internet connection and try again.',
           );
         }
-      } else if (result.value == 'freezed') {
-        bool added = await addDependency('freezed_annotation');
-        if (!added) {
-          stderr.writeln(
-            '❌  freezed_annotation could not be added. Check your internet connection and try again.',
-          );
-        }
+      }
 
-        added = await addDependency('freezed', isDev: true);
-        if (!added) {
-          stderr.writeln(
-            '❌  freezed could not be added. Check your internet connection and try again.',
-          );
-        }
+      final dependencies = pubspec["dependencies"];
+      final devDependencies = pubspec["dev_dependencies"];
 
-        if (buildRunner == null) {
-          added = await addDependency('build_runner', isDev: true);
+      final equatable = dependencies['equatable'];
+      final freezed = dependencies['freezed'] ?? devDependencies['freezed'];
+
+      final buildRunner = dependencies['build_runner'] ?? devDependencies['build_runner'];
+
+      if (equatable == null && freezed == null) {
+        stderr.writeln(
+          '\n\nWhat package do you want to use for your models and immutable states?',
+        );
+        final menu = Menu(['equatable', 'freezed', 'none']);
+        final result = menu.choose();
+
+        if (result.value == 'equatable') {
+          final added = await addDependency('equatable');
           if (!added) {
-            stderr.writeln(
-              '❌  build_runner could not be added. Check your internet connection and try again.',
+            throw Exception(
+              '❌  equatable could not be added. Check your internet connection and try again.',
             );
+          }
+        } else if (result.value == 'freezed') {
+          bool added = await addDependency('freezed_annotation');
+          if (!added) {
+            throw Exception(
+              '❌  freezed_annotation could not be added. Check your internet connection and try again.',
+            );
+          }
+
+          added = await addDependency('freezed', isDev: true);
+          if (!added) {
+            throw Exception(
+              '❌  freezed could not be added. Check your internet connection and try again.',
+            );
+          }
+
+          if (buildRunner == null) {
+            added = await addDependency('build_runner', isDev: true);
+            if (!added) {
+              throw Exception(
+                '❌  build_runner could not be added. Check your internet connection and try again.',
+              );
+            }
           }
         }
       }
-    }
 
-    final processResult = await Shell(verbose: true).run('flutter pub get');
-    final exitCode = processResult.first.exitCode;
-    if (exitCode != 0) {
-      stderr.writeln(
-        r'''
+      final processResult = await Shell().run('flutter pub get');
+      final exitCode = processResult.first.exitCode;
+      if (exitCode != 0) {
+        throw Exception(
+          '''
 ❌  "flutter pub get" finished with exit code $exitCode.
 If the problem is due to conflics with some packages versions you will need to 
 manually fix them in your "pubspec.yaml" and next run this command again.
   ''',
-      );
-      return;
-    }
+        );
+      }
 
-    stderr.writeln(
-      r'''
+      stderr.writeln(
+        r'''
 
       ⚠️  WARNING: you are trying to run the "init" command
       in an existing flutter project this will generate your lib folder again
@@ -136,12 +132,15 @@ manually fix them in your "pubspec.yaml" and next run this command again.
 
       Create clean architecture folder structure?
       ''',
-    );
-    final menu = Menu(['Yes', 'No']);
-    final result = menu.choose();
+      );
+      final menu = Menu(['Yes', 'No']);
+      final result = menu.choose();
 
-    if (result.value == "Yes") {
-      createCleanStructure();
+      if (result.value == "Yes") {
+        createCleanStructure();
+      }
+    } on Exception catch (e) {
+      stderr.writeln(e.toString());
     }
   }
 }
