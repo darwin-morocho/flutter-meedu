@@ -7,6 +7,6 @@ class Commands extends CommandRunner<void> {
           'meedu',
           '',
         ) {
-    addCommand(InitializeCommand(true));
+    addCommand(InitializeCommand());
   }
 }

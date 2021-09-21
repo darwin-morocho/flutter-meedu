@@ -51,7 +51,8 @@ class CreateCommand extends Command {
         throw Exception('"$command" finished with exit code $exitCode.');
       }
       await Shell().run("cd $projectName");
-      InitializeCommand(false).run();
+      InitializeCommand.projectName = projectName;
+      InitializeCommand().run();
     } catch (e) {
       stdout.writeln("❌ $e");
     }

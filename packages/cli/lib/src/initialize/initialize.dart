@@ -8,9 +8,9 @@ import 'package:process_run/shell_run.dart';
 import 'create_clean_structure.dart';
 
 class InitializeCommand extends Command<void> {
-  final bool showQuestionBeforeContinue;
+  static String? projectName;
 
-  InitializeCommand(this.showQuestionBeforeContinue);
+  InitializeCommand();
 
   @override
   String get description => """
@@ -123,13 +123,20 @@ manually fix them in your "pubspec.yaml" and next run this command again.
         );
       }
 
-      stderr.writeln(
-        r'''
+      if (projectName == null) {
+        stderr.writeln(
+          r'''
 
       ⚠️  WARNING: you are trying to run the "init" command
       in an existing flutter project this will generate your lib folder again
       and all files inside lib will be deleted.
 
+      ''',
+        );
+      }
+
+      stderr.writeln(
+        r'''
       Create clean architecture folder structure?
       ''',
       );
