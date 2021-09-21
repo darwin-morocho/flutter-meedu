@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:process_run/shell_run.dart';
 import 'package:yaml/yaml.dart';
 
 import 'initialize/initialize.dart';

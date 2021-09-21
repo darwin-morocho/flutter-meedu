@@ -112,7 +112,7 @@ class InitializeCommand extends Command<void> {
       }
 
       final processResult = await Shell().run(
-        '${projectName != null ? "cd projectName &&" : ""} flutter pub get',
+        '${projectName != null ? "cd $projectName && " : ""}flutter pub get',
       );
       final exitCode = processResult.first.exitCode;
       if (exitCode != 0) {
@@ -139,7 +139,8 @@ manually fix them in your "pubspec.yaml" and next run this command again.
 
       stderr.writeln(
         r'''
-      Create clean architecture folder structure?
+
+🧐 Create clean architecture folder structure?
       ''',
       );
       final menu = Menu(['Yes', 'No']);
@@ -148,6 +149,17 @@ manually fix them in your "pubspec.yaml" and next run this command again.
       if (result.value == "Yes") {
         createCleanStructure();
       }
+
+      stdout.writeln("""
+
+😃 success. Now you need to go to your pubspec.yaml
+and ensure that you are using dart >= 2.13.0
+
+for example:
+
+environment:
+  sdk: '>=2.13.0 <3.0.0'
+      """);
     } on Exception catch (e) {
       stderr.writeln(e.toString());
     }
