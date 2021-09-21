@@ -10,6 +10,10 @@ You have to ways to manage the state of your widgets or pages:
 - Using a  `SimpleNotifier` similiar to `ChangeNotifier` for a simple state.
 - Using a `StateNotifier` for complex states.
 
+:::success
+If you are using **visual studio code** you can use this [extension](https://marketplace.visualstudio.com/items?itemName=meedu.meedu) for a fast development with flutter_meedu
+:::
+
 
 # Auto dispose feature
 The **life cycle** of a `SimpleNotifier` or a `StateNotifier` by default is attached to one `Route`. It means that our notifiers will be disposed when the `route` who created the `SimpleNotifier` or a `StateNotifier` is popped.

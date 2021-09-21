@@ -1,0 +1,54 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:process_run/shell_run.dart';
+import 'package:yaml/yaml.dart';
+
+final pubspecFile = File('pubspec.yaml');
+
+Future<bool> addDependency() async {
+  try {
+    final languageCode = Platform.localeName.split('_')[0];
+    final package = 'flutter_meedu';
+    final url = languageCode == 'zh'
+        ? 'https://pub.flutter-io.cn/api/packages/$package'
+        : 'https://pub.dev/api/packages/$package';
+
+    final uri = Uri.parse(url);
+
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final version = jsonDecode(response.body)['latest']['version'] as String;
+
+      final pubAsString = pubspecFile.readAsStringSync();
+      final key = "dependencies:";
+      final index = pubAsString.indexOf(key);
+
+      final firstPart = pubAsString.substring(0, index + key.length);
+      final secondPart = pubAsString.substring(
+        index + key.length,
+        pubAsString.length,
+      );
+
+      final newPubspec = firstPart + "\n  $package: ^$version" + secondPart;
+
+      stderr.writeln("🔥 Added flutter_meedu: $version");
+
+      pubspecFile.writeAsStringSync(newPubspec);
+
+      /// run flutter pub get
+      await Shell(verbose: true).run('flutter pub get');
+      return true;
+    }
+    return false;
+  } catch (_,s) {
+    print(_);
+    print(s);
+    return false;
+  }
+}
+
+Map<String, dynamic> get pubspec {
+  final doc = loadYaml(pubspecFile.readAsStringSync());
+  return Map<String, dynamic>.from(doc);
+}

@@ -1,0 +1,23 @@
+name: meedu_cli
+description: A simple command-line application.
+version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.14.0 <3.0.0'
+
+
+dependencies:
+  args: ^2.3.0
+  path: ^1.8.0
+  pubspec_parse: ^1.1.0
+  pub_semver: ^2.1.0
+  http: ^0.13.3
+  pubspec: ^2.0.1
+  process_run: ^0.12.2+1
+  glob: ^2.0.1
+  yaml: ^3.1.0
+  cli_menu: ^0.3.0-nullsafety.0
+
+dev_dependencies:
+  lints: ^1.0.0

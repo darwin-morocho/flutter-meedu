@@ -16,6 +16,7 @@ ignore:
   - "**/example/"
   - "examples"
   - "website/"
+  - "cli/"
   - "**/*.g.dart"
   - "**/*.freezed.dart"
 
