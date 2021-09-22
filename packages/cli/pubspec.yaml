@@ -1,6 +1,6 @@
 name: meedu_cli
 description: A CLI generator for flutter_meedu
-version: 0.0.1
+version: 0.0.3
 homepage: https://github.com/darwin-morocho/flutter-meedu/tree/master/packages/meedu_cli
 documentation: https://flutter.meedu.app
 
@@ -23,3 +23,7 @@ dependencies:
   
 dev_dependencies:
   lints: ^1.0.0
+
+
+executables:
+  meedu:

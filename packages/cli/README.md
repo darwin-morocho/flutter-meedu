@@ -2,6 +2,12 @@ A CLI generator for **flutter_meedu**
 
 ## Install
 ```shell
+dart pub global activate very_good_cli
+```
+
+or
+
+```shell
 flutter pub global activate meedu_cli
 ```
 
