@@ -1,6 +1,9 @@
 import 'package:args/command_runner.dart';
-import 'package:meedu_cli/src/create/create.dart';
-import 'package:meedu_cli/src/initialize/initialize.dart';
+
+import 'src/commands/create/create.dart';
+import 'src/commands/initialize/initialize.dart';
+import 'src/commands/page/page.dart';
+
 
 class Commands extends CommandRunner<void> {
   Commands()
@@ -10,5 +13,6 @@ class Commands extends CommandRunner<void> {
         ) {
     addCommand(InitializeCommand());
     addCommand(CreateCommand());
+    addCommand(PageCommand());
   }
 }

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
-import 'package:meedu_cli/src/utils.dart';
+import 'package:meedu_cli/src/utils/add_dependency.dart';
+import 'package:meedu_cli/src/utils/pubspec.dart';
+import 'package:meedu_cli/src/utils/validate_flutter_project.dart';
 import 'package:process_run/shell_run.dart';
 
 import 'create_clean_structure.dart';
@@ -26,31 +28,7 @@ class InitializeCommand extends Command<void> {
   @override
   Future<void> run() async {
     try {
-      /// check if pubspec.yaml exists
-      if (!pubspecFile.existsSync()) {
-        throw Exception(
-          '❌  pubspec.yaml not found! Make sure you are in the root directory of your app',
-        );
-      }
-
-      if (pubspec["dependencies"] == null) {
-        throw Exception(
-          '❌  dependencies bloc not found in your pubspec.yaml',
-        );
-      }
-
-      if (pubspec["dev_dependencies"] == null) {
-        throw Exception(
-          '❌  dev_dependencies bloc not found in your pubspec.yaml',
-        );
-      }
-
-      final flutter = pubspec['dependencies']["flutter"];
-      if (flutter == null) {
-        throw Exception(
-          '❌  no flutter project detected',
-        );
-      }
+      validateFlutterProject();
 
       final meedu = pubspec["dependencies"]['flutter_meedu'];
 
@@ -69,8 +47,7 @@ class InitializeCommand extends Command<void> {
       final equatable = dependencies['equatable'];
       final freezed = dependencies['freezed'] ?? devDependencies['freezed'];
 
-      final buildRunner =
-          dependencies['build_runner'] ?? devDependencies['build_runner'];
+      final buildRunner = dependencies['build_runner'] ?? devDependencies['build_runner'];
 
       if (equatable == null && freezed == null) {
         stderr.writeln(

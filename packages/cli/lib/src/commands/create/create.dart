@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
-import 'package:meedu_cli/src/initialize/initialize.dart';
+import 'package:meedu_cli/src/commands/initialize/initialize.dart';
 import 'package:process_run/shell_run.dart';
 
 class CreateCommand extends Command {
@@ -22,7 +22,7 @@ class CreateCommand extends Command {
       stdout.write("🔤 Project name: ");
       final projectName = getInput() ?? "";
       if (projectName.contains(" ") && projectName.trim().isNotEmpty) {
-        throw Exception("Invalid project name, white spaces are not allowed.");
+        throw Exception("Invalid project name, white spaces, - , and special characters are not allowed.");
       }
       if (projectName.trim().isEmpty) {
         throw Exception("Invalid project name");
@@ -50,7 +50,7 @@ class CreateCommand extends Command {
       if (exitCode != 0) {
         throw Exception('"$command" finished with exit code $exitCode.');
       }
-      await Shell().run("cd $projectName");
+
       InitializeCommand.projectName = projectName;
       InitializeCommand().run();
     } catch (e) {

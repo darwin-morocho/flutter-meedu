@@ -1,18 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:yaml/yaml.dart';
 
-import 'initialize/initialize.dart';
-
-String get basePath {
-  if (InitializeCommand.projectName != null) {
-    return "${InitializeCommand.projectName}/";
-  }
-  return "";
-}
-
-File get pubspecFile => File('${basePath}pubspec.yaml');
+import 'pubspec.dart';
 
 Future<bool> addDependency(
   String package, {
@@ -54,9 +44,4 @@ Future<bool> addDependency(
     stderr.writeln(s);
     return false;
   }
-}
-
-Map<String, dynamic> get pubspec {
-  final doc = loadYaml(pubspecFile.readAsStringSync());
-  return Map<String, dynamic>.from(doc);
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:meedu_cli/src/utils.dart';
+import 'package:meedu_cli/src/utils/base_path.dart';
+import 'package:meedu_cli/src/utils/pubspec.dart';
 
 void createCleanStructure() {
   stderr.writeln("👊 creating clean architecture folder structure");
@@ -8,19 +9,19 @@ void createCleanStructure() {
     Directory('${basePath}lib').deleteSync(recursive: true);
   }
 
-  Directory('${basePath}lib/app').createSync(recursive: true);
-  Directory('${basePath}lib/app/data/data_source').createSync(recursive: true);
-  Directory('${basePath}lib/app/data/helpers').createSync(recursive: true);
-  Directory('${basePath}lib/app/data/repositories_impl')
-      .createSync(recursive: true);
-  Directory('${basePath}lib/app/domain/models').createSync(recursive: true);
-  Directory('${basePath}lib/app/domain/repositories')
-      .createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/routes').createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages').createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/global_widgets').createSync(recursive: true);
+  final appDir = '${basePath}lib/app';
 
-  final routesFile = File('${basePath}lib/app/ui/routes/routes.dart');
+  Directory(appDir).createSync(recursive: true);
+  Directory('$appDir/data/data_source').createSync(recursive: true);
+  Directory('$appDir/data/helpers').createSync(recursive: true);
+  Directory('$appDir/data/repositories_impl').createSync(recursive: true);
+  Directory('$appDir/domain/models').createSync(recursive: true);
+  Directory('$appDir/domain/repositories').createSync(recursive: true);
+  Directory('$appDir/ui/routes').createSync(recursive: true);
+  Directory('$appDir/ui/pages').createSync(recursive: true);
+  Directory('$appDir/ui/global_widgets').createSync(recursive: true);
+
+  final routesFile = File('$appDir/ui/routes/routes.dart');
   routesFile.writeAsStringSync("""
 // ignore_for_file: constant_identifier_names
 
@@ -31,7 +32,7 @@ abstract class Routes {
   routesFile.createSync(recursive: true);
 
   /// create appRoutes Map
-  final appRoutesFile = File('${basePath}lib/app/ui/routes/app_routes.dart');
+  final appRoutesFile = File('$appDir/ui/routes/app_routes.dart');
   appRoutesFile.writeAsStringSync("""
 import 'package:flutter/widgets.dart' show BuildContext, Widget;
 import 'routes.dart';
@@ -46,16 +47,12 @@ Map<String, Widget Function(BuildContext)> get appRoutes {
   appRoutesFile.createSync(recursive: true);
 
   /// create home page demo
-  Directory('${basePath}lib/app/ui/pages/home/controller')
-      .createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages/home/utils')
-      .createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages/home/widgets')
-      .createSync(recursive: true);
-  Directory('${basePath}lib/app/ui/pages/home/widgets')
-      .createSync(recursive: true);
+  Directory('$appDir/ui/pages/home/controller').createSync(recursive: true);
+  Directory('$appDir/ui/pages/home/utils').createSync(recursive: true);
+  Directory('$appDir/ui/pages/home/widgets').createSync(recursive: true);
+  Directory('$appDir/ui/pages/home/widgets').createSync(recursive: true);
 
-  final homePageFile = File('${basePath}lib/app/ui/pages/home/home_page.dart');
+  final homePageFile = File('$appDir/ui/pages/home/home_page.dart');
   homePageFile.writeAsStringSync("""
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/state.dart';
@@ -88,7 +85,7 @@ class HomePage extends StatelessWidget {
   homePageFile.createSync(recursive: true);
 
   final homeControllerFile =
-      File('${basePath}lib/app/ui/pages/home/controller/home_controller.dart');
+      File('$appDir/ui/pages/home/controller/home_controller.dart');
   homeControllerFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 
@@ -107,8 +104,7 @@ class HomeController extends SimpleNotifier {
 
   homePageFile.createSync(recursive: true);
 
-  final homeProviderFile =
-      File('${basePath}lib/app/ui/pages/home/controller/home_provider.dart');
+  final homeProviderFile = File('$appDir/ui/pages/home/controller/home_provider.dart');
   homeProviderFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 import 'home_controller.dart';
@@ -132,7 +128,7 @@ void main() {
 
   mainFile.createSync(recursive: true);
 
-  final myAppFile = File('${basePath}lib/app/my_app.dart');
+  final myAppFile = File('$appDir/my_app.dart');
   myAppFile.writeAsStringSync("""
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/router.dart' as router;
