@@ -107,3 +107,27 @@ class LoginPage extends PageWithArgumentsWidget {
   }
 }
 ```
+
+:::success
+Since `flutter_meedu:^5.1.0` if you are using the meedu's router module
+to navigate in your app you can get your arguments without BuildContext
+and you can directly use them in your providers. With this you don't need
+a `PageWithArgumentsWidget` to pass route arguments to your providers.
+
+```dart
+/// also you can pass directly the route arguments to your controllers
+final loginProvider = SimpleProvider(
+  (_) => LoginController(router.arguments as String),
+);
+
+or
+
+/// if you need to write unit or widget testing
+/// you can use the [overrideProvider] method
+setUp((){
+  loginProvider.overrideProvider(
+    (_) => LoginController(mockedInitialValue),
+  );
+});
+```
+:::

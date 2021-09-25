@@ -4,7 +4,6 @@ import 'meedu_page_route.dart';
 import 'transition.dart';
 import 'utils.dart';
 import 'navigator.dart';
-
 export 'transition.dart';
 
 /// a GlobalKey<NavigatorState> to navigate without BuildContext
@@ -278,9 +277,31 @@ bool canPop() {
 }
 
 /// return the arguments of the current page
-T arguments<T>(BuildContext context) {
-  _validateRouterState();
-  return ModalRoute.of(context)?.settings.arguments as T;
+Object? get arguments {
+  return settings.arguments;
+}
+
+/// return the current route settings
+RouteSettings get settings {
+  assert(
+    MeeduNavigator.i.routeSettings != null,
+    '''
+    you need to define the navigator observer to allow
+    flutter_meedu store the settings of the current route
+
+      MaterialApp(
+        key: router.appKey,
+        initialRoute: '/',
+        navigatorKey: router.navigatorKey,
+        navigatorObservers: [
+          router.observer, //<-- ADD THIS LINE
+        ],
+        routes: YOUR_ROUTES,
+      ),
+
+    ''',
+  );
+  return MeeduNavigator.i.routeSettings!;
 }
 
 /// return null if default transition must be used

@@ -36,6 +36,20 @@ final counterProvider = SimpleProvider(
   (ref) => CounterController(),
 );
 ```
+
+:::note
+If you don't use lambda functions to define the callback for your provider
+you must define the Generic Type
+```dart
+final counterProvider = SimpleProvider<CounterController>(
+  (ref) {
+    /// YOUR CODE HERE
+    return CounterController();
+  },
+);
+```
+:::
+
 Now you can use the `Consumer` widget to read your `CounterController`.
 ```dart
 import 'package:flutter_meedu/state.dart';

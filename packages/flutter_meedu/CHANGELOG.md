@@ -1,3 +1,62 @@
+## [5.1.0]
+- now the router module allows you access to the
+route arguments without BuildContext. To do this you need 
+to add the observer in your navigatorObservers.
+
+```dart
+import 'package:flutter_meedu/router.dart' as router;
+
+MaterialApp(
+  navigatorKey: router.navigatorKey,// <-- ADD THIS
+  home: HomePage(),
+  navigatorObservers: [
+    router.observer,// <-- ADD THIS
+  ],
+  .
+  .
+  .
+),
+```
+
+then you can access to the route setting or arguments
+```dart
+import 'package:flutter_meedu/router.dart' as router;
+.
+.
+.
+// now you can use
+final arguments = router.arguments;
+
+/// current route settings
+final settings = router.settings;
+
+.
+.
+.
+/// also you can pass directly the route arguments to your controllers
+final counterProvider = SimpleProvider(
+  (_) => CounterController(router.arguments as int),
+);
+
+or
+
+final counterProvider = SimpleProvider<CounterController>(
+  (_) {
+    final initialValue = router.arguments as int;
+    return CounterController(initialValue);
+  },
+);
+
+
+/// if you need to write unit or widget testing
+/// you can use the [overrideProvider] method
+setUp((){
+  counterProvider.overrideProvider(
+    (_) => CounterController(mockedInitialValue),
+  );
+});
+```
+
 ## [5.0.1]
 - Updated to `meedu: ^4.2.1`
 

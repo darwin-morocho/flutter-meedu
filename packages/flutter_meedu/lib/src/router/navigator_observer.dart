@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/src/router/navigator.dart';
 import 'package:meedu/get.dart';
 import 'package:meedu/provider.dart';
 
@@ -69,6 +70,7 @@ class _NavigatorObserver extends NavigatorObserver {
   }) {
     if (route is PageRoute && route.isCurrent) {
       BaseProvider.creatorName = this._getRouteName(route);
+      MeeduNavigator.i.setRouteSettings(route.settings);
       if (checkAutoDispose) {
         // wait to the popped animation transisiton
         route.completed.then((_) => _checkAutoDispose(route));

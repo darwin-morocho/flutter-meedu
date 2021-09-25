@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: router.navigatorKey, // add the navigator key
+      navigatorObservers: [
+        router.observer,// <-- ADD THIS
+      ],
       home: HomePage(),
       routes: {YOUR_ROUTES},
     );
@@ -45,12 +48,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // WARNING: when you use ModalRoute.of(context).settings.arguments
-    // inside a build method this could rebuild your widget when it is destroyed.
-    // router.arguments<String>(context) uses  ModalRoute.of(context).settings.arguments
-    // in that cases I recommend get your arguments before create your Page
-    // in that case you can use the PageWithArgumentsWidget class
-    final arguments = router.arguments<String>(context);
+    final arguments = router.arguments as String;
     return YOUR_WIDGET;
   }
 }
@@ -67,6 +65,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       key: router.appKey,// add the route key
       navigatorKey: router.navigatorKey, // add the navigator key
+      navigatorObservers: [
+        router.observer,// <-- ADD THIS
+      ],
       onGenerateRoute: (settings) {
         final name = settings.name;
         switch (name) {
@@ -114,6 +115,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       key: router.appKey,// add the route key
       navigatorKey: router.navigatorKey, // add the navigator key
+      navigatorObservers: [
+        router.observer,// <-- ADD THIS
+      ],
       home: HomePage(),
       routes: {YOUR_ROUTES},
     );

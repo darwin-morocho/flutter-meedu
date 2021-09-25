@@ -8,7 +8,9 @@ import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
-final _provider = StateProvider<LoginController, LoginState>((_) => LoginController());
+final _provider = StateProvider<LoginController, LoginState>(
+  (_) => LoginController(),
+);
 void main() {
   tearDown(() {
     _provider.dispose();

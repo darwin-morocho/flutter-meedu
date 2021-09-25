@@ -9,6 +9,11 @@ class MeeduNavigator {
   GlobalKey<NavigatorState>? _naviatorKey;
   GlobalKey? _appKey;
 
+  RouteSettings? _currentRouteSettings;
+
+  /// store the current route settings
+  RouteSettings? get routeSettings => _currentRouteSettings;
+
   /// return the navigator key
   GlobalKey<NavigatorState> get navigatorKey {
     _naviatorKey ??= GlobalKey<NavigatorState>();
@@ -25,6 +30,14 @@ class MeeduNavigator {
 
   /// default transition duration
   Duration transitionDuration = const Duration(milliseconds: 300);
+
+  /// set the current route settings data
+  void setRouteSettings(
+    RouteSettings settings, {
+    bool isOverrride = false,
+  }) {
+    _currentRouteSettings = settings;
+  }
 
   /// use this method for widget testing
   void dispose() {
