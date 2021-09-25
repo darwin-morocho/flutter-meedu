@@ -25,6 +25,7 @@ void main() {
         ),
       );
       expect(router.canPop(), false);
+      expect(router.settings.name, "/");
       expect(router.arguments, isNull);
       await test.tap(find.text("pushNamed"));
       await test.pumpAndSettle();
@@ -40,6 +41,10 @@ void main() {
       expect(find.text("meedu"), findsOneWidget);
       expect(router.arguments, "meedu");
       expect(router.canPop(), false);
+      await test.tap(find.byType(FloatingActionButton));
+      await test.pumpAndSettle();
+      expect(router.settings.name, "/");
+      expect(router.arguments, "works");
     });
   });
 
@@ -153,6 +158,9 @@ class DetailPage extends StatelessWidget {
         ),
       ),
       body: Text(productName),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => router.pushNamedAndRemoveUntil('/', arguments: 'works'),
+      ),
     );
   }
 }
