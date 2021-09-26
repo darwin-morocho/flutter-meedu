@@ -1,6 +1,6 @@
 library router;
 
-export 'src/router/transitions/custom_transition.dart';
-export 'src/router/router.dart';
-export 'src/router/utils.dart';
-export 'src/router/navigator_observer.dart';
+export 'src/navigation/transitions/custom_transition.dart';
+export 'src/navigation/router/router.dart';
+export 'src/navigation/router/utils.dart';
+export 'src/navigation/navigator_observer.dart';

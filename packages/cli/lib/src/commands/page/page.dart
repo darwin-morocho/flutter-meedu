@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
+import 'package:meedu_cli/src/commands/page/add_page_to_routes.dart';
 import 'package:meedu_cli/src/utils/validate_flutter_project.dart';
 import '../create/create.dart';
 import '../page/simple_notifier_template.dart';
@@ -44,8 +45,7 @@ class PageCommand extends Command {
         name += e.capitalize();
       }
       fileName = fileName.substring(1, fileName.length);
-      stdout.writeln("fileName $fileName");
-      stdout.writeln("name $name");
+
 
       /// if the developer want to use a StateNotifier
       if (notifier == 0) {
@@ -53,6 +53,7 @@ class PageCommand extends Command {
       } else if (notifier == 1) {
         await createStateNotifierTemplate(name, fileName);
       }
+      addPageToRoutes(name, fileName);
     } catch (e) {
       stdout.writeln("❌ $e");
     }

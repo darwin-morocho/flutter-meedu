@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart' show CupertinoApp;
 import 'package:flutter/material.dart';
-import '../../router.dart';
-import 'gesture_detector/back_gesture_controller.dart';
-import 'gesture_detector/gesture_detector.dart';
-import 'transitions/down_to_up.dart';
-import 'transitions/right_to_left.dart';
-import 'transition.dart';
-import 'transitions/up_to_down.dart';
+import '../gesture_detector/back_gesture_controller.dart';
+import '../gesture_detector/gesture_detector.dart';
+import '../transitions/export.dart';
+import 'router.dart';
 
 class MeeduPageRoute<T> extends PageRoute<T> {
   final Duration transitionDuration;

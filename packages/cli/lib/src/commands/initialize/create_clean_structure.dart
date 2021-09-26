@@ -24,7 +24,7 @@ void createCleanStructure() {
   final routesFile = File('$appDir/ui/routes/routes.dart');
   routesFile.writeAsStringSync("""
 // ignore_for_file: constant_identifier_names
-
+/// WARNING: generated code don't modify directly
 abstract class Routes {
   static const HOME = '/home';
 }
@@ -38,6 +38,7 @@ import 'package:flutter/widgets.dart' show BuildContext, Widget;
 import 'routes.dart';
 import '../pages/home/home_page.dart';
 
+/// WARNING: generated code don't modify directly
 Map<String, Widget Function(BuildContext)> get appRoutes {
   return {
     Routes.HOME: (_) => const HomePage(),
@@ -84,8 +85,7 @@ class HomePage extends StatelessWidget {
 
   homePageFile.createSync(recursive: true);
 
-  final homeControllerFile =
-      File('$appDir/ui/pages/home/controller/home_controller.dart');
+  final homeControllerFile = File('$appDir/ui/pages/home/controller/home_controller.dart');
   homeControllerFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 
@@ -206,5 +206,13 @@ void main() {
   """);
   file.createSync(recursive: true);
 
+  final gitignoreFile = File("$basePath/.gitignore");
+  if (gitignoreFile.existsSync()) {
+    final gitignoreCode = gitignoreFile.readAsStringSync();
+    gitignoreFile.writeAsStringSync("""
+$gitignoreCode
+*.freezed.dart
+    """);
+  }
   stderr.writeln("😎 clean architecture structure generated");
 }

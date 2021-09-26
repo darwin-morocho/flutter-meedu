@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/src/router/navigator.dart';
+import 'router/navigator.dart';
 import 'package:meedu/get.dart';
 import 'package:meedu/provider.dart';
 
