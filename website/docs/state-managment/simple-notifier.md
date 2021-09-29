@@ -85,7 +85,7 @@ class CounterPage extends StatelessWidget {
 ```
 
 By default the `counterProvider` variable doesn't create one instance of `CounterController` until it is need it. In this case the `Consumer`
-widget call to the `read` method of our `counterProvider` and check if the `CounterController` was created and return the `CounterController` that was created before or create a new `CounterController`.
+widget call to the `read` property of our `counterProvider` and check if the `CounterController` was created and return the `CounterController` that was created before or create a new `CounterController`.
 
 
 The `dispose` method in our `CounterController` will be called when the `route` who created the `CounterController` is popped.
@@ -97,6 +97,10 @@ final counterProvider = SimpleProvider(
   autoDispose: false,// <-- ADD THIS TO DISABLE THE AUTO DISPOSE
 );
 ```
+:::note
+`autoDispose: false` can be used to define global states.
+:::
+
 :::danger WARNING
 When you disable the `autoDispose` of your `provider` you need to handle it manually. For example 
 :::

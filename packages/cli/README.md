@@ -2,7 +2,7 @@ A CLI generator for **flutter_meedu**
 
 ## Install
 ```shell
-dart pub global activate very_good_cli
+dart pub global activate meedu_cli
 ```
 
 or
@@ -25,4 +25,12 @@ meedu init
 
 // or
 meedu -i
+
+
+// To create a new page with the controller and provider following
+// the clean architecture proposed by meedu
+meedu page
+
+// or 
+meedu -p
 ```

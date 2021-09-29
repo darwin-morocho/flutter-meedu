@@ -5,7 +5,8 @@ import 'package:process_run/shell_run.dart';
 
 import 'page.dart' show StringExtension;
 
-Future<void> createStateNotifierTemplate(String pageName, String fileName) async {
+Future<void> createStateNotifierTemplate(
+    String pageName, String fileName) async {
   final dependencies = pubspec["dependencies"];
   final devDependencies = pubspec["dev_dependencies"];
 
@@ -117,6 +118,7 @@ class ${pageName}Page extends StatelessWidget {
   stateFile.createSync(recursive: true);
 
   if (freezed != null) {
-    await Shell().run("flutter pub run build_runner build --delete-conflicting-outputs");
+    await Shell()
+        .run("flutter pub run build_runner build --delete-conflicting-outputs");
   }
 }

@@ -4,7 +4,6 @@ import 'src/commands/create/create.dart';
 import 'src/commands/initialize/initialize.dart';
 import 'src/commands/page/page.dart';
 
-
 class Commands extends CommandRunner<void> {
   Commands()
       : super(

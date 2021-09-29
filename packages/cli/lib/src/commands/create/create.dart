@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
 import 'package:meedu_cli/src/commands/initialize/initialize.dart';
+import 'package:meedu_cli/src/utils/validator.dart';
 import 'package:process_run/shell_run.dart';
 
 class CreateCommand extends Command {
@@ -22,10 +23,15 @@ class CreateCommand extends Command {
       stdout.write("🔤 Project name: ");
       final projectName = getInput() ?? "";
       if (projectName.contains(" ") && projectName.trim().isNotEmpty) {
-        throw Exception("Invalid project name, white spaces, - , and special characters are not allowed.");
+        throw Exception(
+            "Invalid project name, white spaces, - , and special characters are not allowed.");
       }
       if (projectName.trim().isEmpty) {
         throw Exception("Invalid project name");
+      }
+
+      if (containsSpecialCharacter(projectName)) {
+        throw Exception("Special Character are not allowed");
       }
 
       stdout.write("\n🔤 organization (default: com.example): ");

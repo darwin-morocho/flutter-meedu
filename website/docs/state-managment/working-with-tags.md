@@ -70,9 +70,9 @@ class SimpleConsumerWithTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (_, watch, __) {
+      builder: (_, ref, __) {
         // the find method creates a new unique provider using a string as key
-        final controller = watch(
+        final controller = ref.watch(
           counterProviderWithTag.find(tagName),
         );
         final counter = controller.counter;

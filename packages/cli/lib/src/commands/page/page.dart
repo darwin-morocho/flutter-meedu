@@ -4,13 +4,15 @@ import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
 import 'package:meedu_cli/src/commands/page/add_page_to_routes.dart';
 import 'package:meedu_cli/src/utils/validate_flutter_project.dart';
+import 'package:meedu_cli/src/utils/validator.dart';
 import '../create/create.dart';
 import '../page/simple_notifier_template.dart';
 import 'state_notifier_template.dart';
 
 class PageCommand extends Command {
   @override
-  String get description => 'Creates a new page using a SimpleNofier or a StateNotifier,'
+  String get description =>
+      'Creates a new page using a SimpleNofier or a StateNotifier,'
       ' also create the provider attached to the controller.';
 
   @override
@@ -23,14 +25,20 @@ class PageCommand extends Command {
   Future<void> run() async {
     try {
       validateFlutterProject();
-      stdout.write("🔤 Page name (use spaces for names with multiples worlds): ");
+      stdout
+          .write("🔤 Page name (use spaces for names with multiples worlds): ");
 
       String name = getInput() ?? "";
       if (name.contains("-")) {
-        throw Exception("Invalid name, '-' and special characters are not allowed.");
+        throw Exception(
+            "Invalid name, '-' and special characters are not allowed.");
       }
       if (name.trim().isEmpty) {
         throw Exception("Invalid name");
+      }
+
+      if (containsSpecialCharacter(name)) {
+        throw Exception("Special Character are not allowed");
       }
 
       stdout.writeln("\n✅ Create a controller and a provider using");
@@ -45,7 +53,6 @@ class PageCommand extends Command {
         name += e.capitalize();
       }
       fileName = fileName.substring(1, fileName.length);
-
 
       /// if the developer want to use a StateNotifier
       if (notifier == 0) {

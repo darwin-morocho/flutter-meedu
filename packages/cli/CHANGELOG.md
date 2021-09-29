@@ -1,3 +1,8 @@
+## 0.0.4+1
+- Updated readme.
+
+## 0.0.4
+- Added page command.
 ## 0.0.3
 - renamed bin/meedu_cli.dart
 

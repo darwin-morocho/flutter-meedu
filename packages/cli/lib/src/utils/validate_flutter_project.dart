@@ -1,4 +1,3 @@
-
 import 'package:meedu_cli/src/utils/pubspec.dart';
 
 void validateFlutterProject() {

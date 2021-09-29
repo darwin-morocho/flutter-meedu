@@ -6,12 +6,15 @@ sidebar_position: 2
 
 ## How it works?
 
-You have to ways to manage the state of your widgets or pages:
+You have 2 ways to manage the state of your widgets or pages:
 - Using a  `SimpleNotifier` similiar to `ChangeNotifier` for a simple state.
 - Using a `StateNotifier` for complex states.
 
 :::success
 If you are using **visual studio code** you can use this [extension](https://marketplace.visualstudio.com/items?itemName=meedu.meedu) for a fast development with flutter_meedu
+:::
+:::success
+Also for linux and macOs (not tested on Windows yet, you can try it if you wish) users you can use [meedu_cli](https://pub.dev/packages/meedu_cli) to create flutter projects using flutter_meedu, define a clean architecture and create your pages.
 :::
 
 

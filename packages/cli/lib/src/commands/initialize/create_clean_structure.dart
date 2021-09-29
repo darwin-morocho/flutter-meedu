@@ -85,7 +85,8 @@ class HomePage extends StatelessWidget {
 
   homePageFile.createSync(recursive: true);
 
-  final homeControllerFile = File('$appDir/ui/pages/home/controller/home_controller.dart');
+  final homeControllerFile =
+      File('$appDir/ui/pages/home/controller/home_controller.dart');
   homeControllerFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 
@@ -104,7 +105,8 @@ class HomeController extends SimpleNotifier {
 
   homePageFile.createSync(recursive: true);
 
-  final homeProviderFile = File('$appDir/ui/pages/home/controller/home_provider.dart');
+  final homeProviderFile =
+      File('$appDir/ui/pages/home/controller/home_provider.dart');
   homeProviderFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 import 'home_controller.dart';

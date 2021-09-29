@@ -16,7 +16,9 @@ Future<void> addPageToRoutes(String pageName, String fileName) async {
         final fisrtPart = routesCode.substring(0, lastIndex);
         final secondPart = routesCode.substring(lastIndex, routesCode.length);
         final constName = fileName.toUpperCase();
-        final newCode = fisrtPart + "static const $constName = '/${fileName.replaceAll("_", "-")}';" + secondPart;
+        final newCode = fisrtPart +
+            "static const $constName = '/${fileName.replaceAll("_", "-")}';" +
+            secondPart;
         routesFile.writeAsStringSync(newCode);
 
         /// add the page to the app_routes.dart file
@@ -32,7 +34,8 @@ Future<void> addPageToRoutes(String pageName, String fileName) async {
 
           if (lastAppRoutesIndex != -1) {
             final fisrtPart = appRoutesCode.substring(0, lastAppRoutesIndex);
-            final secondPart = appRoutesCode.substring(lastAppRoutesIndex, appRoutesCode.length);
+            final secondPart = appRoutesCode.substring(
+                lastAppRoutesIndex, appRoutesCode.length);
             final newCode = """
 import '../pages/$fileName/${fileName}_page.dart';
 $fisrtPart

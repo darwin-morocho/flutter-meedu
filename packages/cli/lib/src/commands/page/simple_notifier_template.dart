@@ -3,7 +3,6 @@ import 'package:meedu_cli/src/utils/base_path.dart';
 
 import 'page.dart' show StringExtension;
 
-
 void createSimpleNotifierTemplate(String pageName, String fileName) {
   final controllerName = "${pageName}Controller";
   final folder = "${basePath}lib/app/ui/pages/$fileName";
