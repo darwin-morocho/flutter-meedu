@@ -5,6 +5,9 @@
    <a style={{marginLeft:10}} href="https://codecov.io/gh/darwin-morocho/flutter-meedu">
   <img src="https://codecov.io/gh/darwin-morocho/flutter-meedu/branch/master/graph/badge.svg?token=VM29N1NHWJ"/>
   </a>
+  <a style={{marginLeft:10}} href="https://discord.gg/rV4bPsdefj">
+  <img src="https://img.shields.io/static/v1?label=Discord&message=Server&color=1565c0"/>
+  </a>
   <img style={{marginLeft:10}} alt="license" src="https://img.shields.io/github/license/darwin-morocho/flutter-meedu"/>
   <img style={{marginLeft:10}} alt="stars" src="https://img.shields.io/github/stars/darwin-morocho/flutter-meedu?style=social"/>
 </p>
