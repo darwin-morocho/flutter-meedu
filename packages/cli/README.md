@@ -20,7 +20,7 @@ meedu create
 // or
 meedu -c
 
-// To initialize flutter_meedu in a empty project
+// To initialize flutter_meedu in an empty flutter project
 meedu init
 
 // or
