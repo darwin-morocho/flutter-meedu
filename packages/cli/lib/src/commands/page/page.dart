@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
 import 'package:meedu_cli/src/commands/page/add_page_to_routes.dart';
+import 'package:meedu_cli/src/utils/base_path.dart';
 import 'package:meedu_cli/src/utils/validate_flutter_project.dart';
 import 'package:meedu_cli/src/utils/validator.dart';
 import '../create/create.dart';
@@ -41,10 +42,6 @@ class PageCommand extends Command {
         throw Exception("Special Character are not allowed");
       }
 
-      stdout.writeln("\n✅ Create a controller and a provider using");
-      final menu = Menu(['SimpleNotifier', 'StateNotifier', 'none']);
-      final notifier = menu.choose().index;
-
       final splits = name.split(" ");
       name = "";
       String fileName = "";
@@ -54,13 +51,34 @@ class PageCommand extends Command {
       }
       fileName = fileName.substring(1, fileName.length);
 
+      final folder = "${basePath}lib/app/ui/pages/$fileName";
+      final pageFileName = "${fileName}_page.dart";
+
+      bool isOverride = false;
+
+      if (File("$folder/$pageFileName").existsSync()) {
+        stdout.writeln(
+            "\n⚠️  This page already exists. Do you want to override it?");
+        final menu = Menu(['Yes', 'No']);
+        if (menu.choose().index == 1) {
+          return;
+        }
+        isOverride = true;
+      }
+
+      stdout.writeln("\n✅ Create a controller and a provider using");
+      final menu = Menu(['SimpleNotifier', 'StateNotifier', 'none']);
+      final notifier = menu.choose().index;
+
       /// if the developer want to use a StateNotifier
       if (notifier == 0) {
         createSimpleNotifierTemplate(name, fileName);
       } else if (notifier == 1) {
         await createStateNotifierTemplate(name, fileName);
       }
-      addPageToRoutes(name, fileName);
+      if (!isOverride) {
+        addPageToRoutes(name, fileName);
+      }
     } catch (e) {
       stdout.writeln("❌ $e");
     }

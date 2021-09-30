@@ -1,4 +1,6 @@
-A CLI generator for **flutter_meedu**
+A CLI for **flutter_meedu**
+
+> For linux and macOS (not tested on Windows yet, you can try it if you wish) users you can use this CLI to create flutter projects using flutter_meedu, define a clean architecture and create your pages.
 
 ## Install
 ```shell

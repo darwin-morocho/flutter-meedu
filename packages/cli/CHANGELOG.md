@@ -1,3 +1,5 @@
+## 0.0.5
+- Added validation to check duplicated pages.
 ## 0.0.4+1
 - Updated readme.
 
