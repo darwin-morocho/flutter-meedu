@@ -1,3 +1,5 @@
+## [5.2.0]
+- Added validations for bad use of `ref.watch` and `ref.select`.
 ## [5.1.0]
 - now the router module allows you access to the
 route arguments without BuildContext. To do this you need 

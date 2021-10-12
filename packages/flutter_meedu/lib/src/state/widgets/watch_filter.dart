@@ -74,7 +74,8 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
+extension StateProviderExt<Notifier extends StateNotifier<S>, S>
+    on StateProvider<Notifier, S> {
   /// use this method to rebuild your [Consumer] using the previous state and the current
   /// state to return a boolean
   Target<Notifier, bool> when(BuildWhen<S> cb) {
@@ -120,7 +121,6 @@ void createSimpleSelectListener(Target target) {
   target.listener = listener;
 }
 
-
 /// create the listener for provider.select filter (StateProvider)
 void createStateSelectListener(Target target) {
   // get an initial value using the callback
@@ -141,7 +141,6 @@ void createStateSelectListener(Target target) {
   };
   target.listener = listener;
 }
-
 
 /// create the listener for provider.when filter
 void createWhenListener(Target target) {

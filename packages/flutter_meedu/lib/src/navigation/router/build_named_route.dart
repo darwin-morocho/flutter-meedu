@@ -1,6 +1,5 @@
 part of 'router.dart';
 
-
 /// return null if default transition must be used
 ///
 /// [transitionDuration] is ignored when transition is equals to Transition.material or Transition.cupertino
