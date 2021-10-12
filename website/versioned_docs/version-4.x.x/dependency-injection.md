@@ -25,7 +25,7 @@ Get.i.lazyPut<AuthRepository>(()=>new AuthRepositoryImpl());
 ```
 
 ## Auto remove
-First make sure that you have added the meedu observer in your navigator observers [more info](/docs/5.x.x/state-managment/intro#how-it-works).
+First make sure that you have added the meedu observer in your navigator observers [more info](/docs/5.x.x/state-management/intro#how-it-works).
 
 Now when tou call to `Get.i.put` or `Get.i.lazyPut` you can use the `autoRemove` parameter and set the value to `true` then when the router who created the dependency
 is popped the dependency will be deleted from memory.
