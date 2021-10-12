@@ -13,7 +13,7 @@ import 'state_notifier_template.dart';
 class PageCommand extends Command {
   @override
   String get description =>
-      'Creates a new page using a SimpleNofier or a StateNotifier,'
+      'Creates a new page using a SimpleNotifier or a StateNotifier,'
       ' also create the provider attached to the controller.';
 
   @override

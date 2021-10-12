@@ -1,3 +1,5 @@
+## 0.0.6
+- Updated command description.
 ## 0.0.5
 - Added validation to check duplicated pages.
 ## 0.0.4+1

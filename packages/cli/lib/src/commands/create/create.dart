@@ -30,8 +30,8 @@ class CreateCommand extends Command {
         throw Exception("Invalid project name");
       }
 
-      if (containsSpecialCharacter(projectName)) {
-        throw Exception("Special Character are not allowed");
+      if (containsSpecialCharacterExceptUnderscore(projectName)) {
+        throw Exception("Special Characters are not allowed");
       }
 
       stdout.write("\n🔤 organization (default: com.example): ");
