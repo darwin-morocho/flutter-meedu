@@ -29,6 +29,7 @@ abstract class ConsumerWidget extends StatefulWidget {
 
 class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   Map<BaseNotifier, ListenerCallback> _dependencies = {};
+  Map<BaseNotifier, Target> _targets = {};
 
   // initialized at true for the first build
   bool _isExternalBuild = true;
@@ -79,6 +80,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
       },
     );
     _dependencies = {};
+    _targets = {};
   }
 
   /// read a Notifier from one provider and subscribe the widget to the changes of this Notifier.
@@ -96,8 +98,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    final target =
-        providerOrTarget is Target ? providerOrTarget as Target : null;
+    final target = providerOrTarget is Target ? providerOrTarget as Target : null;
 
     late T notifier;
 
@@ -118,6 +119,17 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
       // was gotten using the .ids, .select or .when methods
       if (target != null) {
         target.rebuild = _rebuild;
+        if (notifier is StateNotifier) {
+          if (target.filter == Filter.select) {
+            createStateSelectListener(target);
+          } else {
+            createWhenListener(target);
+          }
+        } else {
+          if (target.filter == Filter.select) {
+            createSimpleSelectListener(target);
+          }
+        }
         listener = target.listener;
       } else {
         // if the notifier is a SimpleNotifier
@@ -158,12 +170,27 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
     // if there is not a listener for the current provider
     if (!insideDependencies) {
       target.rebuild = _rebuild;
+      if (notifier is StateNotifier) {
+        if (target.filter == Filter.select) {
+          createStateSelectListener(target);
+        } else {
+          throw FlutterError('.when filter only is allowed with ref.watch');
+        }
+      } else {
+        if (target.filter == Filter.select) {
+          createSimpleSelectListener(target);
+        } else {
+          throw FlutterError('.ids filter only is allowed with ref.watch');
+        }
+      }
+
       void Function(dynamic) listener = target.listener;
       // add the listener to the current notifier
       _dependencies[notifier as BaseNotifier] = listener;
+      _targets[notifier] = target;
       notifier.addListener(listener);
     }
-    return target.selectValue; // coverage:ignore-line
+    return _targets[notifier]!.selectValue; // coverage:ignore-line
   }
 
   @override

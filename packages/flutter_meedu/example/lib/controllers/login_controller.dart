@@ -13,6 +13,12 @@ class LoginController extends StateNotifier<LoginState> {
     state = state.copyWith(password: password);
   }
 
+  Future<void> submit() async {
+    state = state.copyWith(loading: true);
+    await Future.delayed(Duration(milliseconds: 1000));
+    state = state.copyWith(loading: false);
+  }
+
   @override
   void dispose() {
     print("Login disposed");
@@ -22,9 +28,11 @@ class LoginController extends StateNotifier<LoginState> {
 
 class LoginState extends Equatable {
   final String email, password;
+  final bool loading;
   LoginState({
     required this.email,
     required this.password,
+    this.loading = false,
   });
 
   static LoginState get initialState => LoginState(email: '', password: '');
@@ -32,13 +40,19 @@ class LoginState extends Equatable {
   LoginState copyWith({
     String? email,
     String? password,
+    bool? loading,
   }) {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
+      loading: loading ?? this.loading,
     );
   }
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [
+        email,
+        password,
+        loading,
+      ];
 }

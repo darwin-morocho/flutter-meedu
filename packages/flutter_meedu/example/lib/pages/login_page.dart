@@ -18,35 +18,63 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: Stack(
             children: [
-              TextField(
-                onChanged: loginProvider.read.onEmailChanged,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                ),
+              Column(
+                children: [
+                  TextField(
+                    onChanged: loginProvider.read.onEmailChanged,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                    ),
+                  ),
+                  TextField(
+                    onChanged: loginProvider.read.onPasswordChanged,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  Consumer(
+                    builder: (_, ref, __) {
+                      final email = ref.select(
+                        loginProvider.select(
+                          (_) => _.email,
+                        ),
+                      );
+                      return Text(email);
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () => loginProvider.read.submit(),
+                    // onPressed: () => router.pushNamed(Routes.HOME),
+                    child: Text("SIGN IN"),
+                  )
+                ],
               ),
-              TextField(
-                onChanged: loginProvider.read.onPasswordChanged,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                ),
-              ),
-              SizedBox(height: 30),
               Consumer(
                 builder: (_, ref, __) {
-                  final email = ref.select(
-                    loginProvider.select(
-                      (_) => _.email,
-                    ),
-                  );
-                  return Text(email);
+                  final loading = ref
+                      .watch(
+                        loginProvider.when(
+                          (prev, next) => prev.loading != next.loading,
+                        ),
+                      )
+                      .state
+                      .loading;
+                  if (loading) {
+                    return Positioned.fill(
+                      child: Container(
+                        color: Colors.black26,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    );
+                  }
+                  return Container();
                 },
               ),
-              ElevatedButton(
-                onPressed: () => router.pushNamed(Routes.HOME),
-                child: Text("SIGN IN"),
-              )
             ],
           ),
         ),
