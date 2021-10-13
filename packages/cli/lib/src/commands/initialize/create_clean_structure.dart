@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:meedu_cli/src/utils/base_path.dart';
-import 'package:meedu_cli/src/utils/pubspec.dart';
+import '../../utils/base_path.dart';
+import '../../utils/pubspec.dart';
 
 void createCleanStructure() {
   stderr.writeln("👊 creating clean architecture folder structure");

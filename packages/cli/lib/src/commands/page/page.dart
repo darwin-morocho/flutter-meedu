@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
-import 'package:meedu_cli/src/commands/page/add_page_to_routes.dart';
-import 'package:meedu_cli/src/utils/base_path.dart';
-import 'package:meedu_cli/src/utils/validate_flutter_project.dart';
-import 'package:meedu_cli/src/utils/validator.dart';
+
+import '../../utils/base_path.dart';
+import '../../utils/validate_flutter_project.dart';
+import '../../utils/validator.dart';
 import '../create/create.dart';
 import '../page/simple_notifier_template.dart';
+import 'add_page_to_routes.dart';
 import 'state_notifier_template.dart';
 
 class PageCommand extends Command {

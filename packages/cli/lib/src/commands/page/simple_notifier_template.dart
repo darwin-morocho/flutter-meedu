@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:meedu_cli/src/utils/base_path.dart';
 
+import '../../utils/base_path.dart';
 import 'page.dart' show StringExtension;
 
 void createSimpleNotifierTemplate(String pageName, String fileName) {

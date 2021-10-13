@@ -1,8 +1,9 @@
 import 'dart:io';
-import 'package:meedu_cli/src/utils/base_path.dart';
-import 'package:meedu_cli/src/utils/pubspec.dart';
+
 import 'package:process_run/shell_run.dart';
 
+import '../../utils/base_path.dart';
+import '../../utils/pubspec.dart';
 import 'page.dart' show StringExtension;
 
 Future<void> createStateNotifierTemplate(

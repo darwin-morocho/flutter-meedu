@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'meedu_page_route.dart';
-import 'utils.dart';
-import 'navigator.dart';
+
 import '../transitions/transition.dart';
+import 'meedu_page_route.dart';
+import 'navigator.dart';
+import 'utils.dart';
+
 export '../transitions/transition.dart';
 
 part 'build_named_route.dart';

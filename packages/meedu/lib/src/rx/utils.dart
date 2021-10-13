@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'rx.dart';
 
 extension RxExtensions<T> on Rx<T> {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+
 import 'package:meta/meta.dart' show mustCallSuper, protected;
 
 typedef ListenerCallback<T> = void Function(T);

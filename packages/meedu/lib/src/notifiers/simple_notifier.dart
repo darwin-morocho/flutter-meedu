@@ -1,5 +1,6 @@
-import 'base_notifier.dart';
 import 'package:meta/meta.dart' show mustCallSuper;
+
+import 'base_notifier.dart';
 
 abstract class SimpleNotifier extends BaseNotifier<List<String>> {
   /// notify to listeners and rebuild the widgets

@@ -1,6 +1,6 @@
 library meedu;
 
-export 'rx.dart';
 export 'get.dart';
-export 'state.dart';
 export 'provider.dart';
+export 'rx.dart';
+export 'state.dart';

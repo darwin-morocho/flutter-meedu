@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' show Widget, BuildContext, Key;
+
 import 'consumer_widget.dart';
 
 /// A function that can also listen to providers

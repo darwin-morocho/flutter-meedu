@@ -1,4 +1,4 @@
-import 'package:meedu_cli/src/utils/pubspec.dart';
+import 'pubspec.dart';
 
 void validateFlutterProject() {
   /// check if pubspec.yaml exists

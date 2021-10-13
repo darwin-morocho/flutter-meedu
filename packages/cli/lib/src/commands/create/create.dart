@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
-import 'package:meedu_cli/src/commands/initialize/initialize.dart';
-import 'package:meedu_cli/src/utils/validator.dart';
 import 'package:process_run/shell_run.dart';
+
+import '../../utils/validator.dart';
+import '../initialize/initialize.dart';
 
 class CreateCommand extends Command {
   @override

@@ -1,4 +1,5 @@
 import '../providers/base_provider.dart';
+
 part 'injectable.dart';
 
 /// Singleton to save dependencies

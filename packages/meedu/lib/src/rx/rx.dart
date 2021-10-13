@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:meta/meta.dart' show sealed;
+
 part 'rx_notifier.dart';
 
 /// Rx class to work with observables

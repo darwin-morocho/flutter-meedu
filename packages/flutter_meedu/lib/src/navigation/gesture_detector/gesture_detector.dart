@@ -1,7 +1,9 @@
 // coverage:ignore-start
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:math';
+
 import 'back_gesture_controller.dart';
 
 const double _kBackGestureWidth = 20.0;

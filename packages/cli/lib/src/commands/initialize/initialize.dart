@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
-import 'package:meedu_cli/src/utils/add_dependency.dart';
-import 'package:meedu_cli/src/utils/pubspec.dart';
-import 'package:meedu_cli/src/utils/validate_flutter_project.dart';
 import 'package:process_run/shell_run.dart';
 
+import '../../utils/add_dependency.dart';
+import '../../utils/pubspec.dart';
+import '../../utils/validate_flutter_project.dart';
 import 'create_clean_structure.dart';
 
 class InitializeCommand extends Command<void> {

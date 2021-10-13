@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart' show CupertinoApp;
 import 'package:flutter/material.dart';
+
 import '../gesture_detector/back_gesture_controller.dart';
 import '../gesture_detector/gesture_detector.dart';
 import '../transitions/export.dart';

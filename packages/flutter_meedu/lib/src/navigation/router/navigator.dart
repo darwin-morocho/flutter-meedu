@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 import '../transitions/transition.dart';
 
 ///this class has the navigator state and the transition configuration

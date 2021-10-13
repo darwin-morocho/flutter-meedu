@@ -1,13 +1,5 @@
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart'
-    show
-        BuildContext,
-        Key,
-        ModalRoute,
-        RouteSettings,
-        State,
-        StatefulWidget,
-        Widget;
+    show BuildContext, Key, ModalRoute, RouteSettings, State, StatefulWidget, Widget;
 
 /// A simple Widget with a callback useful to set arguments for one SimpleProvider or a StateProvider
 /// ```dart
@@ -95,8 +87,7 @@ abstract class PageWithArgumentsWidget extends StatefulWidget {
   Widget build(BuildContext context);
 
   @override
-  _PageWithArgumentsWidgetState createState() =>
-      _PageWithArgumentsWidgetState();
+  _PageWithArgumentsWidgetState createState() => _PageWithArgumentsWidgetState();
 }
 
 class _PageWithArgumentsWidgetState extends State<PageWithArgumentsWidget> {

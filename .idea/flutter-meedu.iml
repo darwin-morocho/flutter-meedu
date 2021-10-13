@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/packages/meedu/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/meedu/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/example/ios/.symlinks/plugins/video_player/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/example/ios/.symlinks/plugins/video_player/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/example/ios/.symlinks/plugins/video_player/build" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/flutter_meedu/example/ios/.symlinks/plugins/video_player/.pub" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,5 +1,5 @@
-import '../notifiers/base_notifier.dart';
 import '../../provider.dart';
+import '../notifiers/base_notifier.dart';
 
 class ProviderContainer {
   /// int used as key into the Map [ProviderScope.containers]

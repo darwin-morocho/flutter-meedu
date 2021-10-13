@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:meedu_cli/src/utils/base_path.dart';
 import 'package:process_run/shell_run.dart';
+
+import '../../utils/base_path.dart';
 
 Future<void> addPageToRoutes(String pageName, String fileName) async {
   final appDir = '${basePath}lib/app';

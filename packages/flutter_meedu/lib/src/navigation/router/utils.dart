@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../transitions/transition.dart';
 import 'meedu_page_route.dart';
 import 'navigator.dart';
-import '../transitions/transition.dart';
 
 /// get the transition
 Route<T> getRoute<T>(
