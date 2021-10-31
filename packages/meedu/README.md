@@ -10,14 +10,14 @@
 </p>
 
 # meedu
-A simple State Managment, Dependency Injection, Reactive programming for Dart projects.
+A simple State Management, Dependency Injection, Reactive programming for Dart projects.
 
 ## Overview
 
 This project was inspired by GetX, we could say that this is a Lite version of GetX but with best practices in the code, without a custom MaterialApp or custom CuppertinoApp, without Dialogs and Snackbars and any other unnecessary functionality.
 ## Features
 
-- A Simple State Managment
+- A Simple State Management
 - Simple dependecy injection
 - Reactive programming
 

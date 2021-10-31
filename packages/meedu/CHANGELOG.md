@@ -1,3 +1,6 @@
+## [4.2.1+1]
+- Updated readme.
+
 ## [4.2.1]
 - Fixed `onRemove` callback with lazyPut.
 ## [4.2.0]

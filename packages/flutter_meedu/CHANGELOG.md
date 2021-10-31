@@ -1,3 +1,5 @@
+## [5.2.0+1]
+- Updated readme.
 ## [5.2.0]
 - Added validations for bad use of `ref.watch` and `ref.select`.
 ## [5.1.0]

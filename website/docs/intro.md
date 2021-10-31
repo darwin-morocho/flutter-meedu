@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # What is flutter_meedu?
 
-Is a **powerful** State Managment, Dependency Injection, Reactive programming and Navigation for Flutter apps.
+Is a **powerful** State Management, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
 <p align="center">
   <a href="https://pub.dev/packages/flutter_meedu"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_meedu?include_prereleases&label=flutter_meedu"/></a>
