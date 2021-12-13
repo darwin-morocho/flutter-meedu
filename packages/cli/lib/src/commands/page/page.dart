@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
+import 'package:meedu_cli/src/commands/page/create_page_template.dart';
 
 import '../../utils/base_path.dart';
 import '../../utils/validate_flutter_project.dart';
@@ -73,12 +74,17 @@ class PageCommand extends Command {
 
       /// if the developer want to use a StateNotifier
       if (notifier == 0) {
-        createSimpleNotifierTemplate(name, fileName);
+        await createSimpleNotifierTemplate(name, fileName);
       } else if (notifier == 1) {
         await createStateNotifierTemplate(name, fileName);
+      } else {
+        await createPageTemplate(
+          pageName: name,
+          fileName: fileName,
+        );
       }
       if (!isOverride) {
-        addPageToRoutes(name, fileName);
+        await addPageToRoutes(name, fileName);
       }
     } catch (e) {
       stdout.writeln("❌ $e");

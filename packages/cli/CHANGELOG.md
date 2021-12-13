@@ -1,3 +1,5 @@
+## 0.0.7
+- Fixed page creation without state.
 ## 0.0.6
 - Updated command description.
 ## 0.0.5
