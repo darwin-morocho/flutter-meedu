@@ -64,6 +64,7 @@ void main() {
         },
       ),
     );
+    expect(router.context, isNotNull);
     await tester.tap(find.text("popAndPushNamed"));
     await tester.pumpAndSettle();
     expect(find.text("meedu"), findsOneWidget);

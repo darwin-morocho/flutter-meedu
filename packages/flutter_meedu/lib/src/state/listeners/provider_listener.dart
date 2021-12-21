@@ -113,13 +113,11 @@ class _ProviderListenerState<T extends BaseNotifier>
   /// and call to onChange callback
   void _listener(_) {
     if (widget.onChange != null) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        // before call onChange we need to check
-        // if the widget is mounted
-        if (mounted) {
-          widget.onChange!(context, _notifier);
-        }
-      });
+      // before call onChange we need to check
+      // if the widget is mounted
+      if (mounted) {
+        widget.onChange!(context, _notifier);
+      }
     }
   }
 

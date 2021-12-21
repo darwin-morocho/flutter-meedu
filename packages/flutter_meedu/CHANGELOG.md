@@ -1,3 +1,5 @@
+## [5.2.1]
+- Added `router.context`.
 ## [5.2.0+1]
 - Updated readme.
 ## [5.2.0]

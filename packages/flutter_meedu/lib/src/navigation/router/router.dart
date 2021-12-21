@@ -307,3 +307,8 @@ RouteSettings get settings {
   );
   return MeeduNavigator.i.routeSettings!;
 }
+
+/// return the current context linked to the global navigatorKey
+BuildContext? get context {
+  return navigatorKey.currentContext;
+}

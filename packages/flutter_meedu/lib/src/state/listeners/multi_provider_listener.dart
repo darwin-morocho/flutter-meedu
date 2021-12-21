@@ -65,13 +65,11 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
       final notifier = item.provider.read;
       _dependencies.putIfAbsent(notifier, () {
         void Function(dynamic) listener = (_) {
-          WidgetsBinding.instance!.addPostFrameCallback((_) {
-            // before call onChange we need to check
-            // if the widget is mounted
-            if (mounted) {
-              (item as dynamic).onChange(context, notifier);
-            }
-          });
+          // before call onChange we need to check
+          // if the widget is mounted
+          if (mounted) {
+            (item as dynamic).onChange(context, notifier);
+          }
         };
         notifier.addListener(listener);
         return listener;
