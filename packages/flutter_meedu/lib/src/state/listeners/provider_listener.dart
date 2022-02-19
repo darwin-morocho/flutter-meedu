@@ -8,11 +8,13 @@ typedef _ProviderListenerCallback<T> = void Function(
   T notifier,
 );
 
+typedef _Builder<T> = Widget Function(BuildContext, T);
+
 /// A widget to listen events in a SimpleProvider or a StateProvider
 ///
 /// THis widget only listen the events, does not update the widget when a SimpleNotifier or a StateNotifier emit a new event
 class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
-  final Widget Function(BuildContext, T) builder;
+  final _Builder<T> builder;
 
   /// provider to listen the changes
   final BaseProvider<T> provider;
@@ -45,8 +47,7 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   _ProviderListenerState createState() => _ProviderListenerState<T>();
 }
 
-class _ProviderListenerState<T extends BaseNotifier>
-    extends State<ProviderListener<T>> {
+class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
   /// the notifier attached to widget.provider
   late T _notifier;
 

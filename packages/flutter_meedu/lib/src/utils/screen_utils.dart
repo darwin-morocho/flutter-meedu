@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 extension ContextExtensionss on BuildContext {
   /// The same of [MediaQuery.of(context).size]
   Size get mediaQuerySize => MediaQuery.of(this).size;
@@ -94,13 +92,13 @@ extension ContextExtensionss on BuildContext {
   double get mediaQueryShortestSide => mediaQuerySize.shortestSide;
 
   /// True if the shortestSide is smaller than 600p
-  bool get isPhone => (mediaQueryShortestSide < 600);
+  bool get isPhone => mediaQueryShortestSide < 600;
 
   /// True if the shortestSide is largest than 600p
-  bool get isSmallTablet => (mediaQueryShortestSide >= 600);
+  bool get isSmallTablet => mediaQueryShortestSide >= 600;
 
   /// True if the shortestSide is largest than 720p
-  bool get isLargeTablet => (mediaQueryShortestSide >= 720);
+  bool get isLargeTablet => mediaQueryShortestSide >= 720;
 
   /// True if the current device is Tablet
   bool get isTablet => isSmallTablet || isLargeTablet;

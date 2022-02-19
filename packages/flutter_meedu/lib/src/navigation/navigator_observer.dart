@@ -1,6 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:meedu/get.dart';
-import 'package:meedu/provider.dart';
 
 import '../../meedu.dart';
 import 'router/navigator.dart';
@@ -22,8 +20,7 @@ class _NavigatorObserver extends NavigatorObserver {
       final routeName = this._getRouteName(route);
 
       /// if we have notifiers into the ProviderScope
-      if (ProviderScope.initialized &&
-          ProviderScope.instance.containers.isNotEmpty) {
+      if (ProviderScope.initialized && ProviderScope.instance.containers.isNotEmpty) {
         /// get all notifiers attached to the current route
         final containers = ProviderScope.instance.containers.values.where(
           (e) => e.routeName == routeName,

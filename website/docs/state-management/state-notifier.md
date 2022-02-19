@@ -218,18 +218,6 @@ Consumer(
   },
 )
 ```
-
-also you can use `ref.select` to access to the value returned by `loginProvider.when`
-```dart {4}
-Consumer(
-  builder: (_, ref, __) {
-    final bool emailHasChanged = ref.select(
-      loginProvider.when((prev, current) => prev.email != current.email),
-    );
-    return Text(email.toString());
-  },
-)
-```
 :::
 
 :::info

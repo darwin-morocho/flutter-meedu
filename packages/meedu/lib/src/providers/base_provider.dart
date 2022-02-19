@@ -2,10 +2,8 @@ import 'package:meta/meta.dart'
     show sealed, visibleForOverriding, visibleForTesting;
 
 import '../../meedu.dart';
-import '../notifiers/base_notifier.dart';
-import '../notifiers/state_notifier.dart';
 import 'provider_container.dart';
-import 'provider_scope.dart';
+
 
 part 'provider_reference.dart';
 part 'simple/simple_provider.dart';
