@@ -27,7 +27,7 @@ part 'build_named_route.dart';
 GlobalKey<NavigatorState> get navigatorKey => MeeduNavigator.i.navigatorKey;
 
 /// GlobalKey to detenrminate if a MaterialApp or CupertinoApp
-/// is using the [onGenerateRoute] paremeter or for custom transitions
+/// is using the `onGenerateRoute` paremeter or for custom transitions
 /// using named routes we need to now the value of `routes` parameter
 ///
 ///```dart
@@ -64,7 +64,7 @@ void setDefaultTransition(Transition transition, {Duration? duration}) {
 void _validateRouterState() {
   assert(
     _state != null,
-    "Invalid navigator state, make sure that you has been set the navigator key in your MaterialApp",
+    'Invalid navigator state, make sure that you has been set the navigator key in your MaterialApp',
   );
 }
 
@@ -262,7 +262,7 @@ Future<bool> maybePop<T>([T? result]) {
   return _state!.maybePop(result);
 }
 
-/// remove the current page or dialog from the stack until [predicate]
+/// remove the current page or dialog from the stack until `predicate`
 void pop<T>([T? result]) {
   _validateRouterState();
   _state!.pop(result);

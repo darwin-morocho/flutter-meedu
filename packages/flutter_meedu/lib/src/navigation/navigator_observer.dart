@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:flutter/widgets.dart';
 
 import '../../meedu.dart';
@@ -10,14 +12,14 @@ NavigatorObserver get observer => _NavigatorObserver();
 class _NavigatorObserver extends NavigatorObserver {
   /// return a name for a route
   String _getRouteName(PageRoute route) {
-    return "${route.hashCode}";
+    return '${route.hashCode}';
   }
 
   /// check if the popped routes has notifier attached to it and dispose
   /// the notifiers and delete its from the ProviderScope
-  void _checkAutoDispose(Route? route) async {
+  Future<void> _checkAutoDispose(Route? route) async {
     if (route is PageRoute) {
-      final routeName = this._getRouteName(route);
+      final routeName = _getRouteName(route);
 
       /// if we have notifiers into the ProviderScope
       if (ProviderScope.initialized && ProviderScope.instance.containers.isNotEmpty) {
@@ -26,7 +28,7 @@ class _NavigatorObserver extends NavigatorObserver {
           (e) => e.routeName == routeName,
         );
 
-        List<int> keysToRemove = []; // save the notifier's keys to be disposed
+        final keysToRemove = <int>[]; // save the notifier's keys to be disposed
 
         // if the popped route has notifiers
         if (containers.isNotEmpty) {
@@ -67,7 +69,7 @@ class _NavigatorObserver extends NavigatorObserver {
     bool checkAutoDispose = false,
   }) {
     if (route is PageRoute && route.isCurrent) {
-      BaseProvider.creatorName = this._getRouteName(route);
+      BaseProvider.creatorName = _getRouteName(route);
       MeeduNavigator.i.setRouteSettings(route.settings);
       if (checkAutoDispose) {
         // wait to the popped animation transisiton

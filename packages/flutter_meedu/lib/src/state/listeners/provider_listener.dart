@@ -16,6 +16,18 @@ typedef _Builder<T> = Widget Function(BuildContext, T);
 ///
 /// THis widget only listen the events, does not update the widget when a SimpleNotifier or a StateNotifier emit a new event
 class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
+  // ignore: public_member_api_docs
+  const ProviderListener({
+    Key? key,
+    this.onChange,
+    required this.provider,
+    required this.builder,
+    this.onInitState,
+    this.onDispose,
+    this.onAfterFirstLayout,
+  }) : super(key: key);
+
+  /// callback that must return the widget child of the ProviderListener
   final _Builder<T> builder;
 
   /// provider to listen the changes
@@ -34,16 +46,6 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
 
   /// callback when dispose is called
   final _ProviderListenerCallback<T>? onDispose;
-
-  const ProviderListener({
-    Key? key,
-    this.onChange,
-    required this.provider,
-    required this.builder,
-    this.onInitState,
-    this.onDispose,
-    this.onAfterFirstLayout,
-  }) : super(key: key);
 
   @override
   _ProviderListenerState createState() => _ProviderListenerState<T>();
@@ -103,11 +105,12 @@ class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListe
 
     // check if the onDispose callback
     // needs to be called
-    if (widget.onDispose != null)
+    if (widget.onDispose != null) {
       widget.onDispose!(
-        this.context,
+        context,
         _notifier,
       );
+    }
     super.dispose();
   }
 

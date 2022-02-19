@@ -1,10 +1,12 @@
 // coverage:ignore-file
+// ignore_for_file: public_member_api_docs, omit_local_variable_types
+
 import 'dart:math';
 import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/widgets.dart';
 
-const double _kMinFlingVelocity = 1.0; // Screen widths per second.
+const double _kMinFlingVelocity = 1; // Screen widths per second.
 
 // An eyeballed value for the maximum time it takes for a page to animate forward
 // if the user releases a page mid swipe.
@@ -28,14 +30,14 @@ class BackGestureController<T> {
   final AnimationController controller;
   final NavigatorState navigator;
 
-  /// The drag gesture has changed by [fractionalDelta]. The total range of the
+  /// The drag gesture has changed by `fractionalDelta`. The total range of the
   /// drag should be 0.0 to 1.0.
   void dragUpdate(double delta) {
     controller.value -= delta;
   }
 
   /// The drag gesture has ended with a horizontal motion of
-  /// [fractionalVelocity] as a fraction of screen width per second.
+  /// `fractionalVelocity` as a fraction of screen width per second.
   void dragEnd(double velocity) {
     // Fling in the appropriate direction.
     // AnimationController.fling is guaranteed to
@@ -71,7 +73,7 @@ class BackGestureController<T> {
 
       // coverage:ignore-start
       controller.animateTo(
-        1.0,
+        1,
         duration: Duration(
           milliseconds: droppedPageForwardAnimationTime,
         ),
@@ -87,7 +89,7 @@ class BackGestureController<T> {
         // Otherwise, use a custom popping animation duration and curve.
         final int droppedPageBackAnimationTime =
             lerpDouble(0, _kMaxDroppedSwipePageForwardAnimationTime, controller.value)!.floor();
-        controller.animateBack(0.0,
+        controller.animateBack(0,
             duration: Duration(milliseconds: droppedPageBackAnimationTime), curve: animationCurve);
       }
     }

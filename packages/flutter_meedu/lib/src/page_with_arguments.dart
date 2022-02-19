@@ -1,12 +1,5 @@
 import 'package:flutter/widgets.dart'
-    show
-        BuildContext,
-        Key,
-        ModalRoute,
-        RouteSettings,
-        State,
-        StatefulWidget,
-        Widget;
+    show BuildContext, Key, ModalRoute, RouteSettings, State, StatefulWidget, Widget;
 
 /// A simple Widget with a callback useful to set arguments for one SimpleProvider or a StateProvider
 /// ```dart
@@ -19,18 +12,20 @@ import 'package:flutter/widgets.dart'
 /// );
 /// ```
 class PageWithArguments extends StatefulWidget {
-  final Widget Function(BuildContext context) builder;
-
-  /// callback that contains the current route [settings], you can use this callback
-  /// to get the [arguments] for one route with our rebuild when
-  /// pushNamedAndRemoveUntil or  pushAndRemoveUntil are called.
-  final void Function(RouteSettings settings) onReady;
-
+  // ignore: public_member_api_docs
   const PageWithArguments({
     Key? key,
     required this.onReady,
     required this.builder,
   }) : super(key: key);
+
+  /// callback that must return the widget child of this PageWithArguments
+  final Widget Function(BuildContext context) builder;
+
+  /// callback that contains the current route `settings`, you can use this callback
+  /// to get the `arguments` for one route with our rebuild when
+  /// pushNamedAndRemoveUntil or  pushAndRemoveUntil are called.
+  final void Function(RouteSettings settings) onReady;
 
   @override
   _PageWithArgumentsState createState() => _PageWithArgumentsState();
@@ -86,16 +81,21 @@ class _PageWithArgumentsState extends State<PageWithArguments> {
 /// }
 /// ```
 abstract class PageWithArgumentsWidget extends StatefulWidget {
+  // ignore: public_member_api_docs
   const PageWithArgumentsWidget({
     Key? key,
   }) : super(key: key);
 
+  /// this method will be called once before render the widget
+  /// and can be used to get the arguments or settings
+  /// of the current route
   void onInit(RouteSettings settings);
+
+  // ignore: public_member_api_docs
   Widget build(BuildContext context);
 
   @override
-  _PageWithArgumentsWidgetState createState() =>
-      _PageWithArgumentsWidgetState();
+  _PageWithArgumentsWidgetState createState() => _PageWithArgumentsWidgetState();
 }
 
 class _PageWithArgumentsWidgetState extends State<PageWithArgumentsWidget> {

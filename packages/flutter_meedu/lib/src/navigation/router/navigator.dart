@@ -5,6 +5,8 @@ import '../transitions/transition.dart';
 ///this class has the navigator state and the transition configuration
 class MeeduNavigator {
   MeeduNavigator._();
+
+  /// expose the MeeduNavigator soingleton
   static final MeeduNavigator i = MeeduNavigator._();
 
   GlobalKey<NavigatorState>? _naviatorKey;
@@ -21,6 +23,10 @@ class MeeduNavigator {
     return _naviatorKey!;
   }
 
+  /// a global key that should be passed
+  /// to MaterialApp or CupertinoApp
+  /// if tyou want to use custom transtions
+  /// for named routes
   GlobalKey get appKey {
     _appKey ??= GlobalKey();
     return _appKey!;

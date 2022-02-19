@@ -1,18 +1,35 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
-typedef BuildWhen<S> = bool Function(S prev, S current);
-typedef BuildBySelect<T, S> = S Function(T);
+typedef _BuildWhen<S> = bool Function(S prev, S current);
+typedef _BuildBySelect<T, S> = S Function(T);
 
-enum Filter { select, when, ids }
+/// enum used to identifier filters used in a provider
+enum Filter {
+  /// .select filter for SimpleProvider and StateProvider
+  select,
+
+  /// .when filter fot StateProvider
+  /// this filter only can be  used with ref.watch
+  when,
+
+  /// .ids filter for SimpleProvider
+  /// this filter only can be  used with ref.watch
+  ids,
+}
 
 /// class to save a Notifier, the listener and the rebuild function
 class Target<Notifier, R> extends Provider<Notifier> {
+  // ignore: public_member_api_docs
+  Target(this.notifier);
+
   /// a SimpleNotifier or a StateNotifier
   final Notifier notifier;
 
   /// listener to listen the changes in our Notifiers
-  late Function(dynamic) listener;
+  late void Function(dynamic) listener;
 
   /// function to rebuild the Consumer
   void Function()? rebuild;
@@ -20,47 +37,46 @@ class Target<Notifier, R> extends Provider<Notifier> {
   /// used to store the value returned by .select or .when
   late R selectValue;
 
+  /// callback defined when a filter is used
   dynamic callback;
 
+  /// filter type
   late Filter filter;
-
-  Target(this.notifier);
 }
 
 /// extension for SimpleProvider
 extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
-  /// use this method to rebuild your [Consumer] when a value has changed
+  /// use this method to rebuild your Consumer when a value has changed
   /// or you can use a boolean condition. Check the documentation for more info.
-  Target<Notifier, R> select<R>(BuildBySelect<Notifier, R> cb) {
+  Target<Notifier, R> select<R>(_BuildBySelect<Notifier, R> cb) {
     // get the  Notifier attached to this SimpleProvider
-    final notifier = this.read;
-
-    final target = Target<Notifier, R>(notifier);
+    final target = Target<Notifier, R>(read);
     target.filter = Filter.select;
     target.callback = cb;
     return target;
   }
 
-  /// use this method to rebuild your [Consumer] using ids (a list of strings)
+  /// use this method to rebuild your Consumer using ids (a list of strings)
   /// passed when you call [notify(['id1','id2',...])]
   ///
   /// If you pass to notify method using
   /// an empty list of ids you can use [allowNotifyWithEmptyIds]
-  /// to decide if the [Consumer] widget or a ProviderListener must be notified
+  /// to decide if the Consumer widget or a ProviderListener must be notified
   Target<Notifier, List> ids(
     List<String> Function() cb, {
     bool allowNotifyWithEmptyIds = true,
   }) {
-    final target = Target<Notifier, List>(this.read);
+    final target = Target<Notifier, List>(read);
     target.filter = Filter.ids;
-    final listener = (dynamic _) {
+    // ignore: prefer_function_declarations_over_variables
+    final listener = (_) {
+      final List<String> listeners = _;
       // get the ids passed in the notify method
-      final listeners = _ as List<String>;
       // get the ids returned in the callback
       final ids = cb();
       if (listeners.isNotEmpty) {
         // if the current Consumer contains at least one id inside the listeners
-        for (final String id in ids) {
+        for (final id in ids) {
           if (listeners.contains(id)) {
             if (target.rebuild != null) {
               target.rebuild!();
@@ -75,28 +91,26 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
         }
       }
     };
-    target.listener = listener;
+    target.listener = listener as dynamic;
     return target;
   }
 }
 
 /// extension for StateProvider
 extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
-  /// use this method to rebuild your [Consumer] using the previous state and the current
+  /// use this method to rebuild your Consumer using the previous state and the current
   /// state to return a boolean
-  Target<Notifier, bool> when(BuildWhen<S> cb) {
-    final notifier = this.read;
-    final target = Target<Notifier, bool>(notifier);
+  Target<Notifier, bool> when(_BuildWhen<S> cb) {
+    final target = Target<Notifier, bool>(read);
     target.filter = Filter.when;
     target.callback = cb;
     return target;
   }
 
-  /// use this method to rebuild your [Consumer] when a value in the state has changed
+  /// use this method to rebuild your Consumer when a value in the state has changed
   /// or you can use a boolean condition. Check the documentation for more info.
-  Target<Notifier, R> select<R>(BuildBySelect<S, R> cb) {
-    final notifier = this.read;
-    final target = Target<Notifier, R>(notifier);
+  Target<Notifier, R> select<R>(_BuildBySelect<S, R> cb) {
+    final target = Target<Notifier, R>(read);
     target.filter = Filter.select;
     target.callback = cb;
     return target;
@@ -112,7 +126,8 @@ void createSimpleSelectListener(Target target) {
   target.selectValue = prevValue;
 
   // listener with  the logic to rebuild the Consumer
-  final listener = (dynamic _) {
+  // ignore: prefer_function_declarations_over_variables
+  final listener = (_) {
     final value = cb(notifier);
     target.selectValue = value;
     // check if the value has changed
@@ -134,7 +149,8 @@ void createStateSelectListener(Target target) {
   dynamic prevValue = cb(target.notifier.state);
   target.selectValue = prevValue;
 
-  final Function(dynamic) listener = (dynamic newState) {
+  // ignore: prefer_function_declarations_over_variables
+  final listener = (newState) {
     final value = cb(target.notifier.state);
     target.selectValue = value;
     // check if the value has changed
@@ -151,10 +167,11 @@ void createStateSelectListener(Target target) {
 /// create the listener for provider.when filter
 void createWhenListener(Target target) {
   final cb = target.callback;
-  final notifier = target.notifier;
+  final notifier = target.notifier as StateNotifier;
   target.selectValue = cb(notifier.state, notifier.state);
 
-  final Function(dynamic) listener = (dynamic newState) {
+  // ignore: prefer_function_declarations_over_variables
+  final listener = (newState) {
     // rebuild the Consumer using the boolean returned by the callback
     final allowRebuild = cb(notifier.oldState, newState);
     target.selectValue = allowRebuild;

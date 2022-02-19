@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+/// BuildContext extension with some ui utils methods and getters
 extension ContextExtensionss on BuildContext {
   /// The same of [MediaQuery.of(context).size]
   Size get mediaQuerySize => MediaQuery.of(this).size;

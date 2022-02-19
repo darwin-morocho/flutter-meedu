@@ -18,7 +18,10 @@ import '../../../../flutter_meedu.dart';
 /// ```
 /// {@endtemplate}
 abstract class ConsumerWidget extends StatefulWidget {
+  // ignore: public_member_api_docs
   const ConsumerWidget({Key? key}) : super(key: key);
+
+  // ignore: public_member_api_docs
   Widget build(BuildContext context, BuilderRef ref);
 
   @override
@@ -57,7 +60,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
 
   /// force the widget update
   void _rebuild() {
-    if (_afterFirstLayout && this.mounted) {
+    if (_afterFirstLayout && mounted) {
       setState(() {});
     }
   }
@@ -90,6 +93,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   ///
   /// If [providerOrTarget] is a value gotten from .select, .ids or .when
   /// the  widget only will be rebuilded depending of the condition of each method.
+  @override
   T watch<T>(Provider<T> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
@@ -157,13 +161,15 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   /// [target] is a value gotten from .select or .when
   ///
   /// the  widget only will be rebuilded depending of the condition of each method.
+  @override
   R select<T, R>(Target<T, R> target) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    late T notifier = target.notifier;
+    final notifier = target.notifier;
+
     final insideDependencies = _dependencies.containsKey(notifier);
     // if there is not a listener for the current provider
     if (!insideDependencies) {
@@ -182,7 +188,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
         }
       }
 
-      void Function(dynamic) listener = target.listener;
+      final listener = target.listener;
       // add the listener to the current notifier
       _dependencies[notifier as BaseNotifier] = listener;
       _targets[notifier] = target;
@@ -197,6 +203,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   }
 }
 
+/// A interface that must be implemented in the ConsumerWidget
 abstract class BuilderRef {
   /// A function to read SimpleProvider or a StateProvider and subscribe to the events.
   ///

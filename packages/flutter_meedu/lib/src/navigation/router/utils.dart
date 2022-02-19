@@ -15,7 +15,7 @@ Route<T> getRoute<T>(
   Transition? transition,
   Duration? transitionDuration,
 }) {
-  final name = "/${page.runtimeType.toString()}";
+  final name = '/${page.runtimeType.toString()}';
   final settings = RouteSettings(
     name: name,
     arguments: arguments,

@@ -1,4 +1,6 @@
 // coverage:ignore-start
+// ignore_for_file: always_put_control_body_on_new_line, prefer_int_literals, omit_local_variable_types, public_member_api_docs
+
 import 'dart:math';
 
 import 'package:flutter/gestures.dart';
