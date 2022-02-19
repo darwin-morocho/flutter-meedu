@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
+import '../widgets/watch_filter.dart';
+
 typedef _ProviderListenerCallback<T> = void Function(BuildContext, T);
 
 /// this class allows you listen the changes in multiples providers
@@ -36,7 +38,7 @@ class MultiProviderListener extends StatefulWidget {
 }
 
 class _MultiProviderListenerState extends State<MultiProviderListener> {
-  Map<BaseNotifier, ListenerCallback> _dependencies = {};
+  Map<BaseNotifier, List<ListenerCallback>> _dependencies = {};
 
   @override
   void initState() {
@@ -62,8 +64,35 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
     /// read all providers passed into widget.items
     /// and add a listener when a notifier changes
     for (final item in widget.items) {
-      final notifier = item.provider.read;
-      _dependencies.putIfAbsent(notifier, () {
+      final target = item.provider is Target ? item.provider as Target : null;
+      final notifier = target != null ? target.notifier : (item.provider as BaseProvider).read;
+
+      if (!_dependencies.containsKey(notifier)) {
+        _dependencies[notifier] = [];
+      }
+
+      if (target != null) {
+        target.rebuild = () {
+          if (mounted) {
+            (item as dynamic).onChange(context, notifier);
+          }
+        };
+
+        if (notifier is SimpleNotifier) {
+          if (target.filter == Filter.select) {
+            createSimpleSelectListener(target);
+          }
+        } else {
+          if (target.filter == Filter.select) {
+            createStateSelectListener(target);
+          } else {
+            createWhenListener(target);
+          }
+        }
+        final listener = target.listener;
+        notifier.addListener(listener);
+        _dependencies[notifier]?.add(listener);
+      } else {
         void Function(dynamic) listener = (_) {
           // before call onChange we need to check
           // if the widget is mounted
@@ -72,8 +101,8 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
           }
         };
         notifier.addListener(listener);
-        return listener;
-      });
+        _dependencies[notifier]?.add(listener);
+      }
     }
   }
 
@@ -82,7 +111,9 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
     for (final item in _dependencies.entries) {
       final notifier = item.key;
       if (!notifier.disposed) {
-        notifier.removeListener(item.value);
+        for (final listener in item.value) {
+          notifier.removeListener(listener);
+        }
       }
     }
     _dependencies = {};
@@ -113,7 +144,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
 /// this class is used to define onChange callback for one Notifier
 class MultiProviderListenerItem<T extends BaseNotifier> {
   /// provider to listen the changes
-  final BaseProvider<T> provider;
+  final Provider<T> provider;
 
   /// callback to listen the new events
   final _ProviderListenerCallback<T> onChange;

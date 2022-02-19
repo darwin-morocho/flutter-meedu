@@ -134,9 +134,11 @@ void main() {
         home: Scaffold(
           body: Consumer(
             builder: (_, ref, __) {
-              final counter = ref.watch(
-                _counterProvider,
-              ).counter;
+              final counter = ref
+                  .watch(
+                    _counterProvider,
+                  )
+                  .counter;
               return Text("${counter}");
             },
           ),
@@ -154,6 +156,28 @@ void main() {
     );
     await tester.pump();
     expect(find.text("1"), findsOneWidget);
+  });
+
+  testWidgets('consumer > ids filter only using ref.watch', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Consumer(
+            builder: (_, ref, __) {
+              final counter = ref.select(
+                _counterProvider.ids(() => ['id']),
+              );
+              return Text("${counter}");
+            },
+          ),
+        ),
+      ),
+    );
+
+    expect(
+      tester.takeException(),
+      isInstanceOf<AssertionError>(),
+    );
   });
 }
 

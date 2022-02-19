@@ -9,10 +9,14 @@ import '../state/state_controller_test.dart';
 import 'package:flutter_meedu/router.dart' as router;
 
 bool _counterCalled = false, _loginCalled = false;
+int _simpleSelectCalledCount = 0, _stateSelectCalledCount = 0, _stateWhenCalledCount = 0;
 void main() {
   setUp(() {
     _counterCalled = false;
     _loginCalled = false;
+    _simpleSelectCalledCount = 0;
+    _stateSelectCalledCount = 0;
+    _stateWhenCalledCount = 0;
     router.dispose();
   });
   tearDown(() {
@@ -43,14 +47,24 @@ void main() {
 
       await tester.tap(find.byType(ElevatedButton));
       await tester.pump();
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pump();
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pump();
+
       await tester.tap(find.byKey(Key('reload')));
       await tester.pump();
       await tester.enterText(find.byType(CupertinoTextField), 'test@test.com');
+      await tester.pump();
+      await tester.enterText(find.byType(CupertinoTextField), 'test2@test.com');
       await tester.pump();
       await tester.pageBack();
       await tester.pumpAndSettle();
       expect(_counterCalled, true);
       expect(_loginCalled, true);
+      expect(_simpleSelectCalledCount, 1);
+      expect(_stateSelectCalledCount, 1);
+      expect(_stateWhenCalledCount, 2);
     },
   );
 }
@@ -79,6 +93,14 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
       onDispose: (_) {},
       items: [
         MultiProviderListenerItem<CounterController>(
+          provider: _conterProvider.select(
+            (_) => _.counter > 2,
+          ),
+          onChange: (_, controller) {
+            _simpleSelectCalledCount++;
+          },
+        ),
+        MultiProviderListenerItem<CounterController>(
           provider: _conterProvider,
           onChange: (_, controller) {
             print("🔥 ${controller.counter}");
@@ -90,6 +112,22 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
           onChange: (_, controller) {
             print("🥶 ${controller.state.email}");
             _loginCalled = true;
+          },
+        ),
+        MultiProviderListenerItem<LoginController>(
+          provider: _loginProvider.select(
+            (_) => _.email == "test2@test.com",
+          ),
+          onChange: (_, controller) {
+            _stateSelectCalledCount++;
+          },
+        ),
+        MultiProviderListenerItem<LoginController>(
+          provider: _loginProvider.when(
+            (prev, current) => prev.email != current.email,
+          ),
+          onChange: (_, controller) {
+            _stateWhenCalledCount++;
           },
         ),
       ],
@@ -114,9 +152,11 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
                 Expanded(
                   child: Consumer(
                     builder: (_, ref, __) {
-                      final counter = ref.watch(
-                        _conterProvider.ids(() => ['66']),
-                      ).counter;
+                      final counter = ref
+                          .watch(
+                            _conterProvider.ids(() => ['66']),
+                          )
+                          .counter;
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -50,6 +50,32 @@ void main() {
     expect(find.text("test"), findsNothing);
     expect(find.text("go"), findsOneWidget);
   });
+
+  testWidgets(
+    'Consumer > StateProvider > .when only with ref.watch',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          navigatorKey: router.navigatorKey,
+          home: Scaffold(
+            body: Consumer(
+              builder: (_, ref, child) {
+                ref.select(
+                  _provider.when((prev, current) => false),
+                );
+                return Text("");
+              },
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        tester.takeException(),
+        isInstanceOf<AssertionError>(),
+      );
+    },
+  );
 }
 
 class HomePage extends StatelessWidget {
