@@ -1,6 +1,8 @@
-import 'package:flutter/widgets.dart';
-import 'package:meedu/provider.dart';
-import 'package:meedu/state.dart';
+import 'package:flutter/widgets.dart'
+    show Widget, BuildContext, StatefulWidget, State, WidgetsBinding, Key;
+import 'package:meedu/meedu.dart';
+
+import '../widgets/watch_filter.dart';
 
 /// a typedef for a common callback
 typedef _ProviderListenerCallback<T> = void Function(
@@ -17,7 +19,7 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   final _Builder<T> builder;
 
   /// provider to listen the changes
-  final BaseProvider<T> provider;
+  final Provider<T> provider;
 
   /// callback to listen the new events
   final _ProviderListenerCallback<T>? onChange;
@@ -50,18 +52,29 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
 class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListener<T>> {
   /// the notifier attached to widget.provider
   late T _notifier;
+  Target? _target;
+  void Function(dynamic)? _listener;
 
   @override
   void initState() {
     super.initState();
 
-    /// read and save the provider
-    _notifier = widget.provider.read;
+    _target = widget.provider is Target ? widget.provider as Target : null;
+
+    if (_target != null) {
+      /// read and save the provider
+      _notifier = _target!.notifier;
+    } else {
+      _notifier = (widget.provider as BaseProvider).read;
+    }
 
     /// check if the onChange callback is defined
-    if (widget.onChange != null) {
+    if (widget.onChange != null && _target == null) {
       // add a listener for the current notifier
-      _notifier.addListener(_listener);
+      _listener = _defaultListener;
+      _notifier.addListener(_listener!);
+    } else if (widget.onChange != null && _target != null) {
+      _buildTargetListener();
     }
 
     // check if the onInitState callback needs to be called
@@ -84,8 +97,8 @@ class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListe
   /// and remove the listeners
   @override
   void dispose() {
-    if (widget.onChange != null) {
-      _notifier.removeListener(_listener);
+    if (widget.onChange != null && _listener != null) {
+      _notifier.removeListener(_listener!);
     }
 
     // check if the onDispose callback
@@ -102,17 +115,19 @@ class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListe
   /// due to the properties has changes or for hot reaload
   @override
   void didUpdateWidget(covariant ProviderListener<T> oldWidget) {
-    if (oldWidget.onChange == null && widget.onChange != null) {
-      _notifier.addListener(_listener);
-    } else if (oldWidget.onChange != null && widget.onChange == null) {
-      _notifier.removeListener(_listener);
+    if (_listener != null) {
+      if (oldWidget.onChange == null && widget.onChange != null) {
+        _notifier.addListener(_listener!);
+      } else if (oldWidget.onChange != null && widget.onChange == null) {
+        _notifier.removeListener(_listener!);
+      }
     }
     super.didUpdateWidget(oldWidget);
   }
 
   /// listen all notify events of one notifier
   /// and call to onChange callback
-  void _listener(_) {
+  void _defaultListener(_) {
     if (widget.onChange != null) {
       // before call onChange we need to check
       // if the widget is mounted
@@ -120,6 +135,25 @@ class _ProviderListenerState<T extends BaseNotifier> extends State<ProviderListe
         widget.onChange!(context, _notifier);
       }
     }
+  }
+
+  void _buildTargetListener() {
+    assert(_target != null);
+    _target!.rebuild = () => _defaultListener(null);
+
+    if (_notifier is SimpleNotifier) {
+      if (_target!.filter == Filter.select) {
+        createSimpleSelectListener(_target!);
+      }
+    } else {
+      if (_target!.filter == Filter.select) {
+        createStateSelectListener(_target!);
+      } else {
+        createWhenListener(_target!);
+      }
+    }
+    _listener = _target!.listener;
+    _notifier.addListener(_listener!);
   }
 
   @override

@@ -11,7 +11,7 @@ class Target<Notifier, R> extends Provider<Notifier> {
   /// a SimpleNotifier or a StateNotifier
   final Notifier notifier;
 
-  /// listaner to listen the changes in our Notifiers
+  /// listener to listen the changes in our Notifiers
   late Function(dynamic) listener;
 
   /// function to rebuild the Consumer
@@ -43,7 +43,14 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 
   /// use this method to rebuild your [Consumer] using ids (a list of strings)
   /// passed when you call [notify(['id1','id2',...])]
-  Target<Notifier, List> ids(List<String> Function() cb) {
+  ///
+  /// If you pass to notify method using
+  /// an empty list of ids you can use [allowNotifyWithEmptyIds]
+  /// to decide if the [Consumer] widget or a ProviderListener must be notified
+  Target<Notifier, List> ids(
+    List<String> Function() cb, {
+    bool allowNotifyWithEmptyIds = true,
+  }) {
     final target = Target<Notifier, List>(this.read);
     target.filter = Filter.ids;
     final listener = (dynamic _) {
@@ -61,7 +68,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
             break;
           }
         }
-      } else {
+      } else if (allowNotifyWithEmptyIds) {
         // update the widget if listeners is empty
         if (target.rebuild != null) {
           target.rebuild!();
@@ -74,8 +81,7 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<Notifier extends StateNotifier<S>, S>
-    on StateProvider<Notifier, S> {
+extension StateProviderExt<Notifier extends StateNotifier<S>, S> on StateProvider<Notifier, S> {
   /// use this method to rebuild your [Consumer] using the previous state and the current
   /// state to return a boolean
   Target<Notifier, bool> when(BuildWhen<S> cb) {

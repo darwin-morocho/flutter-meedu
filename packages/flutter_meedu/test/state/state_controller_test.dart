@@ -31,6 +31,7 @@ void main() {
     await test.pump();
     expect(find.text("test"), findsOneWidget);
     expect(find.text("test@test.com"), findsOneWidget);
+    expect(find.text("watch: test@test.com"), findsOneWidget);
 
     // test onStateWillChange
     await test.tap(find.text("set invalid value"));
@@ -104,6 +105,15 @@ class LoginPage extends StatelessWidget {
               _provider.select((_) => _.email),
             );
             return Text(email);
+          }),
+          Consumer(builder: (_, ref, __) {
+            final email = ref
+                .watch(
+                  _provider.select((_) => _.email),
+                )
+                .state
+                .email;
+            return Text("watch: $email");
           }),
           Consumer(builder: (_, ref, __) {
             final state = ref
