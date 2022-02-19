@@ -17,7 +17,7 @@ class CounterController extends SimpleNotifier{
         _counter++;
         notify(); // notify to all listeners
     }
- 
+
     // override the next method is OPTIONAL
     @override
     void dispose() {
@@ -27,8 +27,8 @@ class CounterController extends SimpleNotifier{
 }
 ```
 
-
 ## **SimpleProvider**
+
 Now you need to create a `provider` as a global variable using the `SimpleProvider` class.
 
 ```dart
@@ -40,6 +40,7 @@ final counterProvider = SimpleProvider(
 :::note
 If you don't use lambda functions to define the callback for your provider
 you must define the Generic Type
+
 ```dart
 final counterProvider = SimpleProvider<CounterController>(
   (ref) {
@@ -48,9 +49,11 @@ final counterProvider = SimpleProvider<CounterController>(
   },
 );
 ```
+
 :::
 
 Now you can use the `Consumer` widget to read your `CounterController`.
+
 ```dart
 import 'package:flutter_meedu/state.dart';
 import 'package:flutter_meedu/meedu.dart';
@@ -87,23 +90,25 @@ class CounterPage extends StatelessWidget {
 By default the `counterProvider` variable doesn't create one instance of `CounterController` until it is need it. In this case the `Consumer`
 widget call to the `read` property of our `counterProvider` and check if the `CounterController` was created and return the `CounterController` that was created before or create a new `CounterController`.
 
-
 The `dispose` method in our `CounterController` will be called when the `route` who created the `CounterController` is popped.
 
 If you don't want to call to the `dispose` method when the `route` who created the `CounterController` is popped you could use.
+
 ```dart {3}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),
   autoDispose: false,// <-- ADD THIS TO DISABLE THE AUTO DISPOSE
 );
 ```
+
 :::note
 `autoDispose: false` can be used to define global states.
 :::
 
 :::danger WARNING
-When you disable the `autoDispose` of your `provider` you need to handle it manually. For example 
+When you disable the `autoDispose` of your `provider` you need to handle it manually. For example
 :::
+
 ```dart {18}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),
@@ -147,7 +152,9 @@ class _CounterPageState extends State<CounterPage> {
 ```
 
 ### Listen the changes in your Controller
+
 You could use the `ProviderListener` Widget to listen the changes in our `CounterController`
+
 ```dart {3-7}
  ProviderListener<CounterController>(
       provider: counterProvider,
@@ -177,10 +184,10 @@ You could use the `ProviderListener` Widget to listen the changes in our `Counte
     )
 ```
 
-
 :::note
 if you want to listen multiples providers at the same time you can use
 the `MultiProviderListener` widget.
+
 ```dart
 
 final conterProvider = SimpleProvider(
@@ -219,7 +226,12 @@ class MultiProviderPage extends StatelessWidget {
 ```
 :::
 
+:::note
+- `ProviderListener` and `MultiProviderListener` don't rebuild the widget returned by the `builder` method.
+:::
+
 Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
+
 ```dart {1,5-7,12}
   StreamSubscription? _subscription;
   @override
@@ -326,6 +338,7 @@ Scaffold(
 :::note
 Also you can use the `select` method to listen when a value has changed and rebuild your Consumer.
 The next code rebuild your `Consumer` only when the `counter` value has changed in your CounterController.
+
 ```dart
 Consumer(
   builder: (_, ref, __) {
@@ -337,8 +350,8 @@ Consumer(
 )
 ```
 
-
 If you want direct access to the value returned by `counterProvider.select((_) => _.counter)` you can use `ref.select`
+
 ```dart
 Consumer(
   builder: (_, ref, __) {
@@ -353,10 +366,32 @@ Consumer(
 **IMPORTANT:** the `.ids` filter only should be used with `ref.watch`.
 :::
 
+:::note
+- You can use the filters `.select , .when , .ids` in your `ProviderListener` 
+or in your `MultiProviderListener`
+  
+  
+Example:
+
+```dart
+ProviderListener<CounterController>(
+  provider: counterProvider.select(
+    (_) => _.counter >= 5,
+  ),
+  onChange: (_, controller) {
+
+  },
+  builder: (_, controller) {
+    return YOUR_WIDGET;
+  },
+);
+```
+:::
 
 ## ConsumerWidget
 
 Also you can extend from `ConsumerWidget` to create a widget and listen the changes in your notifier
+
 ```dart {7}
 class CounterPage extends StatelessWidget {
   @override
@@ -386,6 +421,7 @@ class CounterView extends ConsumerWidget {
 
 :::success NOTE
 The `ref` parameter in a `Consumer` or a `ConsumerWidget` can be used to listen multiples providers.
+
 ```dart
 class CounterView extends ConsumerWidget {
   @override
@@ -396,4 +432,5 @@ class CounterView extends ConsumerWidget {
   }
 }
 ```
+
 :::
