@@ -1,3 +1,22 @@
+## [5.3.0]
+- Added support for filters in ProviderListener and MultiProviderListener
+
+For example:
+```dart
+ProviderListener<CounterController>(
+  provider: counterProvider.select(
+    (_) => _.counter >= 5,
+  ),
+  onChange: (_, controller) {
+   
+  },
+  builder: (_, controller) {
+    return YOUR_WIDGET;
+  },
+);
+```
+- Added lint rules.
+
 ## [5.2.1]
 - Added `router.context`.
 ## [5.2.0+1]

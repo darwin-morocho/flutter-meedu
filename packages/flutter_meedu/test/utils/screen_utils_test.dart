@@ -40,6 +40,7 @@ class __PageState extends State<_Page> {
         print("context.isPortrait ${context.isPortrait}");
         print("context.isLandscape ${context.isLandscape}");
         print("context.isPhone ${context.isPhone}");
+        print("context.isPhone ${context.isSmallPhone}");
         print("context.isLargeTablet ${context.isLargeTablet}");
         print("context.isTablet ${context.isTablet}");
         print("context.width ${context.width}");
