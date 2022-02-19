@@ -100,7 +100,8 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
       _clearDependencies();
     }
     _isExternalBuild = false;
-    final target = providerOrTarget is Target ? providerOrTarget as Target : null;
+    final target =
+        providerOrTarget is Target ? providerOrTarget as Target : null;
 
     late T notifier;
 

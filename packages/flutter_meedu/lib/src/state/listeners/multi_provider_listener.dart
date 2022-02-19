@@ -67,7 +67,9 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
     /// and add a listener when a notifier changes
     for (final item in widget.items) {
       final target = item.provider is Target ? item.provider as Target : null;
-      final BaseNotifier notifier = target != null ? target.notifier : (item.provider as BaseProvider).read;
+      final BaseNotifier notifier = target != null
+          ? target.notifier
+          : (item.provider as BaseProvider).read;
 
       if (!_dependencies.containsKey(notifier)) {
         _dependencies[notifier] = [];

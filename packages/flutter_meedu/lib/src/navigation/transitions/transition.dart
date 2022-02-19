@@ -1,4 +1,4 @@
-/// all posible transition animation for the 
+/// all posible transition animation for the
 /// router module
 // ignore_for_file: public_member_api_docs
 

@@ -22,7 +22,8 @@ class _NavigatorObserver extends NavigatorObserver {
       final routeName = _getRouteName(route);
 
       /// if we have notifiers into the ProviderScope
-      if (ProviderScope.initialized && ProviderScope.instance.containers.isNotEmpty) {
+      if (ProviderScope.initialized &&
+          ProviderScope.instance.containers.isNotEmpty) {
         /// get all notifiers attached to the current route
         final containers = ProviderScope.instance.containers.values.where(
           (e) => e.routeName == routeName,

@@ -1,3 +1,5 @@
+## [5.3.0+1]
+- Updated README.md
 ## [5.3.0]
 - Added support for filters in ProviderListener and MultiProviderListener
 
