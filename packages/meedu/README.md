@@ -10,15 +10,23 @@
 </p>
 
 # meedu
-A simple State Management, Dependency Injection, Reactive programming for Dart projects.
+Is a **powerful** State Management, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
-## Overview
+> This project was inspired by **GetX, riverpod** and **flutter_bloc**. We don't use any code of these projects only get the best features of them and we have implemented them with a total refactoring.
 
-This project was inspired by GetX, we could say that this is a Lite version of GetX but with best practices in the code, without a custom MaterialApp or custom CuppertinoApp, without Dialogs and Snackbars and any other unnecessary functionality.
 ## Features
+- A State Management for simple and complex states.
 
-- A Simple State Management
-- Simple dependecy injection
-- Reactive programming
+  flutter_meedu helps you to manage the state of your flutter app without boilerplate, code generators or InheritedWidget.
+
+- Navigate without BuildContext.
+ 
+  Navigate in your app without a custom Page class, a custom MaterialApp.
+
+- Simple dependecy injection.
+
+- Reactive programming.
+
+- Easy to test.
 
 **FULL DOCUMENTATION**  👉  https://flutter.meedu.app

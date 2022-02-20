@@ -1,3 +1,9 @@
+## [5.3.1]
+- Added `@Deprecated` anotation for `.ids` filter, that filter
+will be removed in `flutter_meedu: ^6.x.x`.
+
+- Updated to meedu: ^4.3.0
+
 ## [5.3.0+1]
 - Updated README.md
 ## [5.3.0]

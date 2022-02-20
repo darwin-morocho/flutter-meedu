@@ -297,6 +297,11 @@ Scaffold(
 )
 ```
 
+:::danger IMPORTANT
+The `.ids` filter is **deprecated** in favor to `.select` and it will be removed
+in `flutter_meedu:^6.x.x`
+:::
+
 If you don't want to use `ids` to rebuild your `Consumer` you can use the `select` method.
 The next code rebuilds the first `Consumer` only when the counter is highest than 5.
 

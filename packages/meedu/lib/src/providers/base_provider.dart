@@ -4,7 +4,6 @@ import 'package:meta/meta.dart'
 import '../../meedu.dart';
 import 'provider_container.dart';
 
-
 part 'provider_reference.dart';
 part 'simple/simple_provider.dart';
 part 'simple/simple_tag_provider.dart';

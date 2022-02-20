@@ -21,7 +21,7 @@ Is a **powerful** State Management, Dependency Injection, Reactive programming a
 </p>
 
 :::note INFO
-This project was inspired by **GetX, riverpod** and **flutter_bloc**. We don't use any code of these projects only get the best fetaures
+This project was inspired by **GetX, riverpod** and **flutter_bloc**. We don't use any code of these projects only get the best features
 of them and we have implemented them with a total refactoring.
 :::
 
@@ -37,7 +37,7 @@ You can join to the discord server [here](https://discord.gg/rV4bPsdefj)
 
 - Navigate without BuildContext.
  
-  Navigate to your app without a custom Page class, a custom MaterialApp.
+  Navigate in your app without a custom Page class, a custom MaterialApp.
 
 - Simple dependecy injection.
 
@@ -55,7 +55,7 @@ environment:
   flutter: ">=2.10.0"
 
 dependencies:
-  flutter_meedu: ^5.3.0
+  flutter_meedu: ^5.3.1
 ``` 
 
 

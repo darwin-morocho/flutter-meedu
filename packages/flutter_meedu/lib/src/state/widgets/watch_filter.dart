@@ -62,6 +62,8 @@ extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
   /// If you pass to notify method using
   /// an empty list of ids you can use [allowNotifyWithEmptyIds]
   /// to decide if the Consumer widget or a ProviderListener must be notified
+  @Deprecated('the .ids filter is obsolete in favor to .select'
+      ' and it will be removed in flutter_meedu:^6.x.x')
   Target<Notifier, List> ids(
     List<String> Function() cb, {
     bool allowNotifyWithEmptyIds = true,

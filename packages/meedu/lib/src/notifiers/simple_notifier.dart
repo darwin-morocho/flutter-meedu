@@ -7,7 +7,14 @@ abstract class SimpleNotifier extends BaseNotifier<List<String>> {
   ///
   /// [listeners] a list of strings to update the widgets (MeeduBuilder) with the ids inside the list
   @override
-  void notify([List<String> listeners = const []]) {
+  void notify([
+    @Deprecated(
+      'This property is obsolete because it was used for `.ids`'
+      ' filter but `.select` filter more efficient so this property will be removed'
+      ' in meedu:^5.x.x and flutter_meedu:^6.x.x',
+    )
+        List<String> listeners = const [],
+  ]) {
     super.notify(listeners);
   }
 
