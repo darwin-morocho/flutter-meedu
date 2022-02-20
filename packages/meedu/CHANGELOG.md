@@ -1,5 +1,5 @@
 ## [4.3.0]
-- Added `@Deprecated` anotation for ids in the notify method fo a SimpleNotifier.
+- Added `@Deprecated` annotation for ids in the notify method fo a SimpleNotifier.
 ## [4.2.1+1]
 - Updated readme.
 
