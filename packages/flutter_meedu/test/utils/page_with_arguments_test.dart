@@ -100,9 +100,7 @@ class _Page2 extends PageWithArgumentsWidget {
       body: Column(
         children: [
           Consumer(builder: (_, ref, __) {
-            final counter = ref.watch(
-              _counterProvider.ids(() => ['1', '2']),
-            ).counter;
+            final counter = ref.watch(_counterProvider).counter;
             return Text(
               counter.toString(),
             );

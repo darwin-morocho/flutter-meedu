@@ -44,9 +44,7 @@ class MultiProviderPage extends StatelessWidget {
                 Expanded(
                   child: Consumer(
                     builder: (_, ref, __) {
-                      final counter = ref.watch(
-                        _conterProvider.ids(() => ['id']),
-                      ).counter;
+                      final counter = ref.watch(_conterProvider).counter;
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

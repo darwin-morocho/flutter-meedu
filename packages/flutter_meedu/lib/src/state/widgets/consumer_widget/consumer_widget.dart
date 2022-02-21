@@ -94,7 +94,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   /// If [providerOrTarget] is a value gotten from .select, .ids or .when
   /// the  widget only will be rebuilded depending of the condition of each method.
   @override
-  T watch<T>(Provider<T> providerOrTarget) {
+  Notifier watch<Notifier>(Provider<Notifier> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
@@ -103,14 +103,14 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
     final target =
         providerOrTarget is Target ? providerOrTarget as Target : null;
 
-    late T notifier;
+    late Notifier notifier;
 
     if (target != null) {
       // If [providerOrTarget] is a value gotten from .select, .ids or .when
-      notifier = target.notifier as T;
+      notifier = target.notifier as Notifier;
     } else {
       // if [providerOrTarget] is a [SimpleProvider] or a [StateProvider]
-      notifier = (providerOrTarget as BaseProvider<T>).read;
+      notifier = (providerOrTarget as BaseProvider<Notifier>).read;
     }
 
     final insideDependencies = _dependencies.containsKey(notifier);
@@ -129,26 +129,11 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
             createWhenListener(target);
           }
         } else {
-          if (target.filter == Filter.select) {
-            createSimpleSelectListener(target);
-          }
+          createSimpleSelectListener(target);
         }
         listener = target.listener;
       } else {
-        // if the notifier is a SimpleNotifier
-        if (notifier is SimpleNotifier) {
-          listener = (_) {
-            final listeners = _ as List<String>;
-            // only rebuild the Consumer if the notify method was called
-            // without ids
-            if (listeners.isEmpty) {
-              _rebuild();
-            }
-          };
-        } else {
-          // if the notifier is a StateNotifier
-          listener = (_) => _rebuild();
-        }
+        listener = (_) => _rebuild();
       }
       // add the listener to the current notifier
       _dependencies[notifier as BaseNotifier] = listener;
@@ -163,7 +148,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   ///
   /// the  widget only will be rebuilded depending of the condition of each method.
   @override
-  R select<T, R>(Target<T, R> target) {
+  Result select<Notifier, Result>(Target<Notifier, Result> target) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
@@ -182,11 +167,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
           throw FlutterError('.when filter only is allowed with ref.watch');
         }
       } else {
-        if (target.filter == Filter.select) {
-          createSimpleSelectListener(target);
-        } else {
-          throw FlutterError('.ids filter only is allowed with ref.watch');
-        }
+        createSimpleSelectListener(target);
       }
 
       final listener = target.listener;

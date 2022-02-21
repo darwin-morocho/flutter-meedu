@@ -249,10 +249,60 @@ Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
   }
 ```
 
-### Avoid rebuilds using the ***.select*** filter
+### Avoid rebuilds using the .ids and .select methods
 
-If you have multiples `Consumer` widgets in your Views and you only want rebuild certain Consumer you can use the `.select` filter.
+If you have multiples `Consumer` widgets in your Views and you only want rebuild certain Consumer you can use the `.ids` and `.select` methods.
 
+```dart {8,22}
+class CounterController extends SimpleNotifier {
+  int _counter = 0;
+  int get counter => _counter;
+
+  void increment() {
+    _counter++;
+    // notify to all listeners but only rebuild the widgets with the id 'text'
+    notify(['text']);
+  }
+}
+
+.
+.
+.
+
+Scaffold(
+  body: Column(
+    children: [
+      Consumer(
+        builder: (_, ref, __) {
+          final controller = ref.watch(
+            counterProvider.ids(()=>['text']),
+          );
+          return Text("${controller.counter}");
+        },
+      ),
+      Consumer(
+        builder: (_, ref, __) {
+          final controller = ref.watch(counterProvider);
+          return Text("${controller.counter}");
+        },
+      )
+    ],
+  ),
+  floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      // you can use the read method to access to your CounterController
+      counterProvider.read.increment();
+    },
+  ),
+)
+```
+
+:::danger IMPORTANT
+The `.ids` filter is **deprecated** in favor to `.select` and it will be removed
+in `flutter_meedu:^6.x.x`
+:::
+
+If you don't want to use `ids` to rebuild your `Consumer` you can use the `select` method.
 The next code rebuilds the first `Consumer` only when the counter is highest than 5.
 
 ```dart {20}
@@ -317,10 +367,12 @@ Consumer(
   },
 )
 ```
+
+**IMPORTANT:** the `.ids` filter only should be used with `ref.watch`.
 :::
 
 :::note
-- You can use the filters `.select , .when` in your `ProviderListener` 
+- You can use the filters `.select , .when , .ids` in your `ProviderListener` 
 or in your `MultiProviderListener`
   
   
@@ -342,6 +394,7 @@ ProviderListener<CounterController>(
 :::
 
 ## ConsumerWidget
+
 Also you can extend from `ConsumerWidget` to create a widget and listen the changes in your notifier
 
 ```dart {7}
@@ -384,4 +437,5 @@ class CounterView extends ConsumerWidget {
   }
 }
 ```
+
 :::

@@ -73,7 +73,7 @@ class CounterView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final controller = ref.watch(
-      counterProvider.ids(() => ['id']),
+      counterProvider,
     );
     return Text("${controller.counter}");
   }

@@ -189,7 +189,7 @@ class LoginPage extends StatelessWidget {
 }
 ```
 
-Also you can use the `.select` filter to only rebuild your `Consumer` when is need it.
+Also you can use the `select` method of your provider to only rebuild your `Consumer` when is need it.
 
 For example the next code only rebuilds the Consumer widget when the `email` in our `LoginState` has changed.
 

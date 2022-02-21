@@ -35,7 +35,7 @@ abstract class StateNotifier<State> extends BaseNotifier<State> {
       _state = newState;
       onStateChanged(_oldState, _state);
       if (notify) {
-        super.notify(_state);
+        notifyListeners(_state);
       }
     }
   }

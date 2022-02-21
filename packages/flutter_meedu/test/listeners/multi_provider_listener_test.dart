@@ -154,7 +154,7 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
                     builder: (_, ref, __) {
                       final counter = ref
                           .watch(
-                            _conterProvider.ids(() => ['66']),
+                            _conterProvider,
                           )
                           .counter;
                       return Column(

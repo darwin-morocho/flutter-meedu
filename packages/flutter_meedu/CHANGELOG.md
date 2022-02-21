@@ -1,3 +1,9 @@
+## [6.0.0-dev.1]
+- Set min dark sdk >=2.15
+## [6.0.0-dev.0]
+**BREAKING CHANGE**: removed `.ids` filter in favor to `.select` in `SimpleProvider`.
+
+
 ## [5.3.1]
 - Added `@Deprecated` annotation for `.ids` filter, that filter
 will be removed in `flutter_meedu: ^6.x.x`.

@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:meta/meta.dart' show mustCallSuper, protected;
+import 'package:meta/meta.dart' show mustCallSuper;
 
 typedef ListenerCallback<T> = void Function(T);
 
 /// this class define the basic Listener for each SimpleController's subscriber or StateController's subscriber
 class _ListenerEntry<T> extends LinkedListEntry<_ListenerEntry<T>> {
   final ListenerCallback<T> listener;
-  final bool autoDispose;
-  _ListenerEntry(this.listener, this.autoDispose);
+  _ListenerEntry(this.listener);
 }
 
 /// Define a base notifier for SimpleNotifier and StateNotifier
@@ -44,9 +43,9 @@ abstract class BaseNotifier<T> {
   }
 
   /// add a new listener
-  void addListener(ListenerCallback<T> listener, [autoDispose = false]) {
+  void addListener(ListenerCallback<T> listener) {
     _debugAssertNotDisposed();
-    _listeners!.add(_ListenerEntry<T>(listener, autoDispose));
+    _listeners!.add(_ListenerEntry<T>(listener));
   }
 
   /// remove a listener from the notifier
@@ -71,8 +70,7 @@ abstract class BaseNotifier<T> {
   ///
   /// only SimpleNotifier or StateNotifier are allowed to call this method, DON'T  call to this method since
   /// a sub-type of SimpleNotifier or StateNotifier
-  @protected
-  void notify(T data) {
+  void notifyListeners(T data) {
     _debugAssertNotDisposed();
 
     _isBusy = Completer();

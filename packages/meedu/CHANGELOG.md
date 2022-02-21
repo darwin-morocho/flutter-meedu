@@ -1,3 +1,7 @@
+## [5.0.0]
+- **BREAKING CHANGE**: Removed `ids` parameter from notify method in SimpleNotifier.
+- Set min dark sdk >=2.15
+
 ## [4.3.0]
 - Added `@Deprecated` annotation for ids in the notify method fo a SimpleNotifier.
 ## [4.2.1+1]

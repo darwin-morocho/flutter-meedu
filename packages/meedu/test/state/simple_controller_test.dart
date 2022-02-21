@@ -13,7 +13,7 @@ void main() {
     var value = c.counter;
     expect(value, 0);
     expect(c.hasListeners, false);
-    final subscribe = (List<String> listeners) {
+    final subscribe = (_) {
       value = c.counter;
       if (value == times) {
         completer.complete();
