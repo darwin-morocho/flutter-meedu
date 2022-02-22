@@ -4,7 +4,7 @@ import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('RxWorkers', () async {
+  test('RxReaction', () async {
     var completer = Completer();
     late Timer timer;
     final times = 10;
@@ -53,12 +53,12 @@ class SearchController extends SimpleNotifier {
   @override
   bool get hasListeners => _text.hasListeners;
 
-  RxWorker? _debounceWorker,
-      _everWorker,
-      _everWithOutConditionWorker,
-      _onceWorker,
-      _onceWithOutConditionWorker,
-      _intervalWorker;
+  RxReaction? _debounce,
+      _ever,
+      _everWithOutCondition,
+      _once,
+      _onceWithOutCondition,
+      _interval;
   String debounce = '', ever = '', everWithOutCondition = '', once = '', onceWithOutCondition = '', interval = '';
 
   void onTextChange(String text) {
@@ -66,39 +66,39 @@ class SearchController extends SimpleNotifier {
   }
 
   void init() {
-    _debounceWorker = _text.debounce(
+    _debounce = _text.debounce(
       Duration(milliseconds: 100),
       (value) {
         debounce = value;
       },
     );
-    _everWorker = _text.ever(
+    _ever = _text.ever(
       (value) {
         ever = value;
       },
       condition: ((value) => value[value.length - 1] == '@'),
     );
 
-    _everWithOutConditionWorker = _text.ever(
+    _everWithOutCondition = _text.ever(
       (value) {
         everWithOutCondition = value;
       },
     );
 
-    _onceWithOutConditionWorker = _text.once(
+    _onceWithOutCondition = _text.once(
       (value) {
         onceWithOutCondition = value;
       },
     );
 
-    _onceWorker = _text.once(
+    _once = _text.once(
       (value) {
         once = value;
       },
       condition: ((value) => value.contains('-')),
     );
 
-    _intervalWorker = _text.interval(
+    _interval = _text.interval(
       Duration(milliseconds: 50),
       (value) {
         interval = value;
@@ -109,12 +109,12 @@ class SearchController extends SimpleNotifier {
   @override
   void dispose() {
     _text.close();
-    _debounceWorker?.dispose();
-    _everWorker?.dispose();
-    _onceWorker?.dispose();
-    _intervalWorker?.dispose();
-    _onceWithOutConditionWorker?.dispose();
-    _everWithOutConditionWorker?.dispose();
+    _debounce?.dispose();
+    _ever?.dispose();
+    _once?.dispose();
+    _interval?.dispose();
+    _onceWithOutCondition?.dispose();
+    _everWithOutCondition?.dispose();
     super.dispose();
   }
 }

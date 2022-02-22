@@ -2,15 +2,18 @@ import '../providers/base_provider.dart';
 
 part 'injectable.dart';
 
+/// return an instance of _Get for the dependency injection module
+_Get get Get => _Get.i;
+
 /// Singleton to save dependencies
-class Get {
+class _Get {
   /// private contructor
-  Get._();
+  _Get._();
 
-  static Get? _instance;
+  static _Get? _instance;
 
-  static Get get i {
-    _instance ??= Get._();
+  static _Get get i {
+    _instance ??= _Get._();
     return _instance!;
   }
 

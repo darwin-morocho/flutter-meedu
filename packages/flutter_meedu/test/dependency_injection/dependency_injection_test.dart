@@ -36,15 +36,15 @@ void main() {
         ),
       );
 
-      var pet = Get.i.find<Pet>();
+      var pet = Get.find<Pet>();
       int hash1 = pet.hashCode;
       expect(pet.name, '/lulu');
       await tester.tap(find.byKey(Key('/lulu')));
       await tester.pumpAndSettle();
-      expect(Get.i.has<Pet>(), false);
+      expect(Get.has<Pet>(), false);
       await tester.tap(find.byKey(Key('/oso')));
       await tester.pumpAndSettle();
-      pet = Get.i.find<Pet>();
+      pet = Get.find<Pet>();
       expect(pet.name, '/lulu');
       expect(pet.hashCode != hash1, true);
     },
@@ -64,7 +64,7 @@ class __PageState extends State<_Page> {
   @override
   void initState() {
     super.initState();
-    Get.i.put<Pet>(Pet(widget.pageName), autoRemove: true, onRemove: (pet) {
+    Get.put<Pet>(Pet(widget.pageName), autoRemove: true, onRemove: (pet) {
       print("🤠 removed ${pet.name}");
     });
   }

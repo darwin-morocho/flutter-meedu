@@ -41,7 +41,7 @@ class _Factory<T, A> {
   _Factory(this.builder);
 }
 
-/// a parent class for singletons usinf put and lazy put
+/// a parent class for singletons using put and lazy put
 abstract class _Injectable<T> {
   /// the route name who creates this instance
   final String? creatorName;

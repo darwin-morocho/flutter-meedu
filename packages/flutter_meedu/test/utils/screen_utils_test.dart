@@ -46,9 +46,6 @@ class __PageState extends State<_Page> {
         print("context.width ${context.width}");
         print("context.height ${context.height}");
         print("context.textScaleFactor ${context.textScaleFactor}");
-        print("context.heightTransformer(dividedBy: 3) ${context.heightTransformer(dividedBy: 3)}");
-        print("context.widthTransformer(dividedBy: 3) ${context.widthTransformer(dividedBy: 3)}");
-        print("context.ratio(dividedBy: 3) ${context.ratio(dividedBy: 3)}");
       },
     );
   }

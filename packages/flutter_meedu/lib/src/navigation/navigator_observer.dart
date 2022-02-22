@@ -52,7 +52,7 @@ class _NavigatorObserver extends NavigatorObserver {
       }
 
       /// get all dependencies injected using put or lazyPut
-      Get.i.dependencies.removeWhere((key, value) {
+      Get.dependencies.removeWhere((key, value) {
         final remove = value.creatorName == routeName && value.autoRemove;
         final dependency = value.dependency;
         final dynamicValue = value as dynamic;

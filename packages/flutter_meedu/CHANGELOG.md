@@ -1,3 +1,5 @@
+## [6.0.0-dev.2]
+- Removed deprecated methods.
 ## [6.0.0-dev.1]
 - Set min dark sdk >=2.15
 ## [6.0.0-dev.0]
