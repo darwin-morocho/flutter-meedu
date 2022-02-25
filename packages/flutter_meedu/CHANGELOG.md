@@ -1,3 +1,5 @@
+## [6.0.0]
+- Release 6.x.x
 ## [6.0.0-dev.2]
 - Removed deprecated methods.
 ## [6.0.0-dev.1]

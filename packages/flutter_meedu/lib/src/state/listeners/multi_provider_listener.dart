@@ -4,7 +4,8 @@ import 'package:meedu/state.dart';
 
 import '../widgets/watch_filter.dart';
 
-typedef _ProviderListenerCallback<T> = void Function(BuildContext, T);
+typedef _ProviderListenerCallback<Notifier> = void Function(
+    BuildContext, Notifier);
 
 /// this class allows you listen the changes in multiples providers
 class MultiProviderListener extends StatefulWidget {
@@ -150,7 +151,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
 }
 
 /// this class is used to define onChange callback for one Notifier
-class MultiProviderListenerItem<T extends BaseNotifier> {
+class MultiProviderListenerItem<Notifier extends BaseNotifier> {
   // ignore: public_member_api_docs
   MultiProviderListenerItem({
     required this.provider,
@@ -158,8 +159,8 @@ class MultiProviderListenerItem<T extends BaseNotifier> {
   });
 
   /// provider to listen the changes
-  final Provider<T> provider;
+  final Provider<Notifier> provider;
 
   /// callback to listen the new events
-  final _ProviderListenerCallback<T> onChange;
+  final _ProviderListenerCallback<Notifier> onChange;
 }
