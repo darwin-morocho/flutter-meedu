@@ -21,7 +21,7 @@ Para usuarios linux y macOs (no probado en Windows, pero puede probarlo si lo de
 # Auto dispose
 El **ciclo de vida** de un `SimpleNotifier` o un `StateNotifier` por defecto esta anclado a una `Ruta`. Esto significa que nuestros Notifiers seran destruidos cuando la `ruta` que creo el `SimpleNotifier` o el `StateNotifier` es eliminada del stack de rutas.
 
-**flutter_meedu** necesita escuchar los cambios en su `navigator`. Esto es muy simple simplemente es su `MaterialApp` o `CupertinoApp`
+**flutter_meedu** necesita escuchar los cambios en su `navigator`. Esto es muy simple solamente en su `MaterialApp` o `CupertinoApp`
 agrege el siguiente código:
 
 ```dart {15} title="main.dart"
@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
 ```
 
 :::note Nested navigation
-Si esta usando navegación anidada para habilitar la caracteristica de `auto dispose` en las rutas anidadas agrege el (`router.observer`) de flutter_meedu en el parametro `navigatorObservers` de su widget `Navigator`
+Si esta usando navegación anidada para habilitar la caracteristica de `auto dispose` en las rutas anidadas agrege el (`router.observer`) de flutter_meedu en el parametro `navigatorObservers` de su widget `Navigator`.
+
+La llamada a `router.observer` siempre crea y retorna un nuevo observer.
 :::
 
 :::note

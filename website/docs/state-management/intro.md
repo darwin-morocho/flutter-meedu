@@ -46,7 +46,9 @@ class MyApp extends StatelessWidget {
 ```
 
 :::note Nested navigation
-If you are working with nested navigation in your app to enable the auto dispose feature you must add the meedu observer (`router.observer`) inside the navigatorObservers your Navigators
+If you are working with nested navigation in your app to enable the auto dispose feature you must add the meedu observer (`router.observer`) inside the navigatorObservers your Navigators.
+
+`router.observer` allways create and return a new observer.
 :::
 
 :::info With Navigator 2.0
