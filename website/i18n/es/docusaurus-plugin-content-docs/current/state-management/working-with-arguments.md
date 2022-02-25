@@ -2,11 +2,12 @@
 sidebar_position: 5
 ---
 
-# Working with arguments
+# Trabajar con argumentos
 
-Some times you need to pass an initial values to your `SimpleNotifier` or `StateNotifier` in that cases you can use the `setArguments` method of your provider.
+A veces necesitamos pasar un dato inicial a nuestro `SimpleNotifier` o `StateNotifier` en esos casos puede usar el método `setArguments` de sus providers.
 
-In the next example to create a new instance of **LoginController** we needs a initial email value
+En el siguiente ejemplo la clase **LoginController** necesita un valor inicial
+para el email de nuestro LoginState
 
 ```dart
 class LoginController extends StateNotifier<LoginState> {
@@ -17,7 +18,7 @@ class LoginController extends StateNotifier<LoginState> {
 }
 ```
 
-Next you can use the `ref` parameter of your callback generator to get the `arguments` passed in the `initState` method.
+Ahora en su provider utilice el parámetro `ref` para recuperar los `argumentos` pasados en el método `initState`.
 ```dart {2,19}
 final loginProvider = StateProvider<LoginController, LoginState>(
   (ref) => LoginController(ref.arguments ?? ''),
@@ -48,11 +49,11 @@ class _LoginPageState extends State<LoginPage> {
 ```
 
 :::danger WARNING
-If you are using `ModalRoute.of(context)` in your `build` method or in the `routes` parameter of one `MaterialApp`  to get `arguments` that was passed by
-`Navigator.push`, `Navigator.pushName`, etc and next you use  `Navigator.pushNamedAndRemoveUntil` or `Navigator.pushNameAndRemoveUntil` to navigate to a new Route removing multiples routes from the Stack the `ModalRoute.of(context)` will rebuild the route before remove it and it could be a problem with a `provider` because that could be recreated a disposed provider.
+Si esta usando `ModalRoute.of(context)` en sus metodos `build` on en el parámetri `routes` de un `MaterialApp` para recuperar los `argumentos` pasados mediante
+`Navigator.push`, `Navigator.pushName`, etc. y luego usa  `Navigator.pushNamedAndRemoveUntil` o `Navigator.pushNameAndRemoveUntil` para navegar removiendo multiples rutas del Stack entonces la llamada a `ModalRoute.of(context)` llamra al método build antes de remove la ruta por lo que podría tener un problema con sus `provider` ya que estos serán recreados.
 
 
-In that cases you could use the `PageWithArguments` widget to avoid the recreation of a disposed provider.
+En esos casos utilice el widget `PageWithArguments` para evitar esos posibles errores.
 :::
 
 ```dart
@@ -76,7 +77,7 @@ class ProductDetail extends StatelessWidget {
 ```
 
 
-Or you can create yourn own widget using `PageWithArgumentsWidget` class.
+O también puede usar la clase `PageWithArgumentsWidget`
 ```dart
 
 import 'package:flutter/material.dart';
@@ -109,13 +110,12 @@ class LoginPage extends PageWithArgumentsWidget {
 ```
 
 :::success
-Since `flutter_meedu:^5.1.0` if you are using the meedu's router module
-to navigate in your app you can get your arguments without BuildContext
-and you can directly use them in your providers. With this you don't need
-a `PageWithArgumentsWidget` to pass route arguments to your providers.
+A partir de `flutter_meedu:^5.1.0` si esta usando el modulo de navegación de 
+flutter_meedu usted puede recuperar sus argumentos sin la necesidad de un `BuildContext`
+o utilizando un `PageWithArgumentsWidget`
 
 ```dart
-/// also you can pass directly the route arguments to your controllers
+/// you can pass directly the route arguments to your controllers
 final loginProvider = SimpleProvider(
   (_) => LoginController(router.arguments as String),
 );

@@ -28,14 +28,18 @@ module.exports = {
           label: "Docs",
         },
         {
-          href: "https://github.com/darwin-morocho/flutter-meedu",
-          label: "GitHub",
+          type: "localeDropdown",
           position: "right",
         },
         {
           type: "docsVersionDropdown",
           position: "right",
           dropdownActiveClassDisabled: true,
+        },
+        {
+          href: "https://github.com/darwin-morocho/flutter-meedu",
+          label: "GitHub",
+          position: "right",
         },
       ],
     },
@@ -53,15 +57,20 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
+          editLocalizedFiles: true,
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
+          editUrl: ({ locale, versionDocsDirPath, docPath }) => {
+            if (locale !== "en") {
+              return `https://github.com/darwin-morocho/flutter-meedu/edit/master/website/i18n/${locale}/${versionDocsDirPath}/${docPath}`;
+            }
+            return `https://github.com/darwin-morocho/flutter-meedu/edit/master/website/${versionDocsDirPath}/${docPath}`;
+          },
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          editUrl:
-            "https://github.com/darwin-morocho/flutter-meedu/edit/master/website/",
           lastVersion: "current",
           versions: {
             current: {
               label: "6.0.0",
-              path: "6.x.x",
             },
             "5.x.x": {
               label: "5.3.0",
@@ -89,4 +98,16 @@ module.exports = {
       },
     ],
   ],
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "es"],
+    localeConfigs: {
+      en: {
+        label: "English",
+      },
+      es: {
+        label: "Español",
+      },
+    },
+  },
 };

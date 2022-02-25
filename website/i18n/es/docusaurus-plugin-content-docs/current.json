@@ -1,0 +1,14 @@
+{
+  "version.label": {
+    "message": "6.0.0",
+    "description": "The label for version current"
+  },
+  "sidebar.mySidebar.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category Getting Started in sidebar mySidebar"
+  },
+  "sidebar.mySidebar.category.State Management": {
+    "message": "State Management",
+    "description": "The label for category State Management in sidebar mySidebar"
+  }
+}
