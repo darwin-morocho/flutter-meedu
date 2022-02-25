@@ -62,7 +62,7 @@ module.exports = {
           showLastUpdateTime: true,
           editUrl: ({ locale, versionDocsDirPath, docPath }) => {
             if (locale !== "en") {
-              return `https://github.com/darwin-morocho/flutter-meedu/edit/master/website/i18n/${locale}/${versionDocsDirPath}/${docPath}`;
+              return `https://github.com/darwin-morocho/flutter-meedu/edit/master/website/i18n/${locale}/docusaurus-plugin-content-docs/current`;
             }
             return `https://github.com/darwin-morocho/flutter-meedu/edit/master/website/${versionDocsDirPath}/${docPath}`;
           },
