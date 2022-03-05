@@ -1,6 +1,7 @@
 ## [6.0.1]
 - Fixed bug due to `addPostFrameCallback` in `ConsumerWidget` when
 an update is called before `addPostFrameCallback` has been completed.
+
 ## [6.0.0]
 - Release 6.x.x
 ## [6.0.0-dev.2]
