@@ -35,15 +35,9 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   // initialized at true for the first build
   bool _isExternalBuild = true;
 
-  /// used know when the first frame was redered
-  bool _afterFirstLayout = false;
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      _afterFirstLayout = true;
-    });
   }
 
   @override // coverage:ignore-line
@@ -60,7 +54,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
 
   /// force the widget update
   void _rebuild() {
-    if (_afterFirstLayout && mounted) {
+    if (mounted) {
       setState(() {});
     }
   }
