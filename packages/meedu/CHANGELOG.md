@@ -1,3 +1,5 @@
+## [5.1.0]
+- Added `PersistentStateMixin` to save the state of your StateNotifers as a JSON.
 ## [5.0.0]
 
 - **BREAKING CHANGE**: Removed `ids` parameter from notify method in SimpleNotifier.

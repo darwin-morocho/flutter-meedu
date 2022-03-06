@@ -1,3 +1,7 @@
+## [6.1.0]
+- Updated to meedu: ^5.1.0
+- Added `PersistentStateMixin` to save the state of your StateNotifers as a JSON.
+
 ## [6.0.1]
 - Fixed bug due to `addPostFrameCallback` in `ConsumerWidget` when
 an update is called before `addPostFrameCallback` has been completed.
