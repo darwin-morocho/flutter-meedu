@@ -1,3 +1,10 @@
+## [6.2.2]
+- Updated to meedu: ^5.3.0
+
+## [6.2.1]
+- Updated to meedu: ^5.2.0
+## [6.2.0]
+- Updated to meedu: ^5.2.0
 ## [6.1.0]
 - Updated to meedu: ^5.1.0
 - Added `PersistentStateMixin` to save the state of your StateNotifers as a JSON.

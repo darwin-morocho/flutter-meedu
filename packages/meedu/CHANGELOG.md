@@ -1,3 +1,7 @@
+## [5.3.0]
+- Updated exports.
+## [5.2.0]
+- Updated `PersistentStateMixin` to be compatible with unions.
 ## [5.1.0]
 - Added `PersistentStateMixin` to save the state of your StateNotifers as a JSON.
 ## [5.0.0]

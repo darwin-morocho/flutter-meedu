@@ -14,11 +14,14 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
   String get storageKey;
 
   /// convert a JSON to one instance of [State]
-  State fromJson(Json json);
+  State? fromJson(Json json);
 
   /// convert one instance of [State] to a JSON
   /// to be saved into the storage
-  Json toJson(State state);
+  ///
+  /// **IMPORTANT** if this method returns `null` the current state saved
+  /// won't be modified
+  Json? toJson(State state);
 
   /// a callback to listen when a cached storage couldn't be parsed
   /// or if the state couldn't be saved
@@ -30,9 +33,16 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
       if (_state != null) {
         return _state!;
       }
-      final cachedState = storage.get(storageKey);
+      final cachedStateAsJson = storage.get(storageKey);
+
+      final cachedState = cachedStateAsJson != null
+          ? fromJson(
+              cachedStateAsJson,
+            )
+          : null;
+
       if (cachedState != null) {
-        _state = fromJson(cachedState);
+        _state = cachedState;
         return _state!;
       }
       _state = super.state;
@@ -47,14 +57,17 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
   @override
   void onStateChanged(State oldState, State currentState) {
     _state = currentState;
-    storage
-        .save(
-          storageKey,
-          toJson(currentState),
-        )
-        .onError(
-          onPersistentStateError,
-        );
+    final json = toJson(currentState);
+    if (json != null) {
+      storage
+          .save(
+            storageKey,
+            json,
+          )
+          .onError(
+            onPersistentStateError,
+          );
+    }
   }
 }
 

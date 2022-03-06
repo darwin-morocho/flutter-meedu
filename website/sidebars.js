@@ -30,6 +30,7 @@ module.exports = {
       ],
     },
     "dependency-injection",
+    "persistent-state",
     "reactive-programming",
     "navigation",
     "screen-utils",

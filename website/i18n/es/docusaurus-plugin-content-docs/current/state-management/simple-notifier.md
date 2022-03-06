@@ -7,7 +7,7 @@ sidebar_position: 3
 Para manejar el estado de su vista similar a `ChangeNotifier`
 utilice a clase `SimpleNotifier`.
 
-Simplemente cree una clase  que extienda de `SimpleNotifier` y llame al metodo `notify` para notificar que ha ocurrido
+Simplemente cree una clase  que extienda de `SimpleNotifier` y llame al método `notify` para notificar que ha ocurrido
 un cambio y actualizar sus vistas.
 
 ```dart
@@ -37,7 +37,7 @@ Ahora debe crear un `provider` como una variable global usando la clase `SimpleP
 
 ```dart
 final counterProvider = SimpleProvider(
-  (ref) => CounterController(),
+  (_) => CounterController(),
 );
 ```
 
@@ -78,7 +78,7 @@ class CounterPage extends StatelessWidget {
 
 Por defecto la variable global `counterProvider` no creara una instancia de `CounterController` hasta que es necesario. En el caso del widget `Consumer` este llama a la propiedad `read` de nuestro `counterProvider` y comprueba si anteriormente se creo una instancia de `CounterController` o si no la crea en ese momento.
 
-El  metodo `dispose` de nuestro `CounterController` sera llamado cuando la `ruta` que creo nuestro `CounterController` es eliminada del stack de rutas (Esta es la caracteristica de **AUTO DISPOSE**).
+El  método `dispose` de nuestro `CounterController` sera llamado cuando la `ruta` que creo nuestro `CounterController` es eliminada del stack de rutas (Esta es la caracteristica de **AUTO DISPOSE**).
 
 Si desea desactivar la caracteristica de **AUTO DISPOSE** use el
 parametro `autoDispose` de su provider.
@@ -175,7 +175,7 @@ El widget `ProviderListener` puede ser usado para escuchar los cambios en un `Si
 ```
 
 :::note
-El widget `ProviderListener` provee de los siguientes parametros
+El widget `ProviderListener` provee de los siguientes parámetros
 para escuchar su ciclo de vida.
 `onInitState, onAfterFirstLayout, onDispose`.
 :::
@@ -374,7 +374,7 @@ class CounterView extends ConsumerWidget {
 ```
 
 :::success NOTE
-El parametro `ref` en un `Consumer` o en un `ConsumerWidget` puede ser usado para escuchar multiples providers.
+El parámetro `ref` en un `Consumer` o en un `ConsumerWidget` puede ser usado para escuchar multiples providers.
 
 ```dart
 class CounterView extends ConsumerWidget {

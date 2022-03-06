@@ -35,9 +35,13 @@ You can join to the discord server [here](https://discord.gg/rV4bPsdefj)
 
   flutter_meedu helps you to manage the state of your flutter app without boilerplate, code generators or InheritedWidget.
 
+- A simple API for persistent state.
+
 - Navigate without BuildContext.
  
   Navigate in your app without a custom Page class, a custom MaterialApp.
+
+- 100% compatible with any other navigator's package.
 
 - Simple dependecy injection.
 
@@ -55,7 +59,7 @@ environment:
   flutter: ">=2.10.0"
 
 dependencies:
-  flutter_meedu: ^6.0.0
+  flutter_meedu: ^6.2.2
 ``` 
 
 

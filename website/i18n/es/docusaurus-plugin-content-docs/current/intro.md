@@ -30,13 +30,15 @@ Puede unirse a nuestro servidor de Discord [aquí](https://discord.gg/rV4bPsdefj
 - Un gestor de estados para estados simples y complejos sin boilerplate, sin generadores de codigo y sin depender de un
 InheritedWidget.
 
-- Navegación con Navigator 1.0 sin depender del BuildContext, sin reescibir el widget MaterialApp o usar un widget personalizado para tus paginas.
+- Navegación con Navigator 1.0 sin depender del BuildContext, sin reescribir el widget MaterialApp o usar un widget personalizado para tus páginas.
 
 - Inyección de dependencias de forma sencilla.
 
 - Programación reactiva.
 
 - Facil de testear.
+
+- Compatible con cualquier package de navegación.
 
 ## Instalación
 
@@ -49,7 +51,7 @@ environment:
   flutter: ">=2.10.0"
 
 dependencies:
-  flutter_meedu: ^6.0.0
+  flutter_meedu: ^6.2.2
 ``` 
 
 

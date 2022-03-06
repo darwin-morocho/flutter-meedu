@@ -92,6 +92,6 @@ Para evitar conflictos con las dependencias inyectadas use el método `clear` en
 
 ```dart
 setUp((){
- Get.i.clear(); // remove all dependencies
+ Get.clear(); // remove all dependencies
 });
 ```

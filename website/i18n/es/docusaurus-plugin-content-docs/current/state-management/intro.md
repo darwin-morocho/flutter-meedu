@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## Como funciona flutter_meedu?
 
-Para manejar el esdato de tus paginas o widget tenemos 2 formas:
+Para manejar el estado de tus páginas o widget tenemos 2 formas:
 - Usando la clase `SimpleNotifier` similiar a `ChangeNotifier` para un estado simple.
 - Usando la clase `StateNotifier` para estados complejos.
 
@@ -14,7 +14,7 @@ Para manejar el esdato de tus paginas o widget tenemos 2 formas:
 Si estas usando **visual studio code** considere instalar la siguiente [extensión](https://marketplace.visualstudio.com/items?itemName=meedu.meedu) para un desarrollo mas agil y rapido con flutter_meedu
 :::
 :::success INFO
-Para usuarios linux y macOs (no probado en Windows, pero puede probarlo si lo desea) puede usar [meedu_cli](https://pub.dev/packages/meedu_cli) para crear proyectos flutter con flutter_meedu por defecto, definir una arquitectura limpia y crear sus paginas.
+Para usuarios linux y macOs (no probado en Windows, pero puede probarlo si lo desea) puede usar [meedu_cli](https://pub.dev/packages/meedu_cli) para crear proyectos flutter con flutter_meedu por defecto, definir una arquitectura limpia y crear sus páginas.
 :::
 
 

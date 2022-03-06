@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.with_go_router">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="with_go_router"
         android:name="${applicationName}"

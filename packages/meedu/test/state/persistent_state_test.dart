@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:meedu/meedu.dart';
 import 'package:meedu/src/persistent_state/persistent_state_mixin.dart';
 import 'package:test/test.dart';
@@ -50,6 +51,24 @@ void main() {
         storageKey: key1,
       );
       expect(controllerCopyFail1.state.products.length, 0);
+    },
+  );
+
+  test(
+    'PersistentStateMixin > cities',
+    () async {
+      final storage =MyStorage();
+      final controller = CityPickerController(storage);
+      expect(controller.state.loading, true);
+      await controller.loadCities();
+      expect(controller.state.loading, false);
+      expect(controller.state.cities.isNotEmpty, true);
+
+      /// create a new controller and check the cached state
+      expect(
+        CityPickerController(storage).state.cities.isNotEmpty,
+        true,
+      );
     },
   );
 }
@@ -224,4 +243,132 @@ class MyStorage implements PersistentStateStorage {
   Future<void> save(String key, Json json) async {
     _states[key] = json;
   }
+}
+
+class CityPickerController extends StateNotifier<CityPickerState> with PersistentStateMixin {
+  CityPickerController(
+    this.storage,
+  ) : super(CityPickerState.initialState);
+
+  @override
+  final PersistentStateStorage storage;
+
+  Future<void> loadCities() async {
+    /// if you don't have a cached state
+    if (state.cities.isEmpty) {
+      final cities = await getCitiesFromYourAPI();
+      state = state.copyWith(
+        loading: false,
+        cities: cities,
+      );
+    }
+  }
+
+  @override
+  CityPickerState? fromJson(Json json) {
+    return CityPickerState.fromJson(json);
+  }
+
+  @override
+  @override
+  String get storageKey => 'my_unique_id';
+
+  @override
+  Json? toJson(CityPickerState state) {
+    if (state.cities.isNotEmpty) {
+      return state.toJson();
+    }
+    return null;
+  }
+}
+
+class CityPickerState extends Equatable {
+  final bool loading;
+  final List<City> cities;
+
+  const CityPickerState({
+    required this.loading,
+    required this.cities,
+  });
+
+  static CityPickerState get initialState => CityPickerState(
+        loading: true,
+        cities: [],
+      );
+
+  CityPickerState copyWith({
+    bool? loading,
+    List<City>? cities,
+  }) {
+    return CityPickerState(
+      loading: loading ?? this.loading,
+      cities: cities ?? this.cities,
+    );
+  }
+
+  factory CityPickerState.fromJson(Map<String, dynamic> json) {
+    return CityPickerState(
+      loading: json['loading'],
+      cities: (json['cities'] as List)
+          .map(
+            (e) => City.fromJson(e),
+          )
+          .toList(),
+    );
+  }
+
+  /// conver this instance to one JSON map
+  Map<String, dynamic> toJson() => {
+        'loading': loading,
+        'cities': cities
+            .map(
+              (e) => e.toJson(),
+            )
+            .toList(),
+      };
+
+  @override
+  List<Object?> get props => [
+        loading,
+        cities,
+      ];
+}
+
+class City extends Equatable {
+  final int id;
+  final String name;
+
+  const City({
+    required this.id,
+    required this.name,
+  });
+
+  /// convert this instance to one JSON map
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+      };
+
+  /// return one instance of City from a JSON map
+  factory City.fromJson(Map<String, dynamic> json) {
+    return City(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+      ];
+}
+
+Future<List<City>> getCitiesFromYourAPI() async {
+  await Future.delayed(
+    Duration(milliseconds: 100),
+  );
+  return const [
+    City(id: 1, name: 'Quito'),
+  ];
 }

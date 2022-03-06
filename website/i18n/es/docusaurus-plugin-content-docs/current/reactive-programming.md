@@ -1,6 +1,6 @@
 # Programación Reactiva
 
-El siguiente ejemplo crea una instancia de la clase `Rx` para guardar un valor entero, cada vez que `_counter.value++` es llamdado
+El siguiente ejemplo crea una instancia de la clase `Rx` para guardar un valor entero, cada vez que `_counter.value++` es llamado
 el widget `RxBuilder` actualiza nuestro Text.
 
 ```dart
@@ -89,7 +89,7 @@ void remove(String key) {
 ```
 
 ## Rx Reactions
-Puede usar la clase Rx  con algunos métodos utiles como like debounce, once, ever e interval.
+Puede usar la clase Rx  con algunos métodos utiles como debounce, once, ever e interval.
 
 ```dart
 class SearchController extends SimpleNotifier {
