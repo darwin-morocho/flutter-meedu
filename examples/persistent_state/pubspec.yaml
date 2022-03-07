@@ -30,9 +30,8 @@ dependencies:
   json_annotation: ^4.4.0
   http: ^0.13.4
   freezed_annotation: ^1.1.0
-  flutter_meedu: ^6.2.2
+  flutter_meedu: ^6.2.3
   
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

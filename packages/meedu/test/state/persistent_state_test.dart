@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:meedu/meedu.dart';
-import 'package:meedu/src/persistent_state/persistent_state_mixin.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -57,7 +56,7 @@ void main() {
   test(
     'PersistentStateMixin > cities',
     () async {
-      final storage =MyStorage();
+      final storage = MyStorage();
       final controller = CityPickerController(storage);
       expect(controller.state.loading, true);
       await controller.loadCities();
@@ -73,8 +72,7 @@ void main() {
   );
 }
 
-class ShoppingCartController extends StateNotifier<ShoppingCartState>
-    with PersistentStateMixin<ShoppingCartState> {
+class ShoppingCartController extends StateNotifier<ShoppingCartState> with PersistentStateMixin {
   ShoppingCartController({
     required this.storageKey,
     required this.storage,
@@ -111,12 +109,12 @@ class ShoppingCartController extends StateNotifier<ShoppingCartState>
   }
 
   @override
-  ShoppingCartState fromJson(Json json) {
+  ShoppingCartState fromJson(Map<String, dynamic> json) {
     return ShoppingCartState.fromJson(json);
   }
 
   @override
-  Json toJson(ShoppingCartState state) {
+  Map<String, dynamic> toJson(ShoppingCartState state) {
     return state.toJson();
   }
 
@@ -155,12 +153,12 @@ class ShoppingCartControllerForceFail extends StateNotifier<ShoppingCartState>
   }
 
   @override
-  ShoppingCartState fromJson(Json json) {
+  ShoppingCartState fromJson(Map<String, dynamic> json) {
     throw Exception('');
   }
 
   @override
-  Json toJson(ShoppingCartState state) {
+  Map<String, dynamic> toJson(ShoppingCartState state) {
     return state.toJson();
   }
 }
@@ -174,7 +172,7 @@ class ShoppingCartState {
     required this.products,
   });
 
-  Json toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'loading': loading,
       'products': [
@@ -185,7 +183,7 @@ class ShoppingCartState {
     };
   }
 
-  factory ShoppingCartState.fromJson(Json json) {
+  factory ShoppingCartState.fromJson(Map<String, dynamic> json) {
     return ShoppingCartState(
       loading: json['loading'],
       products: [
@@ -206,14 +204,14 @@ class Product {
     required this.price,
   });
 
-  Json toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'name': name,
       'price': price,
     };
   }
 
-  factory Product.fromJson(Json json) {
+  factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       name: json['name'],
       price: json['price'],
@@ -222,7 +220,7 @@ class Product {
 }
 
 class MyStorage implements PersistentStateStorage {
-  final Map<String, Json> _states = {};
+  final Map<String, Map<String, dynamic>> _states = {};
 
   @override
   Future<void> delete(String key) async {
@@ -235,12 +233,12 @@ class MyStorage implements PersistentStateStorage {
   }
 
   @override
-  Json? get(String key) {
+  Map<String, dynamic>? get(String key) {
     return _states[key];
   }
 
   @override
-  Future<void> save(String key, Json json) async {
+  Future<void> save(String key, Map<String, dynamic> json) async {
     _states[key] = json;
   }
 }
@@ -265,16 +263,15 @@ class CityPickerController extends StateNotifier<CityPickerState> with Persisten
   }
 
   @override
-  CityPickerState? fromJson(Json json) {
+  CityPickerState? fromJson(Map<String, dynamic> json) {
     return CityPickerState.fromJson(json);
   }
 
   @override
-  @override
   String get storageKey => 'my_unique_id';
 
   @override
-  Json? toJson(CityPickerState state) {
+  Map<String, dynamic>? toJson(CityPickerState state) {
     if (state.cities.isNotEmpty) {
       return state.toJson();
     }

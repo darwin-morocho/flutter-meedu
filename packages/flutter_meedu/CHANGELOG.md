@@ -1,3 +1,6 @@
+## [6.2.3]
+- Updated to meedu: ^5.3.1
+
 ## [6.2.2]
 - Updated to meedu: ^5.3.0
 

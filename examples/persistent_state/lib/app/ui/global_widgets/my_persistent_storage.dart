@@ -17,7 +17,7 @@ class MyPersistentStorage implements PersistentStateStorage {
   }
 
   @override
-  Json? get(String key) {
+  Map<String, dynamic>? get(String key) {
     final dataAsString = _box.get(key);
     if (dataAsString != null) {
       return jsonDecode(dataAsString);
@@ -26,7 +26,7 @@ class MyPersistentStorage implements PersistentStateStorage {
   }
 
   @override
-  Future<void> save(String key, Json json) {
+  Future<void> save(String key, Map<String, dynamic> json) {
     return _box.put(
       key,
       jsonEncode(json),

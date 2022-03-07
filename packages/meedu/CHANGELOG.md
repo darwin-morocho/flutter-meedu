@@ -1,3 +1,5 @@
+## [5.3.1]
+- Removed custom type Json.
 ## [5.3.0]
 - Updated exports.
 ## [5.2.0]

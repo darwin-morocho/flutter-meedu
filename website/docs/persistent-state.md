@@ -1,6 +1,6 @@
 # Persistent state
 
-Since `flutter_meedu:^6.1.0` the `StateNotifier` class allows you to keep the state of your Notifiers even if the app was killed (very useful when you want to add OFFLINE support to your apps).
+Since `flutter_meedu:^6.2.3` the `StateNotifier` class allows you to keep the state of your Notifiers even if the app was killed (very useful when you want to add OFFLINE support to your apps).
 
 For this just use the `PersistentStateMixin` mixin and the `PersistentStateStorage` class then you must override the all properties and methods necessary to persist the state of your StateNotifier.
 
@@ -121,7 +121,7 @@ class MyPersistentStorage implements PersistentStateStorage {
   /// check an state with the provided key exists in the
   /// storage and return it as a JSON map
   @override
-  Json? get(String key) {
+  Map<String,dynamic>? get(String key) {
     final dataAsString = _box.get(key);
     if (dataAsString != null) {
       return jsonDecode(dataAsString);
@@ -130,7 +130,7 @@ class MyPersistentStorage implements PersistentStateStorage {
   }
 
   @override
-  Future<void> save(String key, Json json) {
+  Future<void> save(String key, Map<String,dynamic> json) {
     return _box.put(
       key,
       jsonEncode(json),
@@ -140,8 +140,6 @@ class MyPersistentStorage implements PersistentStateStorage {
 ```
 
 :::note
-`Json = Map<String,dynamic>` it is just a custom typedef
-
 Note that in the above code we use `jsonEncode` to store the json state as a string to avoid to define custom `TypeAdapters` for Hive. Also we use `jsonDecode` to convert the json string to a Map.
 
 You are free to use any other Database.
@@ -190,7 +188,7 @@ class CityPickerController extends StateNotifier<CityPickerState> with Persisten
   }
 
   @override
-  CityPickerState? fromJson(Json json) {
+  CityPickerState? fromJson(Map<String,dynamic> json) {
     return CityPickerState.fromJson(json);
   }
 
@@ -201,7 +199,7 @@ class CityPickerController extends StateNotifier<CityPickerState> with Persisten
   PersistentStateStorage get storage => MyPersistentStorage(); // <--YOUR STORAGE
 
   @override
-  Json? toJson(CityPickerState state) {
+  Map<String,dynamic>? toJson(CityPickerState state) {
     if (state.cities.isNotEmpty) {
       return state.toJson();
     }

@@ -19,7 +19,7 @@ class CityPickerController extends StateNotifier<CityPickerState> with Persisten
   }
 
   @override
-  CityPickerState? fromJson(Json json) {
+  CityPickerState? fromJson(Map<String,dynamic> json) {
     return Loaded.fromJson(json);
   }
 
@@ -30,7 +30,7 @@ class CityPickerController extends StateNotifier<CityPickerState> with Persisten
   String get storageKey => 'cities';
 
   @override
-  Json? toJson(CityPickerState state) {
+  Map<String,dynamic>? toJson(CityPickerState state) {
     if (state is Loaded) {
       return state.toJson();
     }

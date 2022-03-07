@@ -1,8 +1,5 @@
 import 'package:meedu/meedu.dart';
 
-/// typedef to present a JSON
-typedef Json = Map<String, dynamic>;
-
 /// a mixin to allows you save a state as a JSON in any local database
 mixin PersistentStateMixin<State> on StateNotifier<State> {
   State? _state;
@@ -14,14 +11,14 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
   String get storageKey;
 
   /// convert a JSON to one instance of [State]
-  State? fromJson(Json json);
+  State? fromJson(Map<String, dynamic> json);
 
   /// convert one instance of [State] to a JSON
   /// to be saved into the storage
   ///
   /// **IMPORTANT** if this method returns `null` the current state saved
   /// won't be modified
-  Json? toJson(State state);
+  Map<String, dynamic>? toJson(State state);
 
   /// a callback to listen when a cached storage couldn't be parsed
   /// or if the state couldn't be saved
@@ -75,10 +72,10 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
 /// that implements the [PersistentStateMixin]
 abstract class PersistentStateStorage {
   /// return a saved state by key
-  Json? get(String key);
+  Map<String, dynamic>? get(String key);
 
   /// save the state as a json string
-  Future<void> save(String key, Json json);
+  Future<void> save(String key, Map<String, dynamic> json);
 
   /// delete a cached state from the storage
   Future<void> delete(String key);
