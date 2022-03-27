@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../transitions/transition.dart';
-import 'utils.dart';
+import '../router/utils.dart';
 
 /// Navigator 1.0 to use push, pushReplacement, pushAndRemoveUntil and all pop methods
 class Navigator1 {

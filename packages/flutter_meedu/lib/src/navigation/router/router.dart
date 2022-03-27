@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../navigator/navigator.dart';
 import '../transitions/transition.dart';
 import 'contextless_navigator.dart';
 import 'meedu_page_route.dart';
-import 'navigator.dart';
 
 export '../transitions/transition.dart';
 

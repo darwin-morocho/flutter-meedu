@@ -1,3 +1,6 @@
+## [6.2.5]
+- Export `Navigator1` as an independent library.
+- Added `StateNavigatorMixin` mixin and `ContextNavigatorExt` extension.
 ## [6.2.4]
 - Added class `Navigator1` to easy use push, pushReplacement, pushAndRemoveUntil and all pop methods.
 ## [6.2.3]
