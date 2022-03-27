@@ -1,3 +1,5 @@
+## [6.2.4]
+- Added class `Navigator1` to easy use push, pushReplacement, pushAndRemoveUntil and all pop methods.
 ## [6.2.3]
 - Updated to meedu: ^5.3.1
 

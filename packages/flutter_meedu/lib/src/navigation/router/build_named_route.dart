@@ -30,13 +30,13 @@ MeeduPageRoute<T>? _buildNamedRoute<T>({
     return null;
   }
 
-  final _transition = transition ?? MeeduNavigator.i.transition;
+  final _transition = transition ?? ContextlessNavigator.i.transition;
   if (_transition == Transition.material ||
       _transition == Transition.cupertino) {
     return null;
   }
   final _transitionDuration =
-      transitionDuration ?? MeeduNavigator.i.transitionDuration;
+      transitionDuration ?? ContextlessNavigator.i.transitionDuration;
 
   // create a custom route with a custom transition
   return MeeduPageRoute<T>(

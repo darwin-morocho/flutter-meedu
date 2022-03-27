@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../transitions/transition.dart';
+import 'contextless_navigator.dart';
 import 'meedu_page_route.dart';
 import 'navigator.dart';
-import 'utils.dart';
 
 export '../transitions/transition.dart';
 
@@ -24,7 +24,8 @@ part 'build_named_route.dart';
 ///  }
 ///}
 ///```
-GlobalKey<NavigatorState> get navigatorKey => MeeduNavigator.i.navigatorKey;
+GlobalKey<NavigatorState> get navigatorKey =>
+    ContextlessNavigator.i.navigatorKey;
 
 /// GlobalKey to detenrminate if a MaterialApp or CupertinoApp
 /// is using the `onGenerateRoute` paremeter or for custom transitions
@@ -44,19 +45,22 @@ GlobalKey<NavigatorState> get navigatorKey => MeeduNavigator.i.navigatorKey;
 ///  }
 ///}
 ///```
-GlobalKey get appKey => MeeduNavigator.i.appKey;
+GlobalKey get appKey => ContextlessNavigator.i.appKey;
 
 /// current state of navigatorKey to be used to navigate without BuildContext
-NavigatorState? get _state => MeeduNavigator.i.navigatorKey.currentState;
+NavigatorState? get _state => ContextlessNavigator.i.navigatorKey.currentState;
+
+/// create a navigator 1.0 to use push, pushReplacement, pushAndRemoveUntil and all pop methods
+Navigator1 get _navigator => Navigator1(_state!.context);
 
 /// set the default transition for all pages
 ///
 /// [duration] set the transition duration for all pages
 /// by default duration is 300 milliseconds
 void setDefaultTransition(Transition transition, {Duration? duration}) {
-  MeeduNavigator.i.transition = transition;
+  ContextlessNavigator.i.transition = transition;
   if (duration != null) {
-    MeeduNavigator.i.transitionDuration = duration;
+    ContextlessNavigator.i.transitionDuration = duration;
   }
 }
 
@@ -72,7 +76,7 @@ void _validateRouterState() {
 ///
 /// useful for widget testing
 void dispose() {
-  MeeduNavigator.i.dispose();
+  ContextlessNavigator.i.dispose();
 }
 
 /// Push the given [page] onto the navigator.
@@ -90,16 +94,14 @@ Future<T?> push<T>(
   bool backGestureEnabled = false,
 }) {
   _validateRouterState();
-  return _state!.push<T>(
-    getRoute<T>(
-      page,
-      arguments: arguments,
-      maintainState: maintainState,
-      fullscreenDialog: fullscreenDialog,
-      transition: transition,
-      transitionDuration: transitionDuration,
-      backGestureEnabled: backGestureEnabled,
-    ),
+  return _navigator.push<T>(
+    page,
+    arguments: arguments,
+    maintainState: maintainState,
+    fullscreenDialog: fullscreenDialog,
+    transition: transition,
+    transitionDuration: transitionDuration,
+    backGestureEnabled: backGestureEnabled,
   );
 }
 
@@ -120,17 +122,43 @@ Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
   TO? result,
 }) {
   _validateRouterState();
-  return _state!.pushReplacement<T, TO>(
-    getRoute(
-      page,
-      arguments: arguments,
-      maintainState: maintainState,
-      fullscreenDialog: fullscreenDialog,
-      transition: transition,
-      transitionDuration: transitionDuration,
-      backGestureEnabled: backGestureEnabled,
-    ),
+  return _navigator.pushReplacement<T, TO>(
+    page,
+    arguments: arguments,
+    maintainState: maintainState,
+    fullscreenDialog: fullscreenDialog,
+    transition: transition,
+    transitionDuration: transitionDuration,
+    backGestureEnabled: backGestureEnabled,
     result: result,
+  );
+}
+
+/// navigates to a new pages and remove until
+///
+/// [transitionDuration] is ignored when transition is equals to Transition.material or Transition.cupertino
+///
+/// [backGestureEnabled] not works on Android if transition is Transition.material
+Future<T?> pushAndRemoveUntil<T>(
+  Widget page, {
+  bool Function(Route<dynamic>)? predicate,
+  Object? arguments,
+  bool backGestureEnabled = true,
+  bool maintainState = true,
+  bool fullscreenDialog = false,
+  Transition? transition,
+  Duration? transitionDuration,
+}) {
+  _validateRouterState();
+  return _navigator.pushAndRemoveUntil<T>(
+    page,
+    arguments: arguments,
+    maintainState: maintainState,
+    fullscreenDialog: fullscreenDialog,
+    transition: transition,
+    transitionDuration: transitionDuration,
+    backGestureEnabled: backGestureEnabled,
+    predicate: predicate ?? (_) => false,
   );
 }
 
@@ -259,25 +287,25 @@ Future<T?> pushNamedAndRemoveUntil<T>(
 ///  returns whether the pop request should be considered handled.
 Future<bool> maybePop<T>([T? result]) {
   _validateRouterState();
-  return _state!.maybePop(result);
+  return _navigator.maybePop(result);
 }
 
 /// remove the current page or dialog from the stack until `predicate`
 void pop<T>([T? result]) {
   _validateRouterState();
-  _state!.pop(result);
+  _navigator.pop(result);
 }
 
 /// remove all pages in the stack until [predicate]
 void popUntil([bool Function(Route<dynamic>)? predicate]) {
   _validateRouterState();
-  _state!.popUntil(predicate ?? (_) => false);
+  _navigator.popUntil(predicate ?? (_) => false);
 }
 
 /// return true if we can do pop
 bool canPop() {
   _validateRouterState();
-  return _state!.canPop();
+  return _navigator.canPop();
 }
 
 /// return the arguments of the current page
@@ -288,7 +316,7 @@ Object? get arguments {
 /// return the current route settings
 RouteSettings get settings {
   assert(
-    MeeduNavigator.i.routeSettings != null,
+    ContextlessNavigator.i.routeSettings != null,
     '''
     you need to define the navigator observer to allow
     flutter_meedu store the settings of the current route
@@ -305,7 +333,7 @@ RouteSettings get settings {
 
     ''',
   );
-  return MeeduNavigator.i.routeSettings!;
+  return ContextlessNavigator.i.routeSettings!;
 }
 
 /// return the current context linked to the global navigatorKey

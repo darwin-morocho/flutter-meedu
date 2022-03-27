@@ -3,7 +3,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../meedu.dart';
-import 'router/navigator.dart';
+import 'router/contextless_navigator.dart';
 
 /// the observer to listen the changes in the stack route
 NavigatorObserver get observer => _NavigatorObserver();
@@ -71,7 +71,7 @@ class _NavigatorObserver extends NavigatorObserver {
   }) {
     if (route is PageRoute && route.isCurrent) {
       BaseProvider.creatorName = _getRouteName(route);
-      MeeduNavigator.i.setRouteSettings(route.settings);
+      ContextlessNavigator.i.setRouteSettings(route.settings);
       if (checkAutoDispose) {
         // wait to the popped animation transisiton
         route.completed.then((_) => _checkAutoDispose(route));

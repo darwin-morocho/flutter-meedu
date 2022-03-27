@@ -45,6 +45,9 @@ void main() {
       await test.pumpAndSettle();
       expect(router.settings.name, "/");
       expect(router.arguments, "works");
+      await test.tap(find.byType(IconButton));
+      await test.pumpAndSettle();
+      expect(find.text("GREAT"), findsOneWidget);
     });
   });
 
@@ -107,36 +110,48 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          TextButton(
-            onPressed: () {
-              router.pushReplacement(
-                DetailPage(),
-                arguments: "meedu",
-                transition: router.Transition.zoom,
-                transitionDuration: Duration(milliseconds: 100),
-              );
-            },
-            child: Text("pushReplacement"),
-          ),
-          TextButton(
-            onPressed: () {
-              router.popAndPushNamed('/detail', arguments: 'meedu');
-            },
-            child: Text("popAndPushNamed"),
-          ),
-          TextButton(
-            onPressed: () {
-              router.pushNamed(
-                'detail',
-                arguments: "meedu",
-              );
-            },
-            child: Text("pushNamed"),
-          ),
-        ],
+    return Scaffold(
+      body: Container(
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () {
+                router.pushReplacement(
+                  DetailPage(),
+                  arguments: "meedu",
+                  transition: router.Transition.zoom,
+                  transitionDuration: Duration(milliseconds: 100),
+                );
+              },
+              child: Text("pushReplacement"),
+            ),
+            TextButton(
+              onPressed: () {
+                router.popAndPushNamed('/detail', arguments: 'meedu');
+              },
+              child: Text("popAndPushNamed"),
+            ),
+            TextButton(
+              onPressed: () {
+                router.pushNamed(
+                  'detail',
+                  arguments: "meedu",
+                );
+              },
+              child: Text("pushNamed"),
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => router.pushAndRemoveUntil(
+                Scaffold(
+                  body: Center(
+                    child: Text('GREAT'),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

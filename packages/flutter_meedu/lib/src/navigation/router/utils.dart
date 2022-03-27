@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../transitions/transition.dart';
+import 'contextless_navigator.dart';
 import 'meedu_page_route.dart';
-import 'navigator.dart';
 
 /// get the transition
 Route<T> getRoute<T>(
@@ -21,10 +21,10 @@ Route<T> getRoute<T>(
     arguments: arguments,
   );
 
-  final _transition = transition ?? MeeduNavigator.i.transition;
+  final _transition = transition ?? ContextlessNavigator.i.transition;
 
   final _transitionDuration =
-      transitionDuration ?? MeeduNavigator.i.transitionDuration;
+      transitionDuration ?? ContextlessNavigator.i.transitionDuration;
 
   switch (_transition) {
     case Transition.material:
