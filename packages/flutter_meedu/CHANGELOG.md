@@ -1,73 +1,107 @@
+## [6.2.5+1]
+- Added `export 'src/navigation/transitions/transition.dart';` in navigator library.
+
 ## [6.2.5]
+
 - Export `Navigator1` as an independent library.
 - Added `StateNavigatorMixin` mixin and `ContextNavigatorExt` extension.
+
 ## [6.2.4]
+
 - Added class `Navigator1` to easy use push, pushReplacement, pushAndRemoveUntil and all pop methods.
+
 ## [6.2.3]
+
 - Updated to meedu: ^5.3.1
 
 ## [6.2.2]
+
 - Updated to meedu: ^5.3.0
 
 ## [6.2.1]
+
 - Updated to meedu: ^5.2.0
+
 ## [6.2.0]
+
 - Updated to meedu: ^5.2.0
+
 ## [6.1.0]
+
 - Updated to meedu: ^5.1.0
 - Added `PersistentStateMixin` to save the state of your StateNotifers as a JSON.
 
 ## [6.0.1]
+
 - Fixed bug due to `addPostFrameCallback` in `ConsumerWidget` when
-an update is called before `addPostFrameCallback` has been completed.
+  an update is called before `addPostFrameCallback` has been completed.
 
 ## [6.0.0]
+
 - Release 6.x.x
+
 ## [6.0.0-dev.2]
+
 - Removed deprecated methods.
+
 ## [6.0.0-dev.1]
+
 - Set min dark sdk >=2.15
+
 ## [6.0.0-dev.0]
+
 **BREAKING CHANGE**: removed `.ids` filter in favor to `.select` in `SimpleProvider`.
 
-
 ## [5.3.1]
+
 - Added `@Deprecated` annotation for `.ids` filter, that filter
-will be removed in `flutter_meedu: ^6.x.x`.
+  will be removed in `flutter_meedu: ^6.x.x`.
 
 - Updated to meedu: ^4.3.0
 
 ## [5.3.0+1]
+
 - Updated README.md
+
 ## [5.3.0]
+
 - Added support for filters in ProviderListener and MultiProviderListener
 
 For example:
+
 ```dart
 ProviderListener<CounterController>(
   provider: counterProvider.select(
     (_) => _.counter >= 5,
   ),
   onChange: (_, controller) {
-   
+
   },
   builder: (_, controller) {
     return YOUR_WIDGET;
   },
 );
 ```
+
 - Added lint rules.
 
 ## [5.2.1]
+
 - Added `router.context`.
+
 ## [5.2.0+1]
+
 - Updated readme.
+
 ## [5.2.0]
+
 - Added validations for bad use of `ref.watch` and `ref.select`.
+
 ## [5.1.0]
+
 - now the router module allows you access to the
-route arguments without BuildContext. To do this you need 
-to add the observer in your navigatorObservers.
+  route arguments without BuildContext. To do this you need
+  to add the observer in your navigatorObservers.
 
 ```dart
 import 'package:flutter_meedu/router.dart' as router;
@@ -85,6 +119,7 @@ MaterialApp(
 ```
 
 then you can access to the route setting or arguments
+
 ```dart
 import 'package:flutter_meedu/router.dart' as router;
 .
@@ -124,13 +159,15 @@ setUp((){
 ```
 
 ## [5.0.1]
+
 - Updated to `meedu: ^4.2.1`
 
 ## [5.0.0]
+
 - **BREAKING CHANGE:** Removed `ScopedReader` and replaced by `BuilderRef`.
 
 **Before:**
-the watch function allways return the notifier linked to the 
+the watch function allways return the notifier linked to the
 provider passed as parameter to the watch function.
 
 ```dart
@@ -139,7 +176,6 @@ provider passed as parameter to the watch function.
      return Text("${controller.counter}");
  })
 ```
-
 
 ```dart
  Consumer(builder: (_, watch, __) {
@@ -153,6 +189,7 @@ provider passed as parameter to the watch function.
 **After:**
 now the consumer widget has replaced the `watch` parameter for one instance of `BuilderRef`
 with this change to listen the changes you need to use `ref.watch`
+
 ```dart
  Consumer(builder: (_, ref, __) {
      final controller = ref.watch(counterProvider);
@@ -168,7 +205,9 @@ with this change to listen the changes you need to use `ref.watch`
     return Text("${controller.counter}");
  })
 ```
+
 or if you want direct access to the value returned by ` counterProvider.select((_) => _.counter)` you can use `ref.select`
+
 ```dart
  Consumer(builder: (_, ref, __) {
      final int counter = ref.select(
@@ -183,46 +222,76 @@ or if you want direct access to the value returned by ` counterProvider.select((
 - `ref.select` can be used to listen the changes in a provider only using filters like `.select` and `.when` and the value returned by `ref.select` depends of the value returned by the filters.
 
 **IMPORTANT:** the `.ids` filter only should be used with `ref.watch`.
+
 ##
 
 ## [4.4.1]
+
 - Fixed multiples rebuilds with custom transitions using named routes.
 
 ## [4.4.0]
+
 - Added `MultiProviderListener` widget.
+
 ## [4.3.0]
+
 - Added `autoRemove` and `onRemove` in dependency injection.
+
 ## [4.2.1]
+
 - Added **result** parameter in `pushReplacementNamed`.
+
 ## [4.2.0]
+
 - Added custom transitions for named routes.
 - Updated docs.
+
 ## [4.1.1]
+
 - Added isDarkMode extension.
+
 ## [4.1.0+3]
+
 - Added const constructor in PageWithArgumentsWidget class.
+
 ## [4.1.0+2]
+
 - Added const constructor in PageWithArgumentsWidget class.
+
 ## [4.1.0+1]
+
 - Added PageWithArgumentsWidget class.
+
 ## [4.1.0]
+
 - Updated to meedu: ^4.1.0
 
 ## [4.0.0+2]
+
 - Updated to meedu: ^4.0.0+1
 - Improved ConsumerWidget class.
+
 ## [4.0.0+1]
+
 - Added comments in the consumer widget.
+
 ## [4.0.0-dev.0]
+
 - Removed WatchFilter class.
 - Added .ids, .select and .when methods in SimpleProvider and StateProvider.
 
 ## [3.0.10]
+
 - Added PageWithArguments Widget.
+
 ## [3.0.9]
+
 - Updated to meedu: ^3.0.8
+
 ## [3.0.8+1]
+
 - Updated README.
+
 ## [3.0.8]
 
 - Updated to meedu: ^3.0.7
