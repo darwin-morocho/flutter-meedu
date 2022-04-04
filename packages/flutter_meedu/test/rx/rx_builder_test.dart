@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:meedu/rx.dart';
 import 'package:flutter_meedu/flutter_meedu.dart';
 
 class Clock extends StatefulWidget {

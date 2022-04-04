@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/flutter_meedu.dart';
 
 void main() {
   setUp(() {
@@ -10,7 +10,7 @@ void main() {
   testWidgets(
     'CupertinoApp',
     (tester) async {
-      router.setDefaultTransition(router.Transition.downToUp);
+      router.setDefaultTransition(Transition.downToUp);
       await tester.pumpWidget(
         CupertinoApp(
           key: router.appKey,
@@ -37,7 +37,7 @@ void main() {
                           child: Text("popAndPushNamed cupertino"),
                           onPressed: () => router.popAndPushNamed(
                             '/',
-                            transition: router.Transition.cupertino,
+                            transition: Transition.cupertino,
                           ),
                         ),
                       ],

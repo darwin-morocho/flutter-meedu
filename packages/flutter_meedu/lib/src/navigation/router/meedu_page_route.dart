@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../gesture_detector/back_gesture_controller.dart';
 import '../gesture_detector/gesture_detector.dart';
 import '../transitions/export.dart';
-import 'router.dart';
+import 'contextless_navigator.dart';
 
 /// custom PageRoute for custom transitions in the router module
 class MeeduPageRoute<T> extends PageRoute<T> {
@@ -64,7 +64,7 @@ class MeeduPageRoute<T> extends PageRoute<T> {
   }
 
   void build() {
-    child = _getChild(appKey.currentContext!);
+    child = _getChild(ContextlessNavigator.i.appKey.currentContext!);
   }
 
   @override
@@ -112,7 +112,7 @@ class MeeduPageRoute<T> extends PageRoute<T> {
   /// check if [backGestureEnabled]is true and envolves it into a BackGestureDetector
   Widget _getChild(BuildContext context) {
     if (routeName != null) {
-      final app = appKey.currentWidget;
+      final app = ContextlessNavigator.i.appKey.currentWidget;
       late Map<String, Widget Function(BuildContext)> routes;
       if (app is MaterialApp) {
         routes = app.routes ?? {};

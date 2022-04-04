@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/flutter_meedu.dart';
 
 void main() {
   testWidgets('transitions test', (test) async {
-    router.setDefaultTransition(router.Transition.material, duration: Duration(milliseconds: 100));
+    router.setDefaultTransition(Transition.material, duration: Duration(milliseconds: 100));
     await test.pumpWidget(
       MaterialApp(
         navigatorKey: router.navigatorKey,
@@ -56,29 +56,29 @@ class HomePage extends StatelessWidget {
           TextButton(
             onPressed: () => router.push(
               DetailPage(),
-              transition: router.Transition.downToUp,
+              transition: Transition.downToUp,
               backGestureEnabled: true,
             ),
             child: Text("downToUp"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: router.Transition.upToDown),
+            onPressed: () => router.push(DetailPage(), transition: Transition.upToDown),
             child: Text("upToDown"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: router.Transition.fadeIn),
+            onPressed: () => router.push(DetailPage(), transition: Transition.fadeIn),
             child: Text("fadeIn"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: router.Transition.rightToLeft),
+            onPressed: () => router.push(DetailPage(), transition: Transition.rightToLeft),
             child: Text("rightToLeft"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: router.Transition.none),
+            onPressed: () => router.push(DetailPage(), transition: Transition.none),
             child: Text("none"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: router.Transition.cupertino),
+            onPressed: () => router.push(DetailPage(), transition: Transition.cupertino),
             child: Text("cupertino"),
           ),
           TextButton(

@@ -1,10 +1,50 @@
+## [7.0.0+dev.0]
+
+- **BREAKING CHANGE** Now to use the route module you don't have to use alias.
+  Now you have to use the global var `router`
+
+Before:
+
+```dart
+import 'package:flutter_meedu/router.dart' as router;
+
+MaterialApp(
+  navigatorKey: router.navigatorKey,// <-- ADD THIS
+  home: HomePage(),
+  navigatorObservers: [
+    router.observer,// <-- ADD THIS
+  ],
+  .
+  .
+  .
+),
+```
+
+Now:
+
+```dart
+import 'package:flutter_meedu/router.dart'; // Alias is not needed any more
+
+MaterialApp(
+  navigatorKey: router.navigatorKey,// <-- ADD THIS
+  home: HomePage(),
+  navigatorObservers: [
+    router.observer,// <-- ADD THIS
+  ],
+  .
+  .
+  .
+),
+```
+
 ## [6.2.5+1]
+
 - Added `export 'src/navigation/transitions/transition.dart';` in navigator library.
 
 ## [6.2.5]
 
 - Export `Navigator1` as an independent library.
-- Added `StateNavigatorMixin` mixin and `ContextNavigatorExt` extension.
+- Added `ContextNavigatorExt` extension.
 
 ## [6.2.4]
 

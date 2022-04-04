@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/flutter_meedu.dart';
 
 void main() {
   setUp(() {
@@ -9,7 +8,7 @@ void main() {
   });
   testWidgets('back gesture', (tester) async {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-    router.setDefaultTransition(router.Transition.downToUp);
+    router.setDefaultTransition(Transition.downToUp);
     await tester.pumpWidget(
       MaterialApp(
         navigatorKey: router.navigatorKey,
@@ -26,7 +25,7 @@ void main() {
                 ),
                 backGestureEnabled: true,
                 transitionDuration: Duration(milliseconds: 100),
-                transition: router.Transition.rightToLeft,
+                transition: Transition.rightToLeft,
               ),
             ),
           ),

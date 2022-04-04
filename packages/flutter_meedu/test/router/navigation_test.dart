@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/flutter_meedu.dart';
 
 void main() {
   setUp(() {
@@ -9,7 +9,7 @@ void main() {
   group('navigation', () {
     testWidgets('normal navigation', (test) async {
       router.setDefaultTransition(
-        router.Transition.material,
+        Transition.material,
         duration: Duration(milliseconds: 100),
       );
       await test.pumpWidget(
@@ -52,7 +52,7 @@ void main() {
   });
 
   testWidgets('popAndPushNamed', (tester) async {
-    router.setDefaultTransition(router.Transition.downToUp);
+    router.setDefaultTransition(Transition.downToUp);
     await tester.pumpWidget(
       MaterialApp(
         key: router.appKey,
@@ -75,7 +75,7 @@ void main() {
   });
 
   testWidgets('initial arguments', (tester) async {
-    router.setDefaultTransition(router.Transition.downToUp);
+    router.setDefaultTransition(Transition.downToUp);
     await tester.pumpWidget(
       MaterialApp(
         key: router.appKey,
@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
                 router.pushReplacement(
                   DetailPage(),
                   arguments: "meedu",
-                  transition: router.Transition.zoom,
+                  transition: Transition.zoom,
                   transitionDuration: Duration(milliseconds: 100),
                 );
               },

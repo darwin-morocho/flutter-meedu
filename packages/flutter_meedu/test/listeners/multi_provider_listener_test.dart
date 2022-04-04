@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/state.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import '../state/consumer_widget_test.dart';
 import '../state/state_controller_test.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/flutter_meedu.dart';
 
 bool _counterCalled = false, _loginCalled = false;
-int _simpleSelectCalledCount = 0, _stateSelectCalledCount = 0, _stateWhenCalledCount = 0;
+int _simpleSelectCalledCount = 0,
+    _stateSelectCalledCount = 0,
+    _stateWhenCalledCount = 0;
+
 void main() {
   setUp(() {
     _counterCalled = false;

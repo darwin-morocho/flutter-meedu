@@ -1,14 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/state.dart';
+import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:meedu/provider.dart';
-import 'package:meedu/state.dart';
-import 'package:flutter_meedu/router.dart' as router;
 
 final _provider = StateProvider<LoginController, LoginState>(
   (_) => LoginController(),
 );
+
 void main() {
   tearDown(() {
     _provider.dispose();
@@ -142,7 +140,8 @@ class LoginPage extends StatelessWidget {
           Consumer(builder: (_, ref, __) {
             final state = ref
                 .watch(
-                  _provider.when((prev, current) => prev.password != current.password),
+                  _provider.when(
+                      (prev, current) => prev.password != current.password),
                 )
                 .state;
             return Text(state.password);
@@ -183,6 +182,7 @@ class LoginDetail extends ConsumerWidget {
 
 class LoginState extends Equatable {
   final String email, password;
+
   LoginState({
     required this.email,
     required this.password,
