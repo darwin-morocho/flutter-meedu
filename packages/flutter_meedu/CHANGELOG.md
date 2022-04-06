@@ -1,4 +1,4 @@
-## [7.0.0+dev.0]
+## [7.0.0-dev.0]
 
 - **BREAKING CHANGE** Now to use the route module you don't have to use alias.
   Now you have to use the global var `router`
