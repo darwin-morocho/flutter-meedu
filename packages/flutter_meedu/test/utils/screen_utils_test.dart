@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_meedu/screen_utils.dart';
+import 'package:flutter_meedu/ui.dart';
 
 void main() {
   testWidgets('screen utils', (tester) async {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meedu/meedu.dart';
 
-import '../../../../flutter_meedu.dart';
+import '../watch_filter.dart';
 
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers

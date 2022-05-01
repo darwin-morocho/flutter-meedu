@@ -1,41 +1,91 @@
+## [7.0.0-dev.1]
+- Added `AfterFirstLayoutMixin`.
+  Add with AfterLayoutMixin<MyWidget> mixin to your State<MyWidget> class and then implement
+  the void afterFirstLayout(BuildContext context) abstract method. Code in this method will be 
+  called the first time this widget is laid out on the screen.
+  ```dart
+  class MyWidget extends StatefulWidget {
+    const _MyWidget({Key? key}) : super(key: key);
+    @override
+    State<MyWidget> createState() => _MyWidgetState();
+  }
+
+  class _MyWidgetState extends State<MyWidget> with AfterFirstLayoutMixin {
+    @override
+    void afterFirstLayout(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          content: Text('after first layout'),
+        ),
+      );
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold();
+    }
+  }
+  ```
+
+- **BREAKING CHANGE** imports has been renamed.
+
+  Before:
+  ```dart
+  import 'package:flutter_meedu/router.dart';
+  import 'package:flutter_meedu/rx.dart';
+  import 'package:flutter_meedu/state.dart';
+  import 'package:flutter_meedu/page.dart';
+  import 'package:flutter_meedu/navigation.dart';
+  import 'package:flutter_meedu/screen_utils.dart';
+  ```
+
+  Now:
+  ```dart
+  import 'package:flutter_meedu/ui.dart'; /// this contains the all previous libraries in one single import
+  ```
+  > IMPORTANT: `package:flutter_meedu/flutter_meedu.dart` has been removed in favor to `package:flutter_meedu/ui.dart`
+
+
+
 ## [7.0.0-dev.0]
 
 - **BREAKING CHANGE** Now to use the route module you don't have to use alias.
-  Now you have to use the global var `router`
+    Now you have to use the global var `router`
 
-Before:
+  Before:
 
-```dart
-import 'package:flutter_meedu/router.dart' as router;
+  ```dart
+  import 'package:flutter_meedu/router.dart' as router;
 
-MaterialApp(
-  navigatorKey: router.navigatorKey,// <-- ADD THIS
-  home: HomePage(),
-  navigatorObservers: [
-    router.observer,// <-- ADD THIS
-  ],
-  .
-  .
-  .
-),
-```
+  MaterialApp(
+    navigatorKey: router.navigatorKey,// <-- ADD THIS
+    home: HomePage(),
+    navigatorObservers: [
+      router.observer,// <-- ADD THIS
+    ],
+    .
+    .
+    .
+  ),
+  ```
 
-Now:
+  Now:
 
-```dart
-import 'package:flutter_meedu/router.dart'; // Alias is not needed any more
+  ```dart
+  import 'package:flutter_meedu/router.dart'; // Alias is not needed any more
 
-MaterialApp(
-  navigatorKey: router.navigatorKey,// <-- ADD THIS
-  home: HomePage(),
-  navigatorObservers: [
-    router.observer,// <-- ADD THIS
-  ],
-  .
-  .
-  .
-),
-```
+  MaterialApp(
+    navigatorKey: router.navigatorKey,// <-- ADD THIS
+    home: HomePage(),
+    navigatorObservers: [
+      router.observer,// <-- ADD THIS
+    ],
+    .
+    .
+    .
+  ),
+  ```
 
 ## [6.2.5+1]
 

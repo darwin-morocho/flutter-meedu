@@ -5,7 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../state/consumer_widget_test.dart';
 import '../state/state_controller_test.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/meedu.dart';
 
 bool _counterCalled = false, _loginCalled = false;
 int _simpleSelectCalledCount = 0,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+import 'package:flutter_meedu/ui.dart';
 
 void main() {
   testWidgets('transitions test', (test) async {
-    router.setDefaultTransition(Transition.material, duration: Duration(milliseconds: 100));
+    router.setDefaultTransition(Transition.material,
+        duration: Duration(milliseconds: 100));
     await test.pumpWidget(
       MaterialApp(
         navigatorKey: router.navigatorKey,
@@ -62,23 +63,28 @@ class HomePage extends StatelessWidget {
             child: Text("downToUp"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: Transition.upToDown),
+            onPressed: () =>
+                router.push(DetailPage(), transition: Transition.upToDown),
             child: Text("upToDown"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: Transition.fadeIn),
+            onPressed: () =>
+                router.push(DetailPage(), transition: Transition.fadeIn),
             child: Text("fadeIn"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: Transition.rightToLeft),
+            onPressed: () =>
+                router.push(DetailPage(), transition: Transition.rightToLeft),
             child: Text("rightToLeft"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: Transition.none),
+            onPressed: () =>
+                router.push(DetailPage(), transition: Transition.none),
             child: Text("none"),
           ),
           TextButton(
-            onPressed: () => router.push(DetailPage(), transition: Transition.cupertino),
+            onPressed: () =>
+                router.push(DetailPage(), transition: Transition.cupertino),
             child: Text("cupertino"),
           ),
           TextButton(

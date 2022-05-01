@@ -69,3 +69,23 @@ extension ContextExtensionss on BuildContext {
   /// True if the current device is Tablet
   bool get isTablet => isSmallTablet || isLargeTablet;
 }
+
+/// Add with AfterLayoutMixin<MyWidget> mixin to your State<MyWidget> class and then implement
+/// the void afterFirstLayout(BuildContext context) abstract method. Code in this method will be
+/// called the first time this widget is laid out on the screen.
+mixin AfterFirstLayoutMixin<T extends StatefulWidget> on State<T> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (_) => afterFirstLayout(context),
+    );
+  }
+
+  /// Brings functionality to execute code after the first layout of a widget has been performed,
+  /// i.e. after the first frame has been displayed.
+  ///
+  /// If you want to display a widget that depends on the layout, such as a Dialog or BottomSheet,
+  /// you can not use that widget in initState instead of that you can use this method
+  void afterFirstLayout(BuildContext context);
+}
