@@ -1,8 +1,105 @@
-## [7.0.0-dev.1]
+## [7.0.0]
+
+- **BREAKING CHANGE** 
+
+  imports has been renamed.
+
+  Before:
+
+  ```dart
+  import 'package:flutter_meedu/router.dart';
+  import 'package:flutter_meedu/rx.dart';
+  import 'package:flutter_meedu/state.dart';
+  import 'package:flutter_meedu/page.dart';
+  import 'package:flutter_meedu/navigation.dart';
+  import 'package:flutter_meedu/screen_utils.dart';
+  ```
+
+  Now:
+
+  ```dart
+  import 'package:flutter_meedu/ui.dart'; /// this contains the all previous libraries in one single import
+  ```
+
+  > IMPORTANT: `package:flutter_meedu/flutter_meedu.dart` has been removed in favor to `package:flutter_meedu/ui.dart`
+
+
+- **BREAKING CHANGE** 
+  
+  Now to use the route module you don't have to use alias.
+  Now you have to use the global var `router`
+
+  Before:
+
+  ```dart
+  import 'package:flutter_meedu/router.dart' as router;
+
+  MaterialApp(
+    navigatorKey: router.navigatorKey,// <-- ADD THIS
+    home: HomePage(),
+    navigatorObservers: [
+      router.observer,// <-- ADD THIS
+    ],
+    .
+    .
+    .
+  ),
+  ```
+
+  Now:
+
+  ```dart
+  import 'package:flutter_meedu/ui.dart'; // Alias is not needed any more
+
+  MaterialApp(
+    navigatorKey: router.navigatorKey,// <-- ADD THIS
+    home: HomePage(),
+    navigatorObservers: [
+      router.observer,// <-- ADD THIS
+    ],
+    .
+    .
+    .
+  ),
+  ```
+
+- **BREAKING CHANGE**:
+
+  `Get.factoryPut<T,A>` has been replaced for `Get. factoryPut<T>`
+
+  Before:
+
+  ```dart
+  Get.factoryPut<AuthRepository, String>(
+    (String? arguments) => AuthRepository (arguments!),
+  );
+    .
+    .
+    .
+  final testRepo = Get.factoryFind<AuthRepository,  String>(
+  arguments:"https://test.api.com",
+  );
+  ```
+
+  Now:
+
+  ```dart
+  Get.factoryPut<AuthRepository>(
+    (arguments) => AuthRepository(arguments as  String),
+  );
+    .
+    .
+    .
+  final testRepo = Get.factoryFind<AuthRepository>(
+  arguments:"https://test.api.com",
+  );
+  ```
+
 - Added `AfterFirstLayoutMixin`.
   Add with AfterLayoutMixin<MyWidget> mixin to your State<MyWidget> class and then implement
-  the void afterFirstLayout(BuildContext context) abstract method. Code in this method will be 
+  the void afterFirstLayout(BuildContext context) abstract method. Code in this method will be
   called the first time this widget is laid out on the screen.
+
   ```dart
   class MyWidget extends StatefulWidget {
     const _MyWidget({Key? key}) : super(key: key);
@@ -28,63 +125,25 @@
   }
   ```
 
-- **BREAKING CHANGE** imports has been renamed.
-
-  Before:
-  ```dart
-  import 'package:flutter_meedu/router.dart';
-  import 'package:flutter_meedu/rx.dart';
-  import 'package:flutter_meedu/state.dart';
-  import 'package:flutter_meedu/page.dart';
-  import 'package:flutter_meedu/navigation.dart';
-  import 'package:flutter_meedu/screen_utils.dart';
-  ```
-
-  Now:
-  ```dart
-  import 'package:flutter_meedu/ui.dart'; /// this contains the all previous libraries in one single import
-  ```
-  > IMPORTANT: `package:flutter_meedu/flutter_meedu.dart` has been removed in favor to `package:flutter_meedu/ui.dart`
 
 
+- Added `Get.asyncPut<T>`:
 
-## [7.0.0-dev.0]
-
-- **BREAKING CHANGE** Now to use the route module you don't have to use alias.
-    Now you have to use the global var `router`
-
-  Before:
+  Example:
 
   ```dart
-  import 'package:flutter_meedu/router.dart' as router;
-
-  MaterialApp(
-    navigatorKey: router.navigatorKey,// <-- ADD THIS
-    home: HomePage(),
-    navigatorObservers: [
-      router.observer,// <-- ADD THIS
-    ],
-    .
-    .
-    .
-  ),
-  ```
-
-  Now:
-
-  ```dart
-  import 'package:flutter_meedu/router.dart'; // Alias is not needed any more
-
-  MaterialApp(
-    navigatorKey: router.navigatorKey,// <-- ADD THIS
-    home: HomePage(),
-    navigatorObservers: [
-      router.observer,// <-- ADD THIS
-    ],
-    .
-    .
-    .
-  ),
+   Get.asyncPut<Person>(
+      (arguments) async {
+        await Future.delayed(
+          const Duration(milliseconds: 10),
+        );
+        return Person(arguments as String);
+      },
+  );
+  .
+  .
+  .
+  final person = await Get.asyncFind<Person>  (arguments: 'Darwin');
   ```
 
 ## [6.2.5+1]
