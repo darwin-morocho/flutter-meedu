@@ -26,14 +26,12 @@ Get.remove<AuthRepository>();
 ```
 
 ## Auto remove
-
 First make sure that you have added the meedu observer in your navigator observers [more info](/docs/state-management/intro#how-it-works).
 
 Now when tou call to `Get.put` or `Get.lazyPut` you can use the `autoRemove` parameter and set the value to `true` then when the router who created the dependency
 is popped the dependency will be deleted from memory.
 
 ## Listen when a singleton was removed
-
 You can use the `onRemove` to define a callback to listen when a dependency has been deleted from memory, so when you call to `Get.remove` or when you called to `Get.put` or `Get.lazyPut` using `autoRemove` equals to `true` the onRemove callback will be called.
 
 ```dart
@@ -46,6 +44,7 @@ Get.lazyPut<AuthRepository>(
 );
 ```
 
+
 ## Factory
 
 If you want to get a new instance every time you call find in that case you could use `factoryPut`
@@ -57,10 +56,10 @@ class AuthRepository {
 }
 
 // register a factory
-Get.factoryPut<AuthRepository>((_) => AuthRepository());
+Get.factoryPut<AuthRepository, void>((_) => AuthRepository());
 
 // get a new instance of AuthRepository
-final repository = Get.factoryFind<AuthRepository>();
+final repository = Get.factoryFind<AuthRepository, void>();
 ```
 
 :::success NOTE
@@ -69,38 +68,19 @@ If you want pass an initial value to **AuthRepository**
 
 ```dart
 Get.factoryPut<AuthRepository, String>(
-    (Object? arguments) => AuthRepository(arguments as String),
+    (String? arguments) => AuthRepository(arguments!),
 );
 
 // get a new instance of AuthRepository with a initial value
-final testRepo = Get.factoryFind<AuthRepository>(
+final testRepo = Get.factoryFind<AuthRepository, String>(
   arguments:"https://test.api.com",
 );
-final liveRepo = Get.factoryFind<AuthRepository>(
+final liveRepo = Get.factoryFind<AuthRepository, String>(
   arguments:"https://live.api.com",
 );
 ```
 
 :::
-
-## Async Factory
-
-If you want to get a new instance every time you call find but you need to run some asynchronous code in that case you could use `asyncPut`
-
-```dart
- Get.asyncPut<Person>(
-    (arguments) async {
-      await Future.delayed(
-        const Duration(milliseconds: 10),
-      );
-      return Person(arguments as String);
-    },
-);
-.
-.
-.
-final person = await Get.asyncFind<Person>  (arguments: 'Darwin');
-```
 
 ## Testing
 

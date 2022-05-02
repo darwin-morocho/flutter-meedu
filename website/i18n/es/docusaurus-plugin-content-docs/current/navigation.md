@@ -9,7 +9,7 @@ Para navegar en su app usando del modulo de rutas de flutter meedu simplemente
 agrege el siguiente codigo en su MaterialApp
 
 ```dart
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
 Ahora puede navegar en su app usando
 
 ```dart
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 .
 .
 .
@@ -40,7 +40,7 @@ Para recuperar sus argumentos use `router.arguments`
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class DetailPage extends StatelessWidget {
 ## onGenerateRoute
 Si desea usar el parámetro `onGenerateRoute` en su MaterialApp o CupertinoApp  debe definir el parámetro `key`
 ```dart {7}
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
 Si desea usar transiciones personalizadas mientras navega mediante
 nombre de rutas debe definir el parámetro `key` en su MaterialApp o CupertinoApp
 ```dart {5,13}
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 void main() {
   // overrride the default page transition for named and non named routes
@@ -147,7 +147,7 @@ enum Transition {
 Para widget testing usted debe liberar el NavigatorState creado por `router.navigatorKey` antes o despues de cada test.
 
 ```dart
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 .
 .

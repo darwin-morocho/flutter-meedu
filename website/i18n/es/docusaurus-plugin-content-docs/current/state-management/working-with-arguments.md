@@ -58,7 +58,7 @@ En esos casos utilice el widget `PageWithArguments` para evitar esos posibles er
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/page.dart';
+import 'package:flutter_meedu/ui.dart';
 
 class ProductDetail extends StatelessWidget {
   const ProductDetail({Key? key}) : super(key: key);
@@ -82,7 +82,7 @@ O también puede usar la clase `PageWithArgumentsWidget`
 
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/page.dart';
+import 'package:flutter_meedu/ui.dart';
 
 final loginProvider = SimpleProvider(
   (ref) => LoginController(ref.arguments),

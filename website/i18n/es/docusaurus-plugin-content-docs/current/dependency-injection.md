@@ -61,10 +61,10 @@ class AuthRepository {
 }
 
 // register a factory
-Get.factoryPut<AuthRepository, void>((_) => AuthRepository());
+Get.factoryPut<AuthRepository>((_) => AuthRepository());
 
 // get a new instance of AuthRepository
-final repository = Get.factoryFind<AuthRepository, void>();
+final repository = Get.factoryFind<AuthRepository>();
 ```
 
 :::success NOTE
@@ -72,20 +72,41 @@ final repository = Get.factoryFind<AuthRepository, void>();
 Si queremos pasar un argumento a nuestro **AuthRepository**
 
 ```dart
-Get.factoryPut<AuthRepository, String>(
-    (String? arguments) => AuthRepository(arguments!),
+Get.factoryPut<AuthRepository>(
+    (arguments) => AuthRepository(arguments as String),
 );
 
 // get a new instance of AuthRepository with a initial value
-final testRepo = Get.factoryFind<AuthRepository, String>(
+final testRepo = Get.factoryFind<AuthRepository>(
   arguments:"https://test.api.com",
 );
-final liveRepo = Get.factoryFind<AuthRepository, String>(
+final liveRepo = Get.factoryFind<AuthRepository>(
   arguments:"https://live.api.com",
 );
 ```
 
 :::
+
+
+
+## Async Factory
+
+Si desea recuperar una nueva instancia en lugar de un singleton pero debe correr un código asíncrono dentes de retornar el valor deseado use el método `asyncPut`
+
+```dart
+ Get.asyncPut<Person>(
+    (arguments) async {
+      await Future.delayed(
+        const Duration(milliseconds: 10),
+      );
+      return Person(arguments as String);
+    },
+);
+.
+.
+.
+final person = await Get.asyncFind<Person>  (arguments: 'Darwin');
+```
 
 ## Testing
 Para evitar conflictos con las dependencias inyectadas use el método `clear` en un `setUp` o un `tearDown` antes o despues de cada test.

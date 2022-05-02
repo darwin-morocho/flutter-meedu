@@ -25,7 +25,7 @@ First **flutter_meedu** needs to listen the changes in your route navigator. Thi
 
 ```dart {15} title="main.dart"
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 void main() {
   runApp(MyApp());

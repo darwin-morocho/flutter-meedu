@@ -4,14 +4,10 @@ sidebar_position: 3
 
 # SimpleNotifier
 
-Para manejar el estado de su vista similar a `ChangeNotifier`
-utilice a clase `SimpleNotifier`.
-
-Simplemente cree una clase  que extienda de `SimpleNotifier` y llame al método `notify` para notificar que ha ocurrido
-un cambio y actualizar sus vistas.
+Just create a class that extends of `SimpleNotifier`
 
 ```dart
-import 'package:flutter_meedu/meedu.dart';//<-- IMPORT meedu
+import 'package:flutter_meedu/meedu.dart';
 
 class CounterController extends SimpleNotifier{
     int _counter = 0;
@@ -33,18 +29,33 @@ class CounterController extends SimpleNotifier{
 
 ## **SimpleProvider**
 
-Ahora debe crear un `provider` como una variable global usando la clase `SimpleProvider`.
+Now you need to create a `provider` as a global variable using the `SimpleProvider` class.
 
 ```dart
 final counterProvider = SimpleProvider(
-  (_) => CounterController(),
+  (ref) => CounterController(),
 );
 ```
 
-Ahora para escuchar los cambios y actualizar la vista use el widget `Consumer`.
+:::note
+If you don't use lambda functions to define the callback for your provider
+you must define the Generic Type
 
 ```dart
-import 'package:flutter_meedu/ui.dart';
+final counterProvider = SimpleProvider<CounterController>(
+  (ref) {
+    /// YOUR CODE HERE
+    return CounterController();
+  },
+);
+```
+
+:::
+
+Now you can use the `Consumer` widget to read your `CounterController`.
+
+```dart
+import 'package:flutter_meedu/state.dart';
 import 'package:flutter_meedu/meedu.dart';
 
 final counterProvider = SimpleProvider(
@@ -76,12 +87,13 @@ class CounterPage extends StatelessWidget {
 }
 ```
 
-Por defecto la variable global `counterProvider` no creara una instancia de `CounterController` hasta que es necesario. En el caso del widget `Consumer` este llama a la propiedad `read` de nuestro `counterProvider` y comprueba si anteriormente se creo una instancia de `CounterController` o si no la crea en ese momento.
+By default the `counterProvider` variable doesn't create one instance of `CounterController` until it is need it. In this case the `Consumer`
+widget call to the `read` property of our `counterProvider` and check if the `CounterController` was created and return the `CounterController` that was created before or create a new `CounterController`.
 
-El  método `dispose` de nuestro `CounterController` sera llamado cuando la `ruta` que creo nuestro `CounterController` es eliminada del stack de rutas (Esta es la caracteristica de **AUTO DISPOSE**).
+The `dispose` method in our `CounterController` will be called when the `route` who created the `CounterController` is popped.
 
-Si desea desactivar la caracteristica de **AUTO DISPOSE** use el
-parametro `autoDispose` de su provider.
+If you don't want to call to the `dispose` method when the `route` who created the `CounterController` is popped you could use.
+
 ```dart {3}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),
@@ -90,14 +102,14 @@ final counterProvider = SimpleProvider(
 ```
 
 :::note
-`autoDispose: false` puede usarse para crear estados globales.
+`autoDispose: false` can be used to define global states.
 :::
 
 :::danger WARNING
-Cuando desactiva la caracteristica de `autoDispose` en su `provider` usted debe encargarse de liberar su provider cuando
- este ya no es necesario. Aquí un ejemplo:
+When you disable the `autoDispose` of your `provider` you need to handle it manually. For example
+:::
 
- ```dart {18}
+```dart {18}
 final counterProvider = SimpleProvider(
   (ref) => CounterController(),
   autoDispose: false,
@@ -138,12 +150,10 @@ class _CounterPageState extends State<CounterPage> {
   }
 }
 ```
-:::
 
+### Listen the changes in your Controller
 
-### Escuchando los cambios en un SimpleNotifier
-
-El widget `ProviderListener` puede ser usado para escuchar los cambios en un `SimpleNotifier` y un `StateNotifier`
+You could use the `ProviderListener` Widget to listen the changes in our `CounterController`
 
 ```dart {3-7}
  ProviderListener<CounterController>(
@@ -175,13 +185,8 @@ El widget `ProviderListener` puede ser usado para escuchar los cambios en un `Si
 ```
 
 :::note
-El widget `ProviderListener` provee de los siguientes parámetros
-para escuchar su ciclo de vida.
-`onInitState, onAfterFirstLayout, onDispose`.
-:::
-
-:::note
-Si quiere escuchar multiples providers al mismo tiempo utilice el widget `MultiProviderListener`.
+if you want to listen multiples providers at the same time you can use
+the `MultiProviderListener` widget.
 
 ```dart
 
@@ -222,10 +227,10 @@ class MultiProviderPage extends StatelessWidget {
 :::
 
 :::note
-- Los widgets `ProviderListener` y `MultiProviderListener` solamente escuchan los cambios pero NO actualizan la vista.
+- `ProviderListener` and `MultiProviderListener` don't rebuild the widget returned by the `builder` method.
 :::
 
-Tambien puede escuchar los cambios en un provider mediante un `StreamSubscription`
+Or you can listen the changes in your SimpleProvider as a `StreamSubscription`
 
 ```dart {1,5-7,12}
   StreamSubscription? _subscription;
@@ -244,12 +249,11 @@ Tambien puede escuchar los cambios en un provider mediante un `StreamSubscriptio
   }
 ```
 
-### Actualizar Consumers mediante el filtro ***.select***
+### Avoid rebuilds using the ***.select*** filter
 
-Si tiene multiples widget `Consumer` y no quiere que todos se actualicen cuando hay un cambio en su SimpleNotifier puede usar el filtro `.select`.
+If you have multiples `Consumer` widgets in your Views and you only want rebuild certain Consumer you can use the `.select` filter.
 
-El siguiente código solo  actualiza el  `Consumer` cuando el
-valor de `counter` es mayor o igual a 5.
+The next code rebuilds the first `Consumer` only when the counter is highest than 5.
 
 ```dart {20}
 class CounterController extends SimpleNotifier {
@@ -271,9 +275,7 @@ Scaffold(
     child: Consumer(
         builder: (_, ref, __) {
           final controller = ref.watch(
-            counterProvider.select(
-              (controller) => controller.counter > 5),
-            ),
+            counterProvider.select((controller) => controller.counter > 5)),
           );
           return Text("${controller.counter}");
         },
@@ -289,31 +291,27 @@ Scaffold(
 ```
 
 :::note
-El filtro `.select` tambien puede ser usado para escuchar cuando
-el valor de un dato ha cambiado en su Notifier.
-
-El siguiente codigo actualiza el `Consumer` solo cuando el valor de la propiedad `counter`ha cambiado en nuestro CounterController.
+Also you can use the `select` method to listen when a value has changed and rebuild your Consumer.
+The next code rebuild your `Consumer` only when the `counter` value has changed in your CounterController.
 
 ```dart
 Consumer(
   builder: (_, ref, __) {
     final controller = ref.watch(
-        counterProvider.select((_) => _.counter,
-      ),
+      counterProvider.select((_) => _.counter),
     );
     return Text("${controller.counter}");
   },
 )
 ```
 
-Por defecto `ref.watch` retorna el Notifier vinculado a un provider.
-Si quiere acceder directamente al valor retornado por el filtro `.select` utilice `ref.select` en lugar de `ref.watch`
+If you want direct access to the value returned by `counterProvider.select((_) => _.counter)` you can use `ref.select`
+
 ```dart
 Consumer(
   builder: (_, ref, __) {
     final counter = ref.select(
-        counterProvider.select((_) => _.counter,
-      ),
+      counterProvider.select((_) => _.counter),
     );
     return Text("$counter");
   },
@@ -322,11 +320,11 @@ Consumer(
 :::
 
 :::note
-- Los filtros `.select , .when` tambien pueden ser usados con los widgets `ProviderListener` 
-y `MultiProviderListener`
+- You can use the filters `.select , .when` in your `ProviderListener` 
+or in your `MultiProviderListener`
   
   
-Ejemplo:
+Example:
 
 ```dart
 ProviderListener<CounterController>(
@@ -344,7 +342,7 @@ ProviderListener<CounterController>(
 :::
 
 ## ConsumerWidget
-Puede crear un widget que extienda de `ConsumerWidget` y escuchar los cambios en un `SimpleNotifier` o un `StateNotifier`
+Also you can extend from `ConsumerWidget` to create a widget and listen the changes in your notifier
 
 ```dart {7}
 class CounterPage extends StatelessWidget {
@@ -374,7 +372,7 @@ class CounterView extends ConsumerWidget {
 ```
 
 :::success NOTE
-El parámetro `ref` en un `Consumer` o en un `ConsumerWidget` puede ser usado para escuchar multiples providers.
+The `ref` parameter in a `Consumer` or a `ConsumerWidget` can be used to listen multiples providers.
 
 ```dart
 class CounterView extends ConsumerWidget {

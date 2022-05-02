@@ -26,7 +26,7 @@ agrege el siguiente código:
 
 ```dart {15} title="main.dart"
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/router.dart' as router; // <-- ADD THIS
+import 'package:flutter_meedu/ui.dart'; // <-- ADD THIS
 
 void main() {
   runApp(MyApp());

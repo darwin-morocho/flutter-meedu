@@ -129,7 +129,8 @@ Next you need to create a `StateProvider` and use the `Consumer` widget to liste
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/.dart';
 
 
 final loginProvider = StateProvider<LoginController, LoginState>(

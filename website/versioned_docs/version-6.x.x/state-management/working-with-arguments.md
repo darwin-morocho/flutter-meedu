@@ -57,7 +57,7 @@ In that cases you could use the `PageWithArguments` widget to avoid the recreati
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/page.dart';
 
 class ProductDetail extends StatelessWidget {
   const ProductDetail({Key? key}) : super(key: key);
@@ -81,7 +81,7 @@ Or you can create yourn own widget using `PageWithArgumentsWidget` class.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/page.dart';
 
 final loginProvider = SimpleProvider(
   (ref) => LoginController(ref.arguments),

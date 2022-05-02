@@ -3,22 +3,19 @@ sidebar_position: 4
 ---
 
 # StateNotifier
-Para manejo de estados mas complejos considere usar un `StateNotifier` en lugar de un
-`SimpleNotifier`.
+If you have a more complex state consider using the StateNotifier class instead of SimpleNotifier.
 
-Un `StateNotifier` almacena un único estado inmutable.
+A StateNotifier stores a single immutable state.
 
-Un estado inmutable es una instancia de una clase que sobreescribe el operador  `==` y el  `hashCode`. Para esto puede usar [equatable](https://pub.dev/packages/equatable) o [freezed](https://pub.dev/packages/freezed) para crear clases inmutables.
+An immutable state is an instance of one Class that overrides `==` and `hashCode`. For example you could use [equatable](https://pub.dev/packages/equatable) or [freezed](https://pub.dev/packages/freezed) to create an immutable Class.
 
-### Usando equatable
-Agregue `equatable` como dependencia en su archivo `pubspec.yaml`
 
+### With equatable
+Add equatable as a dependency in your `pubspec.yaml` file
 ```yaml
 equatable: latest_version
 ```
-
-Ahora puede crear una clase inmutable para su estado como se muestra 
-a continuación
+Now you can create a Class to manage your state
 ```dart
 import 'package:equatable/equatable.dart';
 
@@ -46,12 +43,12 @@ class LoginState extends Equatable {
 }
 ```
 
-### Usando Freezed
+### With freezed
+To use freezed you need [build_runner](https://pub.dev/packages/build_runner) and [freezed_annotation](https://pub.dev/packages/freezed_annotation)
 
-Para trabajar con freezed necesita [build_runner](https://pub.dev/packages/build_runner) y [freezed_annotation](https://pub.dev/packages/freezed_annotation)
 
-Luego en su `pubspec.yaml` (reemplace `latest_version` con la ultima versión estable de freezed)
 
+in your `pubspec.yaml` file (replace `latest_version` with the latest version of each dependency)
 ```yaml
 dependencies:
   flutter:
@@ -66,15 +63,12 @@ dev_dependencies:
   freezed: latest_version
 ```
 
-Si tiene algún problema al tratar  de instalar y configurar frezeed consulte 
-la documentación oficial https://pub.dev/packages/freezed
+If you have conflicts when you try to install freezed check the oficial
+documentation https://pub.dev/packages/freezed
 
-El siguiente código muestra como generar  una clase inmutable con frezee en
-donde freezed generará el método `copyWith` por nosotros.
 ```dart
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'login_state.freezed.dart';
-
 @freezed
 class LoginState with _$LoginState {
   const LoginState._();
@@ -87,14 +81,13 @@ class LoginState with _$LoginState {
 }
 ```
 
-Ahora ejecute el siguiente comando para genrar los archivos con extensión `.frezeed.dart`
-
+next run the next command to generate the `.frezeed.dart` files
 ```shell
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-Ahora puede usar la clase `LoginState` para trabajar con una clase que extiende de `StateNotifier`
 
+Now you can use the `LoginState` class to create a `StateNotifier`
 ```dart
 import 'package:flutter_meedu/meedu.dart';
 
@@ -111,12 +104,9 @@ class LoginController extends StateNotifier<LoginState> {
   }
 }
 ```
-
 :::info
-Un StateNotifier automaticamente notifica cuando la propiedad `state`  ha cambiado.
-
-Si solo desea codificar el `state` de su `StateNotifier` sin notificar a los oyentes (sin reconstruir sus widgets `Consumer` y sin escuchar los cambios en un `ProviderListener`)
-puede usar el método `onlyUpdate`de su `StateNotifier`.
+If you only want to update the state of your `StateNotifier` but you don't want to notify to the listeners (don't rebuild the `Consumer` widgets and don't listen the changes in the `ProviderListener` widget)
+you can use the `onlyUpdate` method in your `StateNotifier`.
 
 ```dart {7}
 class LoginController extends StateNotifier<LoginState> {
@@ -124,8 +114,7 @@ class LoginController extends StateNotifier<LoginState> {
   LoginController():super(LoginState.initialState);
 
   void onEmailChanged(String email) {
-    // only update the state without rebuil of Consumers or
-    // listening in your ProviderListener
+    // only update the state
     onlyUpdate(state.copyWith(email: email));
   }
   .
@@ -134,19 +123,13 @@ class LoginController extends StateNotifier<LoginState> {
 
 }
 ```
-
 :::
 
-Ahora debe crear un provider usando la clase `StateProvider` a demás de definir los
-`Generic Types` indicando que clase es la que extiende de `StateNotifier` y la clase usada
-para el estado.
-
-Para escuchar los cambios en su `StateNotifier` utilice el widget `Consumer`
+Next you need to create a `StateProvider` and use the `Consumer` widget to listen the changes in your state
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/flutter_meedu.dart';
 
 
 final loginProvider = StateProvider<LoginController, LoginState>(
@@ -207,12 +190,11 @@ class LoginPage extends StatelessWidget {
 }
 ```
 
-También puede usar el filtro `.select` para reconstruir sus `Consumer` solo cuando es necesario.
+Also you can use the `.select` filter to only rebuild your `Consumer` when is need it.
 
-Por ejemplo el siguiente código actualiza el Consumer solo cuando la propiedad `email` 
-en nuestro `LoginState` ha cambiado.
+For example the next code only rebuilds the Consumer widget when the `email` in our `LoginState` has changed.
 
-Aquí usamos `ref.select` para acceder directamente al valor retornado por `loginProvider.select` pero si desea acceder al notifier vinculado a `loginProvider` utilice `ref.watch` con `loginProvider.select`
+here we use `ref.select` to direct access to the value returned by `loginProvider.select` but if you want get the notifier linked to `loginProvider` you can use `ref.watch` with `loginProvider.select`
 
 ```dart {4}
 Consumer(
@@ -226,9 +208,7 @@ Consumer(
 ```
 
 :::note
-También puede usar el filtro `.when` para comprobar el estado actual y el estado
-anterior y determinar si el widget Consumer debe actualizarse.
-
+Also you can use the `when` method for a more complex condition.
 ```dart {4}
 Consumer(
   builder: (_, ref, __) {
@@ -239,15 +219,14 @@ Consumer(
   },
 )
 ```
-
 :::
 
 :::info
-De la misma manera puede escuchar los cambios en su `StateNofier` suando el widget `ProviderListener` o mediante un `StreamSubscription`
+In the same way you can listen the changes of your `StateNofier` using the `ProviderListener` widget or using a `StreamSubscription`
 :::
 
-También la clase `StateNotifier` le permite escuchar cuando el estado va a cambiar o ya cambio.
 
+Also the `StateNotifier` class allows you to listen when the state is going to change and listen when the state has changed.
 ```dart
 class LoginController extends StateNotifier<LoginState> {
   // you need pass an inital state using super

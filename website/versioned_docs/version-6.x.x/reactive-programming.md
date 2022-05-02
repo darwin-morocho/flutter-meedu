@@ -1,12 +1,12 @@
-# Programación Reactiva
+# Reactive programming
 
-El siguiente ejemplo crea una instancia de la clase `Rx` para guardar un valor entero, cada vez que `_counter.value++` es llamado
-el widget `RxBuilder` actualiza nuestro Text.
+The next example create on instance of `Rx` to save int values, every time that `_counter.value++` is called
+the `RxBuilder` rebuilds the Text widget.
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/rx.dart';
 
 class RxPage extends StatefulWidget {
   @override
@@ -41,7 +41,7 @@ class _RxPageState extends State<RxPage> {
 ```
 
 :::note
-Puede crear sus observables para String, int, double o booleans usando el sufijo `.obs`
+You can create observables for String, int, double or booleans using the `.obs` extension
 
 - `final _counter = 0.obs; // equals to final Rx<int> _counter = Rx(0);`
 - `final _enabled = false.obs; // equals to final Rx<bool> _enabled = Rx(false);`
@@ -49,7 +49,7 @@ Puede crear sus observables para String, int, double o booleans usando el sufijo
 - `final _price = 9.99.obs; // equals to final Rx<double> _price = Rx(9.99);`
   :::
 
-## Programación reactiva con List y Map.
+## Working with List and Map.
 
 ```dart
 Rx<List<int>> numbers = Rx([]);
@@ -88,13 +88,14 @@ void remove(String key) {
 }
 ```
 
-## Rx Reactions
-Puede usar la clase Rx  con algunos métodos utiles como debounce, once, ever e interval.
+## Rx Workers
+
+You can use the Rx class to use some utils methods like debounce, once, ever and interval.
 
 ```dart
 class SearchController extends SimpleNotifier {
   final Rx<String> _text = "".obs;
-  RxReaction? _debounceReaction, _everReaction, _onceReaction, _intervalReaction;
+  RxWorker? _debounceWorker, _everWorker, _onceWorker, _intervalWorker;
 
   void onTextChange(String text) {
     _text.value = text;
@@ -107,12 +108,12 @@ class SearchController extends SimpleNotifier {
   void _init() {
 
     // called every time after a certain duration
-    _debounceReaction = _text.debounce(Duration(milliseconds: 500), (value) {
+    _debounceWorker = _text.debounce(Duration(milliseconds: 500), (value) {
       print("debounce  $value");
     });
 
     // called every time
-    _everReaction = _text.ever(
+    _everWorker = _text.ever(
       (value) {
         print("ever  $value");
       },
@@ -120,7 +121,7 @@ class SearchController extends SimpleNotifier {
     );
 
     // called only once time
-    _onceReaction = _text.once(
+    _onceWorker = _text.once(
       (value) {
         print("once  $value");
       },
@@ -128,7 +129,7 @@ class SearchController extends SimpleNotifier {
     );
 
     // called each a certain duration
-    _intervalReaction = _text.interval(Duration(seconds: 2), (value) {
+    _intervalWorker = _text.interval(Duration(seconds: 2), (value) {
       print("interval  $value");
     });
   }
@@ -136,10 +137,10 @@ class SearchController extends SimpleNotifier {
   @override
   void onDispose() {
     _text.close();
-    _debounceReaction?.dispose();
-    _everReaction?.dispose();
-    _onceReaction?.dispose();
-    _intervalReaction?.dispose();
+    _debounceWorker?.dispose();
+    _everWorker?.dispose();
+    _onceWorker?.dispose();
+    _intervalWorker?.dispose();
     super.onDispose();
   }
 }

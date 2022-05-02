@@ -1,7 +1,10 @@
 ---
 sidebar_position: 1
 ---
-# Overview
+
+# What is flutter_meedu?
+
+Is a **powerful** State Management, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
 <p align="center">
   <a href="https://pub.dev/packages/flutter_meedu"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_meedu?include_prereleases&label=flutter_meedu"/></a>
@@ -18,32 +21,37 @@ sidebar_position: 1
 </p>
 
 :::note INFO
-Este proyecto fue inspirado por **GetX** y **Riverpod**. No se utiliza ningún código de estos proyectos solo nos inspiramos en las mejores características de estos con una refactorizacion total.
+This project was inspired by **GetX, riverpod** and **flutter_bloc**. We don't use any code of these projects only get the best features
+of them and we have implemented them with a total refactoring.
 :::
 
 :::info INFO
-Puede unirse a nuestro servidor de Discord [aquí](https://discord.gg/rV4bPsdefj)
+You can join to the discord server [here](https://discord.gg/rV4bPsdefj)
 :::
 
 
-## Caracteristicas
-- Un gestor de estados para estados simples y complejos sin boilerplate, sin generadores de codigo y sin depender de un
-InheritedWidget.
+## Features
+- A State Management for simple and complex states.
 
-- Navegación con Navigator 1.0 sin depender del BuildContext, sin reescribir el widget MaterialApp o usar un widget personalizado para tus páginas.
+  flutter_meedu helps you to manage the state of your flutter app without boilerplate, code generators or InheritedWidget.
 
-- Inyección de dependencias de forma sencilla.
+- A simple API for persistent state.
 
-- Programación reactiva.
+- Navigate without BuildContext.
+ 
+  Navigate in your app without a custom Page class, a custom MaterialApp.
 
-- Facil de testear.
+- 100% compatible with any other navigator's package.
 
-- Compatible con cualquier package de navegación.
+- Simple dependecy injection.
 
-## Instalación
+- Reactive programming.
 
-En tu `pubspec.yaml` agregue `flutter_meedu` en sus dependencias y asegurese de usar
-`flutter ^2.10.x` y `dart ^2.16.x`
+- Easy to test.
+
+## Install
+
+Add the following to your `pubspec.yaml`
 
 ```yaml
 environment:
@@ -58,5 +66,7 @@ dependencies:
 
 
 :::note
-Puede encontrar un curso completo (**en español**) de **flutter_meedu** [aquí](https://meedu.app/curso/flutter-gestion-de-estados-con-meedu)
+**Spanish course with unit testing and widget testing**
+
+You can find a complete video course (**Spanish**) about how to use **flutter_meedu** [here](https://meedu.app/curso/flutter-gestion-de-estados-con-meedu)
 :::

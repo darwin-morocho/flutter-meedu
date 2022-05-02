@@ -10,7 +10,7 @@ To navigate between page without a BuildContext you can use the meedu's router m
 In your MaterialApp
 
 ```dart
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 class MyApp extends StatelessWidget {
   @override
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
 Now you can navigate without BuildContext
 
 ```dart
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 .
 .
 .
@@ -41,7 +41,7 @@ If you want get your arguments
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 class DetailPage extends StatelessWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class DetailPage extends StatelessWidget {
 ## onGenerateRoute
 If you want to use the `onGenerateRoute` parameter of your MaterialApp or CupertinoApp you must define the `key` parameter.
 ```dart {7}
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 class MyApp extends StatelessWidget {
   @override
@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
 If you want to override the default transition when use named routes
 you need to define the `key` parameter of your MaterialApp or CupertinoApp
 ```dart {5,13}
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 void main() {
   // overrride the default page transition for named and non named routes
@@ -148,7 +148,7 @@ enum Transition {
 For widget testing you will need to dispose the NavigatorState created by `router.navigatorKey` before or after each test
 
 ```dart
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/router.dart' as router;
 
 .
 .

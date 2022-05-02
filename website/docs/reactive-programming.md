@@ -6,7 +6,7 @@ the `RxBuilder` rebuilds the Text widget.
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/rx.dart';
+import 'package:flutter_meedu/ui.dart';
 
 class RxPage extends StatefulWidget {
   @override
@@ -88,14 +88,14 @@ void remove(String key) {
 }
 ```
 
-## Rx Workers
+## Rx Reactions
 
 You can use the Rx class to use some utils methods like debounce, once, ever and interval.
 
 ```dart
 class SearchController extends SimpleNotifier {
   final Rx<String> _text = "".obs;
-  RxWorker? _debounceWorker, _everWorker, _onceWorker, _intervalWorker;
+  RxReaction? _debounce, _ever, _once, _interval;
 
   void onTextChange(String text) {
     _text.value = text;
@@ -108,12 +108,12 @@ class SearchController extends SimpleNotifier {
   void _init() {
 
     // called every time after a certain duration
-    _debounceWorker = _text.debounce(Duration(milliseconds: 500), (value) {
+    _debounce = _text.debounce(Duration(milliseconds: 500), (value) {
       print("debounce  $value");
     });
 
     // called every time
-    _everWorker = _text.ever(
+    _ever = _text.ever(
       (value) {
         print("ever  $value");
       },
@@ -121,7 +121,7 @@ class SearchController extends SimpleNotifier {
     );
 
     // called only once time
-    _onceWorker = _text.once(
+    _once = _text.once(
       (value) {
         print("once  $value");
       },
@@ -129,7 +129,7 @@ class SearchController extends SimpleNotifier {
     );
 
     // called each a certain duration
-    _intervalWorker = _text.interval(Duration(seconds: 2), (value) {
+    _interval = _text.interval(Duration(seconds: 2), (value) {
       print("interval  $value");
     });
   }
@@ -137,10 +137,10 @@ class SearchController extends SimpleNotifier {
   @override
   void onDispose() {
     _text.close();
-    _debounceWorker?.dispose();
-    _everWorker?.dispose();
-    _onceWorker?.dispose();
-    _intervalWorker?.dispose();
+    _debounce?.dispose();
+    _ever?.dispose();
+    _once?.dispose();
+    _interval?.dispose();
     super.onDispose();
   }
 }

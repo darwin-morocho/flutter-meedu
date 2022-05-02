@@ -55,7 +55,7 @@ final counterProvider = SimpleProvider<CounterController>(
 Now you can use the `Consumer` widget to read your `CounterController`.
 
 ```dart
-import 'package:flutter_meedu/state.dart';
+import 'package:flutter_meedu/ui.dart';
 import 'package:flutter_meedu/meedu.dart';
 
 final counterProvider = SimpleProvider(
