@@ -1,7 +1,8 @@
 part of 'instance_manager.dart';
 
 typedef _LazyBuilderCallback<T> = T Function();
-typedef _FactoryBuilderCallback<T, A> = T Function(A? arguments);
+typedef _FactoryBuilderCallback<T> = T Function(Object? arguments);
+typedef _AsyncBuilderCallback<T> = Future<T> Function(Object? arguments);
 typedef _RemoveCallback<T> = void Function(T);
 
 /// A dependency will be create immediately
@@ -36,9 +37,16 @@ class _Lazy<T> extends _Injectable<T> {
 
 /// stores a callback that will be called every time that
 /// the code calls to Get.i.factoryFind
-class _Factory<T, A> {
-  _FactoryBuilderCallback<T, A> builder;
+class _Factory<T> {
+  _FactoryBuilderCallback<T> builder;
   _Factory(this.builder);
+}
+
+/// stores a callback that will be called every time that
+/// the code calls to Get.i.asyncFind
+class _AsyncFactory<T> {
+  _AsyncBuilderCallback<T> builder;
+  _AsyncFactory(this.builder);
 }
 
 /// a parent class for singletons using put and lazy put

@@ -11,13 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  meedu: ^5.3.1
-
+  meedu: ^6.0.0
 
   # meedu:
   #   path: ../meedu
 
 dev_dependencies:
+  equatable: ^2.0.3
   flutter_test:
     sdk: flutter
-  equatable: ^2.0.0

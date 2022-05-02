@@ -96,19 +96,46 @@ void main() {
     });
 
     test('factory put', () {
-      Get.factoryPut<Person, String>((arguments) => Person(arguments ?? ''));
-      final p1 = Get.factoryFind<Person, String>(arguments: 'Darwin');
-      final p2 = Get.factoryFind<Person, String>(arguments: 'Santiago');
+      Get.factoryPut<Person>(
+        (arguments) => Person(arguments as String? ?? ''),
+      );
+      final p1 = Get.factoryFind<Person>(arguments: 'Darwin');
+      final p2 = Get.factoryFind<Person>(arguments: 'Santiago');
       expect(p1.name, 'Darwin');
       expect(p2.name, 'Santiago');
       expect(p1.hashCode != p2.hashCode, true);
     });
 
+    test('async put', () async {
+      Get.asyncPut<Person>(
+        (arguments) async {
+          await Future.delayed(
+            const Duration(milliseconds: 10),
+          );
+          return Person(arguments as String? ?? '');
+        },
+      );
+      Get.asyncPut<Person>((_) async {
+        await Future.delayed(
+          const Duration(milliseconds: 10),
+        );
+        return Person('');
+      }, tag: 'tag');
+      final p1 = await Get.asyncFind<Person>(arguments: 'Darwin');
+      final p2 = await Get.asyncFind<Person>(arguments: 'Santiago');
+      final p3 = await Get.asyncFind<Person>(tag: 'tag');
+      expect(p1.name, 'Darwin');
+      expect(p2.name, 'Santiago');
+      expect(p3.name, '');
+      expect(p1.hashCode != p2.hashCode, true);
+      expect(() => Get.asyncFind<Person>(tag: 'random'), throwsAssertionError);
+    });
+
     test('factory put without arguments', () {
-      expect(() => Get.factoryFind<Person, void>(), throwsAssertionError);
-      Get.factoryPut<Person, void>((_) => Person());
-      final p1 = Get.factoryFind<Person, void>();
-      final p2 = Get.factoryFind<Person, void>();
+      expect(() => Get.factoryFind<Person>(), throwsAssertionError);
+      Get.factoryPut<Person>((_) => Person());
+      final p1 = Get.factoryFind<Person>();
+      final p2 = Get.factoryFind<Person>();
       expect(p1.name, '');
       expect(p2.name, '');
       expect(p1.hashCode != p2.hashCode, true);

@@ -1,0 +1,57 @@
+{
+    "ConsumerWidget": {
+        "prefix": "mconsumer",
+        "body": [
+            "class ${1:name} extends ConsumerWidget{",
+            "  const ${1:name}({Key? key}) : super(key: key);",
+            "  @override",
+            "  Widget build(BuildContext context, ref) {",
+            "    return Container(child:null);",
+            "  }",
+            "}"
+        ]
+    },
+    "PageWithArgumentsWidget": {
+        "prefix": "mpage",
+        "body": [
+            "class ${1:name} extends PageWithArgumentsWidget{",
+            "  const ${1:name}({Key? key}) : super(key: key);",
+            "",
+            "@override",
+            "void onInit(RouteSettings settings) {}",
+            "",
+            "  @override",
+            "  Widget build(BuildContext context) {",
+            "    return Scaffold();",
+            "  }",
+            "}"
+        ]
+    },
+    "SimpleProvider": {
+        "prefix": "msimple",
+        "body": [
+            "final ${1:name} = SimpleProvider(",
+            "  (_) => ${2:controller}(),",
+            ");",
+        ]
+    },
+    "StateProvider": {
+        "prefix": "mstate",
+        "body": [
+            "final ${1:name} = StateProvider<${2:controller}, ${3:state}>(",
+            "  (_) => ${2:controller}(),",
+            ");",
+        ]
+    },
+    "ProviderListener": {
+        "prefix": "mlistener",
+        "body": [
+            "ProviderListener<${1:controller}>(",
+            "  provider: ${2:provider},",
+            "  builder: (_,controller){",
+            "    return Container();",
+            "  },",
+            ");",
+        ]
+    }
+}

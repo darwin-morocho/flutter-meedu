@@ -1,19 +1,80 @@
+## [6.0.0]
+
+- Added `Get.asyncPut<T>`:
+
+Example:
+
+```dart
+ Get.asyncPut<Person>(
+    (arguments) async {
+      await Future.delayed(
+        const Duration(milliseconds: 10),
+      );
+      return Person(arguments as String);
+    },
+);
+.
+.
+.
+final person = await Get.asyncFind<Person>(arguments: 'Darwin');
+```
+
+- **BREAKING CHANGE**:
+
+`Get.factoryPut<T,A>` has been replaced for `Get.factoryPut<T>`
+
+Before:
+
+```dart
+Get.factoryPut<AuthRepository, String>(
+  (String? arguments) => AuthRepository(arguments!),
+);
+  .
+  .
+  .
+final testRepo = Get.factoryFind<AuthRepository, String>(
+arguments:"https://test.api.com",
+);
+```
+
+Now:
+
+```dart
+Get.factoryPut<AuthRepository>(
+  (arguments) => AuthRepository(arguments as String),
+);
+  .
+  .
+  .
+final testRepo = Get.factoryFind<AuthRepository>(
+arguments:"https://test.api.com",
+);
+```
+
 ## [5.3.1]
+
 - Removed custom type Json.
+
 ## [5.3.0]
+
 - Updated exports.
+
 ## [5.2.0]
+
 - Updated `PersistentStateMixin` to be compatible with unions.
+
 ## [5.1.0]
+
 - Added `PersistentStateMixin` to save the state of your StateNotifers as a JSON.
+
 ## [5.0.0]
 
 - **BREAKING CHANGE**: Removed `ids` parameter from notify method in SimpleNotifier.
-- **BREAKING CHANGE**:  class `RxWorker` has been renamed to `RxReaction`.
-    > "Worker" for most programmers (especially with Java or Android experience) is associated with "worker thread" (doing tasks in a background)
+- **BREAKING CHANGE**: class `RxWorker` has been renamed to `RxReaction`.
+  > "Worker" for most programmers (especially with Java or Android experience) is associated with "worker thread" (doing tasks in a background)
 - **BREAKING CHANGE**: For dependency injection `Get.i` is not used any more, now you
-must use `Get`.
-For example `Get.put<type>(...)`, `Get.lazyPut<type>(()=>...)`, etc.
+  must use `Get`.
+  For example `Get.put<type>(...)`, `Get.lazyPut<type>(()=>...)`, etc.
 
 - Set min dark sdk >=2.15
 
