@@ -7,7 +7,7 @@ sidebar_position: 1
 Is a **powerful** State Management, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
 <p align="center">
-  <a href="https://pub.dev/packages/flutter_meedu"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_meedu?include_prereleases&label=flutter_meedu"/></a>
+  <a href="https://pub.dev/packages/flutter_meedu"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_meedu?label=flutter_meedu"/></a>
 
   <img style={{marginLeft:10}} alt="last commit" src="https://img.shields.io/github/last-commit/darwin-morocho/flutter-meedu"/>
    <a style={{marginLeft:10}} href="https://codecov.io/gh/darwin-morocho/flutter-meedu">

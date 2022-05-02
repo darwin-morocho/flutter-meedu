@@ -41,6 +41,11 @@ module.exports = {
           label: "GitHub",
           position: "right",
         },
+        {
+          href: "https://github.com/darwin-morocho/flutter-meedu/tree/master/examples",
+          label: "Examples",
+          position: "right",
+        },
       ],
     },
     footer: {
