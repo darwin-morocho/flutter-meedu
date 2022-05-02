@@ -14,7 +14,7 @@ Future<String> createPageTemplate({
 
   final pageCode = """
 import 'package:flutter/material.dart';
-${addProviderCode ? "import 'package:flutter_meedu/state.dart';" : ""}
+${addProviderCode ? "import 'package:flutter_meedu/ui.dart';" : ""}
 ${addProviderCode ? "import 'controller/$providerFileName';" : ""}
 
 class ${pageName}Page extends StatelessWidget {

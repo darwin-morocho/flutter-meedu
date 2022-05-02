@@ -56,7 +56,7 @@ Map<String, Widget Function(BuildContext)> get appRoutes {
   final homePageFile = File('$appDir/ui/pages/home/home_page.dart');
   homePageFile.writeAsStringSync("""
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/state.dart';
+import 'package:flutter_meedu/ui.dart';
 
 import 'controller/home_provider.dart';
 
@@ -85,8 +85,9 @@ class HomePage extends StatelessWidget {
 
   homePageFile.createSync(recursive: true);
 
-  final homeControllerFile =
-      File('$appDir/ui/pages/home/controller/home_controller.dart');
+  final homeControllerFile = File(
+    '$appDir/ui/pages/home/controller/home_controller.dart',
+  );
   homeControllerFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 
@@ -105,8 +106,9 @@ class HomeController extends SimpleNotifier {
 
   homePageFile.createSync(recursive: true);
 
-  final homeProviderFile =
-      File('$appDir/ui/pages/home/controller/home_provider.dart');
+  final homeProviderFile = File(
+    '$appDir/ui/pages/home/controller/home_provider.dart',
+  );
   homeProviderFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
 import 'home_controller.dart';
@@ -133,7 +135,7 @@ void main() {
   final myAppFile = File('$appDir/my_app.dart');
   myAppFile.writeAsStringSync("""
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 import 'ui/routes/app_routes.dart';
 import 'ui/routes/routes.dart';

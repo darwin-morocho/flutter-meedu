@@ -1,3 +1,5 @@
+## 0.0.8
+- Updated to be compatible with` flutter_meedu:^7.x.x`
 ## 0.0.7
 - Fixed page creation without state.
 ## 0.0.6
