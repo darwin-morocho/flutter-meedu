@@ -1,7 +1,7 @@
 import 'package:example/app/ui/routes/routes.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);

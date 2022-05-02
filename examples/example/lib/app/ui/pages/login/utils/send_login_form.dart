@@ -2,7 +2,7 @@ import 'package:example/app/ui/global_widgets/progress_dialog.dart';
 import 'package:example/app/ui/pages/login/controller/login_provider.dart';
 import 'package:example/app/ui/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 Future<void> sendLoginForm(BuildContext context) async {
   ProgressDialog.show(context);

@@ -29,15 +29,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  freezed_annotation: ^1.1.0
+  freezed_annotation: ^2.0.1
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   dartz: ^0.10.1
-  flutter_meedu: ^6.0.0-dev.2
+  flutter_meedu: ^7.0.0
 
 dev_dependencies:
   build_runner: ^2.1.7
-  freezed: ^1.1.1
+  freezed: ^2.0.2
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0

@@ -208,7 +208,7 @@ packages:
       name: flutter_meedu
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.0-dev.2"
+    version: "7.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -225,14 +225,14 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "2.0.2"
   freezed_annotation:
     dependency: "direct main"
     description:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -253,7 +253,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   graphs:
     dependency: transitive
     description:
@@ -330,7 +330,7 @@ packages:
       name: meedu
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0-dev.2"
+    version: "6.0.0"
   meta:
     dependency: transitive
     description:
@@ -359,13 +359,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  path_to_regexp:
-    dependency: transitive
-    description:
-      name: path_to_regexp
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   pool:
     dependency: transitive
     description:

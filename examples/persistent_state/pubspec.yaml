@@ -29,8 +29,8 @@ dependencies:
   hive_flutter: ^1.1.0
   json_annotation: ^4.4.0
   http: ^0.13.4
-  freezed_annotation: ^1.1.0
-  flutter_meedu: ^6.2.3
+  freezed_annotation: ^2.0.1
+  flutter_meedu: ^7.0.0
   
 dev_dependencies:
   flutter_test:
@@ -38,7 +38,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   json_serializable: ^6.0.0
   build_runner: ^2.1.7
-  freezed: ^1.1.1
+  freezed: ^2.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

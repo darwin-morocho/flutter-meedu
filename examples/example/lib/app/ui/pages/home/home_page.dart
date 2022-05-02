@@ -1,6 +1,6 @@
 import 'package:example/app/ui/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 class _MenuItem {
   final String label;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/state.dart';
+import 'package:flutter_meedu/ui.dart';
 import 'package:persistent_state/app/ui/pages/city_picker/controller/city_picker_controller.dart';
 import 'controller/city_picker_provider.dart';
 

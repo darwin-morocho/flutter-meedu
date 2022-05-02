@@ -1,8 +1,7 @@
 import 'package:example/app/ui/pages/splash/controller/splash_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/state.dart';
 import 'controller/splash_provider.dart';
-import 'package:flutter_meedu/router.dart' as router;
+import 'package:flutter_meedu/ui.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);

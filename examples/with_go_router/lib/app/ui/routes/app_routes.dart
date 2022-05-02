@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart' show BuildContext, Container, StatelessWidget, Widget;
-import 'package:flutter_meedu/router.dart';
+import 'package:flutter/widgets.dart' show StatelessWidget;
+import 'package:flutter_meedu/ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:with_go_router/app/ui/pages/color/color_page.dart';
 import 'package:with_go_router/app/ui/pages/home/home_page.dart';
@@ -9,7 +9,7 @@ import 'package:with_go_router/app/ui/routes/routes.dart';
 import '../pages/counter/counter_page.dart';
 
 mixin AppRoutesMixin on StatelessWidget {
-  final router = GoRouter(
+  final goRouter = GoRouter(
     routes: [
       GoRoute(
         path: '/',
@@ -55,7 +55,7 @@ mixin AppRoutesMixin on StatelessWidget {
       ),
     ],
     observers: [
-      observer,
+      router.observer,
     ],
   );
 }

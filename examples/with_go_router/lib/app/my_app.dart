@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget with AppRoutesMixin {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
+      routeInformationParser: goRouter.routeInformationParser,
+      routerDelegate: goRouter.routerDelegate,
     );
   }
 }
