@@ -1,3 +1,6 @@
+## [7.1.0-pre.0]
+- Fixed flutter 3.x.x warnings
+
 ## [7.0.0]
 
 - **BREAKING CHANGE** 

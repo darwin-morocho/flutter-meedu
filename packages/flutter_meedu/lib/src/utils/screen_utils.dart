@@ -77,7 +77,7 @@ mixin AfterFirstLayoutMixin<T extends StatefulWidget> on State<T> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) => afterFirstLayout(context),
     );
   }

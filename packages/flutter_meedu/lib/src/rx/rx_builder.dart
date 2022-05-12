@@ -64,7 +64,7 @@ class _RxBuilderState extends State<RxBuilder> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _afterFirstLayout = true;
     });
     // listen the observable events
