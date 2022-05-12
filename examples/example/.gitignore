@@ -49,3 +49,4 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 !lib/**/*.freezed.dart
+coverage/
