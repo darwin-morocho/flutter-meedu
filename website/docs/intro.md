@@ -55,11 +55,11 @@ Add the following to your `pubspec.yaml`
 
 ```yaml
 environment:
-  sdk: ">=2.16.0 <3.0.0"
-  flutter: ">=2.10.0"
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
-  flutter_meedu: ^7.0.0
+  flutter_meedu: ^7.1.0-pre.1
 ``` 
 
 

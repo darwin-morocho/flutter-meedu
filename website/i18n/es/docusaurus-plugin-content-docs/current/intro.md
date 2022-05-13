@@ -43,15 +43,15 @@ InheritedWidget.
 ## Instalación
 
 En tu `pubspec.yaml` agregue `flutter_meedu` en sus dependencias y asegurese de usar
-`flutter ^2.10.x` y `dart ^2.16.x`
+`flutter ^3.x.x` y `dart ^2.17.x`
 
 ```yaml
 environment:
-  sdk: ">=2.16.0 <3.0.0"
-  flutter: ">=2.10.0"
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
-  flutter_meedu: ^7.0.0
+  flutter_meedu: ^7.1.0-pre.1
 ``` 
 
 
