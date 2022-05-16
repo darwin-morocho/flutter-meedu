@@ -4,6 +4,8 @@ import 'package:meta/meta.dart'
 import '../../meedu.dart';
 import 'provider_container.dart';
 
+part 'base_tag_provider.dart';
+part 'generic/provider.dart';
 part 'provider_reference.dart';
 part 'simple/simple_provider.dart';
 part 'simple/simple_tag_provider.dart';
@@ -13,10 +15,10 @@ part 'state/state_tag_provider.dart';
 /// defines the creator function structure
 typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
-abstract class Provider<T> {}
+abstract class SuperProvider<T> {}
 
 @sealed
-abstract class BaseProvider<T> extends Provider<T> {
+abstract class BaseProvider<T> extends SuperProvider<T> {
   /// save the current route name in flutter apps
   static String? creatorName;
 
@@ -69,34 +71,39 @@ abstract class BaseProvider<T> extends Provider<T> {
   T get read {
     // if the notifier was created before
     if (_mounted) {
-      return ProviderScope.instance.containers[hashCode]!.notifier as T;
+      return ProviderScope.instance.containers[hashCode]!.element as T;
     }
 
     // check if we have a previous reference
     _ref ??= ProviderReference(providerDisposeCallback: _dispose);
 
     // create a new Notifier
-    final notifier = _overriddenCreator != null
+    final element = _overriddenCreator != null
         ? _overriddenCreator!(_ref!)
         : _creator(_ref!);
 
     // save the notifier into containers
     ProviderScope.instance.containers[hashCode] = ProviderContainer(
       providerHashCode: hashCode,
-      notifier: notifier as BaseNotifier,
+      element: element,
       reference: _ref!,
       autoDispose: _overriddenAutoDispose ?? _autoDispose,
       routeName: BaseProvider.creatorName,
     );
     _mounted = true;
-    return notifier;
+    return element;
   }
 
   /// remove the current Notifier from containers and delete a previous reference
   void _dispose() {
     final container = ProviderScope.instance.containers[hashCode];
     if (container != null) {
-      container.notifier.dispose();
+      final element = container.element;
+
+      if (element is BaseNotifier) {
+        element.dispose();
+      }
+
       if (_overriddenCreator != null) {
         _overriddenCreator = null;
         _overriddenAutoDispose = null;

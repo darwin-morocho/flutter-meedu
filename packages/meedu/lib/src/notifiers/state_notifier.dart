@@ -2,7 +2,9 @@ import 'package:meta/meta.dart' show mustCallSuper, protected;
 
 import 'base_notifier.dart';
 
-abstract class StateNotifier<State> extends BaseNotifier<State> {
+abstract class StateNotifier<State> extends BaseNotifier<State>
+    with ListeneableNotifier<State> {
+  ///
   late State _state, _oldState;
   State get state => _state;
   State get oldState => _oldState;

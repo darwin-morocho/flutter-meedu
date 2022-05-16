@@ -2,10 +2,18 @@ import 'package:meta/meta.dart' show mustCallSuper;
 
 import 'base_notifier.dart';
 
-abstract class SimpleNotifier extends BaseNotifier {
+class SimpleNotifierEmptyData {
+  const SimpleNotifierEmptyData();
+}
+
+abstract class SimpleNotifier extends BaseNotifier
+    with ListeneableNotifier<SimpleNotifierEmptyData> {
   /// notify to listeners and rebuild the widgets
   void notify() {
-    notifyListeners([]);
+    debugAssertNotDisposed();
+    notifyListeners(
+      const SimpleNotifierEmptyData(),
+    );
   }
 
   /// use to listen when the controller was deleted from memory
@@ -13,5 +21,6 @@ abstract class SimpleNotifier extends BaseNotifier {
   @mustCallSuper
   void dispose() async {
     super.dispose();
+    await clearListeners();
   }
 }

@@ -1,6 +1,6 @@
 part of '../base_provider.dart';
 
-class SimpleTagProvider<T extends SimpleNotifier> extends TagProvider<T> {
+class SimpleTagProvider<T extends SimpleNotifier> extends BaseTagProvider<T> {
   SimpleTagProvider({
     required _LazyCallback<T> creator,
     required bool autoDispose,

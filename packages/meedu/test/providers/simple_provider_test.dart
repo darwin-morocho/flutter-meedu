@@ -28,7 +28,7 @@ void main() {
       expect(_simpleProvider.mounted, true);
       stream.listen(
         expectAsync1((_) {
-          expect(_.length, 0);
+          expect(_, isA<SimpleNotifierEmptyData>());
         }, count: 4),
       );
 
