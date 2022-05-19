@@ -1,6 +1,7 @@
 part of '../base_provider.dart';
 
-class StateTagProvider<T extends StateNotifier<S>, S> extends BaseTagProvider<T> {
+class StateTagProvider<T extends StateNotifier<S>, S>
+    extends BaseTagProvider<T> {
   StateTagProvider({
     required _LazyCallback<T> creator,
     required bool autoDispose,
@@ -24,4 +25,3 @@ class StateTagProvider<T extends StateNotifier<S>, S> extends BaseTagProvider<T>
     return _providers[tagName]! as StateProvider<T, S>;
   }
 }
-

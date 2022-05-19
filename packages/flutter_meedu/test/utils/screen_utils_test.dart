@@ -25,7 +25,7 @@ class __PageState extends State<_Page> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         print("👏 provider page test onAfterFirstLayout");
         print("context.mediaQuery ${context.mediaQuery}");

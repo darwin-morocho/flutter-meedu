@@ -17,7 +17,7 @@ enum Filter {
 }
 
 /// class to save a Notifier, the listener and the rebuild function
-class Target<Notifier, Result> extends Provider<Notifier> {
+class Target<Notifier, Result> extends ListeneableProvider<Notifier> {
   // ignore: public_member_api_docs
   Target(this.notifier);
 

@@ -31,7 +31,7 @@ class ProviderListener<T extends BaseNotifier> extends StatefulWidget {
   final _Builder<T> builder;
 
   /// provider to listen the changes
-  final Provider<T> provider;
+  final ListeneableProvider<T> provider;
 
   /// callback to listen the new events
   final _ProviderListenerCallback<T>? onChange;
@@ -58,6 +58,9 @@ class _ProviderListenerState<T extends BaseNotifier>
   Target? _target;
   void Function(dynamic)? _listener;
 
+  ListeneableNotifier get _listeneableNotifier =>
+      _notifier as ListeneableNotifier;
+
   @override
   void initState() {
     super.initState();
@@ -75,7 +78,7 @@ class _ProviderListenerState<T extends BaseNotifier>
     if (widget.onChange != null && _target == null) {
       // add a listener for the current notifier
       _listener = _defaultListener;
-      _notifier.addListener(_listener!);
+      (_notifier as ListeneableNotifier).addListener(_listener!);
     } else if (widget.onChange != null && _target != null) {
       _buildTargetListener();
     }
@@ -101,7 +104,7 @@ class _ProviderListenerState<T extends BaseNotifier>
   @override
   void dispose() {
     if (widget.onChange != null && _listener != null) {
-      _notifier.removeListener(_listener!);
+      _listeneableNotifier.removeListener(_listener!);
     }
 
     // check if the onDispose callback
@@ -121,9 +124,9 @@ class _ProviderListenerState<T extends BaseNotifier>
   void didUpdateWidget(covariant ProviderListener<T> oldWidget) {
     if (_listener != null) {
       if (oldWidget.onChange == null && widget.onChange != null) {
-        _notifier.addListener(_listener!);
+        _listeneableNotifier.addListener(_listener!);
       } else if (oldWidget.onChange != null && widget.onChange == null) {
-        _notifier.removeListener(_listener!);
+        _listeneableNotifier.removeListener(_listener!);
       }
     }
     super.didUpdateWidget(oldWidget);
@@ -157,7 +160,7 @@ class _ProviderListenerState<T extends BaseNotifier>
       }
     }
     _listener = _target!.listener;
-    _notifier.addListener(_listener!);
+    _listeneableNotifier.addListener(_listener!);
   }
 
   @override

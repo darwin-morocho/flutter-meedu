@@ -1,11 +1,9 @@
 import 'dart:collection';
 
-typedef ListenerCallback<NotifierType> = void Function(NotifierType);
-
+typedef ListenerCallback<T> = void Function(T);
 
 /// this class define the basic Listener for each SimpleController's subscriber or StateController's subscriber
-class ListenerEntry<NotifierType>
-    extends LinkedListEntry<ListenerEntry<NotifierType>> {
-  final ListenerCallback<NotifierType> listener;
+class ListenerEntry<T> extends LinkedListEntry<ListenerEntry<T>> {
+  final ListenerCallback<T> listener;
   ListenerEntry(this.listener);
 }

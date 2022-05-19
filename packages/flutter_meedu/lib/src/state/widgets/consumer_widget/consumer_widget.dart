@@ -4,6 +4,8 @@ import 'package:meedu/meedu.dart';
 
 import '../watch_filter.dart';
 
+typedef _ListenerCallback<T> = void Function(T);
+
 /// {@template meedu.consumerwidget}
 /// A base-class for widgets that wants to listen to providers
 /// ```dart
@@ -30,7 +32,7 @@ abstract class ConsumerWidget extends StatefulWidget {
 }
 
 class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
-  Map<BaseNotifier, ListenerCallback> _dependencies = {};
+  Map<BaseNotifier, _ListenerCallback> _dependencies = {};
   Map<BaseNotifier, Target> _targets = {};
 
   // initialized at true for the first build
@@ -71,7 +73,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
     _dependencies.forEach(
       (notifier, listener) {
         if (!notifier.disposed) {
-          notifier.removeListener(listener);
+          (notifier as ListeneableNotifier).removeListener(listener);
         }
       },
     );
@@ -89,7 +91,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   /// If [providerOrTarget] is a value gotten from .select, .ids or .when
   /// the  widget only will be rebuilded depending of the condition of each method.
   @override
-  Notifier watch<Notifier>(Provider<Notifier> providerOrTarget) {
+  Notifier watch<Notifier>(ListeneableProvider<Notifier> providerOrTarget) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
       _clearDependencies();
@@ -132,7 +134,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
       }
       // add the listener to the current notifier
       _dependencies[notifier as BaseNotifier] = listener;
-      notifier.addListener(listener);
+      (notifier as ListeneableNotifier).addListener(listener);
     }
     return notifier; // coverage:ignore-line
   }
@@ -169,7 +171,7 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
       // add the listener to the current notifier
       _dependencies[notifier as BaseNotifier] = listener;
       _targets[notifier] = target;
-      notifier.addListener(listener);
+      (notifier as ListeneableNotifier).addListener(listener);
     }
     return _targets[notifier]!.selectValue; // coverage:ignore-line
   }
@@ -185,7 +187,7 @@ abstract class BuilderRef {
   /// A function to read SimpleProvider or a StateProvider and subscribe to the events.
   ///
   /// this method returns the Notifier linked to the provider
-  T watch<T>(Provider<T> providerOrTarget);
+  T watch<T>(ListeneableProvider<T> providerOrTarget);
 
   /// A function to read SimpleProvider or a StateProvider and subscribe to the events.
   ///

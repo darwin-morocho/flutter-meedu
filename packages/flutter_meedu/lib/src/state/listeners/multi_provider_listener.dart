@@ -4,8 +4,11 @@ import 'package:meedu/state.dart';
 
 import '../widgets/watch_filter.dart';
 
+typedef _ListenerCallback<T> = void Function(T);
 typedef _ProviderListenerCallback<Notifier> = void Function(
-    BuildContext, Notifier);
+  BuildContext,
+  Notifier,
+);
 
 /// this class allows you listen the changes in multiples providers
 class MultiProviderListener extends StatefulWidget {
@@ -41,7 +44,7 @@ class MultiProviderListener extends StatefulWidget {
 }
 
 class _MultiProviderListenerState extends State<MultiProviderListener> {
-  Map<BaseNotifier, List<ListenerCallback>> _dependencies = {};
+  Map<BaseNotifier, List<_ListenerCallback>> _dependencies = {};
 
   @override
   void initState() {
@@ -96,7 +99,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
           }
         }
         final listener = target.listener;
-        notifier.addListener(listener);
+        (notifier as ListeneableNotifier).addListener(listener);
         _dependencies[notifier]?.add(listener);
       } else {
         // ignore: prefer_function_declarations_over_variables
@@ -108,7 +111,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
             (item as dynamic).onChange(context, notifier);
           }
         };
-        notifier.addListener(listener);
+        (notifier as ListeneableNotifier).addListener(listener);
         _dependencies[notifier]?.add(listener);
       }
     }
@@ -121,7 +124,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
       if (!notifier.disposed) {
         // ignore: prefer_foreach
         for (final listener in item.value) {
-          notifier.removeListener(listener);
+          (notifier as ListeneableNotifier).removeListener(listener);
         }
       }
     }
@@ -159,7 +162,7 @@ class MultiProviderListenerItem<Notifier extends BaseNotifier> {
   });
 
   /// provider to listen the changes
-  final Provider<Notifier> provider;
+  final ListeneableProvider<Notifier> provider;
 
   /// callback to listen the new events
   final _ProviderListenerCallback<Notifier> onChange;

@@ -1,5 +1,8 @@
-## [6.0.0]
+## [7.0.0]
+- Added Provider class to be able to create providers that don't depend of
+SimpleNotifier or StateNotifier.
 
+## [6.0.0]
 - Added `Get.asyncPut<T>`:
 
 Example:

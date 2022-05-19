@@ -15,10 +15,12 @@ part 'state/state_tag_provider.dart';
 /// defines the creator function structure
 typedef _LazyCallback<T> = T Function(ProviderReference ref);
 
-abstract class SuperProvider<T> {}
+abstract class _Provider<T> {}
+
+abstract class ListeneableProvider<T> {}
 
 @sealed
-abstract class BaseProvider<T> extends SuperProvider<T> {
+abstract class BaseProvider<T> extends _Provider<T> {
   /// save the current route name in flutter apps
   static String? creatorName;
 

@@ -1,3 +1,17 @@
+## [7.2.0-dev.0]
+- Added `Provider` class to be able to create providers that don't depend of
+SimpleNotifier or StateNotifier.
+
+Example:
+```dart
+class HomePageUiUtils {
+  HomePageUiUtils._();
+}
+final homeTabController = 
+```
+
+
+
 ## [7.1.0-pre.0]
 - Fixed flutter 3.x.x warnings
 
