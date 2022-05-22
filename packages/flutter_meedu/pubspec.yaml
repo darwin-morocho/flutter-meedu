@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  meedu: ^7.0.0
+  meedu: ^7.1.1
 
   # meedu:
   #   path: ../meedu

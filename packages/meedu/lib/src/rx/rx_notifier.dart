@@ -35,13 +35,13 @@ class RxNotifier<T> {
   }
 
   /// Closes the subscriptions for this Rx, releasing the resources.
-  void close() {
-    _subscriptions.forEach((_, _subscriptions) {
-      for (final subscription in _subscriptions) {
-        subscription.cancel();
+  FutureOr<void> close() async {
+    for (final e in _subscriptions.values) {
+      for (final subs in e) {
+        await subs.cancel();
       }
-    });
+    }
     _subscriptions.clear();
-    subject.close();
+    return subject.close();
   }
 }

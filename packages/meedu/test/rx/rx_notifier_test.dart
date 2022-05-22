@@ -19,7 +19,7 @@ void main() {
     });
     observer.subject.controller.sink.add(2);
     expect(counter.value, 0);
-    observer.close();
+    await observer.close();
 
     expect(observer.canUpdate, false);
     expect(await completer.future, 2);

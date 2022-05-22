@@ -4,7 +4,7 @@ import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  tearDown(() {
+  tearDown(() async {
     _counterProvider.dispose();
   });
   testWidgets('consumer test', (tester) async {

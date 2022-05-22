@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart' show mustCallSuper, protected;
 
 import 'base_notifier.dart';
@@ -55,7 +57,8 @@ abstract class StateNotifier<State> extends BaseNotifier<State>
   /// use to listen when the controller was deleted from memory
   @override
   @mustCallSuper
-  void dispose() async {
+  FutureOr<void> dispose() {
     super.dispose();
+    clearListeners();
   }
 }

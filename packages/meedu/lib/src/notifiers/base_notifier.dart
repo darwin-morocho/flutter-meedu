@@ -19,7 +19,7 @@ abstract class BaseNotifier<T> {
   }
 
   @mustCallSuper
-  void dispose() {
+  FutureOr<void> dispose() {
     _disposed = true;
   }
 

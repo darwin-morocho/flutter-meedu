@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// BuildContext extension with some ui utils methods and getters
@@ -77,8 +79,12 @@ mixin AfterFirstLayoutMixin<T extends StatefulWidget> on State<T> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => afterFirstLayout(context),
+    WidgetsBinding.instance.endOfFrame.then(
+      (_) {
+        if (mounted) {
+          afterFirstLayout(context);
+        }
+      },
     );
   }
 
@@ -87,5 +93,5 @@ mixin AfterFirstLayoutMixin<T extends StatefulWidget> on State<T> {
   ///
   /// If you want to display a widget that depends on the layout, such as a Dialog or BottomSheet,
   /// you can not use that widget in initState instead of that you can use this method
-  void afterFirstLayout(BuildContext context);
+  FutureOr<void> afterFirstLayout(BuildContext context);
 }

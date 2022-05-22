@@ -1,6 +1,8 @@
 ## [7.2.0-dev.0]
 - Added `Provider` class to be able to create providers that don't depend of
 SimpleNotifier or StateNotifier.
+- Allow `afterFirstLayout` to be overridden with `FutureOr`.
+- Allow `dispose` on SimpleNotifier and StateNotifier to be overridden with `FutureOr`.
 
 Example:
 ```dart

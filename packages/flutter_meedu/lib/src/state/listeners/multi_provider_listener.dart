@@ -58,7 +58,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
     // check if the onAfterFirstLayout callback needs to be called
     if (widget.onAfterFirstLayout != null) {
       // wait after first frame
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.endOfFrame.then((_) {
         if (mounted) {
           widget.onAfterFirstLayout!(context);
         }

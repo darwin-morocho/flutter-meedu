@@ -1,3 +1,7 @@
+
+## [7.1.1]
+- Allow `dispose` on BaseNotifier to be overridden with `FutureOr`.
+
 ## [7.0.0]
 - Added Provider class to be able to create providers that don't depend of
 SimpleNotifier or StateNotifier.
