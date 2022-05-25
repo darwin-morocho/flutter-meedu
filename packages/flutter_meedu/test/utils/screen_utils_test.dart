@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_meedu/src/utils/ambiguate.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_meedu/ui.dart';
 
@@ -25,7 +26,7 @@ class __PageState extends State<_Page> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.endOfFrame.then(
+    ambiguate(WidgetsBinding.instance)?.endOfFrame.then(
       (_) {
         print("👏 provider page test onAfterFirstLayout");
         print("context.mediaQuery ${context.mediaQuery}");
@@ -33,7 +34,8 @@ class __PageState extends State<_Page> {
         print("context.textTheme ${context.textTheme}");
         print("context.mediaQueryPadding ${context.mediaQueryPadding}");
         print("context.devicePixelRatio ${context.devicePixelRatio}");
-        print("context.mediaQueryShortestSide ${context.mediaQueryShortestSide}");
+        print(
+            "context.mediaQueryShortestSide ${context.mediaQueryShortestSide}");
         print("context.mediaQuerySize ${context.mediaQuerySize}");
         print("context.mediaQueryViewInsets ${context.mediaQueryViewInsets}");
         print("context.mediaQueryViewPadding ${context.mediaQueryViewPadding}");

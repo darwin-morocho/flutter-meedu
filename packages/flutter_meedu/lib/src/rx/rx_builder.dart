@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:meedu/rx.dart';
 
+import '../utils/ambiguate.dart';
+
 /// A widget to be used with Observables (instances of Rx)
 ///
 /// ```dart
@@ -64,7 +66,7 @@ class _RxBuilderState extends State<RxBuilder> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.endOfFrame.then((_) {
+    ambiguate(WidgetsBinding.instance)?.endOfFrame.then((_) {
       _afterFirstLayout = true;
     });
     // listen the observable events

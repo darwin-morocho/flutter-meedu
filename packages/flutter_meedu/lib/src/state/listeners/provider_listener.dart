@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart'
     show Widget, BuildContext, StatefulWidget, State, WidgetsBinding, Key;
+
 import 'package:meedu/meedu.dart';
 
+import '../../utils/ambiguate.dart';
 import '../widgets/watch_filter.dart';
 
 /// a typedef for a common callback
@@ -91,7 +93,7 @@ class _ProviderListenerState<T extends BaseNotifier>
     // check if the onAfterFirstLayout callback needs to be called
     if (widget.onAfterFirstLayout != null) {
       // wait after first frame
-      WidgetsBinding.instance.endOfFrame.then((_) {
+      ambiguate(WidgetsBinding.instance)?.endOfFrame.then((_) {
         if (mounted) {
           widget.onAfterFirstLayout!(context, _notifier);
         }

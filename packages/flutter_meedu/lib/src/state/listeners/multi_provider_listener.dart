@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
 
+import '../../utils/ambiguate.dart';
 import '../widgets/watch_filter.dart';
 
 typedef _ListenerCallback<T> = void Function(T);
@@ -58,7 +59,7 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
     // check if the onAfterFirstLayout callback needs to be called
     if (widget.onAfterFirstLayout != null) {
       // wait after first frame
-      WidgetsBinding.instance.endOfFrame.then((_) {
+      ambiguate(WidgetsBinding.instance)?.endOfFrame.then((_) {
         if (mounted) {
           widget.onAfterFirstLayout!(context);
         }

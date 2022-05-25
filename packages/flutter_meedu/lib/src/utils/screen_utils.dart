@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'ambiguate.dart';
+
 /// BuildContext extension with some ui utils methods and getters
 extension ContextExtensionss on BuildContext {
   /// The same of [MediaQuery.of(context).size]
@@ -79,7 +81,7 @@ mixin AfterFirstLayoutMixin<T extends StatefulWidget> on State<T> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.endOfFrame.then(
+    ambiguate(WidgetsBinding.instance)?.endOfFrame.then(
       (_) {
         if (mounted) {
           afterFirstLayout(context);
