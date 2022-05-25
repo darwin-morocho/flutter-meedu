@@ -1,4 +1,4 @@
-## [7.2.0-dev.0]
+## [7.1.0]
 - Added `Provider` class to be able to create providers that don't depend of
 SimpleNotifier or StateNotifier.
 - Allow `afterFirstLayout` to be overridden with `FutureOr`.
@@ -14,8 +14,7 @@ final homeTabController =
 
 
 
-## [7.1.0-pre.0]
-- Fixed flutter 3.x.x warnings
+
 
 ## [7.0.0]
 
