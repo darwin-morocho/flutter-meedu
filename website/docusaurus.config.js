@@ -75,7 +75,7 @@ module.exports = {
           lastVersion: "current",
           versions: {
             current: {
-              label: "7.0.0",
+              label: "7.1.0",
             },
             "6.x.x": {
               label: "6.2.3",

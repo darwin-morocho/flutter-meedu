@@ -31,7 +31,7 @@ dependencies:
     sdk: flutter
   go_router: ^3.1.0
   freezed_annotation: ^2.0.1
-  flutter_meedu: ^7.0.0
+  flutter_meedu: ^7.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
