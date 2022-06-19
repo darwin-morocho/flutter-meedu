@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'login_failure.freezed.dart';
@@ -13,5 +12,5 @@ class LoginFailure with _$LoginFailure {
 
   const factory LoginFailure.unknown() = LoginUnknownError;
 
-  Left<LoginFailure, void> get asLeft => Left(this);
+
 }

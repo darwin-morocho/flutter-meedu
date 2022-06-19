@@ -1,14 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:example/app/core/failure.dart';
 import 'package:example/app/my_app.dart';
 import 'package:example/app/ui/pages/profile/profile_page.dart';
 import 'package:example/app/ui/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:mocktail/mocktail.dart';
 
 import '../../../../mocks/http_client.dart';
 import '../../../../set_up.dart';
@@ -31,22 +25,7 @@ void main() {
   testWidgets(
     'LoginPage > ok',
     (tester) async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => http.Response(
-          jsonEncode(
-            {
-              'token': '',
-            },
-          ),
-          200,
-        ),
-      );
+      MockHttp.loginOk();
 
       await tester.pumpWidget(
         const MyApp(
@@ -76,15 +55,7 @@ void main() {
   testWidgets(
     'LoginPage > network error',
     (tester) async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => throw const SocketException('mocked error'),
-      );
+      MockHttp.networkError();
 
       await tester.pumpWidget(
         const MyApp(
@@ -105,15 +76,7 @@ void main() {
   testWidgets(
     'LoginPage > invalid credentials',
     (tester) async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => throw ServerException(403),
-      );
+      MockHttp.loginInvalidCredentials();
 
       await tester.pumpWidget(
         const MyApp(
@@ -134,20 +97,7 @@ void main() {
   testWidgets(
     'LoginPage > internal error',
     (tester) async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async {
-          await Future.delayed(
-            const Duration(milliseconds: 10),
-          );
-          throw Exception();
-        },
-      );
+      MockHttp.unhandledError();
 
       await tester.pumpWidget(
         const MyApp(

@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
-import 'package:example/app/core/failure.dart';
-import 'package:example/app/data/data_source/remote/auth_service.dart';
-import 'package:example/app/domain/modules/login/failure/login_failure.dart';
-import 'package:example/app/domain/repositories/auth_repository.dart';
+
+import '../../domain/modules/login/failure/login_failure.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../services/remote/auth_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._service);
@@ -16,15 +14,17 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    try {
-      await _service.login(email, password);
-      return const Right(null);
-    } on ServerException catch (e) {
-      return const LoginFailure.accessDenied().asLeft;
-    } on SocketException {
-      return const LoginFailure.network().asLeft;
-    } catch (e, s) {
-      return const LoginFailure.unknown().asLeft;
-    }
+    final result = await _service.login(
+      email,
+      password,
+    );
+
+    return result.map(
+      success: (_) => const Right(null),
+      cancelled: (_) => const Left(LoginFailure.unknown()),
+      networkError: (_) => const Left(LoginFailure.network()),
+      serverError: (_) => const Left(LoginFailure.accessDenied()),
+      unhandledError: (_) => const Left(LoginFailure.unknown()),
+    );
   }
 }
