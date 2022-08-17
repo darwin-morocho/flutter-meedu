@@ -1,4 +1,5 @@
 import 'package:example/app/inject_dependencies.dart';
+import 'package:example/app/inject_repositories.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_meedu/ui.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,9 +14,7 @@ void setUpTests() {
       Get.clear();
       ProviderScope.clear();
 
-      injectRepositories(
-        mockHttpClient,
-      );
+      injectRepositories(mockDio);
       injectDependencies();
       registerFallbackValue(Uri.parse(''));
     },

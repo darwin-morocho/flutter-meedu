@@ -1,15 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'app/core/my_http_client.dart';
-import 'app/inject_dependencies.dart';
-import 'app/my_app.dart';
 import 'package:flutter_meedu/ui.dart';
+
+import 'app/inject_dependencies.dart';
+import 'app/inject_repositories.dart';
+import 'app/my_app.dart';
+import 'package:dio_logger/dio_logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final client = MyHttpClient(
-    baseUrl: 'https://reqres.in/',
+
+  injectRepositories(
+    Dio(
+      BaseOptions(
+        baseUrl: 'https://reqres.in',
+      ),
+    )..interceptors.add(
+        dioLoggerInterceptor,
+      ),
   );
-  injectRepositories(client);
   injectDependencies();
   router.setDefaultTransition(
     Transition.fadeIn,

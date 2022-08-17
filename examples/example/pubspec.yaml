@@ -32,7 +32,8 @@ dependencies:
     sdk: flutter
   freezed_annotation: ^1.1.0
   cupertino_icons: ^1.0.2
-  http: ^0.13.4
+  dio: ^4.0.6
+  dio_logger: ^4.0.8+8
   dartz: ^0.10.1
   flutter_meedu: ^7.1.0
 

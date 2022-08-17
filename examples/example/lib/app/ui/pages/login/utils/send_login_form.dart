@@ -16,6 +16,7 @@ Future<void> sendLoginForm(BuildContext context) async {
         network: () => "Network error",
         unknown: () => "Unknown error",
       );
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(

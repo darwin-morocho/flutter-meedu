@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
-
+import 'package:dio/dio.dart';
 import 'package:example/app/ui/pages/login/controller/login_controller.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,28 +17,16 @@ void main() {
       controller = LoginController(
         loginUseCase: Get.find(),
       );
+      registerFallbackValue(
+        Options(),
+      );
     },
   );
 
   test(
     'LoginController > ok',
     () async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => http.Response(
-          jsonEncode(
-            {
-              'token': '',
-            },
-          ),
-          200,
-        ),
-      );
+      MockHttp.loginOk();
 
       expect(controller.state.email, '');
       expect(controller.state.password, '');
@@ -66,15 +50,7 @@ void main() {
   test(
     'LoginController > network error',
     () async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => throw const SocketException('mocked error'),
-      );
+      MockHttp.networkError();
 
       controller.onEmailChanged('test@test.com');
       controller.onPasswordChanged('test');
@@ -94,20 +70,7 @@ void main() {
   test(
     'LoginController > invalid credentials',
     () async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => http.Response(
-          jsonEncode(
-            {},
-          ),
-          403,
-        ),
-      );
+      MockHttp.loginInvalidCredentials();
 
       controller.onEmailChanged('test@test.com');
       controller.onPasswordChanged('test');
@@ -127,16 +90,7 @@ void main() {
   test(
     'LoginController > internal error',
     () async {
-      when(
-        () => mockHttpClient.post(
-          any(),
-          headers: any(named: 'headers'),
-          body: any(named: 'body'),
-        ),
-      ).thenAnswer(
-        (_) async => throw Exception(),
-      );
-
+      MockHttp.unhandledError();
       controller.onEmailChanged('test@test.com');
       controller.onPasswordChanged('test');
 
