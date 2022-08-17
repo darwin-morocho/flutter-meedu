@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:meedu_cli/src/commands/page/create_page_template.dart';
-import 'package:process_run/shell_run.dart';
+
 import '../../utils/pubspec.dart';
 import 'page.dart' show StringExtension;
 
@@ -24,7 +24,7 @@ import 'package:flutter_meedu/meedu.dart';
 import '$stateFileName';
 
 class $controllerName extends StateNotifier<$stateName> {
-  $controllerName():super($stateName.initialState);
+  $controllerName():super($stateName());
 }
   """;
 
@@ -32,9 +32,7 @@ class $controllerName extends StateNotifier<$stateName> {
 
   if (equatable == null && freezed == null) {
     stateCode = """
-class $stateName {
-  static $stateName get initialState => $stateName();
-}
+class $stateName {}
 """;
   } else if (freezed != null) {
     stateCode = """
@@ -44,15 +42,12 @@ part '${stateFileName.replaceAll(".dart", "")}.freezed.dart';
 class $stateName with _\$$stateName {
   const $stateName._();
   const factory $stateName() = _$stateName;
-  static $stateName get initialState => const $stateName();
 }
 """;
   } else {
     stateCode = """
 import 'package:equatable/equatable.dart';
 class $stateName extends Equatable {
-  static $stateName get initialState => $stateName();
-
   @override
   List<Object?> get props => [];
 }
@@ -94,9 +89,4 @@ final ${pageName.firstLowerCase()}Provider = StateProvider<$controllerName,$stat
   controllerFile.createSync(recursive: true);
   providerFile.createSync(recursive: true);
   stateFile.createSync(recursive: true);
-
-  if (freezed != null) {
-    await Shell()
-        .run("flutter pub run build_runner build --delete-conflicting-outputs");
-  }
 }

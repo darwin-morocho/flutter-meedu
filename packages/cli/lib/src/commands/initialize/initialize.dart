@@ -132,12 +132,12 @@ manually fix them in your "pubspec.yaml" and next run this command again.
       stdout.writeln("""
 
 😃 success. Now you need to go to your pubspec.yaml
-and ensure that you are using dart >= 2.13.0
+and ensure that you are using dart >= 2.17.0 or higher
 
 for example:
 
 environment:
-  sdk: '>=2.13.0 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
       """);
     } on Exception catch (e) {
       stderr.writeln(e.toString());

@@ -1,13 +1,21 @@
 import 'dart:io';
 
+import 'package:meedu_cli/src/utils/is_old_structure.dart';
 import 'package:process_run/shell_run.dart';
 
 import '../../utils/base_path.dart';
 
 Future<void> addPageToRoutes(String pageName, String fileName) async {
   final appDir = '${basePath}lib/app';
-  final appRoutesFile = File('$appDir/ui/routes/app_routes.dart');
-  final routesFile = File('$appDir/ui/routes/routes.dart');
+  String routesDir = '$appDir/presentation/routes';
+
+  if (isOldStructure()) {
+    routesDir = '$appDir/ui/routes';
+  }
+
+  final appRoutesFile = File('$routesDir/app_routes.dart');
+  final routesFile = File('$routesDir/routes.dart');
+
   if (appRoutesFile.existsSync() && routesFile.existsSync()) {
     /// read the routes.dart file
     final routesCode = routesFile.readAsStringSync();
@@ -38,15 +46,15 @@ Future<void> addPageToRoutes(String pageName, String fileName) async {
             final secondPart = appRoutesCode.substring(
                 lastAppRoutesIndex, appRoutesCode.length);
             final newCode = """
-import '../pages/$fileName/${fileName}_page.dart';
+import '../modules/$fileName/view/${fileName}_view.dart';
 $fisrtPart
-    Routes.$constName: (_) => const ${pageName}Page(),
+    Routes.$constName: (_) => const ${pageName}View(),
 $secondPart
         """;
             appRoutesFile.writeAsStringSync(newCode);
           }
 
-          await Shell().run("flutter format $appDir/ui/routes");
+          await Shell().run("flutter format $routesDir");
         }
       }
     }

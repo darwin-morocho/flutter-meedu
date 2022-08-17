@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:meedu_cli/src/utils/create_folder.dart';
+
 import '../../utils/base_path.dart';
-import '../../utils/pubspec.dart';
+import 'generate_test_file.dart';
 
 void createCleanStructure() {
   stderr.writeln("👊 creating clean architecture folder structure");
@@ -10,18 +12,24 @@ void createCleanStructure() {
   }
 
   final appDir = '${basePath}lib/app';
+  final presentationDir = '$appDir/presentation';
+  final modulesDir = '$presentationDir/modules';
+  final routesDir = '$presentationDir/routes';
 
-  Directory(appDir).createSync(recursive: true);
-  Directory('$appDir/data/data_source').createSync(recursive: true);
-  Directory('$appDir/data/helpers').createSync(recursive: true);
-  Directory('$appDir/data/repositories_impl').createSync(recursive: true);
-  Directory('$appDir/domain/models').createSync(recursive: true);
-  Directory('$appDir/domain/repositories').createSync(recursive: true);
-  Directory('$appDir/ui/routes').createSync(recursive: true);
-  Directory('$appDir/ui/pages').createSync(recursive: true);
-  Directory('$appDir/ui/global_widgets').createSync(recursive: true);
+  createFolders(
+    [
+      '$appDir/data/data_source',
+      '$appDir/data/helpers',
+      '$appDir/data/repositories_impl',
+      '$appDir/domain/models',
+      '$appDir/domain/repositories',
+      routesDir,
+      modulesDir,
+      '$presentationDir/global/widgets'
+    ],
+  );
 
-  final routesFile = File('$appDir/ui/routes/routes.dart');
+  final routesFile = File('$routesDir/routes.dart');
   routesFile.writeAsStringSync("""
 // ignore_for_file: constant_identifier_names
 /// WARNING: generated code don't modify directly
@@ -32,36 +40,39 @@ abstract class Routes {
   routesFile.createSync(recursive: true);
 
   /// create appRoutes Map
-  final appRoutesFile = File('$appDir/ui/routes/app_routes.dart');
+  final appRoutesFile = File('$routesDir/app_routes.dart');
   appRoutesFile.writeAsStringSync("""
 import 'package:flutter/widgets.dart' show BuildContext, Widget;
 import 'routes.dart';
-import '../pages/home/home_page.dart';
+import '../modules/home/view/home_view.dart';
 
 /// WARNING: generated code don't modify directly
 Map<String, Widget Function(BuildContext)> get appRoutes {
   return {
-    Routes.HOME: (_) => const HomePage(),
+    Routes.HOME: (_) => const HomeView(),
   };
 }
     """);
   appRoutesFile.createSync(recursive: true);
 
   /// create home page demo
-  Directory('$appDir/ui/pages/home/controller').createSync(recursive: true);
-  Directory('$appDir/ui/pages/home/utils').createSync(recursive: true);
-  Directory('$appDir/ui/pages/home/widgets').createSync(recursive: true);
-  Directory('$appDir/ui/pages/home/widgets').createSync(recursive: true);
+  createFolders(
+    [
+      '$modulesDir/home/controller',
+      '$modulesDir/home/utils',
+      '$modulesDir/home/view/widgets',
+    ],
+  );
 
-  final homePageFile = File('$appDir/ui/pages/home/home_page.dart');
+  final homePageFile = File('$modulesDir/home/view/home_view.dart');
   homePageFile.writeAsStringSync("""
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/ui.dart';
 
-import 'controller/home_provider.dart';
+import '../controller/home_provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +86,8 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: homeProvider.read.increment,
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -86,7 +97,7 @@ class HomePage extends StatelessWidget {
   homePageFile.createSync(recursive: true);
 
   final homeControllerFile = File(
-    '$appDir/ui/pages/home/controller/home_controller.dart',
+    '$modulesDir/home/controller/home_controller.dart',
   );
   homeControllerFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
@@ -107,7 +118,7 @@ class HomeController extends SimpleNotifier {
   homePageFile.createSync(recursive: true);
 
   final homeProviderFile = File(
-    '$appDir/ui/pages/home/controller/home_provider.dart',
+    '$modulesDir/home/controller/home_provider.dart',
   );
   homeProviderFile.writeAsStringSync("""
 import 'package:flutter_meedu/meedu.dart';
@@ -137,8 +148,8 @@ void main() {
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/ui.dart';
 
-import 'ui/routes/app_routes.dart';
-import 'ui/routes/routes.dart';
+import 'presentation/routes/app_routes.dart';
+import 'presentation/routes/routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -163,60 +174,5 @@ class MyApp extends StatelessWidget {
   """);
 
   myAppFile.createSync(recursive: true);
-  _generateTestFile();
-}
-
-void _generateTestFile() {
-  if (!Directory('${basePath}test').existsSync()) {
-    Directory('${basePath}test').createSync(recursive: true);
-  }
-
-  final projectName = pubspec['name'];
-  if (projectName == null) {
-    return;
-  }
-  final file = File('${basePath}test/widget_test.dart');
-  file.writeAsStringSync("""
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:$projectName/app/my_app.dart';
-
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
-}
-  """);
-  file.createSync(recursive: true);
-
-  final gitignoreFile = File("$basePath/.gitignore");
-  if (gitignoreFile.existsSync()) {
-    final gitignoreCode = gitignoreFile.readAsStringSync();
-    gitignoreFile.writeAsStringSync("""
-$gitignoreCode
-*.freezed.dart
-    """);
-  }
-  stderr.writeln("😎 clean architecture structure generated");
+  generateTestFile();
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:cli_menu/cli_menu.dart';
 import 'package:meedu_cli/src/commands/page/create_page_template.dart';
+import 'package:meedu_cli/src/utils/is_old_structure.dart';
 
 import '../../utils/base_path.dart';
 import '../../utils/validate_flutter_project.dart';
@@ -22,7 +23,7 @@ class PageCommand extends Command {
   String get name => 'page';
 
   @override
-  List<String> get aliases => ['-p'];
+  List<String> get aliases => ['-p', '-m'];
 
   @override
   Future<void> run() async {
@@ -53,14 +54,16 @@ class PageCommand extends Command {
       }
       fileName = fileName.substring(1, fileName.length);
 
-      final folder = "${basePath}lib/app/ui/pages/$fileName";
-      final pageFileName = "${fileName}_page.dart";
+      final folder = isOldStructure()
+          ? "${basePath}lib/app/ui/pages/$fileName/view"
+          : "${basePath}lib/app/presentation/modules/$fileName/view";
+      final pageFileName = "${fileName}_view.dart";
 
       bool isOverride = false;
 
       if (File("$folder/$pageFileName").existsSync()) {
         stdout.writeln(
-            "\n⚠️  This page already exists. Do you want to override it?");
+            "\nWARNING: This page already exists. Do you want to override it?");
         final menu = Menu(['Yes', 'No']);
         if (menu.choose().index == 1) {
           return;
