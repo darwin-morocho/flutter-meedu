@@ -251,6 +251,10 @@ Si tiene multiples widget `Consumer` y no quiere que todos se actualicen cuando 
 El siguiente código solo  actualiza el  `Consumer` cuando el
 valor de `counter` es mayor o igual a 5.
 
+:::
+NOTE: Si no define el argumento [booleanCallback] al usar el filtro `select` y su callback retorna un booleano (true o false)  sus consumers y sus listeners seran notificados cuando cambie el valor retornado por el callback ( `true` a `false` o `false` a `true`).
+:::
+
 ```dart {20}
 class CounterController extends SimpleNotifier {
   int _counter = 0;
@@ -273,6 +277,7 @@ Scaffold(
           final controller = ref.watch(
             counterProvider.select(
               (controller) => controller.counter > 5),
+              booleanCallback: true,
             ),
           );
           return Text("${controller.counter}");
@@ -332,6 +337,7 @@ Ejemplo:
 ProviderListener<CounterController>(
   provider: counterProvider.select(
     (_) => _.counter >= 5,
+    booleanCallback: true,
   ),
   onChange: (_, controller) {
 

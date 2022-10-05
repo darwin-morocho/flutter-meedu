@@ -255,10 +255,6 @@ If you have multiples `Consumer` widgets in your Views and you only want rebuild
 
 The next code rebuilds the first `Consumer` only when the counter is highest than 5.
 
-:::
-NOTE:  If you don't define the [booleanCallback] argument when you use the `.select` filter and your callback return a boolean (true or false)  your consumers and your listeners will notified when the value returned by the callback changes ( `true` to `false` or `false` to `true`).
-:::
-
 ```dart {20}
 class CounterController extends SimpleNotifier {
   int _counter = 0;
@@ -279,11 +275,7 @@ Scaffold(
     child: Consumer(
         builder: (_, ref, __) {
           final controller = ref.watch(
-                counterProvider.select(
-                  (controller) => controller.counter > 5,
-                  booleanCallback: true,
-                ),
-            ),
+            counterProvider.select((controller) => controller.counter > 5)),
           );
           return Text("${controller.counter}");
         },
@@ -338,7 +330,6 @@ Example:
 ProviderListener<CounterController>(
   provider: counterProvider.select(
     (_) => _.counter >= 5,
-    booleanCallback: true,
   ),
   onChange: (_, controller) {
 

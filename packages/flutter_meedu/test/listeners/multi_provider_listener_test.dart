@@ -98,6 +98,7 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
         MultiProviderListenerItem<CounterController>(
           provider: _conterProvider.select(
             (_) => _.counter > 2,
+            booleanCallback: true,
           ),
           onChange: (_, controller) {
             _simpleSelectCalledCount++;
@@ -120,6 +121,7 @@ class _MultiProviderPageState extends State<MultiProviderPage> {
         MultiProviderListenerItem<LoginController>(
           provider: _loginProvider.select(
             (_) => _.email == "test2@test.com",
+            booleanCallback: true,
           ),
           onChange: (_, controller) {
             _stateSelectCalledCount++;

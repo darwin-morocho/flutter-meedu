@@ -1,3 +1,13 @@
+## [7.2.0+1]
+- Updated `meta` to `1.8.0`
+- Updated `test` to `1.21.6`
+- Updated `equatable` to `2.0.5`
+## [7.2.0]
+- Updated `meta` to `1.7.0`
+## [7.1.2]
+- Improved code quality for Rx extensions.
+- Updated `meta` to `1.8.0`
+- Updated `test` to `1.21.4`
 
 ## [7.1.1]
 - Allow `dispose` on BaseNotifier to be overridden with `FutureOr`.

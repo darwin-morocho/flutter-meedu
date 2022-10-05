@@ -22,6 +22,7 @@ void main() {
           home: ProviderListener<_CounterController>(
             provider: _counterProvider.select(
               (_) => _.counter >= minValueToBeNotified,
+              booleanCallback: true,
             ),
             onChange: (_, __) {
               numberOfCalls++;

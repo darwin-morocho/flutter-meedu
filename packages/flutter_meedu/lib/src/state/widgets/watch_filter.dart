@@ -38,18 +38,40 @@ class Target<Notifier, Result> extends ListeneableProvider<Notifier> {
 
   /// filter type
   late Filter filter;
+
+  /// if the filter is a selected and we only want to
+  /// rebuild the consumer when the callback returns true
+  late bool listenWhenTheCallbackReturnsTrue;
 }
 
 /// extension for SimpleProvider
 extension SimpleProviderExt<Notifier> on SimpleProvider<Notifier> {
   /// use this method to rebuild your Consumer when a value has changed
   /// or you can use a boolean condition. Check the documentation for more info.
+  ///
+  /// [booleanCallback] If your callback returns a boolean and you want to
+  /// rebuild your consumers or notify to your listeners only when the boolean
+  /// value is true you can set [booleanCallback] as true
+  ///
+  /// EXAMPLE:
+  /// ```dart
+  ///    final controller = ref.watch(
+  ///    provider.select(
+  ///      (_) => _.user != null,
+  ///      booleanCallback: true,
+  ///    ),
+  ///  );
+  /// ```
+  ///
   Target<Notifier, Result> select<Result>(
-      _BuildBySelect<Notifier, Result> callback) {
+    _BuildBySelect<Notifier, Result> callback, {
+    bool booleanCallback = false,
+  }) {
     // get the  Notifier attached to this SimpleProvider
     final target = Target<Notifier, Result>(read);
     target.filter = Filter.select;
     target.callback = callback;
+    target.listenWhenTheCallbackReturnsTrue = booleanCallback;
     return target;
   }
 }
@@ -63,15 +85,35 @@ extension StateProviderExt<Notifier extends StateNotifier<S>, S>
     final target = Target<Notifier, bool>(read);
     target.filter = Filter.when;
     target.callback = callback;
+    target.listenWhenTheCallbackReturnsTrue = false;
     return target;
   }
 
   /// use this method to rebuild your Consumer when a value in the state has changed
   /// or you can use a boolean condition. Check the documentation for more info.
-  Target<Notifier, Result> select<Result>(_BuildBySelect<S, Result> callback) {
+  ///
+  /// [booleanCallback] If your callback returns a boolean and you want to
+  /// rebuild your consumers or notify to your listeners only when the boolean
+  /// value is true you can set [booleanCallback] as true
+  ///
+  /// EXAMPLE:
+  /// ```dart
+  ///    final controller = ref.watch(
+  ///    provider.select(
+  ///      (_) => _.user != null,
+  ///      booleanCallback: true,
+  ///    ),
+  ///  );
+  /// ```
+  ///
+  Target<Notifier, Result> select<Result>(
+    _BuildBySelect<S, Result> callback, {
+    bool booleanCallback = false,
+  }) {
     final target = Target<Notifier, Result>(read);
     target.filter = Filter.select;
     target.callback = callback;
+    target.listenWhenTheCallbackReturnsTrue = booleanCallback;
     return target;
   }
 }
@@ -87,12 +129,25 @@ void createSimpleSelectListener(Target target) {
   // ignore: prefer_function_declarations_over_variables
   final listener = (_) {
     final value = target.callback(notifier);
+    if (target.listenWhenTheCallbackReturnsTrue) {
+      assert(
+        value is bool,
+        'The value returned by the callback must be a boolean because '
+        'listenWhenTheCallbackReturnsTrue is true',
+      );
+    }
+
     target.selectValue = value;
+    bool allowRebuild = false;
+    if (value is bool && target.listenWhenTheCallbackReturnsTrue) {
+      allowRebuild = value;
+    } else if (prevValue != value) {
+      allowRebuild = true;
+    }
+
     // check if the value has changed
-    if (prevValue != value || (value is bool && value)) {
-      if (target.rebuild != null) {
-        target.rebuild!(); // rebuild the Consumer
-      }
+    if (allowRebuild && target.rebuild != null) {
+      target.rebuild!(); // rebuild the Consumer
     }
     prevValue = value;
   };
@@ -108,12 +163,26 @@ void createStateSelectListener(Target target) {
   // ignore: prefer_function_declarations_over_variables
   final listener = (newState) {
     final value = target.callback(target.notifier.state);
+    if (target.listenWhenTheCallbackReturnsTrue) {
+      assert(
+        value is bool,
+        'The value returned by the callback must be a boolean because '
+        'listenWhenTheCallbackReturnsTrue is true',
+      );
+    }
+
     target.selectValue = value;
+
+    bool allowRebuild = false;
+    if (value is bool && target.listenWhenTheCallbackReturnsTrue) {
+      allowRebuild = value;
+    } else if (prevValue != value) {
+      allowRebuild = true;
+    }
+
     // check if the value has changed
-    if (prevValue != value || (value is bool && value)) {
-      if (target.rebuild != null) {
-        target.rebuild!();
-      }
+    if (allowRebuild && target.rebuild != null) {
+      target.rebuild!();
     }
     prevValue = value;
   };

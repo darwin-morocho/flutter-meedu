@@ -1,3 +1,25 @@
+## [8.0.0]
+- **BREAKING CHANGE** 
+  The `.select` filter has a new behavior. A new optional argument called `booleanCallback` has beed
+  added. If your callback (in the `.select` filter) returns a boolean value and you want to
+  rebuild your consumers or notify to your listeners only when the boolean
+  value is `true` you can set [booleanCallback] to `true`.
+
+  If you don't define the [booleanCallback] argument and your callback return a boolean (true or false)  your consumers and your listeners will notified when the value returned by the callback changes ( `true` to `false` or `false` to `true`).
+  
+  EXAMPLE:
+  ```dart
+     final controller = ref.watch(
+        provider.select(
+          (_) => _.user != null,
+          booleanCallback: true,
+        ),
+    );
+  ```
+
+## [7.2.0+1]
+- Updated to meedu: ^7.2.0+1
+
 ## [7.1.0]
 - Added `Provider` class to be able to create providers that don't depend of
 SimpleNotifier or StateNotifier.
