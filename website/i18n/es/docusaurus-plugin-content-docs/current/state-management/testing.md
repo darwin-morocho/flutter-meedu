@@ -20,13 +20,15 @@ import 'package:mocktail/mocktail.dart';
 final loginProvider = StateProvider<LoginController, LoginState>(
   (_) => LoginController(),
 );
+
+class MockLoginController extends Mock implements LoginController {}
 ```
 
 Antes de sus test puede usar un `setUp` y sobreescribir el callback de su provider.
 ```dart
 setUp((){
   loginProvider.overrideProvider(
-    (_) => LoginController(myMockedData),
+    (_) => MockLoginController(),
   );
 });
 ```
