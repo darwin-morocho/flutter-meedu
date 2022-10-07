@@ -256,7 +256,7 @@ If you have multiples `Consumer` widgets in your Views and you only want rebuild
 The next code rebuilds the first `Consumer` only when the counter is highest than 5.
 
 :::note IMPORTANT
-If you don't define the `booleanCallback` argument when you use the `.select` filter and your callback return a boolean (true or false)  your consumers and your listeners will notified when the value returned by the callback changes ( `true` to `false` or `false` to `true`).
+If you don't define the `booleanCallback` argument when you use the `.select` filter and your callback returns a boolean (true or false)  your consumers and your listeners will be notified when the value returned by the callback changes ( `true` to `false` or `false` to `true`).
 :::
 
 ```dart {20}
