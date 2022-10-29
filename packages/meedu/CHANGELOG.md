@@ -1,3 +1,22 @@
+## [7.2.1]
+- Added `contains` method in `BaseTagProvider` to check 
+if a tagged provider is registered.
+
+Example:
+```dart
+final movieProvider = StateProvider.withTag(
+  (ref) => BlocOrController(),
+);
+.
+.
+.
+if (movieProvider.contains('movie-tag')){
+  
+}
+```
+
+
+
 ## [7.2.0+1]
 - Updated `meta` to `1.8.0`
 - Updated `test` to `1.21.6`

@@ -63,7 +63,20 @@ dependencies:
 ``` 
 
 
+:::note
+Check the next advanced example using flutter_meedu.
 
+Features:
+- Internationalization.
+- Dark Mode.
+- Clean Architecture.
+- Navigator 2 with go_router.
+- Nested navigation.
+- Deeplinks support.
+- Integration with the movie db API.
+
+https://github.com/darwin-morocho/flutter-w2w/tree/meedu
+:::
 
 :::note
 **Spanish course with unit testing and widget testing**
