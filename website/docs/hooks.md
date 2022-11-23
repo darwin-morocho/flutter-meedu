@@ -54,7 +54,7 @@ class HookStatefulTestState extends ConsumerState<HookStatefulTest> {
   int count = 0;
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     final count2 = useState(0);
     final state = ref.watch(provider).state;
 
