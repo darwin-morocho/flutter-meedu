@@ -1,3 +1,7 @@
+## [8.1.0]
+- Moved logic from the ConsumerState class to ConsumerStatefulElement class to be
+compatible with `flutter_hooks`.
+
 ## [8.0.0]
 - **BREAKING CHANGE** 
   The `.select` filter has a new behavior. A new optional argument called `booleanCallback` has beed

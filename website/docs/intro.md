@@ -59,7 +59,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
-  flutter_meedu: ^8.0.0
+  flutter_meedu: ^8.1.0
 ``` 
 
 

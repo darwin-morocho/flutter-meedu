@@ -1,4 +1,4 @@
-## 0.0.1-dev.3
+## 0.0.1
 - Added `useRx` hook;
 ## 0.0.1-dev.2
 - Added example.

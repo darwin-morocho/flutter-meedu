@@ -29,6 +29,7 @@ module.exports = {
         "state-management/testing",
       ],
     },
+    "hooks",
     "dependency-injection",
     "persistent-state",
     "reactive-programming",

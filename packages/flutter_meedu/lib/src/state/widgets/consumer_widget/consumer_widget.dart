@@ -6,46 +6,42 @@ import '../watch_filter.dart';
 
 typedef _ListenerCallback<T> = void Function(T);
 
-/// {@template meedu.consumerwidget}
-/// A base-class for widgets that wants to listen to providers
-/// ```dart
-/// class Example extends ConsumerWidget {
-///   const Example({Key? key}): super(key: key);
-///
-///   @override
-///   Widget build(BuildContext context, ref) {
-///     final value = ref.watch(myProvider);
-///     return YOUR_WIDGET;
-///   }
-/// }
-/// ```
-/// {@endtemplate}
-abstract class ConsumerWidget extends StatefulWidget {
-  // ignore: public_member_api_docs
-  const ConsumerWidget({Key? key}) : super(key: key);
-
-  // ignore: public_member_api_docs
-  Widget build(BuildContext context, BuilderRef ref);
+/// A [StatefulWidget] that can read providers.
+abstract class ConsumerStatefulWidget extends StatefulWidget {
+  const ConsumerStatefulWidget({Key? key}) : super(key: key);
 
   @override
-  _ConsumerState createState() => _ConsumerState();
+  // ignore: no_logic_in_create_state
+  ConsumerState createState();
+
+  @override
+  ConsumerStatefulElement createElement() {
+    return ConsumerStatefulElement(this);
+  }
 }
 
-class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
+/// A [State] that has access to a [BuilderRef] through [ref], allowing
+/// it to read providers.
+abstract class ConsumerState<T extends ConsumerStatefulWidget>
+    extends State<T> {
+  /// An object that allows widgets to interact with providers.
+  late final BuilderRef ref = context as BuilderRef;
+}
+
+class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
+  ConsumerStatefulElement(StatefulWidget widget) : super(widget);
+
   Map<BaseNotifier, _ListenerCallback> _dependencies = {};
   Map<BaseNotifier, Target> _targets = {};
 
   // initialized at true for the first build
   bool _isExternalBuild = true;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  bool _mounted = true;
 
-  @override // coverage:ignore-line
-  void didUpdateWidget(ConsumerWidget oldWidget) {
-    super.didUpdateWidget(oldWidget); // coverage:ignore-line
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _isExternalBuild = true; // coverage:ignore-line
   }
 
@@ -57,13 +53,14 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
 
   /// force the widget update
   void _rebuild() {
-    if (mounted) {
-      setState(() {});
+    if (_mounted) {
+      markNeedsBuild();
     }
   }
 
   @override
   void deactivate() {
+    _mounted = false;
     _clearDependencies();
     super.deactivate();
   }
@@ -177,8 +174,8 @@ class _ConsumerState extends State<ConsumerWidget> implements BuilderRef {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return widget.build(context, this);
+  Widget build() {
+    return super.build();
   }
 }
 
@@ -193,4 +190,40 @@ abstract class BuilderRef {
   ///
   /// this method returns the value returned by the select or when methods
   R select<T, R>(Target<T, R> target);
+}
+
+/// {@template meedu.consumerwidget}
+/// A base-class for widgets that wants to listen to providers
+/// ```dart
+/// class Example extends ConsumerWidget {
+///   const Example({Key? key}): super(key: key);
+///
+///   @override
+///   Widget build(BuildContext context, ref) {
+///     final value = ref.watch(myProvider);
+///     return YOUR_WIDGET;
+///   }
+/// }
+/// ```
+/// {@endtemplate}
+abstract class ConsumerWidget extends ConsumerStatefulWidget {
+  // ignore: public_member_api_docs
+  const ConsumerWidget({Key? key}) : super(key: key);
+
+  // ignore: public_member_api_docs
+  Widget build(BuildContext context, BuilderRef ref);
+
+  @override
+  _ConsumerState createState() => _ConsumerState();
+}
+
+class _ConsumerState<T extends ConsumerWidget>
+    extends ConsumerState<ConsumerWidget> {
+  /// An object that allows widgets to interact with providers.
+  BuilderRef get ref => context as BuilderRef;
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.build(context, ref);
+  }
 }

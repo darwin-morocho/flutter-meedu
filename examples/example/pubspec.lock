@@ -226,10 +226,10 @@ packages:
   flutter_meedu:
     dependency: "direct main"
     description:
-      name: flutter_meedu
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.2.0+1"
+      path: "../../packages/flutter_meedu"
+      relative: true
+    source: path
+    version: "8.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
