@@ -1,3 +1,7 @@
+## [7.2.2]
+- Removed Assertion Error when a notify event
+is called after that a notifier was disposed;
+
 ## [7.2.1]
 - Added `contains` method in `BaseTagProvider` to check 
 if a tagged provider is registered.

@@ -1,3 +1,6 @@
+## [8.1.1]
+- Updated to meedu: ^7.2.2
+
 ## [8.1.0]
 - Moved logic from the ConsumerState class to ConsumerStatefulElement class to be
 compatible with `flutter_hooks`.

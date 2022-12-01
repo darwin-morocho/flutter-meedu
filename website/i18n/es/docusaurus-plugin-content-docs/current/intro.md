@@ -17,10 +17,6 @@ sidebar_position: 1
   <img style={{marginLeft:10}} alt="stars" src="https://img.shields.io/github/stars/darwin-morocho/flutter-meedu?style=social"/>
 </p>
 
-:::note INFO
-Este proyecto fue inspirado por **GetX** y **Riverpod**. No se utiliza ningún código de estos proyectos solo nos inspiramos en las mejores características de estos con una refactorizacion total.
-:::
-
 :::info INFO
 Puede unirse a nuestro servidor de Discord [aquí](https://discord.gg/rV4bPsdefj)
 :::
@@ -51,7 +47,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
-  flutter_meedu: ^8.0.0
+  flutter_meedu: ^8.1.1
 ``` 
 
 

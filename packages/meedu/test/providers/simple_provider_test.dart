@@ -37,12 +37,6 @@ void main() {
       controller.increment();
       _simpleProvider.read.increment();
       _simpleProvider.dispose();
-      expect(
-        () {
-          controller.increment();
-        },
-        throwsA(isA<AssertionError>()),
-      );
       expect(controller.disposeCalled, true);
     });
   });

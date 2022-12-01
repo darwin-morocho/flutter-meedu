@@ -20,10 +20,6 @@ Is a **powerful** State Management, Dependency Injection, Reactive programming a
   <img style={{marginLeft:10}} alt="stars" src="https://img.shields.io/github/stars/darwin-morocho/flutter-meedu?style=social"/>
 </p>
 
-:::note INFO
-This project was inspired by **GetX, riverpod** and **flutter_bloc**. We don't use any code of these projects only get the best features
-of them and we have implemented them with a total refactoring.
-:::
 
 :::info INFO
 You can join to the discord server [here](https://discord.gg/rV4bPsdefj)
@@ -59,7 +55,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
-  flutter_meedu: ^8.1.0
+  flutter_meedu: ^8.1.1
 ``` 
 
 

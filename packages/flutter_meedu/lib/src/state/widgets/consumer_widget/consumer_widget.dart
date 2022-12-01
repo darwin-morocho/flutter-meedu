@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meedu/meedu.dart';
@@ -176,6 +177,17 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
   @override
   Widget build() {
     return super.build();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      DiagnosticsProperty(
+        '_notifiers',
+        _dependencies.keys.map((e) => e.runtimeType.toString()),
+      ),
+    );
   }
 }
 

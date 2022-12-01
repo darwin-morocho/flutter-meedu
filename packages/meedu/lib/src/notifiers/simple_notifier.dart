@@ -12,10 +12,11 @@ abstract class SimpleNotifier extends BaseNotifier
     with ListeneableNotifier<SimpleNotifierEmptyData> {
   /// notify to listeners and rebuild the widgets
   void notify() {
-    debugAssertNotDisposed();
-    notifyListeners(
-      const SimpleNotifierEmptyData(),
-    );
+    if (!disposed) {
+      notifyListeners(
+        const SimpleNotifierEmptyData(),
+      );
+    }
   }
 
   /// use to listen when the controller was deleted from memory

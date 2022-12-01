@@ -9,14 +9,11 @@ abstract class BaseNotifier<T> {
   /// used to check if a notifier was disposed
   bool _disposed = false;
 
-  /// Tell us if the controller was disposed
+  /// Tell us if the notifier was disposed
   bool get disposed => _disposed;
 
-  /// check if the controller is mounted
-  @protected
-  void debugAssertNotDisposed() {
-    assert(!_disposed, 'A $runtimeType was used after being disposed.');
-  }
+  /// Tell us if the notifier is mounted
+  bool get mounted => !_disposed;
 
   @mustCallSuper
   FutureOr<void> dispose() {

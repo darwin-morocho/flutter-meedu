@@ -23,9 +23,8 @@ void main() {
     c.dispose();
     expect(email, 'test@test.com');
     expect(c.disposed, true);
-    expect(() {
-      c.onEmailChanged('test@test.com');
-    }, throwsA(isA<AssertionError>()));
+    c.onEmailChanged('test2@test.com');
+    expect(email, 'test@test.com');
   });
 
   test('StateController onlyUpdate', () async {
