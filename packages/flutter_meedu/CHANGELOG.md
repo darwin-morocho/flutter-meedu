@@ -1,3 +1,7 @@
+## [8.2.0]
+- Fixed issue [#14](https://github.com/darwin-morocho/flutter-meedu/issues/14).
+- Use unmount instead of deactivate for disposed Consumers.
+
 ## [8.1.1]
 - Updated to meedu: ^7.2.2
 

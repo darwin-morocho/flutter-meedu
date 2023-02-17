@@ -60,10 +60,10 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
   }
 
   @override
-  void deactivate() {
+  void unmount() {
     _mounted = false;
     _clearDependencies();
-    super.deactivate();
+    super.unmount();
   }
 
   /// clear the listeners for this widget
