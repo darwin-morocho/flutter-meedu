@@ -1,3 +1,6 @@
+## [8.0.0]
+- Added Bloc class to be able to use the BLoC pattern.
+
 ## [7.2.1]
 - Added `contains` method in `BaseTagProvider` to check 
 if a tagged provider is registered.
