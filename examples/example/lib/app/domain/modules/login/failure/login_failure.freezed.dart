@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'login_failure.dart';
 
@@ -11,27 +12,7 @@ part of 'login_failure.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LoginFailureTearOff {
-  const _$LoginFailureTearOff();
-
-  LoginAccessDenied accessDenied() {
-    return const LoginAccessDenied();
-  }
-
-  LoginNetworkError network() {
-    return const LoginNetworkError();
-  }
-
-  LoginUnknownError unknown() {
-    return const LoginUnknownError();
-  }
-}
-
-/// @nodoc
-const $LoginFailure = _$LoginFailureTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LoginFailure {
@@ -44,9 +25,9 @@ mixin _$LoginFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accessDenied,
-    TResult Function()? network,
-    TResult Function()? unknown,
+    TResult? Function()? accessDenied,
+    TResult? Function()? network,
+    TResult? Function()? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,9 +47,9 @@ mixin _$LoginFailure {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LoginAccessDenied value)? accessDenied,
-    TResult Function(LoginNetworkError value)? network,
-    TResult Function(LoginUnknownError value)? unknown,
+    TResult? Function(LoginAccessDenied value)? accessDenied,
+    TResult? Function(LoginNetworkError value)? network,
+    TResult? Function(LoginUnknownError value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,35 +66,34 @@ mixin _$LoginFailure {
 abstract class $LoginFailureCopyWith<$Res> {
   factory $LoginFailureCopyWith(
           LoginFailure value, $Res Function(LoginFailure) then) =
-      _$LoginFailureCopyWithImpl<$Res>;
+      _$LoginFailureCopyWithImpl<$Res, LoginFailure>;
 }
 
 /// @nodoc
-class _$LoginFailureCopyWithImpl<$Res> implements $LoginFailureCopyWith<$Res> {
+class _$LoginFailureCopyWithImpl<$Res, $Val extends LoginFailure>
+    implements $LoginFailureCopyWith<$Res> {
   _$LoginFailureCopyWithImpl(this._value, this._then);
 
-  final LoginFailure _value;
   // ignore: unused_field
-  final $Res Function(LoginFailure) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class $LoginAccessDeniedCopyWith<$Res> {
-  factory $LoginAccessDeniedCopyWith(
-          LoginAccessDenied value, $Res Function(LoginAccessDenied) then) =
-      _$LoginAccessDeniedCopyWithImpl<$Res>;
+abstract class _$$LoginAccessDeniedCopyWith<$Res> {
+  factory _$$LoginAccessDeniedCopyWith(
+          _$LoginAccessDenied value, $Res Function(_$LoginAccessDenied) then) =
+      __$$LoginAccessDeniedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoginAccessDeniedCopyWithImpl<$Res>
-    extends _$LoginFailureCopyWithImpl<$Res>
-    implements $LoginAccessDeniedCopyWith<$Res> {
-  _$LoginAccessDeniedCopyWithImpl(
-      LoginAccessDenied _value, $Res Function(LoginAccessDenied) _then)
-      : super(_value, (v) => _then(v as LoginAccessDenied));
-
-  @override
-  LoginAccessDenied get _value => super._value as LoginAccessDenied;
+class __$$LoginAccessDeniedCopyWithImpl<$Res>
+    extends _$LoginFailureCopyWithImpl<$Res, _$LoginAccessDenied>
+    implements _$$LoginAccessDeniedCopyWith<$Res> {
+  __$$LoginAccessDeniedCopyWithImpl(
+      _$LoginAccessDenied _value, $Res Function(_$LoginAccessDenied) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -129,7 +109,7 @@ class _$LoginAccessDenied extends LoginAccessDenied {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LoginAccessDenied);
+        (other.runtimeType == runtimeType && other is _$LoginAccessDenied);
   }
 
   @override
@@ -148,9 +128,9 @@ class _$LoginAccessDenied extends LoginAccessDenied {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accessDenied,
-    TResult Function()? network,
-    TResult Function()? unknown,
+    TResult? Function()? accessDenied,
+    TResult? Function()? network,
+    TResult? Function()? unknown,
   }) {
     return accessDenied?.call();
   }
@@ -182,9 +162,9 @@ class _$LoginAccessDenied extends LoginAccessDenied {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LoginAccessDenied value)? accessDenied,
-    TResult Function(LoginNetworkError value)? network,
-    TResult Function(LoginUnknownError value)? unknown,
+    TResult? Function(LoginAccessDenied value)? accessDenied,
+    TResult? Function(LoginNetworkError value)? network,
+    TResult? Function(LoginUnknownError value)? unknown,
   }) {
     return accessDenied?.call(this);
   }
@@ -210,22 +190,19 @@ abstract class LoginAccessDenied extends LoginFailure {
 }
 
 /// @nodoc
-abstract class $LoginNetworkErrorCopyWith<$Res> {
-  factory $LoginNetworkErrorCopyWith(
-          LoginNetworkError value, $Res Function(LoginNetworkError) then) =
-      _$LoginNetworkErrorCopyWithImpl<$Res>;
+abstract class _$$LoginNetworkErrorCopyWith<$Res> {
+  factory _$$LoginNetworkErrorCopyWith(
+          _$LoginNetworkError value, $Res Function(_$LoginNetworkError) then) =
+      __$$LoginNetworkErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoginNetworkErrorCopyWithImpl<$Res>
-    extends _$LoginFailureCopyWithImpl<$Res>
-    implements $LoginNetworkErrorCopyWith<$Res> {
-  _$LoginNetworkErrorCopyWithImpl(
-      LoginNetworkError _value, $Res Function(LoginNetworkError) _then)
-      : super(_value, (v) => _then(v as LoginNetworkError));
-
-  @override
-  LoginNetworkError get _value => super._value as LoginNetworkError;
+class __$$LoginNetworkErrorCopyWithImpl<$Res>
+    extends _$LoginFailureCopyWithImpl<$Res, _$LoginNetworkError>
+    implements _$$LoginNetworkErrorCopyWith<$Res> {
+  __$$LoginNetworkErrorCopyWithImpl(
+      _$LoginNetworkError _value, $Res Function(_$LoginNetworkError) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -241,7 +218,7 @@ class _$LoginNetworkError extends LoginNetworkError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LoginNetworkError);
+        (other.runtimeType == runtimeType && other is _$LoginNetworkError);
   }
 
   @override
@@ -260,9 +237,9 @@ class _$LoginNetworkError extends LoginNetworkError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accessDenied,
-    TResult Function()? network,
-    TResult Function()? unknown,
+    TResult? Function()? accessDenied,
+    TResult? Function()? network,
+    TResult? Function()? unknown,
   }) {
     return network?.call();
   }
@@ -294,9 +271,9 @@ class _$LoginNetworkError extends LoginNetworkError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LoginAccessDenied value)? accessDenied,
-    TResult Function(LoginNetworkError value)? network,
-    TResult Function(LoginUnknownError value)? unknown,
+    TResult? Function(LoginAccessDenied value)? accessDenied,
+    TResult? Function(LoginNetworkError value)? network,
+    TResult? Function(LoginUnknownError value)? unknown,
   }) {
     return network?.call(this);
   }
@@ -322,22 +299,19 @@ abstract class LoginNetworkError extends LoginFailure {
 }
 
 /// @nodoc
-abstract class $LoginUnknownErrorCopyWith<$Res> {
-  factory $LoginUnknownErrorCopyWith(
-          LoginUnknownError value, $Res Function(LoginUnknownError) then) =
-      _$LoginUnknownErrorCopyWithImpl<$Res>;
+abstract class _$$LoginUnknownErrorCopyWith<$Res> {
+  factory _$$LoginUnknownErrorCopyWith(
+          _$LoginUnknownError value, $Res Function(_$LoginUnknownError) then) =
+      __$$LoginUnknownErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$LoginUnknownErrorCopyWithImpl<$Res>
-    extends _$LoginFailureCopyWithImpl<$Res>
-    implements $LoginUnknownErrorCopyWith<$Res> {
-  _$LoginUnknownErrorCopyWithImpl(
-      LoginUnknownError _value, $Res Function(LoginUnknownError) _then)
-      : super(_value, (v) => _then(v as LoginUnknownError));
-
-  @override
-  LoginUnknownError get _value => super._value as LoginUnknownError;
+class __$$LoginUnknownErrorCopyWithImpl<$Res>
+    extends _$LoginFailureCopyWithImpl<$Res, _$LoginUnknownError>
+    implements _$$LoginUnknownErrorCopyWith<$Res> {
+  __$$LoginUnknownErrorCopyWithImpl(
+      _$LoginUnknownError _value, $Res Function(_$LoginUnknownError) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -353,7 +327,7 @@ class _$LoginUnknownError extends LoginUnknownError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LoginUnknownError);
+        (other.runtimeType == runtimeType && other is _$LoginUnknownError);
   }
 
   @override
@@ -372,9 +346,9 @@ class _$LoginUnknownError extends LoginUnknownError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? accessDenied,
-    TResult Function()? network,
-    TResult Function()? unknown,
+    TResult? Function()? accessDenied,
+    TResult? Function()? network,
+    TResult? Function()? unknown,
   }) {
     return unknown?.call();
   }
@@ -406,9 +380,9 @@ class _$LoginUnknownError extends LoginUnknownError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(LoginAccessDenied value)? accessDenied,
-    TResult Function(LoginNetworkError value)? network,
-    TResult Function(LoginUnknownError value)? unknown,
+    TResult? Function(LoginAccessDenied value)? accessDenied,
+    TResult? Function(LoginNetworkError value)? network,
+    TResult? Function(LoginUnknownError value)? unknown,
   }) {
     return unknown?.call(this);
   }

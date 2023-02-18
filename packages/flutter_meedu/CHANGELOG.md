@@ -1,3 +1,8 @@
+## [8.3.1]
+- Updated to meedu: ^8.0.2
+## [8.3.0]
+- Updated to meedu: ^8.0.1
+- Added Bloc class to be able to use the BLoC pattern.
 ## [8.2.0]
 - Fixed issue [#14](https://github.com/darwin-morocho/flutter-meedu/issues/14).
 - Use unmount instead of deactivate for disposed Consumers.

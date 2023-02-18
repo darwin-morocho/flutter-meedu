@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'login_state.dart';
 
@@ -11,22 +12,7 @@ part of 'login_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LoginStateTearOff {
-  const _$LoginStateTearOff();
-
-  _LoginState call({String email = '', String password = ''}) {
-    return _LoginState(
-      email: email,
-      password: password,
-    );
-  }
-}
-
-/// @nodoc
-const $LoginState = _$LoginStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LoginState {
@@ -42,66 +28,71 @@ mixin _$LoginState {
 abstract class $LoginStateCopyWith<$Res> {
   factory $LoginStateCopyWith(
           LoginState value, $Res Function(LoginState) then) =
-      _$LoginStateCopyWithImpl<$Res>;
+      _$LoginStateCopyWithImpl<$Res, LoginState>;
+  @useResult
   $Res call({String email, String password});
 }
 
 /// @nodoc
-class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
+class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
+    implements $LoginStateCopyWith<$Res> {
   _$LoginStateCopyWithImpl(this._value, this._then);
 
-  final LoginState _value;
   // ignore: unused_field
-  final $Res Function(LoginState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
-    Object? password = freezed,
+    Object? email = null,
+    Object? password = null,
   }) {
     return _then(_value.copyWith(
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$Res> {
-  factory _$LoginStateCopyWith(
-          _LoginState value, $Res Function(_LoginState) then) =
-      __$LoginStateCopyWithImpl<$Res>;
+abstract class _$$_LoginStateCopyWith<$Res>
+    implements $LoginStateCopyWith<$Res> {
+  factory _$$_LoginStateCopyWith(
+          _$_LoginState value, $Res Function(_$_LoginState) then) =
+      __$$_LoginStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String email, String password});
 }
 
 /// @nodoc
-class __$LoginStateCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
-    implements _$LoginStateCopyWith<$Res> {
-  __$LoginStateCopyWithImpl(
-      _LoginState _value, $Res Function(_LoginState) _then)
-      : super(_value, (v) => _then(v as _LoginState));
+class __$$_LoginStateCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_LoginState>
+    implements _$$_LoginStateCopyWith<$Res> {
+  __$$_LoginStateCopyWithImpl(
+      _$_LoginState _value, $Res Function(_$_LoginState) _then)
+      : super(_value, _then);
 
-  @override
-  _LoginState get _value => super._value as _LoginState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
-    Object? password = freezed,
+    Object? email = null,
+    Object? password = null,
   }) {
-    return _then(_LoginState(
-      email: email == freezed
+    return _then(_$_LoginState(
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
@@ -114,11 +105,11 @@ class __$LoginStateCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
 class _$_LoginState extends _LoginState {
   const _$_LoginState({this.email = '', this.password = ''}) : super._();
 
-  @JsonKey()
   @override
+  @JsonKey()
   final String email;
-  @JsonKey()
   @override
+  @JsonKey()
   final String password;
 
   @override
@@ -130,25 +121,25 @@ class _$_LoginState extends _LoginState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoginState &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password, password));
+            other is _$_LoginState &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password));
+  int get hashCode => Object.hash(runtimeType, email, password);
 
   @JsonKey(ignore: true)
   @override
-  _$LoginStateCopyWith<_LoginState> get copyWith =>
-      __$LoginStateCopyWithImpl<_LoginState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>
+      __$$_LoginStateCopyWithImpl<_$_LoginState>(this, _$identity);
 }
 
 abstract class _LoginState extends LoginState {
-  const factory _LoginState({String email, String password}) = _$_LoginState;
+  const factory _LoginState({final String email, final String password}) =
+      _$_LoginState;
   const _LoginState._() : super._();
 
   @override
@@ -157,6 +148,6 @@ abstract class _LoginState extends LoginState {
   String get password;
   @override
   @JsonKey(ignore: true)
-  _$LoginStateCopyWith<_LoginState> get copyWith =>
+  _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>
       throw _privateConstructorUsedError;
 }

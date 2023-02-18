@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'http.dart';
 
@@ -11,55 +12,7 @@ part of 'http.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$RequestResultTearOff {
-  const _$RequestResultTearOff();
-
-  _Success<T> success<T>({required int statusCode, required T data}) {
-    return _Success<T>(
-      statusCode: statusCode,
-      data: data,
-    );
-  }
-
-  _Cancelled<T> cancelled<T>({required StackTrace stackTrace}) {
-    return _Cancelled<T>(
-      stackTrace: stackTrace,
-    );
-  }
-
-  _NetworkError<T> networkError<T>({required StackTrace stackTrace}) {
-    return _NetworkError<T>(
-      stackTrace: stackTrace,
-    );
-  }
-
-  _ResponseError<T> serverError<T>(
-      {required int statusCode,
-      dynamic data,
-      String? message,
-      required StackTrace stackTrace}) {
-    return _ResponseError<T>(
-      statusCode: statusCode,
-      data: data,
-      message: message,
-      stackTrace: stackTrace,
-    );
-  }
-
-  _UnhandledException<T> unhandledError<T>(
-      {required Object exception, required StackTrace stackTrace}) {
-    return _UnhandledException<T>(
-      exception: exception,
-      stackTrace: stackTrace,
-    );
-  }
-}
-
-/// @nodoc
-const $RequestResult = _$RequestResultTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$RequestResult<T> {
@@ -77,13 +30,13 @@ mixin _$RequestResult<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int statusCode, T data)? success,
-    TResult Function(StackTrace stackTrace)? cancelled,
-    TResult Function(StackTrace stackTrace)? networkError,
-    TResult Function(int statusCode, dynamic data, String? message,
+    TResult? Function(int statusCode, T data)? success,
+    TResult? Function(StackTrace stackTrace)? cancelled,
+    TResult? Function(StackTrace stackTrace)? networkError,
+    TResult? Function(int statusCode, dynamic data, String? message,
             StackTrace stackTrace)?
         serverError,
-    TResult Function(Object exception, StackTrace stackTrace)? unhandledError,
+    TResult? Function(Object exception, StackTrace stackTrace)? unhandledError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -109,11 +62,11 @@ mixin _$RequestResult<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Cancelled<T> value)? cancelled,
-    TResult Function(_NetworkError<T> value)? networkError,
-    TResult Function(_ResponseError<T> value)? serverError,
-    TResult Function(_UnhandledException<T> value)? unhandledError,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Cancelled<T> value)? cancelled,
+    TResult? Function(_NetworkError<T> value)? networkError,
+    TResult? Function(_ResponseError<T> value)? serverError,
+    TResult? Function(_UnhandledException<T> value)? unhandledError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -132,48 +85,49 @@ mixin _$RequestResult<T> {
 abstract class $RequestResultCopyWith<T, $Res> {
   factory $RequestResultCopyWith(
           RequestResult<T> value, $Res Function(RequestResult<T>) then) =
-      _$RequestResultCopyWithImpl<T, $Res>;
+      _$RequestResultCopyWithImpl<T, $Res, RequestResult<T>>;
 }
 
 /// @nodoc
-class _$RequestResultCopyWithImpl<T, $Res>
+class _$RequestResultCopyWithImpl<T, $Res, $Val extends RequestResult<T>>
     implements $RequestResultCopyWith<T, $Res> {
   _$RequestResultCopyWithImpl(this._value, this._then);
 
-  final RequestResult<T> _value;
   // ignore: unused_field
-  final $Res Function(RequestResult<T>) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<T, $Res> {
-  factory _$SuccessCopyWith(
-          _Success<T> value, $Res Function(_Success<T>) then) =
-      __$SuccessCopyWithImpl<T, $Res>;
+abstract class _$$_SuccessCopyWith<T, $Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success<T> value, $Res Function(_$_Success<T>) then) =
+      __$$_SuccessCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({int statusCode, T data});
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<T, $Res>
-    extends _$RequestResultCopyWithImpl<T, $Res>
-    implements _$SuccessCopyWith<T, $Res> {
-  __$SuccessCopyWithImpl(_Success<T> _value, $Res Function(_Success<T>) _then)
-      : super(_value, (v) => _then(v as _Success<T>));
+class __$$_SuccessCopyWithImpl<T, $Res>
+    extends _$RequestResultCopyWithImpl<T, $Res, _$_Success<T>>
+    implements _$$_SuccessCopyWith<T, $Res> {
+  __$$_SuccessCopyWithImpl(
+      _$_Success<T> _value, $Res Function(_$_Success<T>) _then)
+      : super(_value, _then);
 
-  @override
-  _Success<T> get _value => super._value as _Success<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? statusCode = freezed,
+    Object? statusCode = null,
     Object? data = freezed,
   }) {
-    return _then(_Success<T>(
-      statusCode: statusCode == freezed
+    return _then(_$_Success<T>(
+      statusCode: null == statusCode
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
-      data: data == freezed
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as T,
@@ -200,22 +154,21 @@ class _$_Success<T> implements _Success<T> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Success<T> &&
-            const DeepCollectionEquality()
-                .equals(other.statusCode, statusCode) &&
+            other is _$_Success<T> &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode) &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(statusCode),
-      const DeepCollectionEquality().hash(data));
+      runtimeType, statusCode, const DeepCollectionEquality().hash(data));
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<T, _Success<T>> get copyWith =>
-      __$SuccessCopyWithImpl<T, _Success<T>>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_SuccessCopyWith<T, _$_Success<T>> get copyWith =>
+      __$$_SuccessCopyWithImpl<T, _$_Success<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -235,13 +188,13 @@ class _$_Success<T> implements _Success<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int statusCode, T data)? success,
-    TResult Function(StackTrace stackTrace)? cancelled,
-    TResult Function(StackTrace stackTrace)? networkError,
-    TResult Function(int statusCode, dynamic data, String? message,
+    TResult? Function(int statusCode, T data)? success,
+    TResult? Function(StackTrace stackTrace)? cancelled,
+    TResult? Function(StackTrace stackTrace)? networkError,
+    TResult? Function(int statusCode, dynamic data, String? message,
             StackTrace stackTrace)?
         serverError,
-    TResult Function(Object exception, StackTrace stackTrace)? unhandledError,
+    TResult? Function(Object exception, StackTrace stackTrace)? unhandledError,
   }) {
     return success?.call(statusCode, data);
   }
@@ -279,11 +232,11 @@ class _$_Success<T> implements _Success<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Cancelled<T> value)? cancelled,
-    TResult Function(_NetworkError<T> value)? networkError,
-    TResult Function(_ResponseError<T> value)? serverError,
-    TResult Function(_UnhandledException<T> value)? unhandledError,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Cancelled<T> value)? cancelled,
+    TResult? Function(_NetworkError<T> value)? networkError,
+    TResult? Function(_ResponseError<T> value)? serverError,
+    TResult? Function(_UnhandledException<T> value)? unhandledError,
   }) {
     return success?.call(this);
   }
@@ -306,40 +259,40 @@ class _$_Success<T> implements _Success<T> {
 }
 
 abstract class _Success<T> implements RequestResult<T> {
-  factory _Success({required int statusCode, required T data}) = _$_Success<T>;
+  factory _Success({required final int statusCode, required final T data}) =
+      _$_Success<T>;
 
   int get statusCode;
   T get data;
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<T, _Success<T>> get copyWith =>
+  _$$_SuccessCopyWith<T, _$_Success<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$CancelledCopyWith<T, $Res> {
-  factory _$CancelledCopyWith(
-          _Cancelled<T> value, $Res Function(_Cancelled<T>) then) =
-      __$CancelledCopyWithImpl<T, $Res>;
+abstract class _$$_CancelledCopyWith<T, $Res> {
+  factory _$$_CancelledCopyWith(
+          _$_Cancelled<T> value, $Res Function(_$_Cancelled<T>) then) =
+      __$$_CancelledCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({StackTrace stackTrace});
 }
 
 /// @nodoc
-class __$CancelledCopyWithImpl<T, $Res>
-    extends _$RequestResultCopyWithImpl<T, $Res>
-    implements _$CancelledCopyWith<T, $Res> {
-  __$CancelledCopyWithImpl(
-      _Cancelled<T> _value, $Res Function(_Cancelled<T>) _then)
-      : super(_value, (v) => _then(v as _Cancelled<T>));
+class __$$_CancelledCopyWithImpl<T, $Res>
+    extends _$RequestResultCopyWithImpl<T, $Res, _$_Cancelled<T>>
+    implements _$$_CancelledCopyWith<T, $Res> {
+  __$$_CancelledCopyWithImpl(
+      _$_Cancelled<T> _value, $Res Function(_$_Cancelled<T>) _then)
+      : super(_value, _then);
 
-  @override
-  _Cancelled<T> get _value => super._value as _Cancelled<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stackTrace = freezed,
+    Object? stackTrace = null,
   }) {
-    return _then(_Cancelled<T>(
-      stackTrace: stackTrace == freezed
+    return _then(_$_Cancelled<T>(
+      stackTrace: null == stackTrace
           ? _value.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -364,19 +317,19 @@ class _$_Cancelled<T> implements _Cancelled<T> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Cancelled<T> &&
-            const DeepCollectionEquality()
-                .equals(other.stackTrace, stackTrace));
+            other is _$_Cancelled<T> &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(stackTrace));
+  int get hashCode => Object.hash(runtimeType, stackTrace);
 
   @JsonKey(ignore: true)
   @override
-  _$CancelledCopyWith<T, _Cancelled<T>> get copyWith =>
-      __$CancelledCopyWithImpl<T, _Cancelled<T>>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_CancelledCopyWith<T, _$_Cancelled<T>> get copyWith =>
+      __$$_CancelledCopyWithImpl<T, _$_Cancelled<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -396,13 +349,13 @@ class _$_Cancelled<T> implements _Cancelled<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int statusCode, T data)? success,
-    TResult Function(StackTrace stackTrace)? cancelled,
-    TResult Function(StackTrace stackTrace)? networkError,
-    TResult Function(int statusCode, dynamic data, String? message,
+    TResult? Function(int statusCode, T data)? success,
+    TResult? Function(StackTrace stackTrace)? cancelled,
+    TResult? Function(StackTrace stackTrace)? networkError,
+    TResult? Function(int statusCode, dynamic data, String? message,
             StackTrace stackTrace)?
         serverError,
-    TResult Function(Object exception, StackTrace stackTrace)? unhandledError,
+    TResult? Function(Object exception, StackTrace stackTrace)? unhandledError,
   }) {
     return cancelled?.call(stackTrace);
   }
@@ -440,11 +393,11 @@ class _$_Cancelled<T> implements _Cancelled<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Cancelled<T> value)? cancelled,
-    TResult Function(_NetworkError<T> value)? networkError,
-    TResult Function(_ResponseError<T> value)? serverError,
-    TResult Function(_UnhandledException<T> value)? unhandledError,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Cancelled<T> value)? cancelled,
+    TResult? Function(_NetworkError<T> value)? networkError,
+    TResult? Function(_ResponseError<T> value)? serverError,
+    TResult? Function(_UnhandledException<T> value)? unhandledError,
   }) {
     return cancelled?.call(this);
   }
@@ -467,39 +420,38 @@ class _$_Cancelled<T> implements _Cancelled<T> {
 }
 
 abstract class _Cancelled<T> implements RequestResult<T> {
-  factory _Cancelled({required StackTrace stackTrace}) = _$_Cancelled<T>;
+  factory _Cancelled({required final StackTrace stackTrace}) = _$_Cancelled<T>;
 
   StackTrace get stackTrace;
   @JsonKey(ignore: true)
-  _$CancelledCopyWith<T, _Cancelled<T>> get copyWith =>
+  _$$_CancelledCopyWith<T, _$_Cancelled<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$NetworkErrorCopyWith<T, $Res> {
-  factory _$NetworkErrorCopyWith(
-          _NetworkError<T> value, $Res Function(_NetworkError<T>) then) =
-      __$NetworkErrorCopyWithImpl<T, $Res>;
+abstract class _$$_NetworkErrorCopyWith<T, $Res> {
+  factory _$$_NetworkErrorCopyWith(
+          _$_NetworkError<T> value, $Res Function(_$_NetworkError<T>) then) =
+      __$$_NetworkErrorCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({StackTrace stackTrace});
 }
 
 /// @nodoc
-class __$NetworkErrorCopyWithImpl<T, $Res>
-    extends _$RequestResultCopyWithImpl<T, $Res>
-    implements _$NetworkErrorCopyWith<T, $Res> {
-  __$NetworkErrorCopyWithImpl(
-      _NetworkError<T> _value, $Res Function(_NetworkError<T>) _then)
-      : super(_value, (v) => _then(v as _NetworkError<T>));
+class __$$_NetworkErrorCopyWithImpl<T, $Res>
+    extends _$RequestResultCopyWithImpl<T, $Res, _$_NetworkError<T>>
+    implements _$$_NetworkErrorCopyWith<T, $Res> {
+  __$$_NetworkErrorCopyWithImpl(
+      _$_NetworkError<T> _value, $Res Function(_$_NetworkError<T>) _then)
+      : super(_value, _then);
 
-  @override
-  _NetworkError<T> get _value => super._value as _NetworkError<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stackTrace = freezed,
+    Object? stackTrace = null,
   }) {
-    return _then(_NetworkError<T>(
-      stackTrace: stackTrace == freezed
+    return _then(_$_NetworkError<T>(
+      stackTrace: null == stackTrace
           ? _value.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -524,19 +476,19 @@ class _$_NetworkError<T> implements _NetworkError<T> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _NetworkError<T> &&
-            const DeepCollectionEquality()
-                .equals(other.stackTrace, stackTrace));
+            other is _$_NetworkError<T> &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(stackTrace));
+  int get hashCode => Object.hash(runtimeType, stackTrace);
 
   @JsonKey(ignore: true)
   @override
-  _$NetworkErrorCopyWith<T, _NetworkError<T>> get copyWith =>
-      __$NetworkErrorCopyWithImpl<T, _NetworkError<T>>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_NetworkErrorCopyWith<T, _$_NetworkError<T>> get copyWith =>
+      __$$_NetworkErrorCopyWithImpl<T, _$_NetworkError<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -556,13 +508,13 @@ class _$_NetworkError<T> implements _NetworkError<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int statusCode, T data)? success,
-    TResult Function(StackTrace stackTrace)? cancelled,
-    TResult Function(StackTrace stackTrace)? networkError,
-    TResult Function(int statusCode, dynamic data, String? message,
+    TResult? Function(int statusCode, T data)? success,
+    TResult? Function(StackTrace stackTrace)? cancelled,
+    TResult? Function(StackTrace stackTrace)? networkError,
+    TResult? Function(int statusCode, dynamic data, String? message,
             StackTrace stackTrace)?
         serverError,
-    TResult Function(Object exception, StackTrace stackTrace)? unhandledError,
+    TResult? Function(Object exception, StackTrace stackTrace)? unhandledError,
   }) {
     return networkError?.call(stackTrace);
   }
@@ -600,11 +552,11 @@ class _$_NetworkError<T> implements _NetworkError<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Cancelled<T> value)? cancelled,
-    TResult Function(_NetworkError<T> value)? networkError,
-    TResult Function(_ResponseError<T> value)? serverError,
-    TResult Function(_UnhandledException<T> value)? unhandledError,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Cancelled<T> value)? cancelled,
+    TResult? Function(_NetworkError<T> value)? networkError,
+    TResult? Function(_ResponseError<T> value)? serverError,
+    TResult? Function(_UnhandledException<T> value)? unhandledError,
   }) {
     return networkError?.call(this);
   }
@@ -627,55 +579,55 @@ class _$_NetworkError<T> implements _NetworkError<T> {
 }
 
 abstract class _NetworkError<T> implements RequestResult<T> {
-  factory _NetworkError({required StackTrace stackTrace}) = _$_NetworkError<T>;
+  factory _NetworkError({required final StackTrace stackTrace}) =
+      _$_NetworkError<T>;
 
   StackTrace get stackTrace;
   @JsonKey(ignore: true)
-  _$NetworkErrorCopyWith<T, _NetworkError<T>> get copyWith =>
+  _$$_NetworkErrorCopyWith<T, _$_NetworkError<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ResponseErrorCopyWith<T, $Res> {
-  factory _$ResponseErrorCopyWith(
-          _ResponseError<T> value, $Res Function(_ResponseError<T>) then) =
-      __$ResponseErrorCopyWithImpl<T, $Res>;
+abstract class _$$_ResponseErrorCopyWith<T, $Res> {
+  factory _$$_ResponseErrorCopyWith(
+          _$_ResponseError<T> value, $Res Function(_$_ResponseError<T>) then) =
+      __$$_ResponseErrorCopyWithImpl<T, $Res>;
+  @useResult
   $Res call(
       {int statusCode, dynamic data, String? message, StackTrace stackTrace});
 }
 
 /// @nodoc
-class __$ResponseErrorCopyWithImpl<T, $Res>
-    extends _$RequestResultCopyWithImpl<T, $Res>
-    implements _$ResponseErrorCopyWith<T, $Res> {
-  __$ResponseErrorCopyWithImpl(
-      _ResponseError<T> _value, $Res Function(_ResponseError<T>) _then)
-      : super(_value, (v) => _then(v as _ResponseError<T>));
+class __$$_ResponseErrorCopyWithImpl<T, $Res>
+    extends _$RequestResultCopyWithImpl<T, $Res, _$_ResponseError<T>>
+    implements _$$_ResponseErrorCopyWith<T, $Res> {
+  __$$_ResponseErrorCopyWithImpl(
+      _$_ResponseError<T> _value, $Res Function(_$_ResponseError<T>) _then)
+      : super(_value, _then);
 
-  @override
-  _ResponseError<T> get _value => super._value as _ResponseError<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? statusCode = freezed,
+    Object? statusCode = null,
     Object? data = freezed,
     Object? message = freezed,
-    Object? stackTrace = freezed,
+    Object? stackTrace = null,
   }) {
-    return _then(_ResponseError<T>(
-      statusCode: statusCode == freezed
+    return _then(_$_ResponseError<T>(
+      statusCode: null == statusCode
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
-      data: data == freezed
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      stackTrace: stackTrace == freezed
+      stackTrace: null == stackTrace
           ? _value.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -710,27 +662,24 @@ class _$_ResponseError<T> implements _ResponseError<T> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ResponseError<T> &&
-            const DeepCollectionEquality()
-                .equals(other.statusCode, statusCode) &&
+            other is _$_ResponseError<T> &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode) &&
             const DeepCollectionEquality().equals(other.data, data) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality()
-                .equals(other.stackTrace, stackTrace));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(statusCode),
-      const DeepCollectionEquality().hash(data),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(stackTrace));
+  int get hashCode => Object.hash(runtimeType, statusCode,
+      const DeepCollectionEquality().hash(data), message, stackTrace);
 
   @JsonKey(ignore: true)
   @override
-  _$ResponseErrorCopyWith<T, _ResponseError<T>> get copyWith =>
-      __$ResponseErrorCopyWithImpl<T, _ResponseError<T>>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_ResponseErrorCopyWith<T, _$_ResponseError<T>> get copyWith =>
+      __$$_ResponseErrorCopyWithImpl<T, _$_ResponseError<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -750,13 +699,13 @@ class _$_ResponseError<T> implements _ResponseError<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int statusCode, T data)? success,
-    TResult Function(StackTrace stackTrace)? cancelled,
-    TResult Function(StackTrace stackTrace)? networkError,
-    TResult Function(int statusCode, dynamic data, String? message,
+    TResult? Function(int statusCode, T data)? success,
+    TResult? Function(StackTrace stackTrace)? cancelled,
+    TResult? Function(StackTrace stackTrace)? networkError,
+    TResult? Function(int statusCode, dynamic data, String? message,
             StackTrace stackTrace)?
         serverError,
-    TResult Function(Object exception, StackTrace stackTrace)? unhandledError,
+    TResult? Function(Object exception, StackTrace stackTrace)? unhandledError,
   }) {
     return serverError?.call(statusCode, data, message, stackTrace);
   }
@@ -794,11 +743,11 @@ class _$_ResponseError<T> implements _ResponseError<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Cancelled<T> value)? cancelled,
-    TResult Function(_NetworkError<T> value)? networkError,
-    TResult Function(_ResponseError<T> value)? serverError,
-    TResult Function(_UnhandledException<T> value)? unhandledError,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Cancelled<T> value)? cancelled,
+    TResult? Function(_NetworkError<T> value)? networkError,
+    TResult? Function(_ResponseError<T> value)? serverError,
+    TResult? Function(_UnhandledException<T> value)? unhandledError,
   }) {
     return serverError?.call(this);
   }
@@ -822,50 +771,46 @@ class _$_ResponseError<T> implements _ResponseError<T> {
 
 abstract class _ResponseError<T> implements RequestResult<T> {
   factory _ResponseError(
-      {required int statusCode,
-      dynamic data,
-      String? message,
-      required StackTrace stackTrace}) = _$_ResponseError<T>;
+      {required final int statusCode,
+      final dynamic data,
+      final String? message,
+      required final StackTrace stackTrace}) = _$_ResponseError<T>;
 
   int get statusCode;
   dynamic get data;
   String? get message;
   StackTrace get stackTrace;
   @JsonKey(ignore: true)
-  _$ResponseErrorCopyWith<T, _ResponseError<T>> get copyWith =>
+  _$$_ResponseErrorCopyWith<T, _$_ResponseError<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UnhandledExceptionCopyWith<T, $Res> {
-  factory _$UnhandledExceptionCopyWith(_UnhandledException<T> value,
-          $Res Function(_UnhandledException<T>) then) =
-      __$UnhandledExceptionCopyWithImpl<T, $Res>;
+abstract class _$$_UnhandledExceptionCopyWith<T, $Res> {
+  factory _$$_UnhandledExceptionCopyWith(_$_UnhandledException<T> value,
+          $Res Function(_$_UnhandledException<T>) then) =
+      __$$_UnhandledExceptionCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({Object exception, StackTrace stackTrace});
 }
 
 /// @nodoc
-class __$UnhandledExceptionCopyWithImpl<T, $Res>
-    extends _$RequestResultCopyWithImpl<T, $Res>
-    implements _$UnhandledExceptionCopyWith<T, $Res> {
-  __$UnhandledExceptionCopyWithImpl(_UnhandledException<T> _value,
-      $Res Function(_UnhandledException<T>) _then)
-      : super(_value, (v) => _then(v as _UnhandledException<T>));
+class __$$_UnhandledExceptionCopyWithImpl<T, $Res>
+    extends _$RequestResultCopyWithImpl<T, $Res, _$_UnhandledException<T>>
+    implements _$$_UnhandledExceptionCopyWith<T, $Res> {
+  __$$_UnhandledExceptionCopyWithImpl(_$_UnhandledException<T> _value,
+      $Res Function(_$_UnhandledException<T>) _then)
+      : super(_value, _then);
 
-  @override
-  _UnhandledException<T> get _value => super._value as _UnhandledException<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? exception = freezed,
-    Object? stackTrace = freezed,
+    Object? exception = null,
+    Object? stackTrace = null,
   }) {
-    return _then(_UnhandledException<T>(
-      exception: exception == freezed
-          ? _value.exception
-          : exception // ignore: cast_nullable_to_non_nullable
-              as Object,
-      stackTrace: stackTrace == freezed
+    return _then(_$_UnhandledException<T>(
+      exception: null == exception ? _value.exception : exception,
+      stackTrace: null == stackTrace
           ? _value.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as StackTrace,
@@ -892,22 +837,21 @@ class _$_UnhandledException<T> implements _UnhandledException<T> {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UnhandledException<T> &&
+            other is _$_UnhandledException<T> &&
             const DeepCollectionEquality().equals(other.exception, exception) &&
-            const DeepCollectionEquality()
-                .equals(other.stackTrace, stackTrace));
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(exception),
-      const DeepCollectionEquality().hash(stackTrace));
+      runtimeType, const DeepCollectionEquality().hash(exception), stackTrace);
 
   @JsonKey(ignore: true)
   @override
-  _$UnhandledExceptionCopyWith<T, _UnhandledException<T>> get copyWith =>
-      __$UnhandledExceptionCopyWithImpl<T, _UnhandledException<T>>(
+  @pragma('vm:prefer-inline')
+  _$$_UnhandledExceptionCopyWith<T, _$_UnhandledException<T>> get copyWith =>
+      __$$_UnhandledExceptionCopyWithImpl<T, _$_UnhandledException<T>>(
           this, _$identity);
 
   @override
@@ -928,13 +872,13 @@ class _$_UnhandledException<T> implements _UnhandledException<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int statusCode, T data)? success,
-    TResult Function(StackTrace stackTrace)? cancelled,
-    TResult Function(StackTrace stackTrace)? networkError,
-    TResult Function(int statusCode, dynamic data, String? message,
+    TResult? Function(int statusCode, T data)? success,
+    TResult? Function(StackTrace stackTrace)? cancelled,
+    TResult? Function(StackTrace stackTrace)? networkError,
+    TResult? Function(int statusCode, dynamic data, String? message,
             StackTrace stackTrace)?
         serverError,
-    TResult Function(Object exception, StackTrace stackTrace)? unhandledError,
+    TResult? Function(Object exception, StackTrace stackTrace)? unhandledError,
   }) {
     return unhandledError?.call(exception, stackTrace);
   }
@@ -972,11 +916,11 @@ class _$_UnhandledException<T> implements _UnhandledException<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Success<T> value)? success,
-    TResult Function(_Cancelled<T> value)? cancelled,
-    TResult Function(_NetworkError<T> value)? networkError,
-    TResult Function(_ResponseError<T> value)? serverError,
-    TResult Function(_UnhandledException<T> value)? unhandledError,
+    TResult? Function(_Success<T> value)? success,
+    TResult? Function(_Cancelled<T> value)? cancelled,
+    TResult? Function(_NetworkError<T> value)? networkError,
+    TResult? Function(_ResponseError<T> value)? serverError,
+    TResult? Function(_UnhandledException<T> value)? unhandledError,
   }) {
     return unhandledError?.call(this);
   }
@@ -1000,12 +944,12 @@ class _$_UnhandledException<T> implements _UnhandledException<T> {
 
 abstract class _UnhandledException<T> implements RequestResult<T> {
   factory _UnhandledException(
-      {required Object exception,
-      required StackTrace stackTrace}) = _$_UnhandledException<T>;
+      {required final Object exception,
+      required final StackTrace stackTrace}) = _$_UnhandledException<T>;
 
   Object get exception;
   StackTrace get stackTrace;
   @JsonKey(ignore: true)
-  _$UnhandledExceptionCopyWith<T, _UnhandledException<T>> get copyWith =>
+  _$$_UnhandledExceptionCopyWith<T, _$_UnhandledException<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

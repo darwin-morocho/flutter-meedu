@@ -95,10 +95,10 @@ packages:
     dependency: "direct main"
     description:
       name: meedu
-      sha256: "8f28977f2adbc6b5a109c71eef8c42367aae1ea4ff1c10225c7726d5bc89c356"
+      sha256: "2cac0971ea211b1a18e3c4f038369f8ac57401760342da16d9e4e9d043f7de38"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.2"
+    version: "8.0.2"
   meta:
     dependency: transitive
     description:

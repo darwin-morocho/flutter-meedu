@@ -1,23 +1,23 @@
 import 'dart:async';
 
-import 'package:example/app/ui/pages/counter/controller/counter_controller.dart';
+import 'package:example/app/ui/pages/counter/bloc/counter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
     'CounterController',
     () async {
-      final controller = CounterController();
+      final controller = CounterBloc(0);
       final completer = Completer();
       controller.addListener(
         (_) {
           completer.complete();
         },
       );
-      expect(controller.counter, 0);
-      controller.increment();
+      expect(controller.state, 0);
+      controller.add(Increment());
       await completer.future;
-      expect(controller.counter, 1);
+      expect(controller.state, 1);
     },
   );
 }

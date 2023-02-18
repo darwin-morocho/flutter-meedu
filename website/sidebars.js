@@ -23,6 +23,7 @@ module.exports = {
         "state-management/intro",
         "state-management/simple-notifier",
         "state-management/state-notifier",
+        "state-management/bloc-pattern",
         "state-management/working-with-arguments",
         "state-management/working-with-tags",
         "state-management/listen-when-a-provider-dispose-a-notifier",

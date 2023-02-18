@@ -1,13 +1,14 @@
-import 'package:example/app/ui/pages/login/controller/login_controller.dart';
+import 'package:example/app/ui/pages/login/controller/login_bloc.dart';
 import 'package:example/app/ui/pages/login/utils/send_login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meedu/ui.dart';
+import 'controller/login_event.dart';
 import 'controller/login_provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  LoginController get controller => loginProvider.read;
+  LoginBloc get bloc => loginProvider.read;
 
   bool isValidEmail(String email) {
     return RegExp(
@@ -56,7 +57,9 @@ class LoginPage extends StatelessWidget {
                   },
                   child: TextField(
                     key: const Key('login-email'),
-                    onChanged: (text) => controller.onEmailChanged(text),
+                    onChanged: (text) => bloc.add(
+                      LoginEvent.emailChanged(text),
+                    ),
                     decoration: const InputDecoration(
                       label: Text("E-mail"),
                       border: OutlineInputBorder(),
@@ -66,7 +69,9 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 25),
                 TextField(
                   key: const Key('login-password'),
-                  onChanged: (text) => controller.onPasswordChanged(text),
+                  onChanged: (text) => bloc.add(
+                    LoginEvent.passwordChanged(text),
+                  ),
                   decoration: const InputDecoration(
                     label: Text("Password"),
                     border: OutlineInputBorder(),
@@ -85,9 +90,9 @@ class LoginPage extends StatelessWidget {
                       minWidth: double.infinity,
                       onPressed:
                           isValidForm ? () => sendLoginForm(context) : null,
-                      child: const Text("Sign In"),
                       disabledColor: Colors.blueAccent.withOpacity(0.5),
                       color: Colors.blueAccent,
+                      child: const Text("Sign In"),
                     );
                   },
                 ),

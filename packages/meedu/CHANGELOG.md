@@ -1,3 +1,5 @@
+## [8.0.2]
+- Added support for Union Types.
 ## [8.0.1]
 - Added tests.
 ## [8.0.0]

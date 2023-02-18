@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:example/app/ui/pages/login/controller/login_controller.dart';
+import 'package:example/app/ui/pages/login/controller/login_bloc.dart';
+import 'package:example/app/ui/pages/login/controller/login_event.dart';
 import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,11 +11,11 @@ import '../../../../set_up.dart';
 void main() {
   setUpTests();
 
-  late LoginController controller;
+  late LoginBloc controller;
 
   setUp(
     () {
-      controller = LoginController(
+      controller = LoginBloc(
         loginUseCase: Get.find(),
       );
       registerFallbackValue(
@@ -30,8 +31,8 @@ void main() {
 
       expect(controller.state.email, '');
       expect(controller.state.password, '');
-      controller.onEmailChanged('test@test.com');
-      controller.onPasswordChanged('test');
+      controller.add(LoginEvent.emailChanged('test@test.com'));
+      controller.add(LoginEvent.passwordChanged('test'));
       expect(controller.state.email, 'test@test.com');
       expect(controller.state.password, 'test');
 
@@ -52,8 +53,8 @@ void main() {
     () async {
       MockHttp.networkError();
 
-      controller.onEmailChanged('test@test.com');
-      controller.onPasswordChanged('test');
+      controller.add(LoginEvent.emailChanged('test@test.com'));
+      controller.add(LoginEvent.passwordChanged('test'));
 
       bool ok = false;
 
@@ -72,8 +73,8 @@ void main() {
     () async {
       MockHttp.loginInvalidCredentials();
 
-      controller.onEmailChanged('test@test.com');
-      controller.onPasswordChanged('test');
+      controller.add(LoginEvent.emailChanged('test@test.com'));
+      controller.add(LoginEvent.passwordChanged('test'));
 
       bool ok = false;
 
@@ -91,8 +92,8 @@ void main() {
     'LoginController > internal error',
     () async {
       MockHttp.unhandledError();
-      controller.onEmailChanged('test@test.com');
-      controller.onPasswordChanged('test');
+      controller.add(LoginEvent.emailChanged('test@test.com'));
+      controller.add(LoginEvent.passwordChanged('test'));
 
       bool ok = false;
 
