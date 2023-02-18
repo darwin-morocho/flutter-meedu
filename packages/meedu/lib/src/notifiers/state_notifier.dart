@@ -33,8 +33,7 @@ abstract class StateNotifier<State> extends BaseNotifier<State>
   /// changes the state value
   /// if [notify] is false it doesn't notify to all listeners
   void _update(State newState, [bool notify = true]) {
-    assert(!disposed, 'A $runtimeType was used after being disposed.');
-    if (onStateWillChange(_state, newState)) {
+    if (!disposed && onStateWillChange(_state, newState)) {
       _oldState = _state;
       _state = newState;
       onStateChanged(_oldState, _state);

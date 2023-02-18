@@ -30,9 +30,9 @@ void main() {
     c.removeListener(subscribe);
     c.dispose();
     expect(c.disposed, true);
-    expect(() {
-      c.notify();
-    }, throwsA(isA<AssertionError>()));
+    final counter = c.counter;
+    c.notify();
+    expect(c.counter, counter);
   });
 }
 

@@ -229,7 +229,7 @@ packages:
       path: "../../packages/flutter_meedu"
       relative: true
     source: path
-    version: "8.0.1"
+    version: "8.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

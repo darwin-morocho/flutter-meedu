@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meedu/provider.dart';
 import 'package:meedu/state.dart';
@@ -152,6 +153,20 @@ class _MultiProviderListenerState extends State<MultiProviderListener> {
   Widget build(BuildContext context) {
     return widget.child;
   }
+
+  // coverage:ignore-start
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      DiagnosticsProperty(
+        '_notifiers',
+        _dependencies.keys.map(
+          (e) => e.runtimeType.toString(),
+        ),
+      ),
+    );
+  } // coverage:ignore-end
 }
 
 /// this class is used to define onChange callback for one Notifier

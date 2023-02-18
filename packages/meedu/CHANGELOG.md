@@ -1,5 +1,11 @@
 ## [8.0.0]
+- Added tests.
+## [8.0.0]
 - Added Bloc class to be able to use the BLoC pattern.
+
+## [7.2.2]
+- Removed Assertion Error when a notify event
+is called after that a notifier was disposed;
 
 ## [7.2.1]
 - Added `contains` method in `BaseTagProvider` to check 

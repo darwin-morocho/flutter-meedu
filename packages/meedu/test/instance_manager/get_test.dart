@@ -14,6 +14,7 @@ void main() {
     test('has', () {
       final has = Get.has<Person>();
       expect(has, false);
+      Get.put<Person>(Person());
     });
     test('put', () {
       Person? c1;
@@ -184,5 +185,7 @@ void main() {
 
 class Person {
   final String name;
-  Person([this.name = '']);
+  Person([this.name = '']) {
+    print('Person $hashCode');
+  }
 }

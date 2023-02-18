@@ -1,3 +1,10 @@
+## [8.2.0]
+- Fixed issue [#14](https://github.com/darwin-morocho/flutter-meedu/issues/14).
+- Use unmount instead of deactivate for disposed Consumers.
+
+## [8.1.1]
+- Updated to meedu: ^7.2.2
+
 ## [8.1.0]
 - Moved logic from the ConsumerState class to ConsumerStatefulElement class to be
 compatible with `flutter_hooks`.

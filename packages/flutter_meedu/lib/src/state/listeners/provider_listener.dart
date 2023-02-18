@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart'
     show Widget, BuildContext, StatefulWidget, State, WidgetsBinding, Key;
 
@@ -169,4 +170,16 @@ class _ProviderListenerState<T extends BaseNotifier>
   Widget build(BuildContext context) {
     return widget.builder(context, _notifier);
   }
+
+  // coverage:ignore-start
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      DiagnosticsProperty('_notifier', _notifier),
+    );
+    properties.add(
+      DiagnosticsProperty('_target', _target),
+    );
+  } // coverage:ignore-end
 }
