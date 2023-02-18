@@ -1,4 +1,4 @@
-## [8.0.0]
+## [8.0.1]
 - Added tests.
 ## [8.0.0]
 - Added Bloc class to be able to use the BLoC pattern.
