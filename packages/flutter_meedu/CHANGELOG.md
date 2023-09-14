@@ -1,3 +1,7 @@
+## [8.4.0]
+- Updated sdk constraints
+  Dart >=3.0.0 <4.0.0
+  Flutter >=3.10.0
 ## [8.3.1]
 - Updated to meedu: ^8.0.2
 ## [8.3.0]

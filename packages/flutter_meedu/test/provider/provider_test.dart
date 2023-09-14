@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage>
   }
 }
 
-class CustomTabBar extends StatelessWidget with PreferredSizeWidget {
+class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomTabBar({Key? key}) : super(key: key);
 
   @override
