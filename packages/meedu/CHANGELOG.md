@@ -1,3 +1,13 @@
+## [8.1.2]
+- Updated changelog.
+## [8.1.1]
+- Updated `meta` to `1.9.0`
+## [8.1.0]
+- Updated `meta` to `1.10.0`
+- Updated `test` to `1.24.7`
+- environment:
+    sdk: ">=3.0.0 <4.0.0"
+
 ## [8.0.2]
 - Added support for Union Types.
 ## [8.0.1]

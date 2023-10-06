@@ -1,6 +1,7 @@
 part of '../base_provider.dart';
 
-class SimpleProvider<T> extends BaseProvider<T> with ListeneableProvider<T> {
+class SimpleProvider<T> extends BaseProvider<T>
+    implements ListeneableProvider<T> {
   SimpleProvider(
     super.creator, {
     super.autoDispose = true,

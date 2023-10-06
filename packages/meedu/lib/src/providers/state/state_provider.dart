@@ -1,7 +1,7 @@
 part of '../base_provider.dart';
 
 class StateProvider<T extends StateNotifier<S>, S> extends BaseProvider<T>
-    with ListeneableProvider<T> {
+    implements ListeneableProvider<T> {
   StateProvider(
     super.creator, {
     super.autoDispose = true,

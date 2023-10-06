@@ -36,11 +36,11 @@ abstract class BaseTagProvider<P> {
 
   /// clear and dispose all providers
   void clear() {
-    _providers.values.forEach((element) {
-      if (element.mounted) {
-        element.dispose(avoidOnDisposeCallback: true);
+    for (final provider in _providers.values) {
+      if (provider.mounted) {
+        provider.dispose(avoidOnDisposeCallback: true);
       }
-    });
+    }
     _providers.clear();
   }
 

@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v3.1.0
+      - uses: subosito/flutter-action@v2.7.1
         with:
-          flutter-version: '3.3.4'
+          flutter-version: '3.13.6'
       - name: Install meedu dependencies 
         run: cd packages/meedu && flutter pub get
 

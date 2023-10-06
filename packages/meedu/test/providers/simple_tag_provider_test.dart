@@ -1,4 +1,5 @@
-import 'package:meedu/provider.dart';
+
+import 'package:meedu/meedu.dart';
 import 'package:test/test.dart';
 
 import 'simple_provider_test.dart';

@@ -24,6 +24,6 @@ void main() {
   });
 }
 
-final _stateTagProvider = StateProvider.withTag(
+final _stateTagProvider = StateProvider.withTag<LoginController, LoginState>(
   (ref) => LoginController(),
 );

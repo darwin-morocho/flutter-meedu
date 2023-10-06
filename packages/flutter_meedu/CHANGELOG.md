@@ -1,3 +1,5 @@
+## [8.5.0]
+- Updated to meedu: ^8.1.2
 ## [8.4.0]
 - Updated sdk constraints
   Dart >=3.0.0 <4.0.0
