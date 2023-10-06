@@ -1,7 +1,7 @@
 part of 'base_provider.dart';
 
 class ProviderReference {
-  /// store arguements
+  /// store arguments
   final dynamic arguments;
 
   /// callback to be called when a provider is disposed
