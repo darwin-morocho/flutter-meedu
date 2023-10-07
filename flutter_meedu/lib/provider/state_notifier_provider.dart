@@ -18,6 +18,27 @@ class StateNotifierProvider<N extends StateNotifier<State>, State>
       autoDispose: autoDispose,
     );
   }
+
+  static StateTagProvider<N, S> withTag<N extends StateNotifier<S>, S>(
+    Creator<N, dynamic> creator, {
+    bool autoDispose = true,
+  }) {
+    return StateTagProvider(
+      creator,
+      autoDispose,
+    );
+  }
+
+  static StateTagProviderWithArguments<N, S, A>
+      withArgumentsTag<N extends StateNotifier<S>, S, A>(
+    Creator<N, A> creator, {
+    bool autoDispose = true,
+  }) {
+    return StateTagProviderWithArguments(
+      creator,
+      autoDispose,
+    );
+  }
 }
 
 class StateNotifierProviderWithArguments<N extends StateNotifier<State>, State,
@@ -26,6 +47,7 @@ class StateNotifierProviderWithArguments<N extends StateNotifier<State>, State,
   StateNotifierProviderWithArguments(
     super._creator, {
     super.autoDispose,
+    super.onDisposed,
   });
 }
 
@@ -45,11 +67,42 @@ class StateTagProvider<N extends StateNotifier<S>, S>
         autoDispose: autoDispose,
         onDisposed: () {
           _providers.remove(tagName);
+          if (_providers.isEmpty && _overriddenCreator != null) {
+            clearOverridden();
+          }
         },
       );
       _providers[tagName] = provider;
       return provider;
     }
     return _providers[tagName]! as StateNotifierProvider<N, S>;
+  }
+}
+
+class StateTagProviderWithArguments<N extends StateNotifier<S>, S, A>
+    extends BaseTagProvider<N, A> {
+  StateTagProviderWithArguments(
+    super.creator,
+    super.autoDispose,
+  );
+
+  /// get or create a provider by a tag name
+  @override
+  StateNotifierProviderWithArguments<N, S, A> find(String tagName) {
+    if (!_providers.containsKey(tagName)) {
+      final provider = StateNotifierProviderWithArguments<N, S, A>(
+        creator,
+        autoDispose: autoDispose,
+        onDisposed: () {
+          _providers.remove(tagName);
+          if (_providers.isEmpty && _overriddenCreator != null) {
+            clearOverridden();
+          }
+        },
+      );
+      _providers[tagName] = provider;
+      return provider;
+    }
+    return _providers[tagName]! as StateNotifierProviderWithArguments<N, S, A>;
   }
 }

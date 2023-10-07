@@ -1,5 +1,5 @@
 import 'package:flutter_meedu/flutter_meedu.dart';
-import 'package:flutter_meedu/provider_scope.dart';
+import 'package:flutter_meedu/provider/provider_scope.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _provider =

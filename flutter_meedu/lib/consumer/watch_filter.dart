@@ -45,17 +45,11 @@ class Target<Notifier, Result> extends ListeneableProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<N extends StateNotifier<S>, S>
-    on StateNotifierProvider<N, S> {
+extension StateProviderExt<N extends StateNotifier<S>, S> on StateNotifierProvider<N, S> {
   /// use this method to rebuild your Consumer using the previous state and the current
   /// state to return a boolean
-  Target<StateNotifier, bool> when(
-    ProviderReference ref,
-    _BuildWhen<S> callback,
-  ) {
-    final target = Target<StateNotifier, bool>(
-      ref.read(this),
-    );
+  Target<StateNotifier, bool> when(_BuildWhen<S> callback) {
+    final target = Target<StateNotifier, bool>(read);
     target.filter = Filter.when;
     target.callback = callback;
     target.listenWhenTheCallbackReturnsTrue = false;
@@ -80,13 +74,10 @@ extension StateProviderExt<N extends StateNotifier<S>, S>
   /// ```
   ///
   Target<StateNotifier, Result> select<Result>(
-    ProviderReference ref,
     _BuildBySelect<S, Result> callback, {
     bool booleanCallback = false,
   }) {
-    final target = Target<StateNotifier, Result>(
-      ref.read(this),
-    );
+    final target = Target<StateNotifier, Result>(read);
     target.filter = Filter.select;
     target.callback = callback;
     target.listenWhenTheCallbackReturnsTrue = booleanCallback;
