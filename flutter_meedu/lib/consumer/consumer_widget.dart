@@ -109,7 +109,7 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
       notifier = target.notifier as Notifier;
     } else {
       // if [providerOrTarget] is a [SimpleProvider] or a [StateProvider]
-      notifier = (providerOrTarget as BaseProvider<Notifier>).read;
+      notifier = (providerOrTarget as BaseProvider).read;
     }
 
     final insideDependencies = _dependencies.containsKey(notifier);

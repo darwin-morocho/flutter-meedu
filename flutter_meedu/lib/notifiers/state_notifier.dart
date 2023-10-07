@@ -4,12 +4,12 @@ import 'package:meta/meta.dart';
 
 import 'base_notifier.dart';
 
-class Notifier<S> extends BaseNotifier<S> with ListeneableNotifier<S> {
+class StateNotifier<S> extends BaseNotifier<S> with ListeneableNotifier<S> {
   late S _state, _oldState;
   S get state => _state;
   S get oldState => _oldState;
 
-  Notifier(S initialState) {
+  StateNotifier(S initialState) {
     _state = initialState;
     _oldState = _state;
   }
@@ -58,4 +58,3 @@ class Notifier<S> extends BaseNotifier<S> with ListeneableNotifier<S> {
     clearListeners();
   }
 }
-

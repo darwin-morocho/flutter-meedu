@@ -1,8 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import '../notifiers/notifier.dart';
+import '../notifiers/state_notifier.dart';
 import '../provider/base_provider.dart';
-import '../provider/notifier_provider.dart';
 
 typedef _BuildWhen<S> = bool Function(S prev, S current);
 typedef _BuildBySelect<Notifier, Result> = Result Function(Notifier);
@@ -46,11 +45,17 @@ class Target<Notifier, Result> extends ListeneableProvider<Notifier> {
 }
 
 /// extension for StateProvider
-extension StateProviderExt<N extends Notifier<S>, S> on NotifierProvider<N, S> {
+extension StateProviderExt<N extends StateNotifier<S>, S>
+    on StateNotifierProvider<N, S> {
   /// use this method to rebuild your Consumer using the previous state and the current
   /// state to return a boolean
-  Target<Notifier, bool> when(_BuildWhen<S> callback) {
-    final target = Target<Notifier, bool>(read);
+  Target<StateNotifier, bool> when(
+    ProviderReference ref,
+    _BuildWhen<S> callback,
+  ) {
+    final target = Target<StateNotifier, bool>(
+      ref.read(this),
+    );
     target.filter = Filter.when;
     target.callback = callback;
     target.listenWhenTheCallbackReturnsTrue = false;
@@ -74,11 +79,14 @@ extension StateProviderExt<N extends Notifier<S>, S> on NotifierProvider<N, S> {
   ///  );
   /// ```
   ///
-  Target<Notifier, Result> select<Result>(
+  Target<StateNotifier, Result> select<Result>(
+    ProviderReference ref,
     _BuildBySelect<S, Result> callback, {
     bool booleanCallback = false,
   }) {
-    final target = Target<Notifier, Result>(read);
+    final target = Target<StateNotifier, Result>(
+      ref.read(this),
+    );
     target.filter = Filter.select;
     target.callback = callback;
     target.listenWhenTheCallbackReturnsTrue = booleanCallback;
@@ -122,7 +130,7 @@ void createStateSelectListener(Target target) {
 
 /// create the listener for provider.when filter
 void createWhenListener(Target target) {
-  final notifier = target.notifier as Notifier;
+  final notifier = target.notifier as StateNotifier;
   target.selectValue = target.callback(notifier.state, notifier.state);
 
   // ignore: prefer_function_declarations_over_variables

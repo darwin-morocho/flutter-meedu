@@ -6,7 +6,7 @@ import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_meedu/provider_scope.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final _provider = NotifierProvider<LoginController, LoginState>(
+final _provider = StateNotifierProvider<LoginController, LoginState>(
   (_) => LoginController(),
 );
 
@@ -209,7 +209,7 @@ class LoginState extends Equatable {
   List<Object> get props => [email, password];
 }
 
-class LoginController extends Notifier<LoginState> {
+class LoginController extends StateNotifier<LoginState> {
   LoginController() : super(LoginState.initialState);
 
   void onEmailChanged(String email) {
