@@ -60,6 +60,47 @@ void main() {
       );
     },
   );
+
+  test(
+    'FactoryProvider',
+    () {
+      expect(() => _factoryProvider.read(), throwsAssertionError);
+      expect(() => _factoryProvider.mounted(), throwsAssertionError);
+      expect(() => _factoryProvider.dispose(), throwsAssertionError);
+      expect(() => _factoryProvider.setArguments(''), throwsAssertionError);
+
+      final element1 = _factoryProvider.get();
+      final element2 = _factoryProvider.get();
+
+      expect(
+        element1.value.hashCode,
+        isNot(element2.value.hashCode),
+      );
+
+      element1.dispose();
+      expect(element1.value.dispose, true);
+      expect(element2.value.dispose, false);
+
+      element2.dispose();
+      expect(element2.value.dispose, true);
+    },
+  );
+
+  test(
+    'FactoryArgumentsProvider',
+    () {
+      final element1 = _factoryArgumentsProvider.get('key1');
+      final element2 = _factoryArgumentsProvider.get('key2');
+
+      expect(
+        element1.value.hashCode,
+        isNot(element2.value.hashCode),
+      );
+
+      expect(element1.value.apiKey, 'key1');
+      expect(element2.value.apiKey, 'key2');
+    },
+  );
 }
 
 final _provider = Provider(
@@ -78,6 +119,23 @@ final _argumentsProvider = Provider.withArguments<GoogleMapsRepo, String>(
   (ref) => GoogleMapsRepo(
     ref.arguments,
   ),
+);
+
+final _factoryProvider = FactoryProvider(
+  (ref) {
+    final repo = GoogleMapsRepo('');
+    ref.onDispose(
+      () {
+        repo.dispose = true;
+      },
+    );
+    return repo;
+  },
+);
+
+final _factoryArgumentsProvider =
+    FactoryProvider.withArguments<GoogleMapsRepo, String>(
+  (ref) => GoogleMapsRepo(ref.arguments),
 );
 
 class GoogleMapsRepo {

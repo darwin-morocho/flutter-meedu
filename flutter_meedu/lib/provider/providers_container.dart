@@ -12,6 +12,15 @@ class Element<E> {
   void set(E value) => _value = value;
 }
 
+class FactoryElement<E, A> extends Element<E> {
+  FactoryElement({required super.ref});
+
+  @override
+  E get value => _value!;
+
+  void dispose() => ref.dispose();
+}
+
 class Ref<A> {
   Ref({
     required this.tag,

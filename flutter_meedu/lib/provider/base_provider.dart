@@ -28,6 +28,9 @@ abstract class BaseProvider<E, A> {
   late final Creator<E, A> _creator;
 
   @protected
+  Creator<E, A> get creator => _creator;
+
+  @protected
   Map<String, Element> get containerElements =>
       ProvidersContainer.instance.elements;
 

@@ -5,8 +5,6 @@ import 'package:meta/meta.dart';
 
 import 'state_notifier.dart';
 
-
-
 /// A class to allow us implement the BLoC pattern
 abstract class Bloc<Event, State> extends StateNotifier<State> {
   Bloc(super.initialState);
@@ -21,7 +19,7 @@ abstract class Bloc<Event, State> extends StateNotifier<State> {
     final registered = _handlers.any((handler) => handler.type == E);
     assert(
       !registered,
-      'on<$E> was called multiple times.',
+      'on<$E> was called multiple times.', // coverage:ignore-line
     );
     _handlers.add(
       _Handler(
