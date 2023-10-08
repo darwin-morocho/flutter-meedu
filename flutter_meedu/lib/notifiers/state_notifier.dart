@@ -5,14 +5,14 @@ import 'package:meta/meta.dart';
 import 'base_notifier.dart';
 
 class StateNotifier<S> extends BaseNotifier<S> with ListeneableNotifier<S> {
-  late S _state, _oldState;
-  S get state => _state;
-  S get oldState => _oldState;
-
   StateNotifier(S initialState) {
     _state = initialState;
     _oldState = _state;
   }
+
+  late S _state, _oldState;
+  S get state => _state;
+  S get oldState => _oldState;
 
   /// Updates the State and notify to listeners and rebuild the widgets
   ///

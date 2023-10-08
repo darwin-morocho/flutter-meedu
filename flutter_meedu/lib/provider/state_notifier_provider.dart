@@ -1,108 +1,62 @@
-part of 'base_provider.dart';
+// ignore_for_file: invalid_use_of_protected_member
 
-class StateNotifierProvider<N extends StateNotifier<State>, State>
-    extends BaseProvider<N, dynamic> implements ListeneableProvider<N> {
+import '../notifiers/state_notifier.dart';
+import 'base_provider.dart';
+import 'providers_container.dart';
+
+abstract class ListeneableProvider<N extends StateNotifier<S>, S, A>
+    extends BaseProvider<N, A> {
+  ListeneableProvider(
+    super.callback, {
+    super.autoDispose,
+  });
+
+  @override
+  Element<N>? dispose({String? tag}) {
+    final element = super.dispose(tag: tag);
+
+    final notifier = element?.value;
+    if (notifier != null) {
+      notifier.dispose();
+    }
+    return element;
+  }
+
+  @override
+  void onElementValueAssigned(Element<N> element, bool autoDispose) {
+    if (autoDispose) {
+      element.value?.setDisposableCallback(
+        () => dispose(
+          tag: element.ref.tag,
+        ),
+      );
+    }
+  }
+}
+
+class StateNotifierProvider<N extends StateNotifier<S>, S>
+    extends ListeneableProvider<N, S, dynamic> {
   StateNotifierProvider(
     super.creator, {
     super.autoDispose,
-    super.onDisposed,
   });
 
-  static StateNotifierProviderWithArguments<N, State, Arguments>
-      withArguments<N extends StateNotifier<State>, State, Arguments>(
-    Creator<N, Arguments> creator, {
+  static StateNotifierArgumentsProvider<N, S, A>
+      withArguments<N extends StateNotifier<S>, S, A>(
+    CreatorCallback<N, A> callback, {
     bool autoDispose = true,
   }) {
-    return StateNotifierProviderWithArguments(
-      creator,
+    return StateNotifierArgumentsProvider(
+      callback,
       autoDispose: autoDispose,
     );
   }
-
-  static StateTagProvider<N, S> withTag<N extends StateNotifier<S>, S>(
-    Creator<N, dynamic> creator, {
-    bool autoDispose = true,
-  }) {
-    return StateTagProvider(
-      creator,
-      autoDispose,
-    );
-  }
-
-  static StateTagProviderWithArguments<N, S, A>
-      withArgumentsTag<N extends StateNotifier<S>, S, A>(
-    Creator<N, A> creator, {
-    bool autoDispose = true,
-  }) {
-    return StateTagProviderWithArguments(
-      creator,
-      autoDispose,
-    );
-  }
 }
 
-class StateNotifierProviderWithArguments<N extends StateNotifier<State>, State,
-        Arguments> extends BaseProvider<N, Arguments>
-    implements ListeneableProvider<N> {
-  StateNotifierProviderWithArguments(
-    super._creator, {
+class StateNotifierArgumentsProvider<N extends StateNotifier<S>, S, A>
+    extends ListeneableProvider<N, S, A> {
+  StateNotifierArgumentsProvider(
+    super.creator, {
     super.autoDispose,
-    super.onDisposed,
   });
-}
-
-class StateTagProvider<N extends StateNotifier<S>, S>
-    extends BaseTagProvider<N, dynamic> {
-  StateTagProvider(
-    super.creator,
-    super.autoDispose,
-  );
-
-  /// get or create a provider by a tag name
-  @override
-  StateNotifierProvider<N, S> find(String tagName) {
-    if (!_providers.containsKey(tagName)) {
-      final provider = StateNotifierProvider<N, S>(
-        creator,
-        autoDispose: autoDispose,
-        onDisposed: () {
-          _providers.remove(tagName);
-          if (_providers.isEmpty && _overriddenCreator != null) {
-            clearOverridden();
-          }
-        },
-      );
-      _providers[tagName] = provider;
-      return provider;
-    }
-    return _providers[tagName]! as StateNotifierProvider<N, S>;
-  }
-}
-
-class StateTagProviderWithArguments<N extends StateNotifier<S>, S, A>
-    extends BaseTagProvider<N, A> {
-  StateTagProviderWithArguments(
-    super.creator,
-    super.autoDispose,
-  );
-
-  /// get or create a provider by a tag name
-  @override
-  StateNotifierProviderWithArguments<N, S, A> find(String tagName) {
-    if (!_providers.containsKey(tagName)) {
-      final provider = StateNotifierProviderWithArguments<N, S, A>(
-        creator,
-        autoDispose: autoDispose,
-        onDisposed: () {
-          _providers.remove(tagName);
-          if (_providers.isEmpty && _overriddenCreator != null) {
-            clearOverridden();
-          }
-        },
-      );
-      _providers[tagName] = provider;
-      return provider;
-    }
-    return _providers[tagName]! as StateNotifierProviderWithArguments<N, S, A>;
-  }
 }

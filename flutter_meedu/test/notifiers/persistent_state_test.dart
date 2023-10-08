@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+import 'package:flutter_meedu/notifiers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -160,24 +160,11 @@ class ShoppingCartControllerForceFail extends StateNotifier<ShoppingCartState>
 }
 
 class ShoppingCartState {
-  final bool loading;
-  final List<Product> products;
 
   ShoppingCartState({
     required this.loading,
     required this.products,
   });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'loading': loading,
-      'products': [
-        ...products.map(
-          (e) => e.toJson(),
-        ),
-      ],
-    };
-  }
 
   factory ShoppingCartState.fromJson(Map<String, dynamic> json) {
     return ShoppingCartState(
@@ -189,29 +176,42 @@ class ShoppingCartState {
       ],
     );
   }
+  final bool loading;
+  final List<Product> products;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'loading': loading,
+      'products': [
+        ...products.map(
+          (e) => e.toJson(),
+        ),
+      ],
+    };
+  }
 }
 
 class Product {
-  final String name;
-  final double price;
 
   Product({
     required this.name,
     required this.price,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'price': price,
-    };
-  }
-
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       name: json['name'],
       price: json['price'],
     );
+  }
+  final String name;
+  final double price;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+    };
   }
 }
 
@@ -277,13 +277,24 @@ class CityPickerController extends StateNotifier<CityPickerState>
 }
 
 class CityPickerState extends Equatable {
-  final bool loading;
-  final List<City> cities;
 
   const CityPickerState({
     required this.loading,
     required this.cities,
   });
+
+  factory CityPickerState.fromJson(Map<String, dynamic> json) {
+    return CityPickerState(
+      loading: json['loading'],
+      cities: (json['cities'] as List)
+          .map(
+            (e) => City.fromJson(e),
+          )
+          .toList(),
+    );
+  }
+  final bool loading;
+  final List<City> cities;
 
   static CityPickerState get initialState => const CityPickerState(
         loading: true,
@@ -297,17 +308,6 @@ class CityPickerState extends Equatable {
     return CityPickerState(
       loading: loading ?? this.loading,
       cities: cities ?? this.cities,
-    );
-  }
-
-  factory CityPickerState.fromJson(Map<String, dynamic> json) {
-    return CityPickerState(
-      loading: json['loading'],
-      cities: (json['cities'] as List)
-          .map(
-            (e) => City.fromJson(e),
-          )
-          .toList(),
     );
   }
 
@@ -329,19 +329,11 @@ class CityPickerState extends Equatable {
 }
 
 class City extends Equatable {
-  final int id;
-  final String name;
 
   const City({
     required this.id,
     required this.name,
   });
-
-  /// convert this instance to one JSON map
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-      };
 
   /// return one instance of City from a JSON map
   factory City.fromJson(Map<String, dynamic> json) {
@@ -350,6 +342,14 @@ class City extends Equatable {
       name: json['name'],
     );
   }
+  final int id;
+  final String name;
+
+  /// convert this instance to one JSON map
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+      };
 
   @override
   List<Object?> get props => [

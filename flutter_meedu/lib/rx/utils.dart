@@ -70,11 +70,11 @@ extension RxExtensions<T> on Rx<T> {
 
 /// this class allow us to cancel schedules tasks and subscriptions
 class RxReaction {
+  RxReaction(this._subscription, this._debouncer);
+
   final StreamSubscription _subscription;
   final Debouncer? _debouncer;
   bool _disposed = false;
-
-  RxReaction(this._subscription, this._debouncer);
 
   Future<void> dispose() async {
     if (_disposed) return;
@@ -88,13 +88,13 @@ class RxReaction {
 
 /// this class is an implementenacion of a debounce functionallity
 class Debouncer {
+  Debouncer(this.delay);
+
   /// delay for a schedule task
   final Duration delay;
 
   // timer for a schedule task
   Timer? _timer;
-
-  Debouncer(this.delay);
 
   void call(void Function() action) {
     _timer?.cancel(); // cancel the current task

@@ -2,149 +2,110 @@
 
 import 'package:meta/meta.dart';
 
-import '../notifiers/base_notifier.dart';
-import '../notifiers/state_notifier.dart';
-import 'provider_scope.dart';
+import 'providers_container.dart';
 
-part 'base_tag_provider.dart';
-part 'provider.dart';
-part 'state_notifier_provider.dart';
+typedef CreatorCallback<E, A> = E Function(Ref<A> ref);
 
-/// defines the creator function structure
-typedef Creator<Element, Arguments> = Element Function(Ref<Arguments> ref);
+class Creator<E, A> {
+  Creator({
+    required this.callback,
+    required this.autoDispose,
+  });
 
-abstract class ListeneableProvider<T> {}
+  final CreatorCallback<E, A> callback;
+  final bool autoDispose;
+}
 
-abstract class BaseProvider<Element, Arguments> {
+abstract class BaseProvider<E, A> {
   BaseProvider(
-    this._creator, {
+    CreatorCallback<E, A> callback, {
     bool autoDispose = true,
-    @protected void Function()? onDisposed,
-  }) : _autoDispose = autoDispose;
+  }) : _creator = Creator(
+          callback: callback,
+          autoDispose: autoDispose,
+        );
 
-  /// callback to be called when the notifier is disposed
-  void Function()? _onDisposed;
+  late final Creator<E, A> _creator;
 
-  /// callback to create one Instance of [Element] when it was need it
-  late final Creator<Element, Arguments> _creator;
+  @protected
+  Map<String, Element> get containerElements =>
+      ProvidersContainer.instance.elements;
 
-  /// callback to override the main creator callback
-  Creator<Element, Arguments>? _overriddenCreator;
-
-  /// used to check if the [Element] must be disposed when the [Element] doesn't have listeners
-  final bool _autoDispose;
-
-  bool get autoDispose => _overriddenAutoDispose ?? _autoDispose;
-
-  /// boolean to override the main autoDispose
-  bool? _overriddenAutoDispose;
-
-  /// reference to save arguments and a disposable callback for each [Element]
-  Ref<Arguments>? _ref;
-
-  /// tell us if the [E] was created
-  bool get mounted => _element != null;
-
-  Element? _element;
-
-  /// returs always the same instance of [Element], if it is not created yet this will create it.
-  Element get read {
-    if (mounted) {
-      return _element!;
-    }
-    _ref ??= Ref<Arguments>();
-    // create a new Notifier
-    _element = _overriddenCreator != null
-        ? _overriddenCreator!(_ref!)
-        : _creator(_ref!);
-
-    if (_element is ListeneableNotifier && autoDispose) {
-      // ignore: invalid_use_of_protected_member
-      (_element as ListeneableNotifier).setDisposableCallback(
-        () {
-          if (mounted) {
-            dispose();
-          }
-        },
-      );
-    }
-    ProviderScope.instance.add(this);
-
-    return _element!;
+  /// save arguments into the provider [Ref]
+  void setArguments(
+    A args, {
+    String? tag,
+  }) {
+    final key = getKey(tag);
+    final element = containerElements.putIfAbsent(
+      key,
+      () => Element<E>(
+        ref: Ref<A>(tag: tag),
+      ),
+    );
+    element.ref.setArguments(args);
   }
 
-  void setArguments(Arguments arguments) {
-    _ref ??= Ref<Arguments>();
-    _ref?._setArguments(arguments);
+  /// check  if the current provider has a valid Element value into the
+  ///[ProvidersContainer]
+  bool mounted({
+    String? tag,
+  }) {
+    return containerElements[getKey(tag)]?.value != null;
+  }
+
+  /// return the [E] associated to the provider, if the [E] is not
+  /// saved into the [ProvidersContainer] the Element will be created
+  E read({
+    String? tag,
+  }) {
+    final key = getKey(tag);
+    final element = containerElements[key] as Element<E>?;
+    if (element?.value != null) {
+      return element!.value!;
+    }
+
+    final ref = element?.ref as Ref<A>? ?? Ref<A>(tag: tag);
+
+    final createdElement = element ?? Element(ref: ref);
+
+    createdElement.set(
+      _creator.callback(ref),
+    );
+
+    containerElements[key] = createdElement;
+    onElementValueAssigned(
+      createdElement,
+      _creator.autoDispose,
+    );
+    return createdElement.value!;
+  }
+
+  @protected
+  void onElementValueAssigned(Element<E> element, bool autoDispose) {}
+
+  /// generate a key to be used into the [ProvidersContainer]
+  @protected
+  String getKey(String? tag) {
+    return '$_cachedHash${tag ?? ''}';
   }
 
   @mustCallSuper
-  void dispose() {
-    if (!mounted) {
-      return;
+  Element<E>? dispose({String? tag}) {
+    if (mounted(tag: tag)) {
+      final key = getKey(tag);
+      final element = containerElements[key]!;
+      // ignore: invalid_use_of_protected_member
+      element.ref.dispose();
+
+      return containerElements.remove(key) as Element<E>;
     }
-    _ref?._dispose();
-    if (_element is BaseNotifier) {
-      (_element as BaseNotifier).dispose();
-    }
-    _ref = null;
-    _element = null;
-    _overriddenCreator = null;
-    _overriddenAutoDispose = null;
-    _onDisposed?.call();
+    return null;
   }
 
   // Custom implementation of hash code optimized for reading providers.
-  @override
-  int get hashCode => _cachedHash;
+  @override // coverage:ignore-line
+  int get hashCode => _cachedHash; // coverage:ignore-line
   final int _cachedHash = _nextHashCode = (_nextHashCode + 1) % 0xffffff;
   static int _nextHashCode = 1;
-
-  /// overrides the creator function of this provider useful for unit test.
-  @visibleForTesting
-  void overrideProvider(
-    Creator<Element, Arguments> creator, {
-    bool? autoDispose,
-  }) {
-    if (mounted) {
-      dispose();
-    }
-    _overriddenCreator = creator;
-    _overriddenAutoDispose = autoDispose;
-  }
-}
-
-class Ref<A> {
-  /// store arguments
-  A? _arguments;
-  A get arguments {
-    assert(_arguments != null,
-        'arguments is Null, make sure to call to setArguments before');
-    return _arguments!;
-  }
-
-  void Function()? _onDispose;
-
-  void _setArguments(A arguments) {
-    _arguments = arguments;
-  }
-
-  void _dispose() => _onDispose?.call();
-
-  /// called when the linked Element to this reference is destroyed.
-  /// This is useful to release resources like dispose timers, streams, etc.
-  ///
-  /// ```dart
-  /// final counterProvider = NotifierProvider<CounterNotifier,State>(
-  ///   (ref) {
-  ///     ref.onDispose(() {
-  ///      /// YOUR CODE HERE
-  ///     });
-  ///     return CounterNotifier();
-  ///   },
-  /// );
-  /// ```
-  void onDispose(void Function() callback) {
-    _onDispose = callback;
-  }
 }

@@ -6,6 +6,13 @@ part 'rx_notifier.dart';
 
 /// Rx class to work with observables
 class Rx<T> {
+
+  /// Constructor
+  ///
+  /// creates a new observable with an initial value
+  Rx(T initalValue) {
+    _value = initalValue;
+  }
   /// store the value for this observable
   late T _value;
 
@@ -22,13 +29,6 @@ class Rx<T> {
 
   /// returns true if the current observable has listeners
   bool get hasListeners => controller.hasListener;
-
-  /// Constructor
-  ///
-  /// creates a new observable with an initial value
-  Rx(T initalValue) {
-    _value = initalValue;
-  }
 
   /// update the value and add a event sink to the [StreamController]
   set value(T newValue) {
