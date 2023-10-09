@@ -1,3 +1,33 @@
+## [9.0.0-beta.0]
+# Library Update - Important Information
+
+## Overview
+
+We've introduced some significant changes and improvements in this update. Please take note of the following:
+
+### Breaking Changes
+
+- **Navigator Module**: The `Navigator` module has been removed in favor of using `navigator 2.0` with packages like `go_router`.
+
+- **Auto-Dispose Feature**: The auto-dispose feature is no longer linked to a specific route. Instead, the lifecycle of a `StateNotifier` is now linked to its listeners. When a `StateNotifier` loses all of its listeners, it will be disposed, and the associated provider will also be disposed.
+
+- **SimpleNotifier Class**: The `SimpleNotifier` class has been removed in favor of using immutable states with `StateNotifier` and `Bloc`.
+
+- **StateProvider**: The `StateProvider` has been removed in favor of using `StateNotifierProvider` and `StateNotifierArgumentsProvider`.
+
+- **Get Module**: The `Get` module for dependency injection has been removed in favor of using `Provider` and `FactoryProvider`.
+
+- **ProviderListener** and **MultiProviderListeners**: These have been removed in favor of using the `.listen` function inside a `ConsumerWidget`.
+
+- **ProviderScope**: The `ProviderScope` has been removed in favor of using `ProvidersContainer`.
+
+### Upgrade Information
+
+Make sure to upgrade to the latest version of our library to benefit from these changes. Refer to our documentation for more details on how to adapt your code to these updates.
+
+For more information and detailed documentation, please visit our [website](https://example.com/docs).
+
+
 ## [8.5.0]
 - Updated to meedu: ^8.1.2
 ## [8.4.0]

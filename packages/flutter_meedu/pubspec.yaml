@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  meta: ^1.9.1
 
 dev_dependencies:
   equatable: ^2.0.5

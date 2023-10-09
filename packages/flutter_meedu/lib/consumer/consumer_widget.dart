@@ -82,7 +82,6 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     _targets = {};
   }
 
-
   @override
   N listen<N extends StateNotifier<S>, S>(
     BaseStateNotifierProvider<N, S> providerOrFilter, {

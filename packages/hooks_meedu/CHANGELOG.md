@@ -1,3 +1,7 @@
+## 0.1.0-beta.0
+- Upgrade to 
+  flutter_meedu: ^9.x.x
+
 ## 0.0.4
 - Upgrade to 
   flutter_hooks: ^0.20.2

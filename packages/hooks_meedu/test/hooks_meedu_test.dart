@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/flutter_meedu.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:hooks_meedu/hooks_meedu.dart';
@@ -9,7 +8,7 @@ import 'package:hooks_meedu/hooks_meedu.dart';
 void main() {
   setUp(
     () {
-      ProviderScope.clear();
+      ProvidersContainer.clear();
     },
   );
   testWidgets(
@@ -83,17 +82,15 @@ void main() {
   });
 }
 
-final provider = SimpleProvider(
-  (_) => CounterBloc(),
+final provider = StateNotifierProvider<CounterBloc, int>(
+  (_) => CounterBloc(0),
 );
 
-class CounterBloc extends SimpleNotifier {
-  int _counter = 0;
-  int get counter => _counter;
+class CounterBloc extends StateNotifier<int> {
+  CounterBloc(super.initialState);
 
   void increment() {
-    _counter++;
-    notify();
+    state++;
   }
 }
 
@@ -116,7 +113,7 @@ class HookConsumerTest extends HookConsumerWidget {
           FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
-              provider.read.increment();
+              provider.read().increment();
             },
           ),
         ],
@@ -125,7 +122,7 @@ class HookConsumerTest extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'provider ${ref.watch(provider).counter}',
+            'provider ${ref.watch(provider).state}',
           ),
           Text(
             'useState ${count.value}',
@@ -176,7 +173,7 @@ class HookStatefulTestState extends ConsumerState<HookStatefulTest> {
         setState(() => count++);
       },
       child: Text(
-        '${ref.watch(provider).counter} $count ${count2.value}',
+        '${ref.watch(provider).state} $count ${count2.value}',
         textDirection: TextDirection.ltr,
       ),
     );

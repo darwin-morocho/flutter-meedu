@@ -1,6 +1,6 @@
 name: hooks_meedu
 description: A way to use both flutter_hooks and flutter_meedu together.
-version: 0.0.4
+version: 0.1.0-beta.0
 homepage: https://github.com/darwin-morocho/flutter-meedu/tree/master/packages/hooks_meedu
 documentation: https://flutter.meedu.app
 
@@ -12,9 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.20.2
-  flutter_meedu: ^8.5.0
-  # flutter_meedu:
-  #   path: ../flutter_meedu
+  flutter_meedu: ^9.0.0-beta.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/rx.dart';
 
 class _RxHook<T> extends Hook<Rx<T>> {
   const _RxHook({

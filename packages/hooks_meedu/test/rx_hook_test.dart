@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/rx.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_meedu/rx_hook.dart';
 

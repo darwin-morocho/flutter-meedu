@@ -6,13 +6,13 @@ part 'rx_notifier.dart';
 
 /// Rx class to work with observables
 class Rx<T> {
-
   /// Constructor
   ///
   /// creates a new observable with an initial value
   Rx(T initalValue) {
     _value = initalValue;
   }
+
   /// store the value for this observable
   late T _value;
 
