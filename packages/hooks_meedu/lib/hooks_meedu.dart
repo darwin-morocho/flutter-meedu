@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_meedu/consumer.dart';
 
+export 'package:flutter_meedu/consumer.dart';
+
 /// {@template hooks_meedu.hookconsumer.hookconsumerwidget}
 /// A widget that can both use hooks and listen to providers.
 ///

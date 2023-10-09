@@ -1,3 +1,6 @@
+## [9.0.0-beta.1]
+- Export screen_utils.dart
+
 ## [9.0.0-beta.0]
 # Library Update - Important Information
 

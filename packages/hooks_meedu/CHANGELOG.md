@@ -1,3 +1,5 @@
+## 0.1.0-beta.1
+- Expose BuilderRef class
 ## 0.1.0-beta.0
 - Upgrade to 
   flutter_meedu: ^9.x.x
