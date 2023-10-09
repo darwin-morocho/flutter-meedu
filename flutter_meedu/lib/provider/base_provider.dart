@@ -4,35 +4,46 @@ import 'package:meta/meta.dart';
 
 import 'providers_container.dart';
 
-typedef CreatorCallback<E, A> = E Function(Ref<A> ref);
-
-class Creator<E, A> {
-  Creator({
-    required this.callback,
-    required this.autoDispose,
-  });
-
-  final CreatorCallback<E, A> callback;
-  final bool autoDispose;
-}
+/// base class for all Providers
 
 abstract class BaseProvider<E, A> {
   BaseProvider(
     CreatorCallback<E, A> callback, {
     bool autoDispose = true,
   }) : _creator = Creator(
-          callback: callback,
-          autoDispose: autoDispose,
+          callback,
+          autoDispose,
         );
 
+  /// defines how an [E] is created
   late final Creator<E, A> _creator;
 
   @protected
   Creator<E, A> get creator => _creator;
 
+  /// elements saved inside the [ProvidersContainer]
   @protected
   Map<String, Element> get containerElements =>
       ProvidersContainer.instance.elements;
+
+  /// For testing use this to override a provider behavior
+  @protected
+  @visibleForTesting
+  void overrideCreator(
+    CreatorCallback<E, A> callback, {
+    bool? autoDispose,
+  }) {
+    // ignore: invalid_use_of_protected_member
+    _creator.overrideCreator(
+      callback,
+      autoDispose: autoDispose,
+    );
+
+    ProvidersContainer.instance.overriddenCreators.putIfAbsent(
+      _creator.hashCode,
+      () => _creator,
+    );
+  }
 
   /// save arguments into the provider [Ref]
   void setArguments(

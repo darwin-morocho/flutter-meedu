@@ -6,6 +6,30 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   setUp(ProvidersContainer.clear);
+
+  test(
+    'StateNotifierProvider > overrideCreator',
+    () {
+      _provider.overrideCreator(
+        (_) => SearchNotifier('override'),
+        autoDispose: false,
+      );
+      final notifier = _provider.read();
+      expect(
+        notifier.hashCode,
+        _provider.read().hashCode,
+      );
+      final void Function(String) listener = (_) {};
+      notifier.addListener(listener);
+      expect(notifier.mounted, true);
+      expect(notifier.state, 'override');
+      notifier.removeListener(listener);
+      expect(notifier.mounted, true);
+      _provider.dispose();
+      expect(notifier.mounted, false);
+      expect(_provider.mounted(), false);
+    },
+  );
   test(
     'StateNotifierProvider',
     () async {
