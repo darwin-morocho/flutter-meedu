@@ -4,8 +4,10 @@ import '../notifiers/state_notifier.dart';
 import 'base_provider.dart';
 import 'providers_container.dart';
 
+abstract class BaseStateNotifierProvider<N, S> {}
+
 abstract class ListeneableProvider<N extends StateNotifier<S>, S, A>
-    extends BaseProvider<N, A> {
+    extends BaseProvider<N, A> implements BaseStateNotifierProvider<N, S> {
   ListeneableProvider(
     super.callback, {
     super.autoDispose,
