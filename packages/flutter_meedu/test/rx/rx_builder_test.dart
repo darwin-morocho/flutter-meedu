@@ -1,18 +1,20 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter_meedu/rx.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_meedu/ui.dart';
-import 'package:flutter_meedu/meedu.dart';
 
 class Clock extends StatefulWidget {
-  final Rx<int> counter;
-  final Rx<bool> enabled;
-  Clock({
+  const Clock({
     Key? key,
     required this.counter,
     required this.enabled,
   }) : super(key: key);
+  final Rx<int> counter;
+  final Rx<bool> enabled;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ClockState createState() => _ClockState();
 }
 
@@ -38,7 +40,7 @@ class _ClockState extends State<Clock> {
                   return Column(
                     children: [
                       if (widget.enabled.value) ...[
-                        Text("hi"),
+                        const Text("hi"),
                         Text("${widget.counter.value}"),
                       ]
                     ],
@@ -50,11 +52,11 @@ class _ClockState extends State<Clock> {
       floatingActionButton: Row(
         children: [
           FloatingActionButton(
-            child: Text("switch"),
-            onPressed: this.onSwitch,
+            onPressed: onSwitch,
+            child: const Text("switch"),
           ),
           FloatingActionButton(
-            child: Text("Add"),
+            child: const Text("Add"),
             onPressed: () {
               widget.counter.value++;
             },

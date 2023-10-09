@@ -1,19 +1,19 @@
 import 'dart:async';
 
-import 'package:meedu/meedu.dart';
-import 'package:test/test.dart';
+import 'package:flutter_meedu/rx.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('RxReaction', () async {
     var completer = Completer();
     late Timer timer;
-    final times = 10;
+    const times = 10;
     var i = 0;
     final c = SearchController();
     expect(c.text, '');
     expect(c.hasListeners, false);
     c.init();
-    timer = Timer.periodic(Duration(milliseconds: 50), (_) {
+    timer = Timer.periodic(const Duration(milliseconds: 50), (_) {
       if (i == 1) {
         c.onTextChange('${c.text}-');
       } else if (i < times - 1) {
@@ -23,6 +23,7 @@ void main() {
       }
 
       i++;
+      // ignore: avoid_print
       print('$i ---    ${c.text}');
       if (i == times) {
         timer.cancel();
@@ -33,7 +34,7 @@ void main() {
     await completer.future;
 
     expect(c.debounce, '');
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 100));
     expect(c.once, '@-');
     expect(c.onceWithOutCondition, '@');
     expect(c.interval.length >= 9, true);
@@ -46,11 +47,10 @@ void main() {
   });
 }
 
-class SearchController extends SimpleNotifier {
+class SearchController {
   final Rx<String> _text = ''.obs;
   String? get text => _text.value;
 
-  @override
   bool get hasListeners => _text.hasListeners;
 
   RxReaction? _debounce,
@@ -59,7 +59,12 @@ class SearchController extends SimpleNotifier {
       _once,
       _onceWithOutCondition,
       _interval;
-  String debounce = '', ever = '', everWithOutCondition = '', once = '', onceWithOutCondition = '', interval = '';
+  String debounce = '',
+      ever = '',
+      everWithOutCondition = '',
+      once = '',
+      onceWithOutCondition = '',
+      interval = '';
 
   void onTextChange(String text) {
     _text.value = text;
@@ -67,7 +72,7 @@ class SearchController extends SimpleNotifier {
 
   void init() {
     _debounce = _text.debounce(
-      Duration(milliseconds: 100),
+      const Duration(milliseconds: 100),
       (value) {
         debounce = value;
       },
@@ -99,14 +104,13 @@ class SearchController extends SimpleNotifier {
     );
 
     _interval = _text.interval(
-      Duration(milliseconds: 50),
+      const Duration(milliseconds: 50),
       (value) {
         interval = value;
       },
     );
   }
 
-  @override
   void dispose() {
     _text.close();
     _debounce?.dispose();
@@ -115,6 +119,5 @@ class SearchController extends SimpleNotifier {
     _interval?.dispose();
     _onceWithOutCondition?.dispose();
     _everWithOutCondition?.dispose();
-    super.dispose();
   }
 }

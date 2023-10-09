@@ -1,5 +1,6 @@
-import 'package:meedu/rx.dart';
-import 'package:test/test.dart';
+
+import 'package:flutter_meedu/rx.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('rx changes', () async {
