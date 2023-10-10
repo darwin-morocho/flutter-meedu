@@ -49,12 +49,6 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     _isExternalBuild = true; // coverage:ignore-line
   }
 
-  @override // coverage:ignore-line
-  void reassemble() {
-    super.reassemble(); // coverage:ignore-line
-    _isExternalBuild = true; // coverage:ignore-line
-  }
-
   /// force the widget update
   void _rebuild() {
     if (_mounted) {

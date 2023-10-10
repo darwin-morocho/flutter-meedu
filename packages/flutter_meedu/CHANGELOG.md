@@ -1,3 +1,5 @@
+## [9.0.0-beta.3]
+- Fixed hot reload behavior in ConsumerWidget.
 ## [9.0.0-beta.2]
 - Refactor ListeneableNotifier.
 
