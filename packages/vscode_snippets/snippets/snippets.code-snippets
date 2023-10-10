@@ -1,57 +1,46 @@
 {
-    "ConsumerWidget": {
-        "prefix": "mconsumer",
-        "body": [
-            "class ${1:name} extends ConsumerWidget{",
-            "  const ${1:name}({Key? key}) : super(key: key);",
-            "  @override",
-            "  Widget build(BuildContext context, ref) {",
-            "    return Container(child:null);",
-            "  }",
-            "}"
-        ]
-    },
-    "PageWithArgumentsWidget": {
-        "prefix": "mpage",
-        "body": [
-            "class ${1:name} extends PageWithArgumentsWidget{",
-            "  const ${1:name}({Key? key}) : super(key: key);",
-            "",
-            "@override",
-            "void onInit(RouteSettings settings) {}",
-            "",
-            "  @override",
-            "  Widget build(BuildContext context) {",
-            "    return Scaffold();",
-            "  }",
-            "}"
-        ]
-    },
-    "SimpleProvider": {
-        "prefix": "msimple",
-        "body": [
-            "final ${1:name} = SimpleProvider(",
-            "  (_) => ${2:controller}(),",
-            ");",
-        ]
-    },
-    "StateProvider": {
-        "prefix": "mstate",
-        "body": [
-            "final ${1:name} = StateProvider<${2:controller}, ${3:state}>(",
-            "  (_) => ${2:controller}(),",
-            ");",
-        ]
-    },
-    "ProviderListener": {
-        "prefix": "mlistener",
-        "body": [
-            "ProviderListener<${1:controller}>(",
-            "  provider: ${2:provider},",
-            "  builder: (_,controller){",
-            "    return Container();",
-            "  },",
-            ");",
-        ]
-    }
+  "ConsumerWidget": {
+    "prefix": "mconsumer",
+    "body": [
+      "class ${1:name} extends ConsumerWidget{",
+      "  const ${1:name}({Key? key}) : super(key: key);",
+      "  @override",
+      "  Widget build(BuildContext context, BuilderRef ref) {",
+      "    return Container(child:null);",
+      "  }",
+      "}"
+    ]
+  },
+  "Provider": {
+    "prefix": "mprovider",
+    "body": [
+      "final ${1:name} = Provider(",
+      "  (_) => ${2:element}(),",
+      ");",
+    ]
+  },
+  "Provider": {
+    "prefix": "maprovider",
+    "body": [
+      "final ${1:name} = ArgumentsProvider<${2:element}, ${3:arguments}>(",
+      "  (ref) => ${2:element}(ref.arguments),",
+      ");",
+    ]
+  },
+  "StateNotifierProvider": {
+    "prefix": "mstate",
+    "body": [
+      "final ${1:name} = StateNotifierProvider<${2:notifier}, ${3:state}>(",
+      "  (_) => ${2:notifier}(),",
+      ");"
+    ]
+  },
+  "StateNotifierArgumentsProvider": {
+    "prefix": "mastate",
+    "body": [
+      "final ${1:name} = StateNotifierArgumentsProvider<${2:notifier}, ${3:state}, ${4:arguments}>(",
+      "  (ref) => ${2:notifier}(ref.arguments),",
+      ");"
+    ]
+  }
 }

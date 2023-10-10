@@ -9,13 +9,12 @@ Just write
 
 `mconsumer` and press Enter to create a `ConsumerWidget`.
 
-`mpage` and press Enter to create a `PageWithArgumentsWidget`
+`mprovider` and press Enter to create a `Provider`
 
-`msimple` and press Enter to create a `SimpleProvider`
+`maprovider` and press Enter to create a `ArgumentsProvider`
 
-`mstate` and press Enter to create a `StateProvider`
+`mstate` and press Enter to create a `StateNotifierProvider`
 
-`mlistener` and press Enter to create a `ProviderListener`
+`mastate` and press Enter to create a `StateNotifierArgumentsProvider`
 
-`mrouter` and press Enter to import the `router` module like `import 'package:flutter_meedu/router.dart' as router;`
 

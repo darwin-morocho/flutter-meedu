@@ -1,3 +1,6 @@
+## [9.0.0-beta.2]
+- Refactor ListeneableNotifier.
+
 ## [9.0.0-beta.1]
 - Export screen_utils.dart
 

@@ -2,7 +2,7 @@
     "name": "meedu",
     "displayName": "meedu",
     "description": "Code snippets for flutter_meedu",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "publisher": "meedu",
     "engines": {
         "vscode": "^1.58.0"

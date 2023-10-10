@@ -1,18 +1,10 @@
 // ignore_for_file: hash_and_equals
 
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
 typedef ListenerCallback<T> = void Function(T);
-
-/// this class define the basic Listener for each SimpleController's subscriber or StateController's subscriber
-final class ListenerEntry<T> extends LinkedListEntry<ListenerEntry<T>> {
-  ListenerEntry(this.listener);
-
-  final ListenerCallback<T> listener;
-}
 
 /// Define a base notifier for SimpleNotifier and StateNotifier
 abstract class BaseNotifier<S> {
@@ -38,7 +30,7 @@ abstract class BaseNotifier<S> {
 }
 
 mixin ListeneableNotifier<T> {
-  final _listeners = LinkedList<ListenerEntry<T>>();
+  final _listeners = <ListenerCallback<T>>[];
 
   /// completer to check if we are emiting events before call dispose
   Completer<void>? _isBusy;
@@ -62,7 +54,7 @@ mixin ListeneableNotifier<T> {
     _isBusy = Completer();
     if (_listeners.isNotEmpty) {
       for (final entry in _listeners) {
-        if (entry.list != null) entry.listener(data);
+        entry(data);
       }
     }
     _complete();
@@ -70,20 +62,13 @@ mixin ListeneableNotifier<T> {
 
   /// add a new listener
   void addListener(ListenerCallback<T> listener) {
-    _listeners.add(
-      ListenerEntry(listener),
-    );
+    _listeners.add(listener);
   }
 
   /// remove a listener from the notifier
   void removeListener(ListenerCallback<T> listener) {
     if (_listeners.isNotEmpty) {
-      for (final entry in _listeners) {
-        if (entry.listener == listener) {
-          entry.unlink();
-          break;
-        }
-      }
+      _listeners.remove(listener);
 
       if (!hasListeners) {
         _disposableCallback?.call();
@@ -93,10 +78,7 @@ mixin ListeneableNotifier<T> {
 
   @protected
   Future<void> clearListeners() async {
-    // ignore: unawaited_futures
-    if (_isBusy != null) {
-      await _isBusy!.future;
-    }
+    await _isBusy?.future;
     _listeners.clear();
   }
 
