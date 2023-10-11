@@ -35,18 +35,29 @@ abstract class ConsumerState<T extends ConsumerStatefulWidget>
 class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
   ConsumerStatefulElement(StatefulWidget widget) : super(widget);
 
-  Map<StateNotifier, Function> _dependencies = {};
+  Map<StateNotifier, Function> _builders = {};
+  Map<StateNotifier, Function> _listeners = {};
+  Map<StateNotifier, Function> _selectListeners = {};
+  Map<StateNotifier, Function> _whenListeners = {};
+
   Map<StateNotifier, BaseStateNotifierProvider> _targets = {};
 
   // initialized at true for the first build
   bool _isExternalBuild = true;
 
   bool _mounted = true;
+  bool _init = false;
 
   @override // coverage:ignore-line
   void didChangeDependencies() {
     super.didChangeDependencies(); // coverage:ignore-line
     _isExternalBuild = true; // coverage:ignore-line
+  }
+
+  @override
+  void mount(Element? parent, Object? newSlot) {
+    super.mount(parent, newSlot);
+    _init = true;
   }
 
   /// force the widget update
@@ -65,15 +76,21 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
 
   /// clear the listeners for this widget
   void _clearDependencies() {
-    _dependencies.forEach(
-      (notifier, listener) {
-        if (!notifier.disposed) {
-          (notifier as dynamic).removeListener(listener);
+    void clearListeners(Map<StateNotifier, Function> map) {
+      for (final e in map.entries) {
+        if (!e.key.disposed) {
+          (e.key as dynamic).removeListener(e.value);
         }
-      },
-    );
-    _dependencies = {};
-    _targets = {};
+      }
+      map.clear();
+    }
+
+    clearListeners(_builders);
+    clearListeners(_listeners);
+    clearListeners(_selectListeners);
+    clearListeners(_whenListeners);
+
+    _targets.clear();
   }
 
   @override
@@ -85,7 +102,12 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     return _buildWatcher(
       providerOrFilter: providerOrFilter,
       tag: tag,
-      callback: callback,
+      isListener: true,
+      callback: (notifier) {
+        if (_init && mounted) {
+          callback(notifier);
+        }
+      },
     );
   }
 
@@ -106,6 +128,7 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     return _buildWatcher(
       providerOrFilter: providerOrFilter,
       tag: tag,
+      isListener: false,
       callback: (_) => _rebuild(),
     ); // coverage:ignore-line
   }
@@ -126,13 +149,13 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     _isExternalBuild = false;
     final notifier = filter.notifier;
 
-    final insideDependencies = _dependencies.containsKey(notifier);
+    final insideDependencies = _builders.containsKey(notifier);
     // if there is not a listener for the current provider
     if (!insideDependencies) {
       filter.reaction = (_) => _rebuild();
       filter.createListener();
       // add the listener to the current notifier
-      _dependencies[notifier] = filter.listener;
+      _builders[notifier] = filter.listener;
       _targets[notifier] = filter;
       notifier.addListener(filter.listener);
     }
@@ -147,7 +170,7 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     properties.add(
       DiagnosticsProperty(
         '_notifiers',
-        _dependencies.keys.map((e) => e.runtimeType.toString()),
+        _builders.keys.map((e) => e.runtimeType.toString()),
       ),
     );
   }

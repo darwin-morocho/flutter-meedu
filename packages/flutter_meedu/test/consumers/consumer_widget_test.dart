@@ -24,7 +24,7 @@ void main() {
       // await Future.delayed(Duration(milliseconds: 300));
       await test.pumpAndSettle();
       expect(find.text(""), findsWidgets);
-      await test.tap(find.text("set"));
+      await test.tap(find.text('set'));
       await test.pump();
       expect(find.text("test"), findsOneWidget);
       expect(find.text("test@test.com"), findsOneWidget);
@@ -220,3 +220,5 @@ class LoginController extends StateNotifier<LoginState> {
     super.dispose();
   }
 }
+
+

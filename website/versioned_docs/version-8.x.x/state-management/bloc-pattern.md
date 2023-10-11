@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # BLoC pattern
@@ -15,7 +15,7 @@ and Sealed classes. Don't worry. The `Bloc` class is totally compatible with tha
 :::
 
 ```dart
-import 'package:flutter_meedu/notifiers.dart';
+import 'package:flutter_meedu/meedu.dart';
 
 class CounterBloc extends Bloc<CounterEvent, int> {
   CounterBloc(super.initialState) {
@@ -34,7 +34,7 @@ class Increment extends CounterEvent {}
 class Decrement extends CounterEvent {}
 ```
 
-Next you need to create a `StateNotifierProvider` and use the `Consumer` widget to listen the changes in your state.
+Next you need to create a `StateProvider` and use the `Consumer` widget to listen the changes in your state.
 
 :::note
 The `Bloc` class extends of `StateNotifier` so you are able to use
@@ -43,10 +43,11 @@ the `.select` and `.when` filters in your Consumers.
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/providers.dart';
+import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/.dart';
 
 
-final counterProvider = StateNotifierProvider<CounterEvent, int>(
+final counterProvider = StateProvider<CounterEvent, int>(
   (_) => CounterBloc(),
 );
 

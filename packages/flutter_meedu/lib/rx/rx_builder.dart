@@ -78,7 +78,10 @@ class _RxBuilderState extends State<RxBuilder> {
     _afterFirstLayout = false;
     // remove the subsciptions when the widget is destroyed
     _subscription.cancel();
-    _observer?.close();
+    if (_observer?.canUpdate ?? false) {
+      _observer?.close();
+    }
+
     super.dispose();
   }
 

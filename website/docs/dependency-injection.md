@@ -1,113 +1,115 @@
 # Dependency Injection
 
-With the `Get` module you can easy inject your dependencies as a singleton, lazy singleton or as a factory.
-
-## Singletons
+Consider the following class that defines the basic structure for a login using the repository pattern:
 
 ```dart
-import 'package:flutter_meedu/meedu.dart';
-
-// inject the dependency as a singleton
-Get.put<AuthRepository>(AuthRepositoryImpl());
-
-// for lazy singletons use lazyPut
-Get.lazyPut<AuthRepository>(
-  () => AuthRepositoryImpl(),
-);
-
-// whenever part of your code you can get the dependency using
-Get.find<AuthRepository>();
-// or
-final AuthRepository auth = Get.find();
-
-// remove the dependency
-Get.remove<AuthRepository>();
-
+abstract class AuthRepository{
+  Future<String?> login(String email, String password);
+}
 ```
 
-## Auto remove
-
-First make sure that you have added the meedu observer in your navigator observers [more info](/docs/state-management/intro#how-it-works).
-
-Now when tou call to `Get.put` or `Get.lazyPut` you can use the `autoRemove` parameter and set the value to `true` then when the router who created the dependency
-is popped the dependency will be deleted from memory.
-
-## Listen when a singleton was removed
-
-You can use the `onRemove` to define a callback to listen when a dependency has been deleted from memory, so when you call to `Get.remove` or when you called to `Get.put` or `Get.lazyPut` using `autoRemove` equals to `true` the onRemove callback will be called.
+Now, we define a class that implements our repository:
 
 ```dart
-Get.lazyPut<AuthRepository>(
-  () => new AuthRepositoryImpl(),
-  onRemove: (authRepository) {
-      /// YOUR CODE HERE
-    authRepository.dispose();
+class AuthRepositoryImpl implements AuthRepository{
+
+  AuthRepositoryImpl(this._dio);
+
+  final Dio _dio;
+
+  @override
+  Future<String?> login(String email, String password) async {
+    final response = await _dio.post(
+      ..
+      .
+      .
+    );
+    return someData;
   }
-);
+}
 ```
 
-## Factory
+Next, we need to use our `AuthRepository` in a way that makes our code maintainable and testable. In this case, we can use the `Provider` class to create an instance of `AuthRepository`.
 
-If you want to get a new instance every time you call find in that case you could use `factoryPut`
+We define our repository as a global variable:
 
 ```dart
-class AuthRepository {
-  final String apiHost;
-  Person([this.apiHost = 'https://dev.api.com']);
+final authRepository = Provider(
+  (_) => AuthRepositoryImpl(
+    Dio(),
+  ),
+);
+
+```
+
+With this, we can now use our repository in our views or notifiers.
+
+For example, let's imagine we have a `LoginNotifier` class that extends `StateNotifier` and needs our `AuthRepository` to perform the login action:
+
+```dart {4}
+final loginProvider = StateNotifierProvider<LoginNotifier,LoginState>(
+  (_) => LoginNotifier(
+    LoginState(),
+    authRepository.read(),
+  ),
+);
+
+
+class LoginNotifier extends StateNotifier<LoginState>{
+  LoginNotifier(super.initialState, this._repository);
+  final AuthRepository _repository;
+
+  Future<String?> login() async {
+      /// SOME CODE HERE
+  }
 }
 
-// register a factory
-Get.factoryPut<AuthRepository>((_) => AuthRepository());
-
-// get a new instance of AuthRepository
-final repository = Get.factoryFind<AuthRepository>();
 ```
 
-:::success NOTE
-
-If you want pass an initial value to **AuthRepository**
+Now, if we want to write the respective test, we'll notice that we need to mock the behavior of the Dio class. For this, we simply use the `overrideCreator` function:
 
 ```dart
-Get.factoryPut<AuthRepository, String>(
-    (Object? arguments) => AuthRepository(arguments as String),
-);
 
-// get a new instance of AuthRepository with a initial value
-final testRepo = Get.factoryFind<AuthRepository>(
-  arguments:"https://test.api.com",
-);
-final liveRepo = Get.factoryFind<AuthRepository>(
-  arguments:"https://live.api.com",
+setUp(
+  (){
+    authRepository.overrideCreator(
+      (_) => AuthRepositoryImpl(
+        DioMock(), // mocked data
+      ),
+    );
+  },
 );
 ```
 
+
+:::note
+Unlike the `StateNotifierProvider` and `StateNotifierArgumentsProvider` classes, the `auto-dispose` feature is not available for the `Provider` class and its variants such as `ArgumentsProvider`, `FactoryProvider`, and `FactoryArgumentsProvider`. You must manually release the resources of these classes using the `dispose` function.
+
+For example, if we update the definition of our `authRepository` to execute code for resource cleanup, this would be the result:
+
+```dart
+final authRepository = Provider(
+  (ref) {
+    final repo =AuthRepositoryImpl(
+      Dio(),
+    );
+
+    ref.onDispose(
+      (){
+          /// YOUR CODE HERE
+      },
+    );
+
+    return repo;
+
+  },
+);
+
+.
+.
+.
+
+// to delete the element created by our authRepository we need to call to dispose
+authRepository.dispose()
+```
 :::
-
-## Async Factory
-
-If you want to get a new instance every time you call find but you need to run some asynchronous code in that case you could use `asyncPut`
-
-```dart
- Get.asyncPut<Person>(
-    (arguments) async {
-      await Future.delayed(
-        const Duration(milliseconds: 10),
-      );
-      return Person(arguments as String);
-    },
-);
-.
-.
-.
-final person = await Get.asyncFind<Person>  (arguments: 'Darwin');
-```
-
-## Testing
-
-To avoid conflics with dependencies injected in the Get module you can clear the dependencies using a `setUp` or a `tearDown` before or after each test.
-
-```dart
-setUp((){
- Get.clear(); // remove all dependencies
-});
-```

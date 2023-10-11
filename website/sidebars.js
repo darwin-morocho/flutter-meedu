@@ -20,9 +20,9 @@ module.exports = {
       type: "category",
       label: "State Management",
       items: [
-        "state-management/intro",
-        "state-management/simple-notifier",
         "state-management/state-notifier",
+        "state-management/inmutable-states",
+        "state-management/filters",
         "state-management/bloc-pattern",
         "state-management/working-with-arguments",
         "state-management/working-with-tags",
@@ -34,7 +34,6 @@ module.exports = {
     "dependency-injection",
     "persistent-state",
     "reactive-programming",
-    "navigation",
     "screen-utils",
   ],
 };

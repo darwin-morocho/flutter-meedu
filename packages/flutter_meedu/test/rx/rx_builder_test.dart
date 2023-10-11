@@ -68,39 +68,62 @@ class _ClockState extends State<Clock> {
 }
 
 void main() {
-  group('RxBuilder', () {
-    testWidgets(
-      'RxBuilder counter test',
-      (test) async {
-        final counter = 0.obs;
-        await test.pumpWidget(
-          MaterialApp(
-            home: Clock(
-              counter: counter,
-              enabled: true.obs,
+  group(
+    'RxBuilder',
+    () {
+      testWidgets(
+        'RxBuilder > throw FlutterError',
+        (tester) async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: RxBuilder(
+                  (context) => Text('data'),
+                ),
+              ),
             ),
-          ),
-        );
+          );
 
-        expect(find.text("hi"), findsOneWidget);
-        expect(find.text("0"), findsOneWidget);
-        await test.tap(find.text("Add"));
-        print("value ${counter.value}");
-        await test.pump();
-        expect(find.text("1"), findsOneWidget);
-        await test.tap(find.text("switch"));
-        await test.pump();
-        expect(find.text("hi"), findsNothing);
-        await test.tap(find.text("switch"));
-        await test.pump();
-        expect(find.text("hi"), findsOneWidget);
-        expect(find.text("1"), findsOneWidget);
-        await test.tap(find.text("Add"));
-        print("value ${counter.value}");
-        await test.pump();
-        expect(find.text("2"), findsOneWidget);
-        await test.pump();
-      },
-    );
-  });
+          // Use tester.takeException() to catch any unhandled exceptions during widget building.
+          final exception = tester.takeException();
+          // Verify that the exception is a FlutterError.
+          expect(exception, isA<FlutterError>());
+        },
+      );
+      
+      testWidgets(
+        'RxBuilder counter test',
+        (test) async {
+          final counter = 0.obs;
+          await test.pumpWidget(
+            MaterialApp(
+              home: Clock(
+                counter: counter,
+                enabled: true.obs,
+              ),
+            ),
+          );
+
+          expect(find.text("hi"), findsOneWidget);
+          expect(find.text("0"), findsOneWidget);
+          await test.tap(find.text("Add"));
+          print("value ${counter.value}");
+          await test.pump();
+          expect(find.text("1"), findsOneWidget);
+          await test.tap(find.text("switch"));
+          await test.pump();
+          expect(find.text("hi"), findsNothing);
+          await test.tap(find.text("switch"));
+          await test.pump();
+          expect(find.text("hi"), findsOneWidget);
+          expect(find.text("1"), findsOneWidget);
+          await test.tap(find.text("Add"));
+          print("value ${counter.value}");
+          await test.pump();
+          expect(find.text("2"), findsOneWidget);
+          await test.pump();
+        },
+      );
+    },
+  );
 }

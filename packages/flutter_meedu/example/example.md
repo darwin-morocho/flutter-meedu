@@ -1,157 +1,131 @@
 **FULL DOCUMENTATION**  👉  https://flutter.meedu.app
 
 
-## Similar to ChangeNotifier but better
+Consider the following straightforward example of a typical counter app.
+
+First, create a class that extends of **`StateNotifier`** and define the data type to be used for your state. In this example, we will use an **`int`** to represent the state of our counter app.
+
 ```dart
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/notifiers.dart';// import the StateNotifer class
 
-class CounterController extends SimpleNotifier{
-    int _counter = 0;
-    int get counter => _counter;
+class CounterNotifier extends StateNotifer<int>{
+  CounterNotifier(super.initialState); // the super class StateNotifer needs a initial state value
 
-    void increment(){
-        _counter++;
-        notify(); // notify to all listeners
-    }
+  void increment(){
+    state++;
+  }
 }
 ```
 
+Now you need to create a provider for our **`CounterNotifier`**
+
 ```dart
-import 'package:flutter_meedu/state.dart';
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/providers.dart';// import the StateNotifierProvider class
 
-final counterProvider = SimpleProvider(
-  (ref) => CounterController(),
+final counterProvider = StateNotifierProvider<CounterNotifier, int>(
+  (_) => CounterNotifier(0), // pass the initial state value when we create a CounterNotifier
 );
+```
 
-class CounterPage extends StatelessWidget {
-  const CounterPage({Key? key}) : super(key: key);
+As you may have noticed, we declare our **`counterProvider`** as a global variable. Don't worry; Meedu is fully compatible with testing.
+
+With this setup, we can now easily listen to and update our counter within our views using the **`Consumer`** widget.
+
+```dart {2,11,13,19}
+import 'package:flutter/material.dart';
+import 'package:flutter_meedu/consumer.dart'; // import the consumer widget
+
+class CounterView extends StatelessWidget {
+  const CounterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        // The Consumer widget listen the changes in your CounterController
-        // and rebuild the widget when is need it
-        child: Consumer(builder: (_, ref, __) {
-          final controller = ref.watch(counterProvider);
-          return Text("${controller.counter}");
-        }),
+        child: Consumer(
+          builder: (context, ref, child){
+            final notifier =  ref.watch(counterProvider); // listen the state changes in our CounterNotifier
+            return Text("${notifier.state}");
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // you can use the read method to access to your CounterController
-          counterProvider.read.increment();
-        },
+        onPressed: () => counterProvider.read().increment(), // update the CounterNotifier state and rebuild the Consumer widget.
       ),
     );
   }
 }
 ```
 
+By default, our `counterProvider` does not create an instance of `CounterNotifier` until it is needed. In this scenario, the `Consumer` widget calls the `read` function of our `counterProvider` to check if an instance of `CounterNotifier` has been previously created and associated with our `counterProvider`. If not, it creates a new instance of `CounterNotifier` and associates it with our `counterProvider`.
 
-## With inmutable states
-```dart
-import 'package:equatable/equatable.dart';
-import 'package:flutter_meedu/meedu.dart';
+:::note important
+Inside the `Consumer` widget, we use `ref.watch(...)` to create or retrieve our instance of `CounterNotifier`. This action also establishes a subscriber for state changes. As a result, our `Consumer` will be rebuilt every time the state of our `CounterNotifier` instance changes.
 
-class LoginController extends StateNotifier<LoginState> {
-  // you need pass an inital state using super
-  LoginController():super(LoginState.initialState);
+When the `Consumer` widget is destroyed, all subscribers created by it are removed from our `CounterNotifier` instance.
 
-  void onEmailChanged(String email) {
-    state = state.copyWith(email: email);
-  }
+Note: By default, when a `StateNotifier` loses all its subscribers, the `dispose` function of `StateNotifierProvider` will be called, and our `CounterNotifier` instance will also be disposed.
 
-  void onPasswordChanged(String password) {
-    state = state.copyWith(password: password);
-  }
-}
-
-
-class LoginState extends Equatable {
-  final String email, password;
-  LoginState({
-    required this.email,
-    required this.password,
-  });
-
-  static LoginState get initialState => LoginState(email: '', password: '');
-
-  LoginState copyWith({
-    String? email,
-    String? password,
-  }) {
-    return LoginState(
-      email: email ?? this.email,
-      password: password ?? this.password,
-    );
-  }
-
-  @override
-  List<Object?> get props => [email, password];
-}
+You can disable the autoDispose feature using `autoDispose: false` when we create our provider.
+```dart {3}
+final counterProvider = StateNotifierProvider<CounterNotifier, int>(
+  (_) => CounterNotifier(0),
+  autoDispose: false, // disable the autoDispose feature
+);
 ```
 
-```dart
-import 'package:flutter/material.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+Keep in mind that when you disable the autoDispose feature, you must release all resources and the StateNotifier linked to our providers by calling the dispose function.
+For example you can use a StatefulWidget
+```dart {12}
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
 
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
 
-final loginProvider = StateProvider<LoginController, LoginState>(
-  (_) => LoginController(),
-);
+class _MyWidgetState extends State<MyWidget> {
 
+  @override
+  void dispose() {
+    counterProvider.dispose(); // all resources and the StateNotifier linked to our provider
+    super.dispose();
+  }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextField(
-                onChanged: loginProvider.read.onEmailChanged,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                ),
-              ),
-              TextField(
-                onChanged: loginProvider.read.onPasswordChanged,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                ),
-              ),
-              SizedBox(height: 30),
-              Consumer(
-                builder: (_, ref, __) {
-                  final controller = ref.watch(loginProvider);
-                  final state = controller.state;
-
-                  final email = state.email;
-                  final password = state.password;
-
-                  final enabled = email.isNotEmpty && password.isNotEmpty;
-
-                  return ElevatedButton(
-                    onPressed: enabled
-                        ? () {
-                            // YOUR CODE HERE
-                          }
-                        : null,
-                    child: Text("SEND"),
-                  );
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    return YOUR_CODE;
   }
 }
+```
+:::
+
+
+## What about testing?
+This is very simple. Before or after each test you will need the default state of all StateNotifier. So you can use `ProvidersContainer.clear()` to clear and reset all providers.
+```dart {6}
+import 'package:flutter_meedu/providers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  setUp(ProvidersContainer.clear);
+
+  testWidgets(
+    'StateController test',
+    (test) async {
+      await test.pumpWidget(
+        const MaterialApp(
+          home: CounterView(),
+        ),
+      );
+      expect(find.text("0"), findsOneWidget);
+      await test.tap(find.byType(FloatingActionButton));
+      await test.pump();
+      expect(find.text("1"), findsOneWidget);
+    },
+  );
+}
+
 ```

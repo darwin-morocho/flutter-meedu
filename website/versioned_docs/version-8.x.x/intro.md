@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# What is meedu?
+# What is flutter_meedu?
 
-Is a **powerful** State Management, Dependency Injection, Reactive programming for Flutter apps.
+Is a **powerful** State Management, Dependency Injection, Reactive programming and Navigation for Flutter apps.
 
 <p align="center">
   <a href="https://pub.dev/packages/flutter_meedu"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_meedu?label=flutter_meedu"/></a>
@@ -33,6 +33,10 @@ You can join to the discord server [here](https://discord.gg/rV4bPsdefj)
 
 - A simple API for persistent state.
 
+- Navigate without BuildContext.
+ 
+  Navigate in your app without a custom Page class, a custom MaterialApp.
+
 - 100% compatible with any other navigator's package.
 
 - Simple dependecy injection.
@@ -47,11 +51,11 @@ Add the following to your `pubspec.yaml`
 
 ```yaml
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ">=2.19.0 <3.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
-  flutter_meedu: ^9.0.0-beta.4
+  flutter_meedu: ^8.3.1
 ``` 
 
 
@@ -68,4 +72,10 @@ Features:
 - Integration with the movie db API.
 
 https://github.com/darwin-morocho/flutter-w2w/tree/meedu
+:::
+
+:::note
+**Spanish course with unit testing and widget testing**
+
+You can find a complete video course (**Spanish**) about how to use **flutter_meedu** [here](https://meedu.app/curso/flutter-gestion-de-estados-con-meedu)
 :::

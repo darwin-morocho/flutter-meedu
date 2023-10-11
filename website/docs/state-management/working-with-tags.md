@@ -1,114 +1,98 @@
 ---
-sidebar_position: 7
+sidebar_position: 6
 ---
 
 # Working with tags
 
-If you need to have multiples providers using the same `SimpleNotifier` or `StateNotifier` class but you don't want create a provider for each notifier you could use the `withTag` method to create multiples providers for a single Notifier class with its own state.
+If you need to have multiple notifiers using the same `StateNotifier` or `Bloc` class, but you don't want to create a provider for each notifier, you can use the `tag` parameter when you call the `read` function of our providers.
+
+Consider the following example:
+
 
 ```dart
-class CounterController extends SimpleNotifier {
-  int counter = 0;
+final counterProvider = StateNotifierProvider<CounterNotifier, int>(
+  (_) => CounterNotifier(0),
+);
+
+class CounterNotifier extends StateNotifier<int> {
+  CounterNotifier(super.initialState);
+
   void increment() {
-    counter++;
-    notify();
+    state++;
   }
 }
 ```
 
-Now you can create yours provider using `SimpleProvider.withTag` or `StateProvider.withTag`
+Now we can use a single `Consumer` widget to create two different instances of `CounterNotifier` using the same provider.
 
-```dart {1-3,21-24,27-30,55,69}
-final counterProviderWithTag = SimpleProvider.withTag(
-  (_) => CounterController(),
-);
-
-
-class SimpleTagPage extends StatelessWidget {
-  const SimpleTagPage({Key? key}) : super(key: key);
+```dart
+class CounterWidget extends StatelessWidget {
+  const CounterWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            children: [
-              // each SimpleConsumerWithTag has their own state
-              Expanded(
-                child: SimpleConsumerWithTag(
-                  tagName: 'counter1',
-                  color: Colors.black26,
-                ),
-              ),
-              Expanded(
-                child: SimpleConsumerWithTag(
-                  tagName: 'counter2',
-                  color: Colors.redAccent.withOpacity(0.3),
-                ),
-              ),
-            ],
+      body: Column(
+        children: [
+          Consumer(
+            builder: (_, ref, __) {
+              final counter1 = ref.watch(counterProvider, tag: '1').state;
+              final counter2 = ref.watch(counterProvider, tag: '2').state;
+              return Text('counter1=$counter1, counter2=$counter2');
+            },
           ),
-        ),
+          TextButton(
+            onPressed: () => counterProvider.read(tag: '1').increment(),
+            child: Text('increment counter 1'),
+          ),
+          TextButton(
+            onPressed: () => counterProvider.read(tag: '2').increment(),
+            child: Text('increment counter 2'),
+          ),
+        ],
       ),
     );
   }
 }
-
-class SimpleConsumerWithTag extends StatelessWidget {
-  final String tagName;
-  final Color color;
-  const SimpleConsumerWithTag({
-    Key? key,
-    required this.tagName,
-    required this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(
-      builder: (_, ref, __) {
-        // the find method creates a new unique provider using a string as key
-        final controller = ref.watch(
-          counterProviderWithTag.find(tagName),
-        );
-        final counter = controller.counter;
-        return Container(
-          color: this.color,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("$counter"),
-              SizedBox(height: 10),
-              CupertinoButton(
-                color: Colors.blue,
-                onPressed: () {
-                  controller.increment();
-                },
-                child: Text("increment"),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
 ```
+:::note
+In the example above, we have created 2 instances of `CounterNotifier` by using tags, and each of these instances has its own state.
 
-Also you can use `counterProviderWithTag.find('tagName')` to pass an initial argument to your notifier
+NOTE: If you need to manually dispose of your notifiers that were created using tags, you can use
 
 ```dart
-counterProviderWithTag.find(tagName).setArguments('initial argument');
+yourProvider.dispose(tag:'YOUR_TAG');
 ```
+:::
 
-Also for `StateNotifier` you can use the `withTag` method but you need to define the generic types
+## How to Set Arguments for Our Notifiers
+When you call the setArguments function of our StateNotifierArgumentsProvider, you can use the tag argument.
+
 ```dart
-final loginProviderWithTag = StateProvider.withTag<LoginController, LoginState>(
-  (_) => LoginController(),
+final counterProvider = StateNotifierProvider.withArguments<CounterNotifier, int, int>(
+  (ref) => CounterNotifier(ref.arguments), // ref.arguments is an int
 );
+
+counterProvider.setArguments(
+  100,
+  tag: '1',
+);
+```
+
+## Tags and filters
+If you use `ref.watch` or `ref.listen` with filters like `.select` or `.when`, the `tag` parameter of `ref.watch` or `ref.listen` will be omitted, as the filters have their own `tag` parameter.
+
+```dart
+Consumer(
+  builder: (_, ref, __){
+    final notifier = ref.watch(
+      myProvider.select(
+        (state) => state.value,
+        tag: 'myTag',
+      ),
+    );
+    
+    YOUR_CODE
+  },
+)
 ```

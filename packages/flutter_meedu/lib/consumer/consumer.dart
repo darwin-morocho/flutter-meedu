@@ -44,6 +44,7 @@ extension _ConsumerWatchExtension on ConsumerStatefulElement {
     required BaseStateNotifierProvider<N, S> providerOrFilter,
     required void Function(N notifier) callback,
     required String? tag,
+    required bool isListener,
   }) {
     // if the widget was rebuilded
     if (_isExternalBuild) {
@@ -67,7 +68,20 @@ extension _ConsumerWatchExtension on ConsumerStatefulElement {
       notifier = (providerOrFilter as ListeneableProvider).read(tag: tag) as N;
     }
 
-    final insideDependencies = _dependencies.containsKey(notifier);
+    late final Map<StateNotifier, Function> map;
+
+    if (!isListener) {
+      map = _builders;
+    } else {
+      map = filter == null
+          ? _listeners
+          : switch (filter) {
+              SelectFilteredProvider _ => _selectListeners,
+              WhenFilteredProvider _ => _whenListeners,
+            };
+    }
+
+    final insideDependencies = map.containsKey(notifier);
 
     // if there is not a listener for the current provider
     if (!insideDependencies) {
@@ -76,12 +90,12 @@ extension _ConsumerWatchExtension on ConsumerStatefulElement {
       if (filter != null) {
         filter.reaction = callback;
         filter.createListener();
-        _dependencies[notifier] = filter.listener;
+        map[notifier] = filter.listener;
         notifier.addListener(filter.listener);
       } else {
         // ignore: prefer_function_declarations_over_variables
         final _ListenerCallback listener = (_) => callback(notifier);
-        _dependencies[notifier] = listener;
+        map[notifier] = listener;
         notifier.addListener(listener);
       }
       // add the listener to the current notifier

@@ -5,12 +5,12 @@ sidebar_position: 8
 # Listen when a provider has disposed a Notifier
 
 ```dart
-final counterProvider = StateNotifierProvider<CounterNotifier,int>(
+final counterProvider = SimpleProvider<CounterController>(
   (ref) {
     ref.onDispose(() {
       // YOUR CODE HERE
     });
-    return CounterNotifier();
+    return CounterController();
   },
 );
 ```
