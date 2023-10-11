@@ -9,7 +9,7 @@ When use:
 - MediaQuery options.
 
 ```dart
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/screen_utils.dart';
 ```
 
 Now you can use the BuildContext's extensions.

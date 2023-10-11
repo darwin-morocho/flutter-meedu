@@ -27,7 +27,7 @@ Get.remove<AuthRepository>();
 
 ## Auto remove
 
-First make sure that you have added the meedu observer in your navigator observers [more info](/docs/state-management/intro#how-it-works).
+First make sure that you have added the meedu observer in your navigator observers [more info](/docs/7.x.x/state-management/intro#how-it-works).
 
 Now when tou call to `Get.put` or `Get.lazyPut` you can use the `autoRemove` parameter and set the value to `true` then when the router who created the dependency
 is popped the dependency will be deleted from memory.

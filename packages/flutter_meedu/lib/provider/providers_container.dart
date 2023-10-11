@@ -53,8 +53,17 @@ class Element<E> {
   void set(E value) => _value = value;
 }
 
-class FactoryElement<E, A> extends Element<E> {
+class FactoryElement<E> extends Element<E> {
   FactoryElement({required super.ref});
+
+  @override
+  E get value => _value!;
+
+  void dispose() => ref.dispose();
+}
+
+class FactoryArgumentsElement<E, A> extends Element<E> {
+  FactoryArgumentsElement({required super.ref});
 
   @override
   E get value => _value!;

@@ -52,10 +52,10 @@ abstract class BaseFactoryProvider<E, A> extends BaseProvider<E, A> {
 class FactoryProvider<E> extends BaseFactoryProvider<E, dynamic> {
   FactoryProvider(super.callback);
 
-  FactoryElement<E, dynamic> get() {
+  FactoryElement<E> get() {
     final ref = Ref(tag: null);
 
-    return FactoryElement<E, dynamic>(
+    return FactoryElement(
       ref: ref,
     )..set(
         creator.callback(ref),
@@ -74,10 +74,10 @@ class FactoryProvider<E> extends BaseFactoryProvider<E, dynamic> {
 class FactoryArgumentsProvider<E, A> extends BaseFactoryProvider<E, A> {
   FactoryArgumentsProvider(super.callback);
 
-  FactoryElement<E, A> get(A args) {
+  FactoryArgumentsElement<E, A> get(A args) {
     final ref = Ref<A>(tag: null)..setArguments(args);
 
-    return FactoryElement<E, A>(
+    return FactoryArgumentsElement<E, A>(
       ref: ref,
     )..set(
         creator.callback(ref),

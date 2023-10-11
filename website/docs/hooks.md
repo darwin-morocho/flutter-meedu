@@ -7,7 +7,8 @@ First add [hooks_meedu](https://pub.dev/packages/hooks_meedu) to your `pubspec.y
 
 ```yaml
 dependencies:
-  hooks_meedu: ^0.0.1
+  flutter_hooks: lastest_version
+  hooks_meedu: ^0.1.0-beta.2
 ```
 
 

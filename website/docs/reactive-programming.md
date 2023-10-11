@@ -5,8 +5,7 @@ the `RxBuilder` rebuilds the Text widget.
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/meedu.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/rx.dart';
 
 class RxPage extends StatefulWidget {
   @override

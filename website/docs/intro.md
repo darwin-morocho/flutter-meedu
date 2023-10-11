@@ -55,7 +55,7 @@ dependencies:
 ``` 
 
 
-:::note
+<!-- :::note
 Check the next advanced example using flutter_meedu.
 
 Features:
@@ -68,4 +68,4 @@ Features:
 - Integration with the movie db API.
 
 https://github.com/darwin-morocho/flutter-w2w/tree/meedu
-:::
+::: -->

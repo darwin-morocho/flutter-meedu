@@ -115,16 +115,4 @@ module.exports = {
       },
     ],
   ],
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en", "es"],
-    localeConfigs: {
-      en: {
-        label: "English",
-      },
-      es: {
-        label: "Español",
-      },
-    },
-  },
 };
