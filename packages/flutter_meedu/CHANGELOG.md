@@ -1,16 +1,5 @@
-## [9.0.0-beta.4]
-- Fixed some small bugs on RxBuilder.
-- Added ref.listen in ConsumerWidget.
+## [9.0.0]
 
-## [9.0.0-beta.3]
-- Fixed hot reload behavior in ConsumerWidget.
-## [9.0.0-beta.2]
-- Refactor ListeneableNotifier.
-
-## [9.0.0-beta.1]
-- Export screen_utils.dart
-
-## [9.0.0-beta.0]
 # Library Update - Important Information
 
 ## Overview
@@ -33,45 +22,59 @@ We've introduced some significant changes and improvements in this update. Pleas
 
 - **ProviderScope**: The `ProviderScope` has been removed in favor of using `ProvidersContainer`.
 
+- Added ref.listen in ConsumerWidget.
+
 ### Upgrade Information
 
 Make sure to upgrade to the latest version of our library to benefit from these changes. Refer to our documentation for more details on how to adapt your code to these updates.
 
-For more information and detailed documentation, please visit our [website](https://example.com/docs).
-
+For more information and detailed documentation, please visit our [website](https://flutter.meedu.app/).
 
 ## [8.5.0]
+
 - Updated to meedu: ^8.1.2
+
 ## [8.4.0]
+
 - Updated sdk constraints
   Dart >=3.0.0 <4.0.0
   Flutter >=3.10.0
+
 ## [8.3.1]
+
 - Updated to meedu: ^8.0.2
+
 ## [8.3.0]
+
 - Updated to meedu: ^8.0.1
 - Added Bloc class to be able to use the BLoC pattern.
+
 ## [8.2.0]
+
 - Fixed issue [#14](https://github.com/darwin-morocho/flutter-meedu/issues/14).
 - Use unmount instead of deactivate for disposed Consumers.
 
 ## [8.1.1]
+
 - Updated to meedu: ^7.2.2
 
 ## [8.1.0]
+
 - Moved logic from the ConsumerState class to ConsumerStatefulElement class to be
-compatible with `flutter_hooks`.
+  compatible with `flutter_hooks`.
 
 ## [8.0.0]
-- **BREAKING CHANGE** 
+
+- **BREAKING CHANGE**
   The `.select` filter has a new behavior. A new optional argument called `booleanCallback` has beed
   added. If your callback (in the `.select` filter) returns a boolean value and you want to
   rebuild your consumers or notify to your listeners only when the boolean
   value is `true` you can set `booleanCallback` to `true`.
 
-  If you don't define the `booleanCallback` argument and your callback returns a boolean (true or false)  your consumers and your listeners will be notified when the value returned by the callback changes ( `true` to `false` or `false` to `true`).
-  
+  If you don't define the `booleanCallback` argument and your callback returns a boolean (true or false) your consumers and your listeners will be notified when the value returned by the callback changes ( `true` to `false` or `false` to `true`).
+
   EXAMPLE:
+
   ```dart
      final controller = ref.watch(
         provider.select(
@@ -82,29 +85,28 @@ compatible with `flutter_hooks`.
   ```
 
 ## [7.2.0+1]
+
 - Updated to meedu: ^7.2.0+1
 
 ## [7.1.0]
+
 - Added `Provider` class to be able to create providers that don't depend of
-SimpleNotifier or StateNotifier.
+  SimpleNotifier or StateNotifier.
 - Allow `afterFirstLayout` to be overridden with `FutureOr`.
 - Allow `dispose` on SimpleNotifier and StateNotifier to be overridden with `FutureOr`.
 
 Example:
+
 ```dart
 class HomePageUiUtils {
   HomePageUiUtils._();
 }
-final homeTabController = 
+final homeTabController =
 ```
-
-
-
-
 
 ## [7.0.0]
 
-- **BREAKING CHANGE** 
+- **BREAKING CHANGE**
 
   imports has been renamed.
 
@@ -127,9 +129,8 @@ final homeTabController =
 
   > IMPORTANT: `package:flutter_meedu/flutter_meedu.dart` has been removed in favor to `package:flutter_meedu/ui.dart`
 
+- **BREAKING CHANGE**
 
-- **BREAKING CHANGE** 
-  
   Now to use the route module you don't have to use alias.
   Now you have to use the global var `router`
 
@@ -228,8 +229,6 @@ final homeTabController =
     }
   }
   ```
-
-
 
 - Added `Get.asyncPut<T>`:
 
