@@ -15,14 +15,15 @@ jobs:
       - uses: subosito/flutter-action@v2.7.1
         with:
           flutter-version: '3.13.6'
-      - name: Install meedu dependencies 
-        run: cd packages/meedu && flutter pub get
 
       - name: Install flutter_meedu dependencies 
         run: cd packages/flutter_meedu && flutter pub get
 
       - name: Run flutter_meedu tests 
         run: cd packages/flutter_meedu && flutter test --coverage
+
+      - name: Run hooks_meedu tests 
+        run: cd packages/hooks_meedu && flutter test --coverage
 
       - name: Upload coverage to Codecov
         run: curl -s https://codecov.io/bash | bash
