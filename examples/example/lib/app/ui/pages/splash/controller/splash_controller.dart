@@ -1,15 +1,12 @@
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/notifiers.dart';
 
 import '../../../routes/routes.dart';
 
-class SplashController extends SimpleNotifier {
+class SplashNotifier extends StateNotifier<String?> {
+  SplashNotifier(super.initialState);
+
   Future<void> init() async {
     await Future.delayed(const Duration(seconds: 1));
-    _routeName = Routes.HOME;
-    notify();
+    state = Routes.HOME;
   }
-
-  String? _routeName;
-
-  String? get routeName => _routeName;
 }

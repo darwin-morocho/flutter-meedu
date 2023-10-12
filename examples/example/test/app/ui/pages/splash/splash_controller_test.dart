@@ -6,9 +6,9 @@ void main() {
   test(
     'SplashController',
     () async {
-      final controller = SplashController();
+      final controller = SplashNotifier(null);
       await controller.init();
-      expect(controller.routeName, Routes.HOME);
+      expect(controller.state, Routes.HOME);
     },
   );
 }

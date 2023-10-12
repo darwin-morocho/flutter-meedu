@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
 
 import 'ui/routes/app_routes.dart';
 import 'ui/routes/routes.dart';
@@ -19,12 +18,7 @@ class MyApp extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: MaterialApp(
-        key: router.appKey,
         title: 'Hello world',
-        navigatorKey: router.navigatorKey,
-        navigatorObservers: [
-          router.observer,
-        ],
         routes: routes ?? appRoutes,
         initialRoute: initialRoute ?? Routes.SPLASH,
         theme: ThemeData(

@@ -1,4 +1,4 @@
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/notifiers.dart';
 
 class CounterBloc extends Bloc<Increment, int> {
   CounterBloc(super.initialState) {
@@ -9,5 +9,4 @@ class CounterBloc extends Bloc<Increment, int> {
 }
 
 abstract class CounterEvent {}
-
 class Increment extends CounterEvent {}

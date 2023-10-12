@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:example/app/domain/modules/login/use_cases/login_use_case.dart';
+import 'package:example/app/inject_repositories.dart';
 import 'package:example/app/ui/pages/login/controller/login_bloc.dart';
 import 'package:example/app/ui/pages/login/controller/login_event.dart';
-import 'package:flutter_meedu/meedu.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -16,7 +17,9 @@ void main() {
   setUp(
     () {
       controller = LoginBloc(
-        loginUseCase: Get.find(),
+        loginUseCase: LoginUseCase(
+          Repositories.auth.read(),
+        ),
       );
       registerFallbackValue(
         Options(),

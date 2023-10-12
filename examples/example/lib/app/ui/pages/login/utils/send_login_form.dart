@@ -1,13 +1,16 @@
-import 'package:example/app/ui/global_widgets/progress_dialog.dart';
-import 'package:example/app/ui/pages/login/controller/login_provider.dart';
-import 'package:example/app/ui/routes/routes.dart';
+import '../../../global_widgets/progress_dialog.dart';
+import '../controller/login_provider.dart';
+import '../../../routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
 
 Future<void> sendLoginForm(BuildContext context) async {
   ProgressDialog.show(context);
-  final result = await loginProvider.read.submit();
-  router.pop();
+  final result = await loginProvider.read().submit();
+  if (!context.mounted) {
+    return;
+  }
+
+  Navigator.pop(context);
 
   result.fold(
     (loginFailure) {
@@ -24,8 +27,10 @@ Future<void> sendLoginForm(BuildContext context) async {
         ),
       );
     },
-    (_) => router.pushNamedAndRemoveUntil(
+    (_) => Navigator.pushNamedAndRemoveUntil(
+      context,
       Routes.PROFILE,
+      (_) => false,
     ),
   );
 }

@@ -1,7 +1,6 @@
-import 'package:example/app/ui/routes/routes.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_meedu/ui.dart';
+import '../../routes/routes.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -11,7 +10,11 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: MaterialButton(
-          onPressed: () => router.pushNamedAndRemoveUntil(Routes.HOME),
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            Routes.HOME,
+            (_) => false,
+          ),
           color: Colors.redAccent,
           child: const Text("Log out"),
         ),

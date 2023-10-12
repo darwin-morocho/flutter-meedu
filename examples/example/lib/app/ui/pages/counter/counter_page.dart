@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/consumer.dart';
 import 'bloc/counter_bloc.dart';
 import 'bloc/counter_provider.dart';
 
@@ -26,7 +26,7 @@ class CounterPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => counterProvider.read.add(
+        onPressed: () => counterProvider.read().add(
           Increment(),
         ),
         child: const Icon(

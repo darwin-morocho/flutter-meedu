@@ -18,8 +18,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
-  flutter: ">=3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.6"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,13 +35,13 @@ dependencies:
   dio: ^4.0.6
   dio_logger: ^4.0.8+8
   dartz: ^0.10.1
-  flutter_meedu: 8.3.1
+  flutter_meedu: ^9.0.0
 
 dev_dependencies:
   build_runner: ^2.3.3
-  file: 6.1.4
+  file: ^7.0.0
   freezed: ^2.3.2
-  mocktail: ^0.3.0
+  mocktail: ^1.0.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1

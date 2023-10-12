@@ -1,6 +1,5 @@
-import 'package:example/app/ui/routes/routes.dart';
+import '../../routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
 
 class _MenuItem {
   final String label;
@@ -38,7 +37,8 @@ class HomePage extends StatelessWidget {
           final page = _pages[index];
           return ListTile(
             title: Text(page.label),
-            onTap: () => router.pushNamed(
+            onTap: () => Navigator.pushNamed(
+              context,
               page.routeName,
             ),
             trailing: const Icon(

@@ -1,14 +1,16 @@
-import 'package:example/app/ui/pages/login/controller/login_bloc.dart';
-import 'package:example/app/ui/pages/login/utils/send_login_form.dart';
+import 'package:flutter_meedu/consumer.dart';
+import 'package:flutter_meedu/providers.dart';
+
+import 'controller/login_bloc.dart';
+import 'utils/send_login_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
 import 'controller/login_event.dart';
 import 'controller/login_provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  LoginBloc get bloc => loginProvider.read;
+  LoginBloc get bloc => loginProvider.read();
 
   bool isValidEmail(String email) {
     return RegExp(
@@ -39,7 +41,9 @@ class LoginPage extends StatelessWidget {
                 Consumer(
                   builder: (_, ref, child) {
                     final email = ref.select(
-                      loginProvider.select((_) => _.email),
+                      loginProvider.select(
+                        (state) => state.email,
+                      ),
                     );
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
