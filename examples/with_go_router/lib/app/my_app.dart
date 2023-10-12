@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'ui/routes/app_routes.dart';
 
-class MyApp extends StatelessWidget with AppRoutesMixin {
-  MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget with AppRoutesMixin {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routeInformationParser: goRouter.routeInformationParser,
-      routerDelegate: goRouter.routerDelegate,
+      routerConfig: routerProvider.read(),
     );
   }
 }

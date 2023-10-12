@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:flutter_meedu/consumer.dart';
 
-import 'controller/counter_provider.dart';
+import 'controller/counter_notifier.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({Key? key}) : super(key: key);
@@ -13,17 +13,17 @@ class CounterPage extends StatelessWidget {
       body: Center(
         child: Consumer(
           builder: (_, ref, __) {
-            final controller = ref.watch(counterProvider);
+            final counter = ref.watch(counterProvider).state;
             return Text(
-              "${controller.counter}",
+              "$counter",
               style: const TextStyle(fontSize: 30),
             );
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        onPressed: counterProvider.read().increment,
         child: const Icon(Icons.add),
-        onPressed: counterProvider.read.increment,
       ),
     );
   }

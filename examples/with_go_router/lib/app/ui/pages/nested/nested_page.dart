@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:with_go_router/app/ui/pages/nested/tabs/accents_colors.dart';
-import 'package:with_go_router/app/ui/pages/nested/tabs/primaries_colors.dart';
 import 'package:with_go_router/app/ui/routes/routes.dart';
+
+import 'tabs/accents_colors.dart';
+import 'tabs/primaries_colors.dart';
 
 class NestedPage extends StatefulWidget {
   final int index;
@@ -67,6 +68,7 @@ class _NestedPageState extends State<NestedPage> with TickerProviderStateMixin {
         ),
       ),
       body: TabBarView(
+        controller: _controller,
         children: const [
           PrimariesColors(
             tabIndex: 0,
@@ -75,7 +77,6 @@ class _NestedPageState extends State<NestedPage> with TickerProviderStateMixin {
             tabIndex: 1,
           ),
         ],
-        controller: _controller,
       ),
     );
   }

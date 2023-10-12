@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:with_go_router/app/ui/pages/color/color_controller.dart';
+import 'package:with_go_router/app/ui/pages/color/color_notifier.dart';
 
 class ColorPage extends StatelessWidget {
   final bool isPrimary;
   final int colorIndex;
   final String tagName;
   ColorPage({
-    Key? key,
+    super.key,
     required this.isPrimary,
     required this.colorIndex,
-  })  : tagName = '$isPrimary-$colorIndex',
-        super(key: key) {
+  })  : tagName = '$isPrimary-$colorIndex'{
+
+    print(tagName);
     colorProvider.setArguments(
-      tagName,
       colorIndex,
+      tag: tagName,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final index = colorProvider.find(tagName).read.color;
+    final index = colorProvider.read(tag: tagName).state;
     return Scaffold(
       appBar: AppBar(),
       body: Container(
