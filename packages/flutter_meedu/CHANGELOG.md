@@ -1,3 +1,5 @@
+## [9.0.1]
+- Updated readme
 ## [9.0.0]
 
 # Library Update - Important Information
