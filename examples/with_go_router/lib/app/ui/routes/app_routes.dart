@@ -1,4 +1,4 @@
-import 'package:flutter_meedu/flutter_meedu.dart';
+import 'package:flutter_meedu/providers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:with_go_router/app/ui/pages/color/color_page.dart';
 import 'package:with_go_router/app/ui/pages/home/home_page.dart';

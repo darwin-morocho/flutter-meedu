@@ -1,3 +1,5 @@
+## [9.0.2]
+- Updated exports;
 ## [9.0.1]
 - Updated readme
 ## [9.0.0]

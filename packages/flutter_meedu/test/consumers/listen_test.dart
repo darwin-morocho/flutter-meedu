@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/flutter_meedu.dart';
+import 'package:flutter_meedu/consumer.dart';
+import 'package:flutter_meedu/notifiers.dart';
+import 'package:flutter_meedu/providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 int _index = 0;

@@ -242,10 +242,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_meedu
-      sha256: "76eceaa6377cb9879bc1c792f390cb8bd77d6d8aff3e0e9a692e9c5c816f0d49"
+      sha256: "8e9eb1f4b2e081954e66ea5b012d09654e28c8fba5007a804a5e71a6e8ca475e"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.0"
+    version: "9.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
