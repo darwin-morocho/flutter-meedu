@@ -10,10 +10,13 @@ abstract class BaseProvider<E, A> {
   BaseProvider(
     CreatorCallback<E, A> callback, {
     bool autoDispose = true,
+    required this.tags,
   }) : _creator = Creator(
           callback,
           autoDispose,
         );
+
+  final bool tags;
 
   /// defines how an [E] is created
   late final Creator<E, A> _creator;
@@ -101,6 +104,17 @@ abstract class BaseProvider<E, A> {
   /// generate a key to be used into the [ProvidersContainer]
   @protected
   String getKey(String? tag) {
+    if (tags) {
+      assert(
+        tag != null,
+        'Missing `tag`, your instance of ${this.runtimeType} uses `tags = true`',
+      );
+    } else {
+      assert(
+        tag == null,
+        '`tag` not allowed, your instance of ${this.runtimeType} uses `tags = false`',
+      );
+    }
     return '$_cachedHash${tag ?? ''}';
   }
 

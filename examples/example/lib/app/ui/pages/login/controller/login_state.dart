@@ -1,5 +1,6 @@
-import 'package:example/app/domain/modules/login/use_cases/login_use_case.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../domain/modules/login/use_cases/login_use_case.dart';
 
 part 'login_state.freezed.dart';
 

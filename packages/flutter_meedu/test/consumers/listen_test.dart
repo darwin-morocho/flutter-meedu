@@ -81,6 +81,7 @@ class MyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, BuilderRef ref) {
+    ref.watch(counterProvider);
     ref.listen(
       counterProvider,
       callback: (notifier) {
@@ -100,7 +101,7 @@ class MyWidget extends ConsumerWidget {
 
     ref.listen(
       counterProvider.when(
-        (prev, current) => prev!=current,
+        (prev, current) => prev != current,
       ),
       callback: (notifier) {
         _whenIndex++;

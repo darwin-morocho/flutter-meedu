@@ -8,10 +8,10 @@ If you need to have multiple notifiers using the same `StateNotifier` or `Bloc` 
 
 Consider the following example:
 
-
-```dart
+```dart {3}
 final counterProvider = StateNotifierProvider<CounterNotifier, int>(
   (_) => CounterNotifier(0),
+  tags: true, // <-- Add this to create multiples instances of CounterNotifier using the same provider
 );
 
 class CounterNotifier extends StateNotifier<int> {
@@ -25,7 +25,7 @@ class CounterNotifier extends StateNotifier<int> {
 
 Now we can use a single `Consumer` widget to create two different instances of `CounterNotifier` using the same provider.
 
-```dart
+```dart {11-12,17,21}
 class CounterWidget extends StatelessWidget {
   const CounterWidget({super.key});
 
@@ -55,6 +55,7 @@ class CounterWidget extends StatelessWidget {
   }
 }
 ```
+
 :::note
 In the example above, we have created 2 instances of `CounterNotifier` by using tags, and each of these instances has its own state.
 
@@ -63,14 +64,17 @@ NOTE: If you need to manually dispose of your notifiers that were created using 
 ```dart
 yourProvider.dispose(tag:'YOUR_TAG');
 ```
+
 :::
 
 ## How to Set Arguments for Our Notifiers
+
 When you call the setArguments function of our StateNotifierArgumentsProvider, you can use the tag argument.
 
-```dart
+```dart {3,8}
 final counterProvider = StateNotifierProvider.withArguments<CounterNotifier, int, int>(
   (ref) => CounterNotifier(ref.arguments), // ref.arguments is an int
+  tags: true, // <-- ADD THIS
 );
 
 counterProvider.setArguments(
@@ -80,9 +84,10 @@ counterProvider.setArguments(
 ```
 
 ## Tags and filters
+
 If you use `ref.watch` or `ref.listen` with filters like `.select` or `.when`, the `tag` parameter of `ref.watch` or `ref.listen` will be omitted, as the filters have their own `tag` parameter.
 
-```dart
+```dart {6}
 Consumer(
   builder: (_, ref, __){
     final notifier = ref.watch(
@@ -91,7 +96,7 @@ Consumer(
         tag: 'myTag',
       ),
     );
-    
+
     YOUR_CODE
   },
 )

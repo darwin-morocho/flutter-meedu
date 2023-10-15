@@ -7,6 +7,7 @@ void main() {
   test(
     'Provider',
     () {
+      expect(() => _provider.mounted(tag: ''), throwsAssertionError);
       expect(_provider.mounted(), false);
       final repo = _provider.read();
       expect(
@@ -25,8 +26,9 @@ void main() {
   test(
     'Provider > tag',
     () {
-      final repo1 = _provider.read(tag: 'user1');
-      final repo2 = _provider.read(tag: 'user2');
+      expect(() => _tagProvider.read(), throwsAssertionError);
+      final repo1 = _tagProvider.read(tag: 'user1');
+      final repo2 = _tagProvider.read(tag: 'user2');
       expect(
         repo1.hashCode,
         isNot(repo2.hashCode),
@@ -34,7 +36,7 @@ void main() {
       expect(
         repo1.hashCode,
         isNot(
-          _provider.read(tag: 'user1'),
+          _tagProvider.read(tag: 'user1'),
         ),
       );
     },
@@ -99,6 +101,8 @@ void main() {
 
       expect(element1.value.apiKey, 'key1');
       expect(element2.value.apiKey, 'key2');
+      element1.dispose();
+      expect(element1.value.dispose, true);
     },
   );
 }
@@ -113,6 +117,19 @@ final _provider = Provider(
     );
     return repo;
   },
+);
+
+final _tagProvider = Provider(
+  (ref) {
+    final repo = GoogleMapsRepo('');
+    ref.onDispose(
+      () {
+        repo.dispose = true;
+      },
+    );
+    return repo;
+  },
+  tags: true,
 );
 
 final _argumentsProvider = Provider.withArguments<GoogleMapsRepo, String>(
@@ -135,7 +152,15 @@ final _factoryProvider = FactoryProvider(
 
 final _factoryArgumentsProvider =
     FactoryProvider.withArguments<GoogleMapsRepo, String>(
-  (ref) => GoogleMapsRepo(ref.arguments),
+  (ref) {
+    final repo = GoogleMapsRepo(ref.arguments);
+
+    ref.onDispose(() {
+      repo.dispose = true;
+    });
+
+    return repo;
+  },
 );
 
 class GoogleMapsRepo {

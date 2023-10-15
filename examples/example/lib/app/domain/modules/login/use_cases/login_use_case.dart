@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:example/app/domain/repositories/auth_repository.dart';
-
+import '../../../repositories/auth_repository.dart';
 import '../failure/login_failure.dart';
 
 class LoginUseCase {

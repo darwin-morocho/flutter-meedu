@@ -1,3 +1,7 @@
+## [9.0.3]
+- Added `tags` parameter in BaseProvider class.
+- Added assertions to validade the right way to read providers using tags.
+
 ## [9.0.2]
 - Updated exports;
 ## [9.0.1]

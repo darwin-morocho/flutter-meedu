@@ -4,21 +4,28 @@ import 'base_provider.dart';
 import 'providers_container.dart';
 
 class Provider<E> extends BaseProvider<E, dynamic> {
-  Provider(super.callback);
+  Provider(
+    super.callback, {
+    super.tags = false,
+  });
 
   static ArgumentsProvider<E, A> withArguments<E, A>(
-    CreatorCallback<E, A> callback,
-  ) {
-    return ArgumentsProvider<E, A>(callback);
+    CreatorCallback<E, A> callback, {
+    bool tags = false,
+  }) {
+    return ArgumentsProvider<E, A>(callback, tags: tags);
   }
 }
 
 class ArgumentsProvider<E, A> extends BaseProvider<E, A> {
-  ArgumentsProvider(super.callback);
+  ArgumentsProvider(
+    super.callback, {
+    super.tags = false,
+  });
 }
 
 abstract class BaseFactoryProvider<E, A> extends BaseProvider<E, A> {
-  BaseFactoryProvider(super.callback);
+  BaseFactoryProvider(super.callback) : super(tags: false);
 
   @override
   @visibleForTesting

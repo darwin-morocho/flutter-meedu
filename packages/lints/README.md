@@ -1,0 +1,1 @@
+Dart lint rules for flutter_meedu

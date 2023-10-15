@@ -27,8 +27,8 @@ class CounterPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => counterProvider.read().add(
-          Increment(),
-        ),
+              Increment(),
+            ),
         child: const Icon(
           Icons.add_rounded,
         ),

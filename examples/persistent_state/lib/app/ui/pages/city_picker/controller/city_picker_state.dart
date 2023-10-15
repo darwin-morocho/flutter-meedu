@@ -5,7 +5,7 @@ part 'city_picker_state.freezed.dart';
 part 'city_picker_state.g.dart';
 
 @freezed
-class CityPickerState with _$CityPickerState {
+sealed class CityPickerState with _$CityPickerState {
   const CityPickerState._();
 
 

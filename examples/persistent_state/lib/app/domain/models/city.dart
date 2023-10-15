@@ -6,7 +6,7 @@ part 'city.freezed.dart';
 part 'city.g.dart';
 
 @freezed
-class City with _$City {
+sealed class City with _$City {
   const factory City({
     @JsonKey(name:'city')
     required String name,
