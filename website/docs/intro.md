@@ -55,7 +55,7 @@ dependencies:
   meedu_lints: ^0.0.2 # <--- ADD THIS
 
 dev_dependencies:
-  meedu_lints: ^0.0.4 # <--- ADD THIS
+  meedu_lints: ^0.0.5 # <--- ADD THIS
 ``` 
 
 Now in your `analysis_options.yaml` enable the custom lints
