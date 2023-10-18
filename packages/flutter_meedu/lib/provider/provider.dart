@@ -1,31 +1,98 @@
+import 'package:flutter_meedu/provider/state_notifier_provider.dart';
 import 'package:meta/meta.dart';
 
+import '../notifiers/state_notifier.dart';
 import 'base_provider.dart';
 import 'providers_container.dart';
 
 class Provider<E> extends BaseProvider<E, dynamic> {
-  Provider(
-    super.callback, {
-    super.tags = false,
-  });
+  Provider(super.callback);
 
-  static ArgumentsProvider<E, A> withArguments<E, A>(
-    CreatorCallback<E, A> callback, {
+  /// creates a TagProvider
+  static TagProvider<E> tag<E>(
+    CreatorCallback<E, dynamic> callback,
+  ) {
+    return TagProvider<E>(callback);
+  }
+
+  /// creates an TagArgumentsProvider
+  static TagArgumentsProvider<E, A> argumentsTag<E, A>(
+    CreatorCallback<E, A> callback,
+  ) {
+    return TagArgumentsProvider<E, A>(callback);
+  }
+
+  /// creates an ArgumentsProvider
+  static ArgumentsProvider<E, A> arguments<E, A>(
+    CreatorCallback<E, A> callback,
+  ) {
+    return ArgumentsProvider<E, A>(callback);
+  }
+
+  /// creates a StateNotifierProvider
+  static StateNotifierProvider<N, S> state<N extends StateNotifier<S>, S>(
+    CreatorCallback<N, dynamic> callback, {
+    bool autoDispose = true,
+  }) {
+    return StateNotifierProvider<N, S>(
+      callback,
+      autoDispose: true,
+    );
+  }
+
+  /// creates a StateNotifierTagProvider
+  static StateNotifierTagProvider<N, S> stateTag<N extends StateNotifier<S>, S>(
+    CreatorCallback<N, dynamic> callback, {
+    bool autoDispose = true,
+  }) {
+    return StateNotifierTagProvider<N, S>(
+      callback,
+      autoDispose: true,
+    );
+  }
+
+  /// creates a StateNotifierArgumentsProvider
+  static StateNotifierArgumentsProvider<N, S, A>
+      stateArguments<N extends StateNotifier<S>, S, A>(
+    CreatorCallback<N, A> callback, {
+    bool autoDispose = true,
     bool tags = false,
   }) {
-    return ArgumentsProvider<E, A>(callback, tags: tags);
+    return StateNotifierArgumentsProvider(
+      callback,
+      autoDispose: autoDispose,
+    );
+  }
+
+  /// creates a StateNotifierArgumentsProvider
+  static StateNotifierTagArgumentsProvider<N, S, A>
+      stateArgumentsTag<N extends StateNotifier<S>, S, A>(
+    CreatorCallback<N, A> callback, {
+    bool autoDispose = true,
+    bool tags = false,
+  }) {
+    return StateNotifierTagArgumentsProvider(
+      callback,
+      autoDispose: autoDispose,
+    );
   }
 }
 
+class TagProvider<E> extends Provider<E> implements BaseTagProvider {
+  TagProvider(super.callback);
+}
+
 class ArgumentsProvider<E, A> extends BaseProvider<E, A> {
-  ArgumentsProvider(
-    super.callback, {
-    super.tags = false,
-  });
+  ArgumentsProvider(super.callback);
+}
+
+class TagArgumentsProvider<E, A> extends ArgumentsProvider<E, A>
+    implements BaseTagProvider {
+  TagArgumentsProvider(super.callback);
 }
 
 abstract class BaseFactoryProvider<E, A> extends BaseProvider<E, A> {
-  BaseFactoryProvider(super.callback) : super(tags: false);
+  BaseFactoryProvider(super.callback);
 
   @override
   @visibleForTesting
@@ -69,7 +136,7 @@ class FactoryProvider<E> extends BaseFactoryProvider<E, dynamic> {
       );
   }
 
-  static FactoryArgumentsProvider<E, A> withArguments<E, A>(
+  static FactoryArgumentsProvider<E, A> arguments<E, A>(
     CreatorCallback<E, A> creatorCallback,
   ) {
     return FactoryArgumentsProvider(

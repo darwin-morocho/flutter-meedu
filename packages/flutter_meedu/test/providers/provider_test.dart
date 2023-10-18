@@ -7,7 +7,7 @@ void main() {
   test(
     'Provider',
     () {
-      expect(() => _provider.mounted(tag: ''), throwsAssertionError);
+      // expect(() => _provider.mounted(tag: ''), throwsAssertionError);
       expect(_provider.mounted(), false);
       final repo = _provider.read();
       expect(
@@ -26,7 +26,7 @@ void main() {
   test(
     'Provider > tag',
     () {
-      expect(() => _tagProvider.read(), throwsAssertionError);
+      // expect(() => _tagProvider.read(), throwsAssertionError);
       final repo1 = _tagProvider.read(tag: 'user1');
       final repo2 = _tagProvider.read(tag: 'user2');
       expect(
@@ -59,6 +59,23 @@ void main() {
       expect(
         repo.hashCode,
         _argumentsProvider.read().hashCode,
+      );
+    },
+  );
+
+  test(
+    'TagArgumentsProvider',
+    () {
+      _argumentsTagProvider.setArguments('hello', tag: '1');
+
+      final repo = _argumentsTagProvider.read(tag: '1');
+      expect(
+        repo.apiKey,
+        'hello',
+      );
+      expect(
+        repo.hashCode,
+        _argumentsTagProvider.read(tag: '1').hashCode,
       );
     },
   );
@@ -119,7 +136,7 @@ final _provider = Provider(
   },
 );
 
-final _tagProvider = Provider(
+final _tagProvider = Provider.tag(
   (ref) {
     final repo = GoogleMapsRepo('');
     ref.onDispose(
@@ -129,10 +146,15 @@ final _tagProvider = Provider(
     );
     return repo;
   },
-  tags: true,
 );
 
-final _argumentsProvider = Provider.withArguments<GoogleMapsRepo, String>(
+final _argumentsProvider = Provider.arguments<GoogleMapsRepo, String>(
+  (ref) => GoogleMapsRepo(
+    ref.arguments,
+  ),
+);
+
+final _argumentsTagProvider = Provider.argumentsTag<GoogleMapsRepo, String>(
   (ref) => GoogleMapsRepo(
     ref.arguments,
   ),
@@ -151,7 +173,7 @@ final _factoryProvider = FactoryProvider(
 );
 
 final _factoryArgumentsProvider =
-    FactoryProvider.withArguments<GoogleMapsRepo, String>(
+    FactoryProvider.arguments<GoogleMapsRepo, String>(
   (ref) {
     final repo = GoogleMapsRepo(ref.arguments);
 

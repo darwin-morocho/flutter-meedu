@@ -8,10 +8,9 @@ If you need to have multiple notifiers using the same `StateNotifier` or `Bloc` 
 
 Consider the following example:
 
-```dart {3}
-final counterProvider = StateNotifierProvider<CounterNotifier, int>(
+```dart {1, 3}
+final counterProvider = Provider.stateTag<CounterNotifier, int>(
   (_) => CounterNotifier(0),
-  tags: true, // <-- Add this to create multiples instances of CounterNotifier using the same provider
 );
 
 class CounterNotifier extends StateNotifier<int> {
@@ -69,12 +68,11 @@ yourProvider.dispose(tag:'YOUR_TAG');
 
 ## How to Set Arguments for Our Notifiers
 
-When you call the setArguments function of our StateNotifierArgumentsProvider, you can use the tag argument.
+When you call the setArguments function of our `StateNotifierTagArgumentsProvider`, you must use the tag argument.
 
 ```dart {3,8}
-final counterProvider = StateNotifierProvider.withArguments<CounterNotifier, int, int>(
+final counterProvider = Provider.stateArgumentsTag<CounterNotifier, int, int>(
   (ref) => CounterNotifier(ref.arguments), // ref.arguments is an int
-  tags: true, // <-- ADD THIS
 );
 
 counterProvider.setArguments(

@@ -1,3 +1,6 @@
-## 0.0.1-beta.0
+## 0.0.5
+- Fixed runtime values for tags.
+
+## 0.0.1
 
 - Initial beta version.

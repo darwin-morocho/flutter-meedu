@@ -47,7 +47,7 @@ With this, we can now use our repository in our views or notifiers.
 For example, let's imagine we have a `LoginNotifier` class that extends `StateNotifier` and needs our `AuthRepository` to perform the login action:
 
 ```dart {4}
-final loginProvider = StateNotifierProvider<LoginNotifier,LoginState>(
+final loginProvider = Provider.state<LoginNotifier,LoginState>(
   (_) => LoginNotifier(
     LoginState(),
     authRepository.read(),
@@ -119,17 +119,7 @@ authRepository.dispose()
 If you need to provide some values before the provider creates your data, you can use the `ArgumentsProvider` class.
 
 ```dart
-final authRepository = ArgumentsProvider<AuthRepository, Dio>(
-  (ref) => AuthRepositoryImpl(
-    ref.arguments, //  ref.arguments is an instace of Dio
-  ),
-);
-
-
- //  OR
-
-
-final authRepository = Provider.withArguments<AuthRepository, Dio>(
+final authRepository = Provider.arguments<AuthRepository, Dio>(
   (ref) => AuthRepositoryImpl(
     ref.arguments, //  ref.arguments is an instace of Dio
   ),
@@ -220,7 +210,7 @@ final myRepo = FactoryArgumentsProvider<MyRepo, String>(
 // OR
 
 
-final myRepo = FactoryProvider.withArguments<MyRepo, String>(
+final myRepo = FactoryProvider.arguments<MyRepo, String>(
   (ref) => MyRepo(
       ref.arguments, // here ref.arguments is a Strung
   ),

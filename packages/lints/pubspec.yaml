@@ -1,7 +1,7 @@
 name: meedu_lints
 description: Dart lint rules for flutter_meedu
-version: 0.0.1-beta.3
-# repository: https://github.com/my_org/my_repo
+version: 0.0.5
+repository: https://github.com/darwin-morocho/flutter-meedu
 
 environment:
   sdk: ^3.1.3

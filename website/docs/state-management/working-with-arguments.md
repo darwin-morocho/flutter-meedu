@@ -9,7 +9,7 @@ Sometimes you need to pass initial values to your `StateNotifier`. In such cases
 Next, you can use the `ref` parameter of your callback generator to access the arguments passed in the `initState` method.
 
 ```dart {4,24}
-final loginProvider = StateNotifierArgumentsProvider<LoginNotifier, LoginState, String>(
+final loginProvider = Provider.stateArguments<LoginNotifier, LoginState, String>(
   (ref) => LoginNotifier(
     LoginState(
       email: ref.arguments, // here ref.arguments is a String
@@ -41,16 +41,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 ```
-
-:::note
-You can use the static function `withArguments` to create a `StateNotifierArgumentsProvider`
-```dart
-final loginProvider = StateNotifierProvider.withArguments<LoginNotifier, LoginState, String>(
-  (ref) => LoginNotifier(
-    LoginState(
-      email: ref.arguments,
-      password: '',
-    ),
-  ),
-);
-:::

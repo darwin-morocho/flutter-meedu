@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 final counterProvider = StateNotifierProvider<CounterNotifier, int>(
   (_) => CounterNotifier(0),
-  tags: true,
 );
 
 class CounterNotifier extends StateNotifier<int> {

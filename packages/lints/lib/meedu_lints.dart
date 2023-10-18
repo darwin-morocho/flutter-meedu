@@ -1,12 +1,12 @@
 library;
 
-import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+
+part 'watch_and_listen.dart';
+part 'provider_methods.dart';
 
 // This is the entrypoint of our custom linter
 PluginBase createPlugin() => _MeeduLinter();
@@ -16,7 +16,11 @@ class _MeeduLinter extends PluginBase {
   List<LintRule> getLintRules(CustomLintConfigs configs) {
     return [
       _FinalsRule(),
-      _TagsRule(),
+      _ListenAndWatchNoFiltersRule(),
+      _ListenAndWatchFiltersRule(),
+      _NoTagsRule(),
+      _ProviderMethodsNoTagsRule(),
+      _ProviderMethodsTagsRule(),
     ];
   }
 }
@@ -58,62 +62,65 @@ class _FinalsRule extends DartLintRule {
   }
 }
 
-class _TagsRule extends DartLintRule {
-  _TagsRule() : super(code: _code);
-
-  /// Metadata about the warning that will show-up in the IDE.
-  /// This is used for `// ignore: code` and enabling/disabling the lint
-  static const _code = LintCode(
-    name: 'flutter_meedu_tags_on_watch_or_listen',
-    problemMessage:
-        '`watch` or `listen` functions must have a valid `tag` if one instance of `StateNotifierTagProvider` or `StateNotifierArgumentsTagProvider` is used.',
-    errorSeverity: ErrorSeverity.ERROR,
-  );
-
-  @override
-  void run(
-    CustomLintResolver resolver,
-    ErrorReporter reporter,
-    CustomLintContext context,
-  ) {
-    context.registry.addMethodInvocation(
-      (node) {
-        final methodName = node.methodName.name;
-        if (methodName != 'watch' && methodName != 'listen') {
-          return;
-        }
-
-        final args = node.argumentList.arguments;
-        if (args.isEmpty) {
-          return;
-        }
-
-        const providerOrFilterChecker = TypeChecker.fromName(
-          'StateNotifierTagProvider',
-          packageName: 'flutter_meedu',
-        );
-
-        final firstArgumentType = args.first.staticType;
-
-        if (firstArgumentType == null) {
-          return;
-        }
-
-        /// check if the first parameter is a filter omit checker
-        if (!providerOrFilterChecker.isAssignableFromType(firstArgumentType)) {
-          return;
-        }
-
-        final hasTag = args.length == 2 &&
-            TypeChecker.fromName('String')
-                .isAssignableFromType(args.last.staticType!);
-
-        if (hasTag) {
-          return;
-        }
-
-        reporter.reportErrorForNode(_code, node);
-      },
-    );
+bool hasMatch({
+  required MethodInvocation node,
+  required List<String> types,
+  required List<String> methods,
+}) {
+  final methodName = node.methodName.name;
+  if (!methods.contains(methodName)) {
+    return false;
   }
+
+  final args = node.argumentList.arguments;
+  if (args.isEmpty) {
+    return false;
+  }
+
+  return types.any(
+    (type) {
+      final providerOrFilterChecker = TypeChecker.fromName(
+        type,
+        packageName: 'flutter_meedu',
+      );
+      final firstArgumentType = args.first.staticType;
+
+      if (firstArgumentType == null) {
+        return false;
+      }
+
+      return providerOrFilterChecker.isExactlyType(firstArgumentType);
+    },
+  );
+}
+
+bool hasTags(NodeList<Expression> arguments) {
+  /// check if tag is defined
+  return arguments.any(
+    (e) {
+      if (e is NamedExpression && e.name.label.name == 'tag') {
+        if (e.expression is NullLiteral) {
+          return false;
+        }
+
+        if (e.expression.staticType.toString() == 'String?') {
+          return false;
+        }
+        return true;
+      }
+      return false;
+    },
+  );
+}
+
+bool noHasTags(NodeList<Expression> arguments) {
+  /// check if tag is defined
+  return !arguments.any(
+    (e) {
+      if (e is NamedExpression && e.name.label.name == 'tag') {
+        return true;
+      }
+      return false;
+    },
+  );
 }

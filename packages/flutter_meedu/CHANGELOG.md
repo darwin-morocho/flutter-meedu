@@ -1,3 +1,9 @@
+## [9.0.5]
+- Updated tests.
+
+## [9.0.4]
+- Removed `tags` parameter in BaseProvider class in favor to use `BaseTagClass`.
+
 ## [9.0.3]
 - Added `tags` parameter in BaseProvider class.
 - Added assertions to validade the right way to read providers using tags.

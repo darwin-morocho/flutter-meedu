@@ -25,7 +25,7 @@ Now you need to create a provider for our **`CounterNotifier`**
 ```dart
 import 'package:flutter_meedu/providers.dart';// import the StateNotifierProvider class
 
-final counterProvider = StateNotifierProvider<CounterNotifier, int>(
+final counterProvider = Provider.state<CounterNotifier, int>(
   (_) => CounterNotifier(0), // pass the initial state value when we create a CounterNotifier
 );
 ```
@@ -72,7 +72,7 @@ Note: By default, when a `StateNotifier` loses all its subscribers, the `dispose
 You can disable the autoDispose feature using `autoDispose: false` when we create our provider.
 
 ```dart {3}
-final counterProvider = StateNotifierProvider<CounterNotifier, int>(
+final counterProvider = Provider.state<CounterNotifier, int>(
   (_) => CounterNotifier(0),
   autoDispose: false, // disable the autoDispose feature
 );

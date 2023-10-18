@@ -15,7 +15,7 @@ void injectRepositories(Dio dio) {
 class Repositories {
   Repositories._();
 
-  static final auth = Provider.withArguments<AuthRepository, AuthService>(
+  static final auth = Provider.arguments<AuthRepository, AuthService>(
     (ref) => AuthRepositoryImpl(ref.arguments),
   );
 }

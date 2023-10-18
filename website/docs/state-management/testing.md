@@ -6,7 +6,7 @@ sidebar_position: 9
 
 ## Cleaning your providers
 
-Before or after each test you will need the default state of all StateNotifier or Bloc. So you can use `ProvidersContainer.clear();`
+Before or after each test you will need the default state of all `StateNotifier` or `Bloc`. So you can use `ProvidersContainer.clear();`
 
 ```dart
 setUp((){
@@ -26,7 +26,7 @@ tearDown((){
 Consider the next provider
 
 ```dart
-final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>(
+final loginProvider = Provider.state<LoginNotifier, LoginState>(
   (_) => LoginNotifier(
     LoginState(),
     someRepo: SomeRepo(),

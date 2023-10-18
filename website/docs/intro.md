@@ -51,9 +51,19 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
-  flutter_meedu: ^9.0.3
+  flutter_meedu: ^9.0.5
+  meedu_lints: ^0.0.2 # <--- ADD THIS
+
+dev_dependencies:
+  meedu_lints: ^0.0.4 # <--- ADD THIS
 ``` 
 
+Now in your `analysis_options.yaml` enable the custom lints
+```yaml
+analyzer:
+  plugins:
+    - custom_lint
+```
 
 <!-- :::note
 Check the next advanced example using flutter_meedu.

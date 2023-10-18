@@ -55,15 +55,45 @@ void main() {
       expect(notifier.state, 'init');
     },
   );
+
+  test(
+    'StateNotifierTagProvider',
+    () async {
+      final notifier1 = _providerStateTag.read(tag: '1');
+      final notifier = _providerStateTag.read(tag: '2');
+      expect(notifier.hashCode != notifier1.hashCode, true);
+    },
+  );
+
+  test(
+    'StateNotifierTagArgumentsProvider',
+    () async {
+      _argumentsTagProvider.setArguments('init1', tag: '1');
+      _argumentsTagProvider.setArguments('init2', tag: '2');
+      expect(_argumentsTagProvider.read(tag: '1').state, 'init1');
+      expect(_argumentsTagProvider.read(tag: '2').state, 'init2');
+    },
+  );
 }
 
-final _provider = StateNotifierProvider<SearchNotifier, String>(
+final _provider = Provider.state<SearchNotifier, String>(
+  (_) => SearchNotifier(''),
+  autoDispose: true,
+);
+
+final _providerStateTag = Provider.stateTag<SearchNotifier, String>(
   (_) => SearchNotifier(''),
   autoDispose: true,
 );
 
 final _argumentsProvider =
-    StateNotifierProvider.withArguments<SearchNotifier, String, String>(
+    Provider.stateArguments<SearchNotifier, String, String>(
+  (ref) => SearchNotifier(ref.arguments),
+  autoDispose: true,
+);
+
+final _argumentsTagProvider =
+    Provider.stateArgumentsTag<SearchNotifier, String, String>(
   (ref) => SearchNotifier(ref.arguments),
   autoDispose: true,
 );

@@ -128,7 +128,7 @@ import 'package:flutter_meedu/providers.dart';
 import 'package:flutter_meedu/consumer.dart';
 
 
-final loginProvider = StateProvider<LoginNotifier, LoginState>(
+final loginProvider = Provider.state<LoginNotifier, LoginState>(
   (_) => LoginController(
     LoginState(
       email: '',
