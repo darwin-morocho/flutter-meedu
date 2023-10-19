@@ -1,6 +1,6 @@
 name: flutter_meedu
 description: A powerful State Management, Dependency Injection, Reactive programming and Navigation for Flutter apps.
-version: 9.0.5
+version: 9.0.6
 homepage: https://github.com/darwin-morocho/flutter-meedu/tree/master/packages/flutter_meedu
 documentation: https://flutter.meedu.app
 
@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.9.1
+  meedu: ^9.0.0
 
 dev_dependencies:
   equatable: ^2.0.5

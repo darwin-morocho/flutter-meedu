@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_function_declarations_over_variables
 
-import 'package:flutter_meedu/notifiers.dart';
-import 'package:flutter_meedu/providers.dart';
-import 'package:flutter_test/flutter_test.dart';
+
+import 'package:meedu/notifiers.dart';
+import 'package:meedu/providers.dart';
+import 'package:test/test.dart';
 
 void main() {
   setUp(ProvidersContainer.clear);
@@ -19,6 +19,7 @@ void main() {
         notifier.hashCode,
         _provider.read().hashCode,
       );
+      // ignore: omit_local_variable_types
       final void Function(String) listener = (_) {};
       notifier.addListener(listener);
       expect(notifier.mounted, true);

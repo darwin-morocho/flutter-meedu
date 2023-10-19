@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter_meedu/rx.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:meedu/rx.dart';
+import 'package:test/test.dart';
+
 
 void main() {
   test('RxReaction', () async {

@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-
-import 'rx.dart';
+import 'package:meedu/rx.dart';
 
 /// A widget to be used with Observables (instances of Rx)
 ///

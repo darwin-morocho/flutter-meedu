@@ -6,7 +6,7 @@ class _ProviderMethodsTagsRule extends DartLintRule {
   /// Metadata about the warning that will show-up in the IDE.
   /// This is used for `// ignore: code` and enabling/disabling the lint
   static const _code = LintCode(
-    name: 'flutter_meedu_missing_tag',
+    name: 'meedu_missing_tag',
     problemMessage:
         'The `tag` parameter must be defined, due to your provider uses Tags.'
         '\n\n\n'
@@ -42,7 +42,7 @@ class _ProviderMethodsNoTagsRule extends DartLintRule {
   /// Metadata about the warning that will show-up in the IDE.
   /// This is used for `// ignore: code` and enabling/disabling the lint
   static const _code = LintCode(
-    name: 'flutter_meedu_no_tags',
+    name: 'meedu_no_tags',
     problemMessage:
         'The `tag` parameter should not be used, due to your `provider` is not allowed to use Tags'
         '\n\n\n'
@@ -97,7 +97,7 @@ bool _isAssignable(
 
   final isAssignable = TypeChecker.fromName(
     'BaseTagProvider',
-    packageName: 'flutter_meedu',
+    packageName: 'meedu',
   ).isAssignableFromType(nodeType);
 
   if (tags) {

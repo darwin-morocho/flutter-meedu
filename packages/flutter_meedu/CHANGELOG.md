@@ -1,3 +1,6 @@
+## [9.0.6]
+- Updated to meedu: ^9.0.0
+
 ## [9.0.5]
 - Updated tests.
 

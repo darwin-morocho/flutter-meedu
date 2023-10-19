@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meedu/notifiers.dart';
+import 'package:meedu/providers.dart' as m;
 
-import '../notifiers/state_notifier.dart';
 import '../provider/filters.dart';
-import '../provider/state_notifier_provider.dart';
 
 part 'consumer.dart';
 
@@ -40,7 +40,7 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
   Map<StateNotifier, Function> _selectListeners = {};
   Map<StateNotifier, Function> _whenListeners = {};
 
-  Map<StateNotifier, BaseStateNotifierProvider> _targets = {};
+  Map<StateNotifier, m.BaseStateNotifierProvider> _targets = {};
 
   // initialized at true for the first build
   bool _isExternalBuild = true;
@@ -95,7 +95,7 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
 
   @override
   N listen<N extends StateNotifier<S>, S>(
-    BaseStateNotifierProvider<N, S> providerOrFilter, {
+    m.BaseStateNotifierProvider<N, S> providerOrFilter, {
     required void Function(N notifier) callback,
     String? tag,
   }) {
@@ -122,7 +122,7 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
   /// the  widget only will be rebuilded depending of the condition of each method.
   @override
   N watch<N extends StateNotifier<S>, S>(
-    BaseStateNotifierProvider<N, S> providerOrFilter, {
+    m.BaseStateNotifierProvider<N, S> providerOrFilter, {
     String? tag,
   }) {
     return _buildWatcher(
@@ -183,7 +183,7 @@ abstract class BuilderRef {
   ///
   /// this method returns the Notifier linked to the provider
   N listen<N extends StateNotifier<S>, S>(
-    BaseStateNotifierProvider<N, S> providerOrFilter, {
+    m.BaseStateNotifierProvider<N, S> providerOrFilter, {
     required void Function(N notifier) callback,
     String? tag,
   });
@@ -192,7 +192,7 @@ abstract class BuilderRef {
   ///
   /// this method returns the Notifier linked to the provider
   N watch<N extends StateNotifier<S>, S>(
-    BaseStateNotifierProvider<N, S> providerOrFilter, {
+    m.BaseStateNotifierProvider<N, S> providerOrFilter, {
     String? tag,
   });
 

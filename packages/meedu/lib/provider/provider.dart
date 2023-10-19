@@ -1,9 +1,9 @@
-import 'package:flutter_meedu/provider/state_notifier_provider.dart';
 import 'package:meta/meta.dart';
 
 import '../notifiers/state_notifier.dart';
 import 'base_provider.dart';
 import 'providers_container.dart';
+import 'state_notifier_provider.dart';
 
 class Provider<E> extends BaseProvider<E, dynamic> {
   Provider(super.callback);

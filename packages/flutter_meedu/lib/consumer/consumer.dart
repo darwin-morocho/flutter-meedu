@@ -41,7 +41,7 @@ class Consumer extends ConsumerWidget {
 
 extension _ConsumerWatchExtension on ConsumerStatefulElement {
   N _buildWatcher<N extends StateNotifier<S>, S>({
-    required BaseStateNotifierProvider<N, S> providerOrFilter,
+    required m.BaseStateNotifierProvider<N, S> providerOrFilter,
     required void Function(N notifier) callback,
     required String? tag,
     required bool isListener,
@@ -65,7 +65,8 @@ extension _ConsumerWatchExtension on ConsumerStatefulElement {
       } as N;
     } else {
       // if [providerOrFilter] is a  a [StateProvider]
-      notifier = (providerOrFilter as ListeneableProvider).read(tag: tag) as N;
+      notifier =
+          (providerOrFilter as m.ListeneableProvider).read(tag: tag) as N;
     }
 
     late final Map<StateNotifier, Function> map;

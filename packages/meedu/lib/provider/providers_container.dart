@@ -84,7 +84,7 @@ class Ref<A> {
   A get arguments {
     assert(
       _arguments != null,
-      'arguments not initialized, make sure to call to ypurProvoder.setArguments(...) before',
+      'arguments not initialized, make sure to call to yourProvoder.setArguments(...) before',
     );
     return _arguments!;
   }

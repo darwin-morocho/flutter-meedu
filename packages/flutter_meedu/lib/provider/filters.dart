@@ -1,5 +1,5 @@
-import '../notifiers/state_notifier.dart';
-import 'state_notifier_provider.dart';
+import 'package:meedu/notifiers.dart';
+import 'package:meedu/providers.dart';
 
 typedef SelectCallback<S, R> = R Function(S);
 typedef BuildWhenCallback<S> = bool Function(S prev, S current);

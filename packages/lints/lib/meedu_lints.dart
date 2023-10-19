@@ -31,7 +31,7 @@ class _FinalsRule extends DartLintRule {
   /// Metadata about the warning that will show-up in the IDE.
   /// This is used for `// ignore: code` and enabling/disabling the lint
   static const _code = LintCode(
-    name: 'flutter_meedu_final_providers',
+    name: 'meedu_final_providers',
     problemMessage: 'Providers must be declared using the `final` keyword.',
     errorSeverity: ErrorSeverity.ERROR,
   );
@@ -46,7 +46,7 @@ class _FinalsRule extends DartLintRule {
     context.registry.addVariableDeclaration((node) {
       const providerBaseChecker = TypeChecker.fromName(
         'BaseProvider',
-        packageName: 'flutter_meedu',
+        packageName: 'meedu',
       );
       final element = node.declaredElement;
       if (element == null ||
@@ -66,6 +66,7 @@ bool hasMatch({
   required MethodInvocation node,
   required List<String> types,
   required List<String> methods,
+  String? packageName,
 }) {
   final methodName = node.methodName.name;
   if (!methods.contains(methodName)) {
@@ -81,7 +82,7 @@ bool hasMatch({
     (type) {
       final providerOrFilterChecker = TypeChecker.fromName(
         type,
-        packageName: 'flutter_meedu',
+        packageName: packageName ?? 'meedu',
       );
       final firstArgumentType = args.first.staticType;
 

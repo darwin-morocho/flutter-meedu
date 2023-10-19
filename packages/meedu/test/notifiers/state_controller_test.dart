@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_function_declarations_over_variables, avoid_print
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_meedu/notifiers.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:meedu/notifiers.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('StateController', () async {
@@ -10,6 +10,7 @@ void main() {
     var email = c.state.email;
     var password = c.state.password;
     expect(email, '');
+    // ignore: omit_local_variable_types
     final void Function(LoginState) subscribe = (LoginState state) {
       email = state.email;
       password = state.password;

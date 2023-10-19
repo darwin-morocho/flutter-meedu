@@ -78,6 +78,7 @@ class _ListenAndWatchFiltersRule extends DartLintRule {
             'watch',
             'listen',
           ],
+          packageName: 'flutter_meedu',
         )) {
           return;
         }

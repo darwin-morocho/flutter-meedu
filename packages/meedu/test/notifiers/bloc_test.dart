@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter_meedu/notifiers.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-
+import 'package:meedu/notifiers.dart';
+import 'package:test/test.dart';
 
 void main() {
   test(
@@ -26,7 +24,7 @@ void main() {
 
       expect(
         () => bloc.add(_Increment()),
-        throwsAssertionError,
+        throwsA(isA<AssertionError>()),
       );
     },
   );

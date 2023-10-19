@@ -292,7 +292,7 @@ packages:
       path: "../../packages/flutter_meedu"
       relative: true
     source: path
-    version: "9.0.3"
+    version: "9.0.5"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -418,13 +418,21 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  meedu:
+    dependency: transitive
+    description:
+      name: meedu
+      sha256: "77735c8699253ac58312c504b857c5a5b95a70bb73937ca4a13ccae37d61f42e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.0"
   meedu_lints:
     dependency: "direct dev"
     description:
       path: "../../packages/lints"
       relative: true
     source: path
-    version: "0.0.1-beta.3"
+    version: "0.0.5"
   meta:
     dependency: transitive
     description:

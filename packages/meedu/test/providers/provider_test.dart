@@ -1,5 +1,5 @@
-import 'package:flutter_meedu/providers.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:meedu/providers.dart';
+import 'package:test/test.dart';
 
 void main() {
   setUp(ProvidersContainer.clear);
@@ -47,7 +47,7 @@ void main() {
     () {
       expect(
         () => _argumentsProvider.read(),
-        throwsAssertionError,
+        throwsA(isA<AssertionError>()),
       );
       _argumentsProvider.setArguments('hello');
 
@@ -83,10 +83,22 @@ void main() {
   test(
     'FactoryProvider',
     () {
-      expect(() => _factoryProvider.read(), throwsAssertionError);
-      expect(() => _factoryProvider.mounted(), throwsAssertionError);
-      expect(() => _factoryProvider.dispose(), throwsAssertionError);
-      expect(() => _factoryProvider.setArguments(''), throwsAssertionError);
+      expect(
+        () => _factoryProvider.read(),
+        throwsA(isA<AssertionError>()),
+      );
+      expect(
+        () => _factoryProvider.mounted(),
+        throwsA(isA<AssertionError>()),
+      );
+      expect(
+        () => _factoryProvider.dispose(),
+        throwsA(isA<AssertionError>()),
+      );
+      expect(
+        () => _factoryProvider.setArguments('', tag: ''),
+        throwsA(isA<AssertionError>()),
+      );
 
       final element1 = _factoryProvider.get();
       final element2 = _factoryProvider.get();
