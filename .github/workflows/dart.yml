@@ -16,6 +16,12 @@ jobs:
         with:
           flutter-version: '3.13.6'
 
+      - name: Install meedu dependencies 
+        run: cd packages/meedu && flutter pub get
+
+      - name: Run meedu tests
+        run: cd packages/meedu && flutter test --coverage
+
       - name: Install flutter_meedu dependencies 
         run: cd packages/flutter_meedu && flutter pub get
 
