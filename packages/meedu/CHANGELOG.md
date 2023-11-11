@@ -1,3 +1,6 @@
+## [9.0.1]
+- Allow null arguments in Providers.
+
 ## [9.0.0]
 - Release 9.x
 

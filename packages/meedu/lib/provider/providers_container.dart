@@ -79,24 +79,31 @@ class Ref<A> {
   });
 
   final String? tag;
+  bool _argumentsInitialized = false;
 
-  A? _arguments;
+  late A _arguments;
   A get arguments {
     assert(
-      _arguments != null,
-      'arguments not initialized, make sure to call to yourProvoder.setArguments(...) before',
+      _argumentsInitialized,
+      'arguments not initialized, make sure to call to yourProvider.setArguments(...) before',
     );
-    return _arguments!;
+    return _arguments;
   }
 
   void Function()? _onDisposeCallback;
 
-  void setArguments(A args) => _arguments = args;
+  void setArguments(A args) {
+    _arguments = args;
+    _argumentsInitialized = true;
+  }
 
   void onDispose(void Function() callback) => _onDisposeCallback = callback;
 
   @protected
-  void dispose() => _onDisposeCallback?.call();
+  void dispose() {
+    _argumentsInitialized = false;
+    _onDisposeCallback?.call();
+  }
 }
 
 class ProvidersContainer {

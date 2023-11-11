@@ -1,3 +1,6 @@
+## [9.0.7]
+- Updated to meedu: ^9.0.1
+
 ## [9.0.6]
 - Updated to meedu: ^9.0.0
 

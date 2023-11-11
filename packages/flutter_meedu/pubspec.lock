@@ -87,10 +87,10 @@ packages:
     dependency: "direct main"
     description:
       name: meedu
-      sha256: "77735c8699253ac58312c504b857c5a5b95a70bb73937ca4a13ccae37d61f42e"
+      sha256: c189d65d7fd3ba3435bc046531ed2eee30ce389a8510161c508c23c30a8d22bd
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.0"
+    version: "9.0.1"
   meta:
     dependency: "direct main"
     description:
