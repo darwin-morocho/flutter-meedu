@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:meedu/notifiers.dart';
 import 'package:test/test.dart';
 
-
 void main() {
   test(
     'PersistentStateMixin',
@@ -13,11 +12,11 @@ void main() {
       final controller1 = ShoppingCartController(
         storage: storage,
         storageKey: key1,
-      );
+      )..loadSavedState();
       final controller2 = ShoppingCartController(
         storage: storage,
         storageKey: key2,
-      );
+      )..loadSavedState();
       expect(controller1.state.products.length, 0);
       controller1.addProduct(
         Product(name: 'p1', price: 0),
@@ -28,28 +27,28 @@ void main() {
       final controllerCopy1 = ShoppingCartController(
         storage: storage,
         storageKey: key1,
-      );
+      )..loadSavedState();
       expect(controllerCopy1.state.products.length, 1);
       storage.delete(key1);
 
       final controllerCopy11 = ShoppingCartController(
         storage: storage,
         storageKey: key1,
-      );
+      )..loadSavedState();
 
       expect(controllerCopy11.state.products.length, 0);
 
       final controllerFail1 = ShoppingCartControllerForceFail(
         storage: storage,
         storageKey: key1,
-      );
+      )..loadSavedState();
       controllerFail1.addProduct(
         Product(name: 'p2', price: 0),
       );
       final controllerCopyFail1 = ShoppingCartControllerForceFail(
         storage: storage,
         storageKey: key1,
-      );
+      )..loadSavedState();
       expect(controllerCopyFail1.state.products.length, 0);
     },
   );
@@ -58,15 +57,16 @@ void main() {
     'PersistentStateMixin > cities',
     () async {
       final storage = MyStorage();
-      final controller = CityPickerController(storage);
+      final controller = CityPickerController(storage)..loadSavedState();
       expect(controller.state.loading, true);
       await controller.loadCities();
       expect(controller.state.loading, false);
       expect(controller.state.cities.isNotEmpty, true);
 
       /// create a new controller and check the cached state
+      final copy = CityPickerController(storage)..loadSavedState();
       expect(
-        CityPickerController(storage).state.cities.isNotEmpty,
+       copy.state.cities.isNotEmpty,
         true,
       );
     },
@@ -161,7 +161,6 @@ class ShoppingCartControllerForceFail extends StateNotifier<ShoppingCartState>
 }
 
 class ShoppingCartState {
-
   ShoppingCartState({
     required this.loading,
     required this.products,
@@ -193,7 +192,6 @@ class ShoppingCartState {
 }
 
 class Product {
-
   Product({
     required this.name,
     required this.price,
@@ -278,7 +276,6 @@ class CityPickerController extends StateNotifier<CityPickerState>
 }
 
 class CityPickerState extends Equatable {
-
   const CityPickerState({
     required this.loading,
     required this.cities,
@@ -330,7 +327,6 @@ class CityPickerState extends Equatable {
 }
 
 class City extends Equatable {
-
   const City({
     required this.id,
     required this.name,

@@ -1,3 +1,6 @@
+## [9.0.3]
+- Improve PersistentStateMixin.
+
 ## [9.0.2]
 - Fixed persistent state init value.
 

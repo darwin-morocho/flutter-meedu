@@ -1,3 +1,6 @@
+## [9.0.9]
+- Updated to meedu: ^9.0.3
+
 ## [9.0.8]
 - Fixed persistent state init value.
 
