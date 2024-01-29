@@ -1,8 +1,8 @@
-import 'state_notifier.dart';
+part of 'state_notifier.dart';
 
 /// a mixin to allows you save a state as a JSON in any local database
 mixin PersistentStateMixin<State> on StateNotifier<State> {
-  State? _state;
+  State? _persistentState;
 
   /// the storage sho save and return a cached  state
   PersistentStateStorage get storage;
@@ -27,8 +27,8 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
   @override
   State get state {
     try {
-      if (_state != null) {
-        return _state!;
+      if (_persistentState != null) {
+        return _persistentState!;
       }
       final cachedStateAsJson = storage.get(storageKey);
 
@@ -39,21 +39,22 @@ mixin PersistentStateMixin<State> on StateNotifier<State> {
           : null;
 
       if (cachedState != null) {
-        _state = cachedState;
-        return _state!;
+        _oldState = cachedState;
+        _persistentState = cachedState;
+        return _persistentState!;
       }
-      _state = super.state;
+      _persistentState = super.state;
       return _state!;
     } catch (e, s) {
-      _state = super.state;
+      _persistentState = super.state;
       onPersistentStateError(e, s);
-      return _state!;
+      return _persistentState!;
     }
   }
 
   @override
   void onStateChanged(State oldState, State currentState) {
-    _state = currentState;
+    _persistentState = currentState;
     final json = toJson(currentState);
     if (json != null) {
       storage

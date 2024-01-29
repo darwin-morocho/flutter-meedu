@@ -1,3 +1,6 @@
+## [9.0.2]
+- Fixed persistent state init value.
+
 ## [9.0.1]
 - Allow null arguments in Providers.
 

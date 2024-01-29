@@ -4,6 +4,8 @@ import 'package:meta/meta.dart';
 
 import 'base_notifier.dart';
 
+part 'persistent_state_mixin.dart';
+
 class StateNotifier<S> extends BaseNotifier<S> with ListeneableNotifier<S> {
   StateNotifier(S initialState) {
     _state = initialState;
