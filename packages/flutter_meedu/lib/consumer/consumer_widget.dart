@@ -79,7 +79,10 @@ class ConsumerStatefulElement extends StatefulElement implements BuilderRef {
     void clearListeners(Map<StateNotifier, Function> map) {
       for (final e in map.entries) {
         if (!e.key.disposed) {
-          (e.key as dynamic).removeListener(e.value);
+          (e.key as dynamic).removeListener(
+            e.value,
+            ignoreAutoDispose: _isExternalBuild,
+          );
         }
       }
       map.clear();

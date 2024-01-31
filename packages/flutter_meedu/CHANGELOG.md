@@ -1,3 +1,9 @@
+## [9.0.10]
+- Prevent dispose provider when didChangeDependencies is called on ConsumerWidget.
+
+## [9.0.9]
+- Updated to meedu: ^9.0.3
+
 ## [9.0.9]
 - Updated to meedu: ^9.0.3
 
