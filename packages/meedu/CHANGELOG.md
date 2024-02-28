@@ -1,3 +1,6 @@
+## [9.1.0]
+- Fixed removeListener missing param.
+
 ## [9.0.3]
 - Improve PersistentStateMixin.
 

@@ -66,11 +66,14 @@ mixin ListeneableNotifier<T> {
   }
 
   /// remove a listener from the notifier
-  void removeListener(ListenerCallback<T> listener) {
+  void removeListener(
+    ListenerCallback<T> listener, {
+    bool ignoreAutoDispose = false,
+  }) {
     if (_listeners.isNotEmpty) {
       _listeners.remove(listener);
 
-      if (!hasListeners) {
+      if (!hasListeners && !ignoreAutoDispose) {
         _disposableCallback?.call();
       }
     }

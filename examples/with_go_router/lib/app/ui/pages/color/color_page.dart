@@ -9,9 +9,7 @@ class ColorPage extends StatelessWidget {
     super.key,
     required this.isPrimary,
     required this.colorIndex,
-  })  : tagName = '$isPrimary-$colorIndex'{
-
-    print(tagName);
+  }) : tagName = '$isPrimary-$colorIndex' {
     colorProvider.setArguments(
       colorIndex,
       tag: tagName,

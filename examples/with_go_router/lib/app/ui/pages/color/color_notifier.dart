@@ -1,7 +1,7 @@
 import 'package:flutter_meedu/notifiers.dart';
 import 'package:flutter_meedu/providers.dart';
 
-final colorProvider = StateNotifierArgumentsProvider<ColorNotifier, int, int>(
+final colorProvider = Provider.stateArgumentsTag<ColorNotifier, int, int>(
   (ref) => ColorNotifier(ref.arguments),
 );
 

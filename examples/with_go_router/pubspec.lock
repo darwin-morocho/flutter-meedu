@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
+  analyzer_plugin:
+    dependency: transitive
+    description:
+      name: analyzer_plugin
+      sha256: "9661b30b13a685efaee9f02e5d01ed9f2b423bd889d28a304d02d704aee69161"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.3"
   args:
     dependency: transitive
     description:
@@ -121,6 +129,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  ci:
+    dependency: transitive
+    description:
+      name: ci
+      sha256: "145d095ce05cddac4d797a158bc4cf3b6016d1fe63d8c3d2fbd7212590adca13"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: c05b7406fdabc7a49a3929d4af76bcaccbbffcbcdcf185b082e1ae07da323d19
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   clock:
     dependency: transitive
     description:
@@ -169,6 +193,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  custom_lint:
+    dependency: transitive
+    description:
+      name: custom_lint
+      sha256: "22bd87a362f433ba6aae127a7bac2838645270737f3721b180916d7c5946cb5d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.11"
+  custom_lint_builder:
+    dependency: transitive
+    description:
+      name: custom_lint_builder
+      sha256: "0d48e002438950f9582e574ef806b2bea5719d8d14c0f9f754fbad729bcf3b19"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.14"
+  custom_lint_core:
+    dependency: transitive
+    description:
+      name: custom_lint_core
+      sha256: "2952837953022de610dacb464f045594854ced6506ac7f76af28d4a6490e189b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.14"
   dart_style:
     dependency: transitive
     description:
@@ -218,10 +266,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_meedu
-      sha256: "8e9eb1f4b2e081954e66ea5b012d09654e28c8fba5007a804a5e71a6e8ca475e"
+      sha256: "2e164f57996ff677e24103fa61be9a9c7bddc198e38f6dcc31a9383af3bc3f66"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.2"
+    version: "9.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -280,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  hotreloader:
+    dependency: transitive
+    description:
+      name: hotreloader
+      sha256: ed56fdc1f3a8ac924e717257621d09e9ec20e308ab6352a73a50a1d7a4d9158e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -352,6 +408,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
+  meedu:
+    dependency: transitive
+    description:
+      name: meedu
+      sha256: cb8082a0b48bad1b824a25f5c925fdd0db074e60e63adacdffa7a112cbb32d21
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.0"
+  meedu_lints:
+    dependency: "direct dev"
+    description:
+      name: meedu_lints
+      sha256: "1519c0c29ae729fa2393584f331ca297569686e8087115ad70652289e976a74d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   meta:
     dependency: transitive
     description:
@@ -408,6 +480,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.27.7"
   shelf:
     dependency: transitive
     description:
@@ -445,6 +525,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -509,6 +597,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      sha256: cd210a09f7c18cbe5a02511718e0334de6559871052c90a90c0cca46a4aa81c8
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.3"
   vector_math:
     dependency: transitive
     description:
@@ -517,6 +613,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  vm_service:
+    dependency: transitive
+    description:
+      name: vm_service
+      sha256: a2662fb1f114f4296cf3f5a50786a2d888268d7776cf681aa17d660ffa23b246
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.0.0"
   watcher:
     dependency: transitive
     description:

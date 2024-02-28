@@ -1,3 +1,9 @@
+## 0.2.0
+- Upgrade to 
+  flutter_meedu: ^9.1.0
+  flutter_hooks: ^0.20.5
+
+
 ## 0.1.6
 - Upgrade to 
   flutter_meedu: ^9.0.9
