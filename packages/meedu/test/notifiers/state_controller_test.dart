@@ -29,6 +29,8 @@ void main() {
     expect(c.disposed, true);
     c.onEmailChanged('test2@test.com');
     expect(email, 'test@test.com');
+    expect(c.initialState.email, '');
+    expect(c.initialState.password, '');
   });
 
   test('StateController onlyUpdate', () async {
@@ -53,7 +55,8 @@ class LoginState extends Equatable {
   });
   final String email, password;
 
-  static LoginState get initialState => const LoginState(email: '', password: '');
+  static LoginState get initialState =>
+      const LoginState(email: '', password: '');
 
   LoginState copyWith({
     String? email,

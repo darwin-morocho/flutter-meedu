@@ -30,7 +30,7 @@ class _ProviderMethodsTagsRule extends DartLintRule {
           return;
         }
 
-        reporter.reportErrorForNode(_code, node);
+        reporter.atNode(node, _code);
       },
     );
   }
@@ -66,7 +66,7 @@ class _ProviderMethodsNoTagsRule extends DartLintRule {
           return;
         }
 
-        reporter.reportErrorForNode(_code, node);
+        reporter.atNode(node, _code);
       },
     );
   }

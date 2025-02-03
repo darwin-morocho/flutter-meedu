@@ -1,3 +1,6 @@
+## [9.1.1]
+- Upgrade `meedu` to ^9.2.2
+
 ## [9.1.0]
 - Updated to meedu: ^9.1.0
 

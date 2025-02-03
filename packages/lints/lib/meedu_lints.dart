@@ -1,7 +1,7 @@
 library;
 
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
@@ -55,9 +55,8 @@ class _FinalsRule extends DartLintRule {
           !providerBaseChecker.isAssignableFromType(element.type)) {
         return;
       }
-
       // This emits our lint warning at the location of the variable.
-      reporter.reportErrorForElement(code, element);
+      reporter.atElement(element, code);
     });
   }
 }

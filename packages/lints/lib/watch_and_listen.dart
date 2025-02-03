@@ -40,7 +40,7 @@ class _ListenAndWatchNoFiltersRule extends DartLintRule {
           return;
         }
 
-        reporter.reportErrorForNode(_code, node);
+        reporter.atNode(node, _code);
       },
     );
   }
@@ -87,7 +87,7 @@ class _ListenAndWatchFiltersRule extends DartLintRule {
           return;
         }
 
-        reporter.reportErrorForNode(_code, node);
+        reporter.atNode(node, _code);
       },
     );
   }
@@ -133,7 +133,7 @@ class _NoTagsRule extends DartLintRule {
           return;
         }
 
-        reporter.reportErrorForNode(_code, node);
+        reporter.atNode(node, _code);
       },
     );
   }

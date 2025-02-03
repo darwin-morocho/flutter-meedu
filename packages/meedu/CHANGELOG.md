@@ -1,8 +1,16 @@
+## [9.2.1]
+- Downgrade `meta` to 1.15.0.
+
+## [9.2.1]
+- Added `initialState` getter in `StateNotifier`.
+- Upgrade `meta` to 1.16.0.
+- Set min dart SDK version to 3.3.0.
+
 ## [9.1.0]
 - Fixed removeListener missing param.
 
 ## [9.0.3]
-- Improve PersistentStateMixin.
+- Improve `PersistentStateMixin`.
 
 ## [9.0.2]
 - Fixed persistent state init value.

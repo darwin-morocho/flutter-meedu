@@ -47,14 +47,14 @@ Add the following to your `pubspec.yaml`
 
 ```yaml
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
   flutter: ">=3.10.0"
 
 dependencies:
-  flutter_meedu: ^9.1.0
+  flutter_meedu: ^9.1.1
 
 dev_dependencies:
-  meedu_lints: ^0.0.6 # <--- ADD THIS
+  meedu_lints: ^0.1.0 # <--- ADD THIS
 ``` 
 
 Now in your `analysis_options.yaml` enable the custom lints

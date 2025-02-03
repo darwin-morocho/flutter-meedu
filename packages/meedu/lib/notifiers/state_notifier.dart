@@ -8,11 +8,16 @@ part 'persistent_state_mixin.dart';
 
 class StateNotifier<S> extends BaseNotifier<S> with ListeneableNotifier<S> {
   StateNotifier(S initialState) {
-    _state = initialState;
+    _initialState = initialState;
+    _state = _initialState;
     _oldState = _state;
   }
 
-  late S _state, _oldState;
+  late S _initialState, _state, _oldState;
+
+  /// Returns the initial state value.
+  S get initialState => _initialState;
+
   S get state => _state;
   S get oldState => _oldState;
 
