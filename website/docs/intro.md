@@ -54,7 +54,7 @@ dependencies:
   flutter_meedu: ^9.1.1
 
 dev_dependencies:
-  meedu_lints: ^0.1.0 # <--- ADD THIS
+  meedu_lints: ^0.1.1 # <--- ADD THIS
 ``` 
 
 Now in your `analysis_options.yaml` enable the custom lints
