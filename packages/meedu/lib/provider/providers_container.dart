@@ -83,10 +83,12 @@ class Ref<A> {
 
   late A _arguments;
   A get arguments {
-    assert(
-      _argumentsInitialized,
-      'arguments not initialized, make sure to call to yourProvider.setArguments(...) before',
-    );
+    if (!_argumentsInitialized) {
+      throw AssertionError(
+        'arguments not initialized, make sure to call to yourProvider.setArguments(...) before',
+      );
+    }
+
     return _arguments;
   }
 
