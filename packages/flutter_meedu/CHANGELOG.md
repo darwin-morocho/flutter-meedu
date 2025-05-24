@@ -1,3 +1,7 @@
+## [9.2.0]
+- Fixed `autoDispose` not working on `StateNotifier` Providers.
+- Upgrade `meedu` to ^9.3.0
+
 ## [9.1.1]
 - Upgrade `meedu` to ^9.2.2
 

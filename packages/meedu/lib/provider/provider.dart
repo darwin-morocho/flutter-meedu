@@ -36,7 +36,7 @@ class Provider<E> extends BaseProvider<E, dynamic> {
   }) {
     return StateNotifierProvider<N, S>(
       callback,
-      autoDispose: true,
+      autoDispose: autoDispose,
     );
   }
 
@@ -47,7 +47,7 @@ class Provider<E> extends BaseProvider<E, dynamic> {
   }) {
     return StateNotifierTagProvider<N, S>(
       callback,
-      autoDispose: true,
+      autoDispose: autoDispose,
     );
   }
 

@@ -51,7 +51,7 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
-  flutter_meedu: ^9.1.1
+  flutter_meedu: ^9.2.0
 
 dev_dependencies:
   meedu_lints: ^0.1.0 # <--- ADD THIS

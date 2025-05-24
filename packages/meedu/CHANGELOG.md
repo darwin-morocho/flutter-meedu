@@ -1,3 +1,6 @@
+## [9.3.0]
+- Fixed `autoDispose` not working on `StateNotifier` Providers.
+
 ## [9.2.1]
 - Downgrade `meta` to 1.15.0.
 
