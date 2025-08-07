@@ -110,9 +110,10 @@ packages:
   meedu:
     dependency: "direct main"
     description:
-      path: "../meedu"
-      relative: true
-    source: path
+      name: meedu
+      sha256: a43fe7ebe3352046b5752806cadb05928963184c540a2568efbbebdcdd19e09e
+      url: "https://pub.dev"
+    source: hosted
     version: "9.3.1"
   meta:
     dependency: "direct main"
