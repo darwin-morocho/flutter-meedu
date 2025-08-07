@@ -24,6 +24,24 @@ void main() {
   );
 
   test(
+    'Provider null arguments, null value',
+    () {
+      // expect(() => _provider.mounted(tag: ''), throwsAssertionError);
+      expect(_providerNull.mounted(), false);
+      _providerNull.setArguments(null);
+      final value = _providerNull.read();
+      expect(
+        value.hashCode,
+        _providerNull.read().hashCode,
+      );
+      expect(value, null);
+      expect(_providerNull.mounted(), true);
+      _providerNull.dispose();
+      expect(_providerNull.mounted(), false);
+    },
+  );
+
+  test(
     'Provider > tag',
     () {
       // expect(() => _tagProvider.read(), throwsAssertionError);
@@ -55,6 +73,27 @@ void main() {
       expect(
         repo.apiKey,
         'hello',
+      );
+      expect(
+        repo.hashCode,
+        _argumentsProvider.read().hashCode,
+      );
+    },
+  );
+
+  test(
+    'ArgumentsProvider > null',
+    () {
+      expect(
+        () => _argumentsProvider.read(),
+        throwsA(isA<AssertionError>()),
+      );
+      _argumentsProvider.setArguments(null);
+
+      final repo = _argumentsProvider.read();
+      expect(
+        repo.apiKey,
+        'null',
       );
       expect(
         repo.hashCode,
@@ -148,6 +187,12 @@ final _provider = Provider(
   },
 );
 
+final _providerNull = Provider.arguments<String?, String?>(
+  (ref) {
+    return ref.arguments;
+  },
+);
+
 final _tagProvider = Provider.tag(
   (ref) {
     final repo = GoogleMapsRepo('');
@@ -160,9 +205,9 @@ final _tagProvider = Provider.tag(
   },
 );
 
-final _argumentsProvider = Provider.arguments<GoogleMapsRepo, String>(
+final _argumentsProvider = Provider.arguments<GoogleMapsRepo, String?>(
   (ref) => GoogleMapsRepo(
-    ref.arguments,
+    ref.arguments ?? 'null',
   ),
 );
 

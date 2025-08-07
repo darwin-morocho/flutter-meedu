@@ -50,7 +50,13 @@ class Element<E> {
   E? _value;
   E? get value => _value;
 
-  void set(E value) => _value = value;
+  bool _valueAssigned = false;
+  bool get valueAssigned => _valueAssigned;
+
+  void set(E value) {
+    _value = value;
+    _valueAssigned = true;
+  }
 }
 
 class FactoryElement<E> extends Element<E> {

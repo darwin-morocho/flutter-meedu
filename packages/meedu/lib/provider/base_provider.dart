@@ -69,7 +69,7 @@ abstract class BaseProvider<E, A> {
   bool mounted({
     String? tag,
   }) {
-    return containerElements[getKey(tag)]?.value != null;
+    return containerElements[getKey(tag)]?.valueAssigned ?? false;
   }
 
   /// return the [E] associated to the provider, if the [E] is not
@@ -87,6 +87,10 @@ abstract class BaseProvider<E, A> {
 
     final createdElement = element ?? Element(ref: ref);
 
+    if (createdElement.valueAssigned) {
+      return createdElement.value as E;
+    }
+
     createdElement.set(
       _creator.callback(ref),
     );
@@ -96,11 +100,11 @@ abstract class BaseProvider<E, A> {
       createdElement,
       _creator.autoDispose,
     );
-    return createdElement.value!;
+    return createdElement.value as E;
   }
 
   @protected
-  void onElementValueAssigned(Element<E> element, bool autoDispose) {}
+  void onElementValueAssigned(Element<E> element, bool autoDispose);
 
   /// generate a key to be used into the [ProvidersContainer]
   @protected

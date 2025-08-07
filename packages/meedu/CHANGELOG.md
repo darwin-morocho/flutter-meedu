@@ -1,3 +1,8 @@
+## [9.3.1]
+- Fixed null assertion error when using `Provider.arguments` with null arguments and null values.
+- Fixed `onElementValueAssigned` method in `BaseProvider` to be called when the
+  value is assigned to the element.
+
 ## [9.3.0]
 - Fixed `autoDispose` not working on `StateNotifier` Providers.
 

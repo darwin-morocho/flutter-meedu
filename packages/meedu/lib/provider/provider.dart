@@ -76,6 +76,9 @@ class Provider<E> extends BaseProvider<E, dynamic> {
       autoDispose: autoDispose,
     );
   }
+
+  @override
+  void onElementValueAssigned(Element<E> element, bool autoDispose) {}
 }
 
 class TagProvider<E> extends Provider<E> implements BaseTagProvider {
@@ -84,6 +87,11 @@ class TagProvider<E> extends Provider<E> implements BaseTagProvider {
 
 class ArgumentsProvider<E, A> extends BaseProvider<E, A> {
   ArgumentsProvider(super.callback);
+
+  @override
+  void onElementValueAssigned(Element<E> element, bool autoDispose) {
+    // TODO: implement onElementValueAssigned
+  }
 }
 
 class TagArgumentsProvider<E, A> extends ArgumentsProvider<E, A>
@@ -143,6 +151,9 @@ class FactoryProvider<E> extends BaseFactoryProvider<E, dynamic> {
       creatorCallback,
     );
   }
+
+  @override
+  void onElementValueAssigned(Element<E> element, bool autoDispose) {}
 }
 
 class FactoryArgumentsProvider<E, A> extends BaseFactoryProvider<E, A> {
@@ -157,4 +168,7 @@ class FactoryArgumentsProvider<E, A> extends BaseFactoryProvider<E, A> {
         creator.callback(ref),
       );
   }
+
+  @override
+  void onElementValueAssigned(Element<E> element, bool autoDispose) {}
 }
