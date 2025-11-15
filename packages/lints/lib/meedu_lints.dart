@@ -33,13 +33,13 @@ class _FinalsRule extends DartLintRule {
   static const _code = LintCode(
     name: 'meedu_final_providers',
     problemMessage: 'Providers must be declared using the `final` keyword.',
-    errorSeverity: ErrorSeverity.ERROR,
+    errorSeverity: DiagnosticSeverity.ERROR,
   );
 
   @override
   void run(
     CustomLintResolver resolver,
-    ErrorReporter reporter,
+    DiagnosticReporter reporter,
     CustomLintContext context,
   ) {
     // Our lint will highlight all variable declarations with our custom warning.
@@ -56,7 +56,7 @@ class _FinalsRule extends DartLintRule {
         return;
       }
       // This emits our lint warning at the location of the variable.
-      reporter.atElement(element, code);
+      reporter.atElement2(element, code);
     });
   }
 }

@@ -1,9 +1,10 @@
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/notifiers.dart';
 import 'package:persistent_state/app/domain/repositories/cities_repository.dart';
 import 'package:persistent_state/app/ui/global_widgets/my_persistent_storage.dart';
 import 'city_picker_state.dart';
 
-class CityPickerController extends StateNotifier<CityPickerState> with PersistentStateMixin {
+class CityPickerController extends StateNotifier<CityPickerState>
+    with PersistentStateMixin {
   CityPickerController() : super(CityPickerState.initialState);
 
   Future<void> load() async {

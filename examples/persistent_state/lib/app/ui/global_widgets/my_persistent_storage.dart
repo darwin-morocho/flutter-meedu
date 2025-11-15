@@ -1,10 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter_meedu/meedu.dart';
+import 'package:flutter_meedu/notifiers.dart';
 import 'package:hive/hive.dart';
 
 class MyPersistentStorage implements PersistentStateStorage {
-  final Box _box = Get.find();
+  final Box _box;
+
+  MyPersistentStorage({required Box box}) : _box = box;
 
   @override
   Future<void> delete(String key) {

@@ -1,3 +1,7 @@
+## 0.1.2
+- Upgrade `analyzer` to ^8.0.0.
+- Upgrade `custom_lint_builder` to ^0.8.1.
+
 ## 0.1.1
 - Upgrade `analyzer` to ^7.0.0.
 - Upgrade `analyzer_plugin` to ^0.13.0.

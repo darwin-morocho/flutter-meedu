@@ -82,6 +82,9 @@ class _NestedPageState extends State<NestedPage> with TickerProviderStateMixin {
   }
 
   String _title(BuildContext context) {
-    return (context as Element).findAncestorWidgetOfExactType<MaterialApp>()!.title;
+    return (context as Element)
+            .findAncestorWidgetOfExactType<MaterialApp>()!
+            .title ??
+        '';
   }
 }
