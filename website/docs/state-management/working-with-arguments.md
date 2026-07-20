@@ -6,6 +6,8 @@ sidebar_position: 5
 
 Sometimes you need to pass initial values to your `StateNotifier`. In such cases, you can use the `StateNotifierArgumentsProvider` class and call the `setArguments` function to set argument values that will be retrieved in the creator callback of your provider.
 
+If `setArguments` is missing, Meedu now throws a clearer error that includes the provider label when available.
+
 Next, you can use the `ref` parameter of your callback generator to access the arguments passed in the `initState` method.
 
 ```dart {4,24}

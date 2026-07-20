@@ -124,9 +124,15 @@ final authRepository = Provider.arguments<AuthRepository, Dio>(
     ref.arguments, //  ref.arguments is an instace of Dio
   ),
 );
+
+final authRepository = Provider.arguments<AuthRepository, Dio>(
+  (ref) => AuthRepositoryImpl(ref.arguments),
+  debugLabel: 'authRepository',
+);
 ```
 
 Now you can pass an instance of Dio as an argument using setArguments.
+If the provider is read before `setArguments`, the error message will include the provider label when one is provided.
 
 For example
 
