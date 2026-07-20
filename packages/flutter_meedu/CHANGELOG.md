@@ -1,3 +1,6 @@
+## [9.2.2]
+- Upgrade `meedu` to ^9.3.2.
+
 ## [9.2.1]
 - Fixed null assertion error when using `Provider.arguments` with null arguments and null values.
 - Fixed `onElementValueAssigned` method in `BaseProvider` to be called when the
