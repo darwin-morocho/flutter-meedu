@@ -1,3 +1,7 @@
+## 0.2.5
+- Upgrade to 
+  flutter_meedu: ^9.2.2
+
 ## 0.2.4
 - Upgrade to 
   flutter_meedu: ^9.2.1
