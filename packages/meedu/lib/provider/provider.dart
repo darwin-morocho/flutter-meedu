@@ -6,37 +6,45 @@ import 'providers_container.dart';
 import 'state_notifier_provider.dart';
 
 class Provider<E> extends BaseProvider<E, dynamic> {
-  Provider(super.callback);
+  Provider(
+    super.callback, {
+    super.debugLabel,
+  });
 
   /// creates a TagProvider
   static TagProvider<E> tag<E>(
     CreatorCallback<E, dynamic> callback,
+    {String? debugLabel}
   ) {
-    return TagProvider<E>(callback);
+    return TagProvider<E>(callback, debugLabel: debugLabel);
   }
 
   /// creates an TagArgumentsProvider
   static TagArgumentsProvider<E, A> argumentsTag<E, A>(
     CreatorCallback<E, A> callback,
+    {String? debugLabel}
   ) {
-    return TagArgumentsProvider<E, A>(callback);
+    return TagArgumentsProvider<E, A>(callback, debugLabel: debugLabel);
   }
 
   /// creates an ArgumentsProvider
   static ArgumentsProvider<E, A> arguments<E, A>(
     CreatorCallback<E, A> callback,
+    {String? debugLabel}
   ) {
-    return ArgumentsProvider<E, A>(callback);
+    return ArgumentsProvider<E, A>(callback, debugLabel: debugLabel);
   }
 
   /// creates a StateNotifierProvider
   static StateNotifierProvider<N, S> state<N extends StateNotifier<S>, S>(
     CreatorCallback<N, dynamic> callback, {
     bool autoDispose = true,
+    String? debugLabel,
   }) {
     return StateNotifierProvider<N, S>(
       callback,
       autoDispose: autoDispose,
+      debugLabel: debugLabel,
     );
   }
 
@@ -44,10 +52,12 @@ class Provider<E> extends BaseProvider<E, dynamic> {
   static StateNotifierTagProvider<N, S> stateTag<N extends StateNotifier<S>, S>(
     CreatorCallback<N, dynamic> callback, {
     bool autoDispose = true,
+    String? debugLabel,
   }) {
     return StateNotifierTagProvider<N, S>(
       callback,
       autoDispose: autoDispose,
+      debugLabel: debugLabel,
     );
   }
 
@@ -57,10 +67,12 @@ class Provider<E> extends BaseProvider<E, dynamic> {
     CreatorCallback<N, A> callback, {
     bool autoDispose = true,
     bool tags = false,
+    String? debugLabel,
   }) {
     return StateNotifierArgumentsProvider(
       callback,
       autoDispose: autoDispose,
+      debugLabel: debugLabel,
     );
   }
 
@@ -70,10 +82,12 @@ class Provider<E> extends BaseProvider<E, dynamic> {
     CreatorCallback<N, A> callback, {
     bool autoDispose = true,
     bool tags = false,
+    String? debugLabel,
   }) {
     return StateNotifierTagArgumentsProvider(
       callback,
       autoDispose: autoDispose,
+      debugLabel: debugLabel,
     );
   }
 
@@ -82,11 +96,17 @@ class Provider<E> extends BaseProvider<E, dynamic> {
 }
 
 class TagProvider<E> extends Provider<E> implements BaseTagProvider {
-  TagProvider(super.callback);
+  TagProvider(
+    super.callback, {
+    super.debugLabel,
+  });
 }
 
 class ArgumentsProvider<E, A> extends BaseProvider<E, A> {
-  ArgumentsProvider(super.callback);
+  ArgumentsProvider(
+    super.callback, {
+    super.debugLabel,
+  });
 
   @override
   void onElementValueAssigned(Element<E> element, bool autoDispose) {
@@ -96,11 +116,17 @@ class ArgumentsProvider<E, A> extends BaseProvider<E, A> {
 
 class TagArgumentsProvider<E, A> extends ArgumentsProvider<E, A>
     implements BaseTagProvider {
-  TagArgumentsProvider(super.callback);
+  TagArgumentsProvider(
+    super.callback, {
+    super.debugLabel,
+  });
 }
 
 abstract class BaseFactoryProvider<E, A> extends BaseProvider<E, A> {
-  BaseFactoryProvider(super.callback);
+  BaseFactoryProvider(
+    super.callback, {
+    super.debugLabel,
+  });
 
   @override
   @visibleForTesting
@@ -132,10 +158,13 @@ abstract class BaseFactoryProvider<E, A> extends BaseProvider<E, A> {
 }
 
 class FactoryProvider<E> extends BaseFactoryProvider<E, dynamic> {
-  FactoryProvider(super.callback);
+  FactoryProvider(
+    super.callback, {
+    super.debugLabel,
+  });
 
   FactoryElement<E> get() {
-    final ref = Ref(tag: null);
+    final ref = Ref(tag: null, providerLabel: debugLabel());
 
     return FactoryElement(
       ref: ref,
@@ -157,10 +186,13 @@ class FactoryProvider<E> extends BaseFactoryProvider<E, dynamic> {
 }
 
 class FactoryArgumentsProvider<E, A> extends BaseFactoryProvider<E, A> {
-  FactoryArgumentsProvider(super.callback);
+  FactoryArgumentsProvider(
+    super.callback, {
+    super.debugLabel,
+  });
 
   FactoryArgumentsElement<E, A> get(A args) {
-    final ref = Ref<A>(tag: null)..setArguments(args);
+    final ref = Ref<A>(tag: null, providerLabel: debugLabel())..setArguments(args);
 
     return FactoryArgumentsElement<E, A>(
       ref: ref,

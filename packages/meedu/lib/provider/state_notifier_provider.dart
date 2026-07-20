@@ -11,6 +11,7 @@ abstract class ListeneableProvider<N extends StateNotifier<S>, S, A>
   ListeneableProvider(
     super.callback, {
     super.autoDispose,
+    super.debugLabel,
   });
 
   @override
@@ -41,6 +42,7 @@ class StateNotifierProvider<N extends StateNotifier<S>, S>
   StateNotifierProvider(
     super.creator, {
     super.autoDispose,
+    super.debugLabel,
   });
 }
 
@@ -49,6 +51,7 @@ class StateNotifierArgumentsProvider<N extends StateNotifier<S>, S, A>
   StateNotifierArgumentsProvider(
     super.creator, {
     super.autoDispose,
+    super.debugLabel,
   });
 }
 
@@ -57,6 +60,7 @@ class StateNotifierTagProvider<N extends StateNotifier<S>, S>
   StateNotifierTagProvider(
     super.creator, {
     super.autoDispose,
+    super.debugLabel,
   });
 }
 
@@ -65,5 +69,6 @@ class StateNotifierTagArgumentsProvider<N extends StateNotifier<S>, S, A>
   StateNotifierTagArgumentsProvider(
     super.creator, {
     super.autoDispose,
+    super.debugLabel,
   });
 }

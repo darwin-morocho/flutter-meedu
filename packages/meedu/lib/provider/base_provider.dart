@@ -14,13 +14,16 @@ abstract class BaseProvider<E, A> {
   BaseProvider(
     CreatorCallback<E, A> callback, {
     bool autoDispose = true,
-  }) : _creator = Creator(
+    String? debugLabel,
+  })  : _creator = Creator(
           callback,
           autoDispose,
-        );
+        ),
+        _debugLabel = debugLabel;
 
   /// defines how an [E] is created
   late final Creator<E, A> _creator;
+  final String? _debugLabel;
 
   @protected
   Creator<E, A> get creator => _creator;
@@ -58,7 +61,10 @@ abstract class BaseProvider<E, A> {
     final element = containerElements.putIfAbsent(
       key,
       () => Element<E>(
-        ref: Ref<A>(tag: tag),
+        ref: Ref<A>(
+          tag: tag,
+          providerLabel: debugLabel(tag: tag),
+        ),
       ),
     );
     element.ref.setArguments(args);
@@ -83,7 +89,11 @@ abstract class BaseProvider<E, A> {
       return element!.value!;
     }
 
-    final ref = element?.ref as Ref<A>? ?? Ref<A>(tag: tag);
+    final ref = element?.ref as Ref<A>? ??
+        Ref<A>(
+          tag: tag,
+          providerLabel: debugLabel(tag: tag),
+        );
 
     final createdElement = element ?? Element(ref: ref);
 
@@ -110,6 +120,16 @@ abstract class BaseProvider<E, A> {
   @protected
   String getKey(String? tag) {
     return '$_cachedHash${tag ?? ''}';
+  }
+
+  @protected
+  String debugLabel({
+    String? tag,
+  }) {
+    final providerName = runtimeType.toString();
+    return _debugLabel == null
+        ? '$providerName${tag == null ? '' : '[$tag]'}'
+        : '$_debugLabel${tag == null ? '' : '[$tag]'}';
   }
 
   @mustCallSuper

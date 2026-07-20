@@ -82,6 +82,23 @@ void main() {
   );
 
   test(
+    'ArgumentsProvider > missing arguments shows debug label',
+    () {
+      expect(
+        () => _argumentsProviderWithLabel.read(),
+        throwsA(
+          predicate((error) {
+            final message = error.toString();
+            return message.contains('arguments not initialized') &&
+                message.contains('_argumentsProviderWithLabel') &&
+                message.contains('setArguments');
+          }),
+        ),
+      );
+    },
+  );
+
+  test(
     'ArgumentsProvider > null',
     () {
       expect(
@@ -209,6 +226,11 @@ final _argumentsProvider = Provider.arguments<GoogleMapsRepo, String?>(
   (ref) => GoogleMapsRepo(
     ref.arguments ?? 'null',
   ),
+);
+
+final _argumentsProviderWithLabel = Provider.arguments<GoogleMapsRepo, String?>(
+  (ref) => GoogleMapsRepo(ref.arguments ?? 'null'),
+  debugLabel: '_argumentsProviderWithLabel',
 );
 
 final _argumentsTagProvider = Provider.argumentsTag<GoogleMapsRepo, String>(

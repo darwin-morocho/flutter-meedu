@@ -1,3 +1,7 @@
+## [9.3.2]
+- Improved argument error messages to include provider labels and tags.
+- Added a debug label option for providers and state notifier providers.
+
 ## [9.3.1]
 - Fixed null assertion error when using `Provider.arguments` with null arguments and null values.
 - Fixed `onElementValueAssigned` method in `BaseProvider` to be called when the

@@ -82,16 +82,18 @@ class FactoryArgumentsElement<E, A> extends Element<E> {
 class Ref<A> {
   Ref({
     required this.tag,
+    required this.providerLabel,
   });
 
   final String? tag;
+  final String providerLabel;
   bool _argumentsInitialized = false;
 
   late A _arguments;
   A get arguments {
     if (!_argumentsInitialized) {
       throw AssertionError(
-        'arguments not initialized, make sure to call to yourProvider.setArguments(...) before',
+        'arguments not initialized for $providerLabel, make sure to call $providerLabel.setArguments(...) before read',
       );
     }
 
